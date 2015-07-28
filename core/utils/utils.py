@@ -203,7 +203,7 @@ def _get_tip(lccn, date, edition, sequence=1):
     return title, issue, page
 
 
-def _stream_file(path, mimetype):
+def _stream_file(path, content_type):
     """helper function for streaming back the contents of a file"""
     # must calculate Content-length else django ConditionalGetMiddleware
     # tries to and fails, since it is streaming back, and it attempts to
@@ -211,7 +211,7 @@ def _stream_file(path, mimetype):
     if path:
         stat = os.stat(path)
         r = HttpResponse(wsgiref.util.FileWrapper(file(path)))
-        r['Content-Type'] = mimetype
+        r['Content-Type'] = content_type
         r['Content-Length'] = stat.st_size
         r['Last-Modified'] = http_date(stat.st_mtime)
         return r
