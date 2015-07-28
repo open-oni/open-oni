@@ -612,7 +612,7 @@ class Page(models.Model):
     ocr_filename = models.CharField(max_length=250, null=True)
     issue = models.ForeignKey('Issue', related_name='pages')
     reel = models.ForeignKey('Reel', related_name='pages', null=True)
-    indexed = models.BooleanField()
+    indexed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
     def json(self, serialize=True, host="chroniclingamerica.loc.gov"):

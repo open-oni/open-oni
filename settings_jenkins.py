@@ -65,7 +65,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'south',
+    # 'south',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'djcelery',
@@ -87,7 +87,7 @@ MEMORIOUS_REPOSITORIES = {"default": '/opt/chronam/'}
 MEMORIOUS_DEBUG = True
 USE_TIFF = False
 
-SOUTH_TESTS_MIGRATE = False
+# SOUTH_TESTS_MIGRATE = False
 ESSAYS_FEED = "http://ndnp-essays.rdc.lctl.gov/feed/"
 CACHE_BACKEND = 'file:///var/tmp/django_cache?timeout=100'
 

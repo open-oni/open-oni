@@ -71,7 +71,7 @@ INSTALLED_APPS = (
     # 'lc',
     # 'chronam.example',
     # 'chronam.loc',
-    'south',
+    # 'south',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'djcelery',
@@ -91,7 +91,7 @@ FEED_TTL_SECONDS = 60 * 60 * 24 * 7
 
 USE_TIFF = False
 
-SOUTH_TESTS_MIGRATE = False
+# SOUTH_TESTS_MIGRATE = False
 ESSAYS_FEED = "http://ndnp-essays.rdc.lctl.gov/feed/"
 
 CACHES = {
