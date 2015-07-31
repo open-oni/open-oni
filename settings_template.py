@@ -1,6 +1,4 @@
 import os
-import logging
-import subprocess
 
 def abs_path(path):
     import os
