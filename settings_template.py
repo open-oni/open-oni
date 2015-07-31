@@ -1,10 +1,5 @@
 import os
 
-def abs_path(path):
-    import os
-    _root = os.path.abspath(os.path.dirname(__file__))
-    return os.path.join(_root, path)
-
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
