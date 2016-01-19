@@ -14,7 +14,7 @@ Next you need to get the openoni code:
 
     sudo mkdir /opt/openoni
     sudo chown $USER:users /opt/openoni
-    git clone https://github.com/LibraryOfCongress/openoni.git /opt/openoni
+    git clone https://github.com/open-oni/open-oni.git /opt/openoni
 
 Configure Solr
 --------------
@@ -50,4 +50,4 @@ Configure Apache
 Continue
 --------
 
-* You can now return to the Install section in [README.md](https://github.com/LibraryOfCongress/openoni/blob/master/README.md#install)
+* You can now return to the Install section in [README.md](https://github.com/open-oni/open-oni/blob/master/README.md#install)

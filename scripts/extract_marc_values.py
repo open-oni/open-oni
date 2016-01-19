@@ -11,7 +11,7 @@ Example: python extract_marc_values.py /vol/ndnp/openoni/bib/holdings/ 852 a
 
 
 This also useds: openoni
-Found here: http://github.com/LibraryOfCongress/openoni
+Found here: http://github.com/open-oni/open-oni
 '''
 
 
