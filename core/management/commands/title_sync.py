@@ -163,4 +163,4 @@ class Command(BaseCommand):
             place.geonames = p['geonames']
             place.dbpedia = p['dbpedia']
             place.save()
-            _logger.info('finished loading place links')
+        _logger.info('finished loading place links')
