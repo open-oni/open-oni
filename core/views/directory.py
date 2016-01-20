@@ -234,7 +234,7 @@ def search_titles_results(request):
     if format == 'atom':
         feed_url = 'http://' + host + request.get_full_path()
         updated = rfc3339(datetime.datetime.now())
-        return render_to_response('search_titles_results.xml',
+        return render_to_response('search/search_titles_results.xml',
                                   dictionary=locals(),
                                   context_instance=RequestContext(request),
                                   mimetype='application/atom+xml')
@@ -266,7 +266,7 @@ def search_titles_results(request):
         del q['sort']
     q = q.urlencode()
     collapse_search_tab = True
-    return render_to_response('search_titles_results.html',
+    return render_to_response('search/search_titles_results.html',
                               dictionary=locals(),
                               context_instance=RequestContext(request))
 
