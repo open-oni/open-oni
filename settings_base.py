@@ -48,7 +48,7 @@ DATABASES = {
     }
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'px2@!q2(m5alb$0=)h@u*80mmf9cd-nn**^y4j2j&+_8h^n_0f'
+SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
