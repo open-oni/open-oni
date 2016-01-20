@@ -1,21 +1,33 @@
 import os
 
+# Local variable for making fairly decent assumptions
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
+# If true, provides detailed logging and error pages.  DO NOT SET THIS TO TRUE
+# IN PRODUCTION!
 DEBUG = True
+
+# DEPRECATED as of Django 1.8!
+#
+# If TRUE *and* DEBUG is true, provides detailed information when template
+# rendering causes exceptions.
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-)
-
-MANAGERS = ADMINS
-
+# Time zone name for django internally to use
 TIME_ZONE = 'America/New_York'
+
+# App language code: used for I18n translations
 LANGUAGE_CODE = 'en-us'
+
+# Site id differentiates DB data if multiple sites use the same database
 SITE_ID = 1
+
+# I18n and L10n settings for translating and localizing the app
 USE_I18N = True
 USE_L10N = True
 
+# Absolute filesystem path to the directory that will hold user-uploaded files
+# (We don't need this)
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 
