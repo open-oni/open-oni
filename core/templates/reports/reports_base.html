@@ -1,0 +1,10 @@
+{% extends "site_base.html" %}
+{% load static from staticfiles %}
+
+{% block extrahead %}
+    <link type="text/css" href="{% static 'css/ca_reports.css' %}" rel="stylesheet" />
+
+    {% block extra_link_types %}{% endblock %}
+{% endblock %}
+
+{% block subcontent %}{% endblock subcontent %}

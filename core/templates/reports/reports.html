@@ -1,17 +1,8 @@
-{% extends "site_base.html" %}
-{% load static from staticfiles %}
-
-{% block extrahead %}
-<link type="text/css" href="{% static 'css/ca_reports.css' %}" rel="stylesheet" />
-
-{% block extra_link_types %}
-{% endblock %}
-
-{% endblock %}
+{% extends "reports/reports_base.html" %}
 
 {% block subcontent %}
 
-<table class="data table table-striped table-hover" width="100%">
+  <table class="data table table-striped table-hover" width="100%">
     <tr class='lightGray'>
         <td><a href="{% url 'openoni_batches' %}">Batches View</td>
     </tr>    
@@ -54,6 +45,6 @@
     <tr class='white'>
         <td><a href="{% url 'openoni_languages' %}">Languages View</td>
     </tr>
-</table>
+  </table>
 
 {% endblock %}
