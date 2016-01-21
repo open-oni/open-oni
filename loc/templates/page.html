@@ -166,7 +166,7 @@
           {% endif %}
           <strong>Issues</strong> 
           {% if next_issue_first_page %}
-          <a rel="next" href="{% url 'openoni_page' title.lccn next_issue_first_page.issue.date_issued next_issue_first_page.issue.edition next_issue_first_page.sequence %}"><img src="{% static 'images/item_btn_next.png' %}" width="17" height="17" alt="Next Issue" /></a><a class="all" href="{% url 'openoni_issues' title.lccn %}"><small>All Issues</small></a> 
+          <a rel="next" href="{% url 'openoni_page' title.lccn next_issue_first_page.issue.date_issued next_issue_first_page.issue.edition next_issue_first_page.sequence %}"><img src="{% static 'images/item_btn_next.png' %}" width="17" height="17" alt="Next Issue" /></a><a class="all" href="{% url 'openoni_issues_title' title.lccn %}"><small>All Issues</small></a> 
           {% endif %}
         </span>
         {% if page.jp2_filename %}
