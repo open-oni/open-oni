@@ -49,7 +49,7 @@ DATABASES = {
 
 # Make this unique, and don't share it with anybody.  This MUST be overridden
 # either in settings_local.py or /etc/openoni.ini
-SECRET_KEY = 'CHANGE ME!'
+SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
