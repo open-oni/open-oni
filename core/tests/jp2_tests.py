@@ -5,7 +5,7 @@ try:
 except ImportError:
     j2k = None
 
-import Image
+from PIL import Image
 
 from StringIO import StringIO
 
