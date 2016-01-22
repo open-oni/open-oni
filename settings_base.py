@@ -3,6 +3,10 @@ import os
 # Local variable for making fairly decent assumptions
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
+####################################################################
+# DJANGO SETTINGS
+####################################################################
+
 # If true, provides detailed logging and error pages.  DO NOT SET THIS TO TRUE
 # IN PRODUCTION!
 DEBUG = True
@@ -31,13 +35,20 @@ USE_L10N = True
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 
+# Determines how we store static files; e.g., CSS, images, etc.
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
+# Base URL to static files
 STATIC_URL = '/media/'
+
+# Directory path to static files
 STATIC_ROOT = os.path.join(DIRNAME, '.static-media')
 
+# Module which processes URL routing
 ROOT_URLCONF = 'openoni.urls'
 
+# Database settings.  This should be overridden in settings_local.py or
+# /etc/openoni.ini.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -48,7 +59,7 @@ DATABASES = {
     }
 
 # Make this unique, and don't share it with anybody.  This MUST be overridden
-# either in settings_local.py or /etc/openoni.ini
+# either in settings_local.py or /etc/openoni.ini.
 SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
@@ -57,6 +68,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+# Classes which implement request/response middleware
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,19 +76,24 @@ MIDDLEWARE_CLASSES = (
     'openoni.core.middleware.TooBusyMiddleware',
 )
 
+# DEPRECATED as of django 1.8!
+#
+# Callables which alter the request context
 TEMPLATE_CONTEXT_PROCESSORS = (
     'openoni.core.context_processors.extra_request_info',
     'openoni.core.context_processors.newspaper_info',
 )
 
+# DEPRECATED as of django 1.8!
+#
+# Where to look for HTML templates
 TEMPLATE_DIRS = (
     os.path.join(DIRNAME, 'templates'),
 )
 
+# List of configuration classes / app packages in order of priority (i.e., the
+# first item in the list has final say when collisions occur)
 INSTALLED_APPS = (
-    # 'lc',
-    # 'openoni.example',
-    # 'openoni.loc',
     'south',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
@@ -86,20 +103,7 @@ INSTALLED_APPS = (
     'openoni.core',
 )
 
-BROKER_TRANSPORT = "django"
-
-THUMBNAIL_WIDTH = 360
-
-DEFAULT_TTL_SECONDS = 86400  # 1 day
-PAGE_IMAGE_TTL_SECONDS = 60 * 60 * 24 * 7 * 2  # 2 weeks
-API_TTL_SECONDS = 60 * 60  # 1 hour
-FEED_TTL_SECONDS = 60 * 60 * 24 * 7
-
-USE_TIFF = False
-
-SOUTH_TESTS_MIGRATE = False
-ESSAYS_FEED = "http://ndnp-essays.rdc.lctl.gov/feed/"
-
+# Determines how django does its caching
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
@@ -108,7 +112,53 @@ CACHES = {
     }
 }
 
+# Hosts/domain names that are valid for this site.  This MUST be overridden in
+# settings_local.py if you aren't in DEBUG mode.
+#
+# TODO: Allow this to be overridden by the INI file as well
+ALLOWED_HOSTS = []
+
+####################################################################
+# 3RD-PARTY LIB SETTINGS
+####################################################################
+
+# This is a setting for Celery to know where to put data
+BROKER_TRANSPORT = "django"
+
+# This tells South to create the test database via syncdb rather than running
+# all the migrations
+SOUTH_TESTS_MIGRATE = False
+
+####################################################################
+# OPEN-ONI SETTINGS
+####################################################################
+
+# Should be turned on in production.  TODO: this should probably drive the
+# DEBUG setting, at least forcing it to be off when IS_PRODUCTION is true.  We
+# should also make this overrideable in the INI file.
 IS_PRODUCTION = False
+
+# How big should thumbnails be?
+THUMBNAIL_WIDTH = 360
+
+# These determine the life of various caches (via cache_page)
+DEFAULT_TTL_SECONDS = 86400  # 1 day
+PAGE_IMAGE_TTL_SECONDS = 60 * 60 * 24 * 7 * 2  # 2 weeks
+API_TTL_SECONDS = 60 * 60  # 1 hour
+FEED_TTL_SECONDS = 60 * 60 * 24 * 7
+
+# Turn this on to allow using tiff files for serving images.  Much faster than
+# JP2s if you don't have Aware, but significantly more memory-intense.
+USE_TIFF = False
+
+#???
+# URL for essays... ?????
+#???
+ESSAYS_FEED = "http://ndnp-essays.rdc.lctl.gov/feed/"
+
+#???
+# Settings for CTS... ?????
+#???
 CTS_USERNAME = 'username'
 CTS_PASSWORD = 'password'
 CTS_PROJECT_ID = 'ndnp'
@@ -116,31 +166,36 @@ CTS_QUEUE = 'ndnpingestqueue'
 CTS_SERVICE_TYPE = 'ingest.NdnpIngest.ingest'
 CTS_URL = "https://cts.loc.gov/transfer/"
 
+# Max batches for CTS-related code
 MAX_BATCHES = 0
 
-import multiprocessing
-#TOO_BUSY_LOAD_AVERAGE = 1.5 * multiprocessing.cpu_count()
+# Set this to a server load value at which you want Open ONI to stop handling
+# web requests.  If you aren't sure, just leave this alone.
 TOO_BUSY_LOAD_AVERAGE = 64 
 
+# URL to the Solr server.  This should be overridden in settings_local.py or
+# else /etc/openoni.ini.
 SOLR = "http://localhost:8983/solr"
+
+# Languages solr uses
 SOLR_LANGUAGES = ("eng", "fre", "spa", "ger", "ita",)
 
-DOCUMENT_ROOT = "/opt/openoni/static"
-
+# Absolute path on disk to the data directory
 STORAGE = '/opt/openoni/data/'
+
+# URL path to the data directory
 STORAGE_URL = '/data/'
+
+# Various storage subdirectories
 BATCH_STORAGE = os.path.join(STORAGE, "batches")
 BIB_STORAGE = os.path.join(STORAGE, "bib")
 OCR_DUMP_STORAGE = os.path.join(STORAGE, "ocr")
 COORD_STORAGE = os.path.join(STORAGE, "word_coordinates")
 TEMP_TEST_DATA = os.path.join(STORAGE, "temp_test_data")
 
-
+# List of breadcrumbs that will be shown on all pages
 BASE_CRUMBS = [{'label':'Home', 'href': '/'}]
 
+# Settings for the sync_topics admin command (used in core.topic_loader)
 TOPICS_ROOT_URL = 'http://www.loc.gov/rr/news/topics'
 TOPICS_SUBJECT_URL = '/topicsSubject.html'
-
-# Hosts/domain names that are valid for this site; required if DEBUG is False
-# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['*']
