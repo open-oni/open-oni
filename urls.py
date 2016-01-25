@@ -97,12 +97,18 @@ urlpatterns += patterns(
     url(r'^lccn/(?P<lccn>\w+)/$', 'title', 
         name="openoni_title"),
 
+    # example: /issues/
+    url(r'^issues/$', 'issues', name="openoni_issues"),
+
+    # example: /issues/1900/
+    url(r'^issues/(?P<year>\d{4})/$', 'issues', name="openoni_issues_for_year"),
+
     # example: /lccn/sn85066387/issues/
-    url(r'^lccn/(?P<lccn>\w+)/issues/$', 'issues', name="openoni_issues"),
+    url(r'^lccn/(?P<lccn>\w+)/issues/$', 'issues_title', name="openoni_issues_title"),
 
     # example: /lccn/sn85066387/issues/1900
-    url(r'^lccn/(?P<lccn>\w+)/issues/(?P<year>\d{4})/$', 
-        'issues', name="openoni_issues_for_year"),
+    url(r'^lccn/(?P<lccn>\w+)/issues/(?P<year>\d{4})/$',
+       'issues_title', name="openoni_issues_title_for_year"),
 
     # example: /lccn/sn85066387/issues/first_pages
     url(r'^lccn/(?P<lccn>\w+)/issues/first_pages/$', 'issues_first_pages', 
