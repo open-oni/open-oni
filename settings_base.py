@@ -161,19 +161,6 @@ USE_TIFF = False
 #???
 ESSAYS_FEED = "http://ndnp-essays.rdc.lctl.gov/feed/"
 
-#???
-# Settings for CTS... ?????
-#???
-CTS_USERNAME = 'username'
-CTS_PASSWORD = 'password'
-CTS_PROJECT_ID = 'ndnp'
-CTS_QUEUE = 'ndnpingestqueue'
-CTS_SERVICE_TYPE = 'ingest.NdnpIngest.ingest'
-CTS_URL = "https://cts.loc.gov/transfer/"
-
-# Max batches for CTS-related code
-MAX_BATCHES = 0
-
 # Set this to a server load value at which you want Open ONI to stop handling
 # web requests.  If you aren't sure, just leave this alone.
 TOO_BUSY_LOAD_AVERAGE = 64 
