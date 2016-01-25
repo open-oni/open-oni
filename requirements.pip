@@ -20,4 +20,3 @@ worldcat
 
 # these are used at LC
 # git+https://git.rdc.lctl.gov/django-lc.git#egg=lc
-# git+https://git.rdc.lctl.gov/minicts.git#egg=minicts

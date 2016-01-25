@@ -12,7 +12,6 @@ from api_tests import *
 from json_tests import *
 from rdf_tests import *
 from system_tests import *
-from cts_tests import *
 from ocr_dump_tests import *
 
 
