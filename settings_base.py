@@ -1,5 +1,9 @@
 import os
 
+# "Private" aliases for seconds in a day and week
+_ONEDAY = 60 * 60 * 24
+_ONEWEEK = _ONEDAY * 7
+
 # Local variable for making fairly decent assumptions
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
@@ -103,12 +107,13 @@ INSTALLED_APPS = (
     'openoni.core',
 )
 
+
 # Determines how django does its caching
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/var/tmp/django_cache',
-        'TIMEOUT': 4838400,  # 2 months
+        'TIMEOUT': _ONEWEEK * 8
     }
 }
 
@@ -142,10 +147,10 @@ IS_PRODUCTION = False
 THUMBNAIL_WIDTH = 360
 
 # These determine the life of various caches (via cache_page)
-DEFAULT_TTL_SECONDS = 86400  # 1 day
-PAGE_IMAGE_TTL_SECONDS = 60 * 60 * 24 * 7 * 2  # 2 weeks
+DEFAULT_TTL_SECONDS = _ONEDAY
+PAGE_IMAGE_TTL_SECONDS = _ONEWEEK * 2
 API_TTL_SECONDS = 60 * 60  # 1 hour
-FEED_TTL_SECONDS = 60 * 60 * 24 * 7
+FEED_TTL_SECONDS = _ONEWEEK
 
 # Turn this on to allow using tiff files for serving images.  Much faster than
 # JP2s if you don't have Aware, but significantly more memory-intense.
