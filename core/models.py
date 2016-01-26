@@ -800,14 +800,6 @@ class Page(models.Model):
             return None
         return pages[0]
 
-    def on_flickr(self):
-        return len(self.flickr_urls.all()) > 0
-
-    def first_flickr_url(self):
-        for flickr_url in self.flickr_urls.all():
-            return flickr_url.value
-        return None
-
     def __unicode__(self):
         parts = [u'%s' % self.issue.title]
         # little hack to get django's datetime support for stftime
@@ -1123,15 +1115,6 @@ class Url(models.Model):
     value = models.TextField()
     type = models.CharField(max_length=1, null=True)
     title = models.ForeignKey('Title', related_name='urls')
-
-    def __unicode__(self):
-        return self.value
-
-
-class FlickrUrl(models.Model):
-    value = models.TextField()
-    page = models.ForeignKey('Page', related_name='flickr_urls')
-    created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.value
