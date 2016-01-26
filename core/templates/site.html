@@ -1,6 +1,11 @@
-<!DOCTYPE html>{% load static from staticfiles %}
+<!DOCTYPE html>
+{% load static from staticfiles %}
+{% load humanize %}
+{% load custom_tags %}
+
 <html lang="en">
-  <head profile="http://dublincore.org/documents/2008/08/04/dc-html/">{% block head_content %}
+  <head profile="http://dublincore.org/documents/2008/08/04/dc-html/">
+  {% block head_content %}
     <meta charset="utf-8">
     <title>{% if page_title %}{{page_title}} « {% endif %}{% if site_title %}{{site_title}} « {% endif %}Library of Congress</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,63 +14,72 @@
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
     <link href="{% static 'bootstrap/css/bootstrap-responsive.css' %}" rel="stylesheet">
     <style>
-    body {
-	padding-top: 41px;
-    }
-    @media (max-width: 979px) {
-	body {
-	    padding-top: 0px;
-	}
-	.navbar-fixed-top {
-	    margin-bottom: 0px;
-	}
-    }
-    .breadcrumb {
+      body {
+        padding-top: 41px;
+      }
+      @media (max-width: 979px) {
+        body {
+          padding-top: 0px;
+        }
+        .navbar-fixed-top {
+          margin-bottom: 0px;
+        }
+      }
+      .breadcrumb {
         margin: 0 0 5px;
-    }
-    #myCarousel {
+      #myCarousel {
         margin-top: 10px;
-    }
+      }
+      ul.newspaper_pages li.span4 {
+        height: 450px;
+      }
+      @media (min-width: 1200px) {
+        ul.newspaper_pages li.span4 {
+          height: 575px;
+        }
+      }
+      @media (max-width: 979px) and (min-width: 768px) {
+        ul.newspaper_pages li.span4 {
+          height: 350px;
+        }
+      }
+      @media (max-width: 767px) {
+        ul.newspaper_pages li.span4 {
+          height: auto;
+        }
+      }
 
-    ul.newspaper_pages li.span4 {
-	height: 450px;
-    }
-    @media (min-width: 1200px) {
-	ul.newspaper_pages li.span4 {
-	    height: 575px;
-	}
-    }
-    @media (max-width: 979px) and (min-width: 768px) {
-	ul.newspaper_pages li.span4 {
-	    height: 350px;
-	}
-    }
-    @media (max-width: 767px) {
-	ul.newspaper_pages li.span4 {
-	    height: auto;
-	}
-    }
-
-    .highlight_words div {
-	margin-top: -3px;
-	padding-top: 3px;
-	margin-bottom: 3px;
-	padding-bottom: 3px;
-	margin-left: -1px;
-	padding-left: 1px;
-	margin-right: 1px;
-	padding-right: 1px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: black;
-	background:transparent; /* fallback for browsers not supporting rgba */
-	background: rgba(255, 0, 0, 0.4);
-    }
+      .highlight_words div {
+        margin-top: -3px;
+        padding-top: 3px;
+        margin-bottom: 3px;
+        padding-bottom: 3px;
+        margin-left: -1px;
+        padding-left: 1px;
+        margin-right: 1px;
+        padding-right: 1px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
+        background:transparent; /* fallback for browsers not supporting rgba */
+        background: rgba(255, 0, 0, 0.4);
+      }
     </style>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->{% endblock head_content %}
+    <![endif]-->
+    {% block lc_metadata %}{% endblock lc_metadata %}
+    <link title="NDNP Page Search" href="{% url 'openoni_search_pages_opensearch' %}"
+      rel="search" type="application/opensearchdescription+xml" />
+    <link title="NDNP Title Search" href="{% url 'openoni_search_titles_opensearch' %}"
+      rel="search" type="application/opensearchdescription+xml" />
+
+    <meta http-equiv="Content-Language" content="en-us" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="{% static 'jquery-ui.css' %}" rel="stylesheet" />
+    {% block extrahead %}{% endblock extrahead %}
+  {% endblock head_content %}
   </head>
   <body>{% block body_content %}
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -84,42 +98,69 @@
               <li><a href="{% url 'openoni_about' %}">About</a></li>
               <li><a href="{% url 'openoni_about_api' %}">API</a></li>
               <li><a href="{% url 'openoni_reports' %}">Reports</a></li>
+              <li><a href="{% url 'openoni_issues' %}">Browse by Date</a></li>
               <li><a href="/help/">Help</a></li>
             </ul>
-	    <form class="navbar-form pull-right" action="{% url 'openoni_search_pages_results' %}" method="get">
+            <form class="navbar-form pull-right" action="{% url 'openoni_search_pages_results' %}" method="get">
               <input type="hidden" name="rows" id="rows" alt="rows" value="20" />
               <input type="hidden" name="searchType" alt="searchType" value="basic" />
               <input class="span2" type="text" name="proxtext" placeholder="search words">
-	      <div class="btn-group">
-		<button type="submit" class="btn">Search</button>
-		<button class="btn dropdown-toggle" data-toggle="dropdown">
-		  <span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu">
-		  <li><a tabindex="-1" href="/search/advanced/">Advanced Search</a></li>
-		  <li><a tabindex="-1" href="/newspapers/">All Digitized Newspapers</a></li>
-		  <li><a tabindex="-1" href="/search/titles/">U.S. Newspaper Directory</a></li>
-		</ul>
-	      </div>
+              <div class="btn-group">
+                <button type="submit" class="btn">Search</button>
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a tabindex="-1" href="/search/advanced/">Advanced Search</a></li>
+                  <li><a tabindex="-1" href="/newspapers/">All Digitized Newspapers</a></li>
+                  <li><a tabindex="-1" href="/search/titles/">U.S. Newspaper Directory</a></li>
+                </ul>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
-    <div class="container">{% if crumbs and crumbs|length > 1 %}
-      <ul class="breadcrumb">{% for crumb in crumbs %}
-	<li {% if crumb.active %}class="active"{% endif %}><a href="{{crumb.href}}">{{crumb.label}}</a>{% if forloop.last %}{% else %} <span class="divider">/</span>{% endif %}</li>{% endfor %}
-      </ul>{% endif %}{% block content %}{% endblock content %}
-    </div>{% endblock body_content %}{% block javascript %}
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>{% endblock javascript %}
-    <script type="text/javascript">
-(function($) {
-    function initPage() {
-        $('ul.nav > li > a[href="' + document.location.pathname + '"]').parent().addClass('active');
-    }
-    $(initPage);
-})(jQuery)
+    <div class="container">
+      {% if crumbs and crumbs|length > 1 %}
+        <ul class="breadcrumb">
+          {% for crumb in crumbs %}
+            <li {% if crumb.active %}class="active"{% endif %}>
+              <a href="{{crumb.href}}">{{crumb.label}}</a>
+              {% if forloop.last %}
+              {% else %} <span class="divider">/</span>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% block content %}
+        {% block page_head_container %}
+          {% block page_head %}
+            {% block sub_page_head %}
+              {% if page_title %}
+                <h1>{{ page_title }}</h1>
+              {% endif %}
+            {% endblock sub_page_head %}
+          {% endblock page_head%}
+        {% endblock page_head_container %}
+        <div>
+          <a name="skip_menu"></a>{% block main_content %}{% endblock main_content %}
+        </div>
+        {% block subcontent %}{% endblock subcontent %}
+      {% endblock content %}
+    </div>{% endblock body_content %}
+
+    {% block javascript %}
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+      <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>{% endblock javascript %}
+      <script type="text/javascript">
+      (function($) {
+        function initPage() {
+          $('ul.nav > li > a[href="' + document.location.pathname + '"]').parent().addClass('active');
+          }
+        $(initPage);
+      })(jQuery)
     </script>
   </body>
 </html>
