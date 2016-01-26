@@ -98,7 +98,7 @@ class BatchLoader(object):
         #b = urllib2.urlopen(batch.url)
         batch.validated_batch_file = self._find_batch_file(batch)
 
-    def load_batch(self, batch_path, strict=True):
+    def load_batch(self, batch_path):
         """Load a batch, and return a Batch instance for the batch
         that was loaded.
 
@@ -121,13 +121,12 @@ class BatchLoader(object):
                 batch_source += "/"
 
         batch_name = _normalize_batch_name(batch_name)
-        if not strict:
-            try:
-                batch = Batch.objects.get(name=batch_name)
-                _logger.info("Batch already loaded: %s" % batch_name)
-                return batch
-            except Batch.DoesNotExist, e:
-                pass
+        try:
+            batch = Batch.objects.get(name=batch_name)
+            _logger.info("Batch already loaded: %s" % batch_name)
+            return batch
+        except Batch.DoesNotExist, e:
+            pass
 
         _logger.info("loading batch: %s" % batch_name)
         t0 = time()
