@@ -11,10 +11,10 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.template import RequestContext
 
-from chronam.core import index, models
-from chronam.core import forms
-from chronam.core.decorator import opensearch_clean, cache_page, cors
-from chronam.core.utils.utils import _page_range_short
+from openoni.core import index, models
+from openoni.core import forms
+from openoni.core.decorator import opensearch_clean, cache_page, cors
+from openoni.core.utils.utils import _page_range_short
 
 
 def search_pages_paginator(request):
@@ -45,7 +45,7 @@ def search_pages_results(request, view_type='gallery'):
     try:
         page = paginator.page(paginator._cur_page)
     except InvalidPage:
-        url = urlresolvers.reverse('chronam_search_pages_results')
+        url = urlresolvers.reverse('openoni_search_pages_results')
         # Set the page to the first page
         q['page'] = 1
         return HttpResponseRedirect('%s?%s' % (url, q.urlencode()))
@@ -70,7 +70,7 @@ def search_pages_results(request, view_type='gallery'):
     if format == 'atom':
         feed_url = 'http://' + host + request.get_full_path()
         updated = rfc3339(datetime.datetime.now())
-        return render_to_response('search_pages_results.xml',
+        return render_to_response('search/search_pages_results.xml',
                                   dictionary=locals(),
                                   context_instance=RequestContext(request),
                                   content_type='application/atom+xml')
@@ -108,9 +108,9 @@ def search_pages_results(request, view_type='gallery'):
     # figure out the sort that's in use
     sort = query.get('sort', 'relevance')
     if view_type == "list":
-        template = "search_pages_results_list.html"
+        template = "search/search_pages_results_list.html"
     else:
-        template = "search_pages_results.html"
+        template = "search/search_pages_results.html"
     page_list = []
     for count in range(len(page.object_list)):
         page_list.append((count + start, page.object_list[count]))
@@ -136,7 +136,7 @@ def search_titles(request):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def search_titles_opensearch(request):
     host = request.get_host()
-    return render_to_response('search_titles_opensearch.xml',
+    return render_to_response('search/search_titles_opensearch.xml',
                               content_type='application/opensearchdescription+xml',
                               dictionary=locals(),
                               context_instance=RequestContext(request))
@@ -145,7 +145,7 @@ def search_titles_opensearch(request):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def search_pages_opensearch(request):
     host = request.get_host()
-    return render_to_response('search_pages_opensearch.xml',
+    return render_to_response('search/search_pages_opensearch.xml',
                               content_type='application/opensearchdescription+xml',
                               dictionary=locals(),
                               context_instance=RequestContext(request))
@@ -195,7 +195,7 @@ def search_pages_navigation(request):
     if not ('page' in request.GET and 'index' in request.GET):
         return HttpResponseNotFound()
 
-    search_url = urlresolvers.reverse('chronam_search_pages_results')
+    search_url = urlresolvers.reverse('openoni_search_pages_results')
 
     paginator = search_pages_paginator(request)
 
@@ -212,7 +212,7 @@ def search_pages_navigation(request):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def search_advanced(request):
     adv_search_form = forms.AdvSearchPagesForm()
-    template = "search_advanced.html"
+    template = "search/search_advanced.html"
     crumbs = list(settings.BASE_CRUMBS)
     page_title = 'Advanced Search'
     return render_to_response(template, dictionary=locals(),

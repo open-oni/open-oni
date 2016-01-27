@@ -1,6 +1,6 @@
 *.pyc
 ENV
-settings.py
+settings_local.py
 *.log
 data/batches
 data/ocr

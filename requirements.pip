@@ -4,7 +4,7 @@ MySQL-python
 lxml
 pymarc
 solrpy
-PIL
+Pillow
 simplejson
 feedparser
 rfc3339==5
@@ -19,4 +19,3 @@ worldcat
 
 # these are used at LC
 # git+https://git.rdc.lctl.gov/django-lc.git#egg=lc
-# git+https://git.rdc.lctl.gov/minicts.git#egg=minicts

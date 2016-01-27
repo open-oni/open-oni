@@ -10,7 +10,7 @@ from django.http import HttpResponse, Http404
 from django.utils.http import http_date
 from django.utils import datetime_safe
 
-from chronam.core import models
+from openoni.core import models
 
 
 def _rdf_base(request):
@@ -37,9 +37,10 @@ class HTMLCalendar(calendar.Calendar):
     This calendar returns complete HTML pages.
     """
 
-    def __init__(self, firstweekday=0, issues=None):
+    def __init__(self, firstweekday=0, issues=None, all_issues=False):
         calendar.Calendar.__init__(self, firstweekday)
         self.issues = issues
+        self.all_issues = all_issues
 
     # CSS classes for the day <td>s
     cssclasses = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
@@ -55,25 +56,46 @@ class HTMLCalendar(calendar.Calendar):
             issues = set()
             for issue in r:
                 issues.add((issue.title.lccn,
-                            issue.date_issued, issue.edition))
+                            issue.date_issued, 
+                            issue.edition,
+                            issue.title
+                            ))
             issues = sorted(list(issues))
             count = len(issues)
             if count == 1:
                 _class = "single"
-                lccn, date_issued, edition = issues[0]
+                lccn, date_issued, edition, title = issues[0]
                 kw = dict(lccn=lccn, date=date_issued, edition=edition)
-                url = urlresolvers.reverse('chronam_issue_pages', kwargs=kw)
-                _day = """<a href="%s">%s</a>""" % (url, day)
+                url = urlresolvers.reverse('openoni_issue_pages', kwargs=kw)
+                if self.all_issues:
+                    # list the title(s) being linked since this view is for all papers
+                    _day = """<div class='btn-group'><a class='btn dropdown-toggle' 
+                        data-toggle='dropdown' href='#'>
+                        """
+                    _day += """%s<span class='caret'></span></a>""" % day
+                    _day += "<ul class='dropdown-menu'>"
+                    _day += """<li><a href="%s">%s</a></li>""" % (url, title)
+                    _day += "</ul></div>"
+                else:
+                    # if specific paper, 
+                    _day = """<a href="%s">%s</a>""" % (url, day)
             elif count > 1:
                 _class = "multiple"
-                _day = "<em class='text-info'>%s </em>" % day
-                _day += "<ul class='unstyled'>"
-                for lccn, date_issued, edition in issues:
+                # use a dropdown instead of expanding the calendar to display multiple titles
+                _day = """<div class='btn-group'><a class='btn dropdown-toggle' 
+                    data-toggle='dropdown' href='#'>
+                    """
+                _day += """%s<span class='caret'></span></a>""" % day
+                _day += "<ul class='dropdown-menu'>"
+                for lccn, date_issued, edition, title in issues:
                     kw = dict(lccn=lccn, date=date_issued, edition=edition)
-                    url = urlresolvers.reverse('chronam_issue_pages',
+                    url = urlresolvers.reverse('openoni_issue_pages',
                                                kwargs=kw)
-                    _day += """<li><a href="%s">ed-%d</a></li>""" % (url, edition)
-                _day += "</ul>"
+                    if self.all_issues:
+                        _day += """<li><a href="%s">%s</a></li>""" % (url, title)
+                    else:
+                        _day += """<li><a href="%s">ed-%d</a></li>""" % (url, edition)
+                _day += "</ul></div>"
             else:
                 _class = "noissues"
                 _day = day
@@ -159,7 +181,7 @@ class HTMLCalendar(calendar.Calendar):
 
 def get_page(lccn, date, edition, sequence):
     """a helper function to lookup a particular page based on metadata
-    cooked into the chronam URLs, and raise a 404 appropriately when
+    cooked into the openoni URLs, and raise a 404 appropriately when
     portions of the hiearchical metadata are not found in the database
     """
 
@@ -181,7 +203,7 @@ def get_page(lccn, date, edition, sequence):
 
 def _get_tip(lccn, date, edition, sequence=1):
     """a helper function to lookup a particular page based on metadata cooked
-    into the chronam URLs, and raise a 404 appropriately when portions of the
+    into the openoni URLs, and raise a 404 appropriately when portions of the
     hiearchical metadata are not found in the database
     """
     title = get_object_or_404(models.Title, lccn=lccn)
@@ -246,12 +268,12 @@ def label(instance):
 def create_crumbs(title, issue=None, date=None, edition=None, page=None):
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([{'label': label(title.name.split(":")[0]),
-                    'href': urlresolvers.reverse('chronam_title',
+                    'href': urlresolvers.reverse('openoni_title',
                                                  kwargs={'lccn': title.lccn})}])
     if date and edition is not None:
         crumbs.append(
             {'label': label(issue),
-             'href': urlresolvers.reverse('chronam_issue_pages',
+             'href': urlresolvers.reverse('openoni_issue_pages',
                                           kwargs={'lccn': title.lccn,
                                                   'date': date,
                                                   'edition': edition})})
@@ -259,7 +281,7 @@ def create_crumbs(title, issue=None, date=None, edition=None, page=None):
     if page is not None:
         crumbs.append(
             {'label': label(page),
-             'href': urlresolvers.reverse('chronam_page',
+             'href': urlresolvers.reverse('openoni_page',
                                           kwargs={'lccn': title.lccn,
                                                   'date': date,
                                                   'edition': edition,

@@ -20,38 +20,34 @@ from django.template.defaultfilters import filesizeformat
 from django.utils import html
 from django.views.decorators.vary import vary_on_headers
 
-from chronam.core.utils.url import unpack_url_path
-from chronam.core import models, index
-from chronam.core.rdf import title_to_graph, issue_to_graph, page_to_graph
+from openoni.core.utils.url import unpack_url_path
+from openoni.core import models, index
+from openoni.core.rdf import title_to_graph, issue_to_graph, page_to_graph
 
-from chronam.core.utils.utils import HTMLCalendar, _get_tip, _stream_file, \
+from openoni.core.utils.utils import HTMLCalendar, _get_tip, _stream_file, \
     _page_range_short, _rdf_base, get_page, label, create_crumbs
-from chronam.core.decorator import cache_page, rdf_view
+from openoni.core.decorator import cache_page, rdf_view
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
-def issues(request, lccn, year=None):
+def issues(request, year=None):
+    issues = models.Issue.objects.all().order_by('date_issued')
+    year_view, select_year_form = _create_year_form(issues, year, True)
+    page_title = "Browse All Issues"
+    page_name = "issues"
+    crumbs = list(settings.BASE_CRUMBS)
+    return render_to_response("issues.html", dictionary=locals(),
+                              context_instance=RequestContext(request))
+
+@cache_page(settings.DEFAULT_TTL_SECONDS)
+def issues_title(request, lccn, year=None):
     title = get_object_or_404(models.Title, lccn=lccn)
     issues = title.issues.all()
-
-    if issues.count() > 0:
-        if year is None:
-            _year = issues[0].date_issued.year
-        else:
-            _year = int(year)
-    else:
-        _year = 1900  # no issues available
-    year_view = HTMLCalendar(firstweekday=6, issues=issues).formatyear(_year)
-    dates = issues.dates('date_issued', 'year')
-
-    class SelectYearForm(django_forms.Form):
-        year = fields.ChoiceField(choices=((d.year, d.year) for d in dates),
-                                  initial=_year)
-    select_year_form = SelectYearForm()
+    year_view, select_year_form = _create_year_form(issues, year, False)
     page_title = "Browse Issues: %s" % title.display_name
-    page_name = "issues"
+    page_name = "issues_title"
     crumbs = create_crumbs(title)
-    return render_to_response('issues.html', dictionary=locals(),
+    return render_to_response('issues_title.html', dictionary=locals(),
                               context_instance=RequestContext(request))
 
 
@@ -153,7 +149,6 @@ def issue_pages(request, lccn, date, edition, page_number=1):
     page_head_heading = "All Pages: %s, %s" % (title.display_name, label(issue))
     page_head_subheading = label(title)
     crumbs = create_crumbs(title, issue, date, edition)
-    profile_uri = 'http://www.openarchives.org/ore/html/'
     response = render_to_response('issue_pages.html', dictionary=locals(),
                                   context_instance=RequestContext(request))
     return response
@@ -182,7 +177,7 @@ def page(request, lccn, date, edition, sequence, words=None):
     if fragments:
         path_parts = dict(lccn=lccn, date=date, edition=edition,
                           sequence=sequence)
-        url = urlresolvers.reverse('chronam_page',
+        url = urlresolvers.reverse('openoni_page',
                                    kwargs=path_parts)
 
         return HttpResponseRedirect(url + "#" + "&".join(fragments))
@@ -207,7 +202,7 @@ def page(request, lccn, date, edition, sequence, words=None):
             if len(words) > 0:
                 path_parts = dict(lccn=lccn, date=date, edition=edition,
                                   sequence=sequence, words=words)
-                url = urlresolvers.reverse('chronam_page_words',
+                url = urlresolvers.reverse('openoni_page_words',
                                            kwargs=path_parts)
                 return HttpResponseRedirect(url)
         except Exception, e:
@@ -255,7 +250,6 @@ def page(request, lccn, date, edition, sequence, words=None):
 
     image_credit = issue.batch.awardee.name
     host = request.get_host()
-    profile_uri = 'http://www.openarchives.org/ore/html/'
 
     template = "page.html"
     page_topics = None
@@ -305,7 +299,6 @@ def title(request, lccn):
     related_titles = title.related_titles()
     succeeding_titles = title.succeeding_titles()
     preceeding_titles = title.preceeding_titles()
-    profile_uri = 'http://www.openarchives.org/ore/html/'
     notes = []
     has_external_link = False
     for note in title.notes.all():
@@ -444,6 +437,23 @@ def awardee(request, institution_code):
                               context_instance=RequestContext(request))
 
 
+def _create_year_form(issues, year, all_issues):
+    if issues.count() > 0:
+        if year is None:
+            _year = issues[0].date_issued.year
+        else:
+            _year = int(year)
+    else:
+        _year = 1900 # no issues available
+    year_view = HTMLCalendar(firstweekday=6, issues=issues, all_issues=all_issues).formatyear(_year)
+    dates = issues.dates('date_issued', 'year')
+
+    class SelectYearForm(django_forms.Form):
+        year = fields.ChoiceField(choices=((d.year, d.year) for d in dates), initial=_year)
+
+    return year_view, SelectYearForm()
+
+
 def _search_engine_words(request):
     """
     Inspects the http request and returns a list of words from the OCR
@@ -534,7 +544,7 @@ def page_print(request, lccn, date, edition, sequence,
                       sequence=sequence,
                       width=width, height=height,
                       x1=x1, y1=y1, x2=x2, y2=y2)
-    url = urlresolvers.reverse('chronam_page_print',
+    url = urlresolvers.reverse('openoni_page_print',
                                kwargs=path_parts)
 
     return render_to_response('page_print.html', dictionary=locals(),
@@ -589,7 +599,7 @@ def recommended_topics(request):
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 @vary_on_headers('Referer')
-def chronam_topic(request, topic_id):
+def openoni_topic(request, topic_id):
     topic = get_object_or_404(models.Topic, pk=topic_id)
     page_title = topic.name
     crumbs = list(settings.BASE_CRUMBS)
@@ -597,7 +607,7 @@ def chronam_topic(request, topic_id):
         crumbs.extend([{'label': 'Recommended Topics',        
                         'href': urlresolvers.reverse('recommended_topics')},
                        {'label': topic.name,
-                        'href': urlresolvers.reverse('chronam_topic', 
+                        'href': urlresolvers.reverse('openoni_topic', 
                                               kwargs={'topic_id': topic.pk})}])
     else:
         referer = re.sub('^https?:\/\/', '', request.META.get('HTTP_REFERER')).split('/')
@@ -608,13 +618,13 @@ def chronam_topic(request, topic_id):
                 title, issue, page = _get_tip(lccn, date, edition, sequence)
                 crumbs = create_crumbs(title, issue, date, edition, page)
                 crumbs.extend([{'label': topic.name,
-                                'href': urlresolvers.reverse('chronam_topic',
+                                'href': urlresolvers.reverse('openoni_topic',
                                               kwargs={'topic_id': topic.pk})}])
         except:
             pass
     important_dates = filter(lambda s: not s.isspace(), topic.important_dates.split('\n '))
     search_suggestions = topic.suggested_search_terms.split('\t')
-    chronam_pages = [{'title': t.title, 'description': t.description.lstrip(t.title),
+    openoni_pages = [{'title': t.title, 'description': t.description.lstrip(t.title),
                       'url': t.url} for t in topic.topicpages_set.all()]
     return render_to_response('topic.html', dictionary=locals(),
                               context_instance=RequestContext(request))
