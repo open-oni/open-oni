@@ -42,7 +42,7 @@
                 <td class="first left_no_border"><a {% ifchanged state %}name="{{state}}" {% endifchanged %}href="{% url 'openoni_newspapers_state' state|pack_url %}">{{state}}</a></td>
                 <td>
                 {% for place in title.places.all %}
-                    {{ place.city }}, {{ place.county }}<br/>
+                    {{ place.get_city_county }}<br/>
                 {% endfor %}
                 </td>
                 <td><a href="{% url 'openoni_title' lccn %}"><strong>{{title.display_name}}</strong></a><br />{{title.place_of_publication}}, {{title.start_year}}-{{title.end_year}}</td>
