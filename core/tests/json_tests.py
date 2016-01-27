@@ -16,7 +16,7 @@ class JsonTests(TestCase):
 
     def test_batch(self):
         b = m.Batch.objects.get(name='batch_curiv_ahwahnee_ver01')
-        j = b.json()
+        j = b.json(host="example.com")
         x = json.loads(j)
         self.assertEqual(x['name'], 'batch_curiv_ahwahnee_ver01')
 
