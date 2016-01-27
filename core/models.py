@@ -50,7 +50,7 @@ class Awardee(models.Model):
     def abstract_url(self):
         return self.url.rstrip('/') + '#awardee'
 
-    def json(self, host="chroniclingamerica.loc.gov", serialize=True):
+    def json(self, host, serialize=True):
         j = {
             "name": self.name,
             "url": 'http://' + host + self.json_url
@@ -141,7 +141,7 @@ class Batch(models.Model):
             logging.warn("no OcrDump to delete for %s", self)
         super(Batch, self).delete(*args, **kwargs)
 
-    def json(self, include_issues=True, serialize=True, host="chroniclingamerica.loc.gov"):
+    def json(self, host, include_issues=True, serialize=True):
         b = {}
         b['name'] = self.name
         b['ingested'] = rfc3339(self.created)
@@ -308,7 +308,7 @@ class Title(models.Model):
 
         return doc
 
-    def json(self, serialize=True, host="chroniclingamerica.loc.gov"):
+    def json(self, host, serialize=True):
         j = {
             "url": "http://" + host + self.json_url,
             "lccn": self.lccn,
@@ -576,7 +576,7 @@ class Issue(models.Model):
             self.title.has_issues = False
             self.title.save()
 
-    def json(self, serialize=True, include_pages=True, host='chroniclingamerica.loc.gov'):
+    def json(self, host, serialize=True, include_pages=True):
         j = {
             'url': 'http://' + host + self.json_url,
             'date_issued': strftime(self.date_issued, "%Y-%m-%d"),
@@ -615,7 +615,7 @@ class Page(models.Model):
     indexed = models.BooleanField()
     created = models.DateTimeField(auto_now_add=True)
 
-    def json(self, serialize=True, host="chroniclingamerica.loc.gov"):
+    def json(self, host, serialize=True):
         j = {
             "sequence": self.sequence,
             "issue": {
@@ -1177,7 +1177,7 @@ class OcrDump(models.Model):
     def path(self):
         return os.path.join(settings.OCR_DUMP_STORAGE, self.name)
 
-    def json(self, serialize=True, host="chroniclingamerica.loc.gov"):
+    def json(self, host, serialize=True):
         j = {
             "name": self.name,
             "created": rfc3339(self.created),
