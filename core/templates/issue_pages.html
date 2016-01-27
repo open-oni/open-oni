@@ -1,13 +1,8 @@
-{% extends "site_base.html" %}
+{% extends "newspaper_base.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
 
-{% block page_head %}
-<h1>
-{{ page_head_heading }}<br />
-<span>About <a href="{% url 'openoni_title' title.lccn %}">{{page_head_subheading}}</a></span>
-</h1>
-{% endblock %}
+
 
 {% block extrahead %}
 <link rel="alternate" href="{% url 'openoni_issue_pages_dot_json' title.lccn issue.date_issued issue.edition %}" />
@@ -17,7 +12,7 @@
 {% include "includes/lc_metadata.html" %}
 {% endblock %}
 
-{% block subcontent %}
+{% block newspaper_content %}
 {% if first_pages %}
 {% include "includes/issue_frontpages_ctrl.html" %}
 {% else %}
@@ -26,11 +21,11 @@
 
 <div class="search_results_body gallery issues">
     {% if page.object_list %}
-    <table class="search_results" cellspacing="0" summary="">
-        <tr> 
+    <div class="search_results">
+        <div class="row"> 
         {% for page in page.object_list %}
         {% url 'openoni_page' title.lccn page.issue.date_issued page.issue.edition page.sequence as url %}
-            <td>
+            <div class="col-md-3">
                 <div class="highlite">
                     <a href="{{url}}">
                     {% if page.jp2_filename %}
@@ -44,13 +39,11 @@
                     <br/>
                     <a href="{{url}}" shape="rect">{% if page.issue %}{{page.issue|label}}, {% endif %}{% if page %}{{ page|label }}{% endif %}</a>
                 </div>
-            </td>
-            {% if forloop.counter|divisibleby:"4" %}
-            </tr><tr>
-            {% endif %}
+            </div>
+            
             {% endfor %}
-        </tr>
-    </table>
+        </div>
+    </div>
     {% else %}
     <div class="missing">
         <h2>This issue has no available digitized pages{% if display_label %}: {{ display_label }}{% endif %}{% if explanation %}; {{explanation}}{% endif %}.</h2>
