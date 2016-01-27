@@ -14,7 +14,6 @@ except ImportError:
 
 from openoni import core
 from openoni.core import index
-from openoni.core.essay_loader import load_essays
 from openoni.core.management.commands import configure_logging
 from openoni.core.models import Place, Title
 from openoni.core.utils.utils import validate_bib_dir
@@ -24,19 +23,13 @@ _logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    skip_essays = make_option('--skip-essays',
-                              action='store_true',
-                              dest='skip_essays',
-                              default=False,
-                              help='Skip essay loading.')
-
     pull_title_updates = make_option('--pull-title-updates',
                                      action='store_true',
                                      dest='pull_title_updates',
                                      default=False,
                                      help='Pull down a new set of titles.')
 
-    option_list = BaseCommand.option_list + (skip_essays, pull_title_updates)
+    option_list = BaseCommand.option_list + (pull_title_updates)
 
     help = 'Runs title pull and title load for a complete title refresh.'
     args = ''
@@ -103,10 +96,6 @@ class Command(BaseCommand):
 
             tnu = self.find_titles_not_updated(limited=False)
             _logger.info("Running pre-deletion checks for these titles.")
-
-        # Make sure that our essays are up to date
-        if not options['skip_essays']:
-            load_essays(settings.ESSAYS_FEED)
 
         if bib_in_settings:
             if len(tnu):

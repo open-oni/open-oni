@@ -21,19 +21,13 @@ class Command(BaseCommand):
                           default=False,
                           help='')
 
-    skip_essays = make_option('--skip-essays',
-                              action='store_true',
-                              dest='skip_essays',
-                              default=False,
-                              help='Skip essay loading.')
-
     pull_title_updates = make_option('--pull-title-updates',
                                      action='store_true',
                                      dest='pull_title_updates',
                                      default=False,
                                      help='Pull down a new set of titles.')
 
-    option_list = BaseCommand.option_list + (verbose, skip_essays, pull_title_updates)
+    option_list = BaseCommand.option_list + (verbose, pull_title_updates)
     help = ''
     args = ''
 
@@ -65,7 +59,6 @@ class Command(BaseCommand):
                     management.call_command('load_titles', filepath, skip_index=True)
 
         management.call_command('title_sync',
-                                skip_essays=options['skip_essays'],
                                 pull_title_updates=options['pull_title_updates'])
 
         end = datetime.now()
