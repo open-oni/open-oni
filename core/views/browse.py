@@ -292,7 +292,7 @@ def titles(request, start=None, page_number=1):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def title(request, lccn):
     title = get_object_or_404(models.Title, lccn=lccn)
-    page_title = "About %s" % label(title)
+    page_title = label(title)
     page_name = "title"
     # we call these here, because the query the db, they are not
     # cached by django's ORM, and we have some conditional logic
