@@ -870,7 +870,7 @@ class Place(models.Model):
             return self.city
         if self.county:
             return self.county
-        return "No city or county found"
+        return "Unknown"
 
     def __unicode__(self):
         return u"%s, %s, %s" % (self.city, self.county, self.state)
