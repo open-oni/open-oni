@@ -15,7 +15,7 @@ from static import about, about_api, help
 from reports import reports, batches, batches_atom, batches_json, batches_csv, \
     batch_rdf, batch_json, batch, reels, reel, awardee_rdf, awardees, awardees_json, \
     awardee, awardee_json, essays, essay, events, events_csv, event, events_atom, \
-    pages_on_flickr, status, institutions, institution, states, \
+    status, institutions, institution, states, \
     states_counties, counties_in_state, cities_in_state, cities_in_county, \
     batch_summary, institution_titles, terms, ocr, ocr_json, ocr_atom, \
     title_json, issue_pages_json, page_json, languages, language_batches, \

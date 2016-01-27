@@ -371,9 +371,6 @@ urlpatterns += patterns(
     # ndnp vocabulary
     url(r'^terms/.*$', 'terms', name='openoni_terms'),
 
-    # flickr report
-    url(r'^flickr/$', 'pages_on_flickr', name='openoni_pages_on_flickr'),
-
     # batch summary
     url(r'^batches/summary/$', 'batch_summary', name='openoni_batch_summary'),
     url(r'^batches/summary.(?P<format>txt)$', 'batch_summary', 

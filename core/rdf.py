@@ -128,9 +128,6 @@ def page_to_graph(p, g=None):
     g.add((uri, DCTERMS['title'], Literal('%s - %s - %s' % 
         (p.issue.title.display_name, p.issue.date_issued, p.sequence))))
 
-    for flickr_url in p.flickr_urls.all():
-        g.add((uri, ORE.aggregates, flickr_url.value))
-
     if p.number:
         g.add((uri, NDNP['number'], Literal(p.number)))
     if p.section_label:
