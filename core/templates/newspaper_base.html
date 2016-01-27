@@ -39,7 +39,7 @@
 
 {% block page_nav %} 
 <div id="page_nav">
-{% if title.has_issues %}<a id="page_nav_issues" href="{% url 'openoni_issues' title.lccn %}">Browse Issues</a> | {% endif %}
+{% if title.has_issues %}<a id="page_nav_issues" href="{% url 'openoni_issues_title' title.lccn %}">Browse Issues</a> | {% endif %}
 <a id="page_nav_title" href="{% url 'openoni_title' title.lccn %}">About</a> | <a id="page_nav_holdings" href="{% url 'openoni_title_holdings' title.lccn %}">Libraries that Have It</a> | <a id="page_nav_marc" href="{% url 'openoni_title_marc' title.lccn %}">MARC Record</a></div> 
 {% endblock %}
 

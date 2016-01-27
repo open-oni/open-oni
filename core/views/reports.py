@@ -116,7 +116,7 @@ def batch(request, batch_name):
               core_title.name_normal,
               core_title.lccn,
               issued
-          ORDER BY core_title.name_normal, core_issue.date_issued ASC
+          ORDER BY core_title.name_normal, issued ASC
           """
     cursor = connection.cursor()
     cursor.execute(sql, [batch.name])

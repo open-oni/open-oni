@@ -92,7 +92,7 @@ def newspapers(request, state=None, format='html'):
         for state, titles in newspapers_by_state:
             for title in titles:
                 writer.writerow(('http://%s%s' % (request.get_host(), 
-                                                  reverse('openoni_issues', 
+                                                  reverse('openoni_issues_title', 
                                                            kwargs={'lccn': title.lccn}),),
                                  state, title, title.lccn or '', title.oclc or '',
                                  title.issn or '', title.issues.count(), title.first, 

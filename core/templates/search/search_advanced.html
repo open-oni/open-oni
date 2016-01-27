@@ -34,6 +34,8 @@
         <fieldset>
             <legend>Select Date Range</legend>
             <!-- date -->
+            <!-- send a hidden field specifying that this is a date range -->
+            <input type="hidden" name="dateFilterType" alt="dateFilterType" value="yearRange"/>
             <p class="help-block">Newspaper pages are available for newspapers published between <strong>{{adv_search_form.fulltextStartYear}}-{{adv_search_form.fulltextEndYear}}</strong></p>
             <div class="row">
                 <div class="span2">

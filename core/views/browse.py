@@ -30,28 +30,24 @@ from openoni.core.decorator import cache_page, rdf_view
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
-def issues(request, lccn, year=None):
+def issues(request, year=None):
+    issues = models.Issue.objects.all().order_by('date_issued')
+    year_view, select_year_form = _create_year_form(issues, year, True)
+    page_title = "Browse All Issues"
+    page_name = "issues"
+    crumbs = list(settings.BASE_CRUMBS)
+    return render_to_response("issues.html", dictionary=locals(),
+                              context_instance=RequestContext(request))
+
+@cache_page(settings.DEFAULT_TTL_SECONDS)
+def issues_title(request, lccn, year=None):
     title = get_object_or_404(models.Title, lccn=lccn)
     issues = title.issues.all()
-
-    if issues.count() > 0:
-        if year is None:
-            _year = issues[0].date_issued.year
-        else:
-            _year = int(year)
-    else:
-        _year = 1900  # no issues available
-    year_view = HTMLCalendar(firstweekday=6, issues=issues).formatyear(_year)
-    dates = issues.dates('date_issued', 'year')
-
-    class SelectYearForm(django_forms.Form):
-        year = fields.ChoiceField(choices=((d.year, d.year) for d in dates),
-                                  initial=_year)
-    select_year_form = SelectYearForm()
+    year_view, select_year_form = _create_year_form(issues, year, False)
     page_title = "Browse Issues: %s" % title.display_name
-    page_name = "issues"
+    page_name = "issues_title"
     crumbs = create_crumbs(title)
-    return render_to_response('issues.html', dictionary=locals(),
+    return render_to_response('issues_title.html', dictionary=locals(),
                               context_instance=RequestContext(request))
 
 
@@ -442,6 +438,23 @@ def awardee(request, institution_code):
     batches = models.Batch.objects.filter(awardee=awardee)
     return render_to_response('reports/awardee.html', dictionary=locals(),
                               context_instance=RequestContext(request))
+
+
+def _create_year_form(issues, year, all_issues):
+    if issues.count() > 0:
+        if year is None:
+            _year = issues[0].date_issued.year
+        else:
+            _year = int(year)
+    else:
+        _year = 1900 # no issues available
+    year_view = HTMLCalendar(firstweekday=6, issues=issues, all_issues=all_issues).formatyear(_year)
+    dates = issues.dates('date_issued', 'year')
+
+    class SelectYearForm(django_forms.Form):
+        year = fields.ChoiceField(choices=((d.year, d.year) for d in dates), initial=_year)
+
+    return year_view, SelectYearForm()
 
 
 def _search_engine_words(request):

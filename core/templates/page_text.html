@@ -1,4 +1,4 @@
-{% extends "site_base_alt.html" %}
+{% extends "site_base.html" %}
 {% load static from staticfiles %}
 
 {% block subcontent %}
@@ -11,7 +11,7 @@
     <a href="{% url 'openoni_page_ocr_xml' title.lccn issue.date_issued issue.edition page.sequence %}">XML</a>.
     </p>
 </div> 
-
+zzz
     <div>
     {{page.ocr.text|escape}}
     </div>

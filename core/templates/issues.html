@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% extends "newspaper_base.html" %}
+=======
+{% extends "site_base.html" %}
+>>>>>>> master
 
 {% block lc_metadata %}
 {% include "includes/lc_metadata.html" %}
@@ -9,8 +13,8 @@
 <script type="text/javascript">
 jQuery(function($){
     $("#id_year").change(function(){
-        window.location = '{% url 'openoni_issues' title.lccn %}' + this.value;        
-        });
+        window.location = '{% url 'openoni_issues' %}' + this.value;
+    });
     $("td.multiple").find("ul").css("display", "none");
     
     $("td.multiple").hover(
@@ -24,20 +28,25 @@ jQuery(function($){
 </script>
 {% endblock %}
 
-{% block extra_nav %}
-<div id="col2_left"> 
-    <form>
-        <label class="bold" for="year_select">Issues for:</label>&nbsp; {{select_year_form.year}}
-    </form>
-    
-    <p class="rule-top"><a href="{% url 'openoni_issues_first_pages' title.lccn %}"><strong>Show all front pages</strong></a></p> 
-    <p class="rule-top gray">Single edition:<br /> dates in <b>bold</b>.</p> 
-    <p class="gray">Multiple editions:<br /> dates in <b><i>bold italics</i></b>.</p> 
-</div><!-- end id:col2_left --> 
-{% endblock %}
+{% block subcontent %}
+    <div id="std_box"> 
+        {% block extra_nav %}
+            <div id="col2_left"> 
+                <form>
+                    <label class="bold" for="year_select">Issues for:</label>&nbsp; {{select_year_form.year}}
+                </form>
+                <p class="rule-top gray">Single edition:<br /> dates in <b>bold</b>.</p> 
+                <p class="gray">Multiple editions:<br /> dates in <b><i>bold italics</i></b>.</p> 
+            </div><!-- end id:col2_left --> 
+        {% endblock extra_nav %}
+        
+        {% block newspaper_content %}
+            <div id="col2_right" class='row'> 
+                {{year_view|safe}}
+            </div><!-- end id:col2_right --> 
+        {% endblock newspaper_content %}
 
-{% block newspaper_content %}
-<div id="col2_right" class='row'> 
-    {{year_view|safe}}
-</div><!-- end id:col2_right --> 
-{% endblock %}
+        <div class="clear"><!-- --></div> 
+    </div><!-- end id:std_box --> 
+{% endblock subcontent %}
+
