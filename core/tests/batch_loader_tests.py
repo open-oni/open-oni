@@ -21,7 +21,7 @@ class BatchLoaderTest(TestCase):
 
     @classmethod
     def tearDownClass(cls):
-      shutil.rmtree(cls.dataDir)
+      shutil.rmtree(cls.batchDir)
 
     def test_fixture(self):
         title = Title.objects.get(lccn = 'sn83030214')
