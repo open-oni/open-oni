@@ -18,6 +18,13 @@ h1, h2, h3, h4, h5, h6 {
 .search_results img {max-width:100%}
 
 
+.search_results_option_set {
+    border-bottom: solid 1px #ececec;
+    padding: 0px 0px 10px 0px ;
+    margin-bottom: 10px;
+}
+
+
 /* ---------------------- 
 Changes to integrate */
 

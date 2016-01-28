@@ -29,16 +29,19 @@ jQuery(function($){
     <div class="col-md-4">
         <form>
             <label class="bold" for="year_select">Issues for:</label>&nbsp; {{select_year_form.year}}
-        </form></div>
+        </form>
+    </div>
     <div class="col-md-4">
-        <p class="issues_single">Single edition</p></div>
+        <p class="issues_single">Single edition</p>
+      </div>
     <div class="col-md-4">
-        <p class="issues_multiple">Multiple editions</p> </div>
+        <p class="issues_multiple">Multiple editions</p>
+    </div>
 </div>
 {% endblock %}
 
 {% block newspaper_content %}
-<div id="col2_right" class='row'>
+
     {{year_view|safe}}
-</div><!-- end id:col2_right -->
+
 {% endblock %}

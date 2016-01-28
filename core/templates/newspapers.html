@@ -1,3 +1,5 @@
+<!-- http://localhost/newspapers/-->
+
 {% extends "site_base.html" %}
 {% load custom_filters %}
 {% load static from staticfiles %}
@@ -6,7 +8,7 @@
 {% block extrahead %}
 <link rel="alternate" title="Newspapers Atom Feed" href="{% url 'openoni_newspapers_atom' %}" />
 <link rel="alternate" title="Newspapers JSON Feed" href="{% url 'openoni_newspapers_format' "json" %}" />
-<link type="text/css" href="{% static 'css/tablesort.css' %}" rel="stylesheet" />
+<link href="{% static 'css/tablesort.css' %}" rel="stylesheet" media="screen">
 {% endblock %}
 
 {% block subcontent %}
@@ -62,7 +64,7 @@
 
 
 {% block javascript %}{{ block.super }}
-<script type="text/javascript" src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.tablesorter.min.js' %}"></script>
 <script type="text/javascript">
     // Customization for tablesorter. Works in conjunction with jquery.tablsorter.min.js
 

@@ -5,10 +5,10 @@
  
 {% block content %}
 <div class="row">
-  <div class="span3">
+  <div class="col-md-3">
     <h2><a href='{% url 'openoni_search_pages_results' %}?dateFilterType=range&date1={{date|date:"m/d/Y" }}&date2={{date|date:"m/d/Y"}}/'>100 Years Ago Today</a></h2>
     <p>{{ date|date:"F j, Y" }} ({{pages|length}})</p>
-  </div>
+
   <div id="myCarousel" class="carousel slide span6">
     <div class="carousel-inner">{% for page in pages %}
       <div class="item{% if forloop.first %} active{% endif %}">
@@ -20,8 +20,13 @@
     <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
     <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
   </div>
-  <div class="span3"></div>
-</div>
+  </div><!-- /col-md-3 -->
+  <div class="col-md-9">
+  <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+  <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>
+  </div>
+  
+</div><!-- /row -->
 {% endblock content %}
 
  

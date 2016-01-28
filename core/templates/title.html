@@ -1,3 +1,5 @@
+<!-- http://localhost/lccn/sn83045396/ (sample batch lccn) -->
+
 {% extends "newspaper_base.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
@@ -30,7 +32,7 @@
             {% if title.alt_titles.all %}
             <dt>Alternative Titles:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                     {% for alt in title.alt_titles.all %}
                     <li>
                         {{ alt.name }}
@@ -52,7 +54,7 @@
             {% if title.places %}
             <dt>Geographic coverage:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                     {% for place in title.places.all %}
                     <li>
                         {{ place.city }}, 
@@ -85,7 +87,7 @@
             {% if title.publication_dates.all %}
             <dt>Description:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                     {% for pd in title.publication_dates.all %}
                     <li>
                     {{ pd.text }}
@@ -107,7 +109,7 @@
             {% if title.languages.all %}
             <dt>Language:</dt>
             <dd>
-            <ul class="bullet_blue">
+            <ul>
                 {% for lang in title.languages.all %}
                 <li>
                     <dd>{{lang.name}}</dd>
@@ -120,7 +122,7 @@
             {% if title.subjects.all %}
             <dt>Subjects:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                     {% for subject in title.subjects.all %}
                     <li>{{subject.heading}}</li>
                     {% endfor %}
@@ -131,7 +133,7 @@
             {% if title.notes.all %}
             <dt>Notes:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                     {% for note in notes %}
                     <li>{{ note|safe }}</li>
                     {% endfor %}
@@ -155,7 +157,7 @@
             {% if preceeding_titles %}
             <dt>Preceding Titles:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                 {% for t in preceeding_titles %}
                     <li><a href="{% url 'openoni_title' t.lccn %}">{{t}}</a></li>
                 {% endfor %}
@@ -166,7 +168,7 @@
             {% if succeeding_titles %}
             <dt>Succeeding Titles:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                     {% for t in succeeding_titles %}
                     <li><a href="{% url 'openoni_title' t.lccn %}">{{t}}</a></li>
                     {% endfor %}
@@ -177,7 +179,7 @@
             {% if related_titles %}
             <dt>Related Titles:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                     {% for t in related_titles %}
                     <li><a href="{% url 'openoni_title' t.lccn %}">{{t}}</a></li>
                     {% endfor %}
@@ -188,7 +190,7 @@
             {% if title.urls.all %}
             <dt>Related Links:</dt>
             <dd>
-                <ul class="bullet_blue">
+                <ul>
                     {% for u in title.urls.all %}
                     <li><a href="{{u.value}}">{{u.value}}</a></li>
                     {% endfor %}
@@ -225,8 +227,8 @@
 
     <div class="col-md-5">
         {% if title.has_issues %}
-        <div class="about_issue_right row">
-            <div class="frontpage span2">
+        <div class="about_issue_right">
+            <div class="frontpage">
             {% if title.first_issue.first_page_with_image.jp2_filename and title.first_issue.first_page_with_image.sequence %}
             <a href="{% url 'openoni_page' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page_with_image.sequence %}">
                 <img class="thumbnail" src="{% url 'openoni_page_thumbnail' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page_with_image.sequence %}" alt="" />
@@ -234,16 +236,15 @@
             {% else %}
                 Missing Page: {{explanation}}
             {% endif %}
-            </div>
-            <div class="info span3">
+            </div><!-- /frontpage -->
+            <div class="info">
               <p><strong>{{title.display_name}}&nbsp;{{issue_date|date:"F j, Y"}}, Image {{title.first_issue.first_page.sequence}}</strong></p>
-              
             </div>
         </div>
         {% endif %}
         {% if first_essay %}
-        <div class="about_issue_more row">
-            <div class="span6">
+        <div class="about_issue_more">
+            <div class="title_essay">
             <h4>{{first_essay.title}}</h4>
             <p>{{first_essay.html|safe}}</p>
             <p><em>Provided by: <a href="{% url 'openoni_awardee' first_essay.creator.org_code %}">{{ first_essay.creator }}</a></em></p>

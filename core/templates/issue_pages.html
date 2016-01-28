@@ -40,6 +40,10 @@
                     <a href="{{url}}" shape="rect">{% if page.issue %}{{page.issue|label}}, {% endif %}{% if page %}{{ page|label }}{% endif %}</a>
                 </div>
             </div>
+            {% if forloop.counter|divisibleby:"4" %}
+            </div>
+        <div class="row">
+            {% endif %}
             
             {% endfor %}
         </div>

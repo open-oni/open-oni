@@ -147,16 +147,18 @@ MAIN CONTENT
 
     <div class="container main_content">
       {% if crumbs and crumbs|length > 1 %}
-        <ul class="breadcrumb">
-          {% for crumb in crumbs %}
+
+    <ol class="breadcrumb">
+      {% for crumb in crumbs %}
             <li {% if crumb.active %}class="active"{% endif %}>
               <a href="{{crumb.href}}">{{crumb.label}}</a>
               {% if forloop.last %}
-              {% else %} <span class="divider">/</span>
+              {% else %}
               {% endif %}
             </li>
           {% endfor %}
-        </ul>
+
+     </ol>
       {% endif %}
       {% block content %}
         {% block page_head_container %}
@@ -196,14 +198,13 @@ Bottom loading javascripts
 
      <!-- JQuery and Jquery UI -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-     <script type="text/javascript" async="" src="{% static 'vendor/jquery/javascript/jquery-ui.js' %}"></script>
-     <script type="text/javascript" async="" src="{% static 'vendor/jquery/javascript/jquery.tablesorter.min.js' %}"></script>
-     <script type="text/javascript" async="" src="{% static 'vendor/jquery/javascript/jquery.jcarousel.min.js' %}"></script>
+     <script type="text/javascript" async="" src="{% static 'vendor/jquery/js/jquery-ui.js' %}"></script>
+     <script type="text/javascript" async="" src="{% static 'vendor/jquery/js/jquery.jcarousel.min.js' %}"></script>
      
 
     <!-- Bootstrap -->
 
-    <script type="text/javascript" async="" src="{% static 'vendor/bootstrap/javascripts/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" async="" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
   
     
     <!-- Google Analytics -->
