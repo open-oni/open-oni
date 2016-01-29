@@ -2,6 +2,7 @@
 
 {% extends "site_base.html" %}
 {% load static from staticfiles %}
+{% load image_urls %}
 
 {% block head_content %}{{ block.super }}
     {% with page as title_metadata %}
@@ -18,7 +19,7 @@
     <link rel="up" href="{{ issue.url }}" />
     <link rel="up" href="{{ issue.batch.url }}" />
     {% if page.reel.number %}<link rel="up" href="{% url 'openoni_reel' page.reel.number %}" />{% endif %}
-    <meta property="og:image" content="http://{{ host }}{% url 'openoni_page_thumbnail' title.lccn page.issue.date_issued page.issue.edition page.sequence %}" />
+    <meta property="og:image" content="{% thumb_image_url page %}" />
     <meta property="og:title" content="{{ page_title }}" />
     <meta property="og:description" content="{{ page_title }}, brought to you by {{ image_credit }}, and the National Digital Newspaper Program." />
     
