@@ -1,10 +1,3 @@
-/* Bootstrap */
-
-$(document).ready(function(){
-        $('.dropdown-toggle').dropdown()
-    });
-
-
 /* Other */
 
 

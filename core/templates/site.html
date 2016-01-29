@@ -86,23 +86,6 @@ HEADER
     </div>
 
 
-<!--dropdown for JS testing -->
-<!-- <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul> -->
-<!-- end dropdown to delete -->
-
-
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
@@ -115,14 +98,9 @@ HEADER
         <li><a href="/help/">Help</a></li>
       </ul>
 
-
-
       <ul class="nav navbar-nav navbar-right">
-        <li class="nav_advanced_search"><a href="#">Advanced<br/>Search</a></li><!--TODO: Link this up -->
-        
-          </ul>
-      
-
+        <li class="nav_advanced_search"><a href="{% url 'openoni_search_advanced' %">Advanced<br/>Search</a></li>
+      </ul>
       
       <form class="form-inline navbar-form navbar-right"  action="{% url 'openoni_search_pages_results' %}" method="get">
         <div class="form-group">
@@ -196,11 +174,16 @@ Bottom loading javascripts
 
     {% block javascript %}
 
-     <!-- JQuery and Jquery UI -->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-     <script type="text/javascript" async="" src="{% static 'vendor/jquery/js/jquery-ui.js' %}"></script>
-     <script type="text/javascript" async="" src="{% static 'vendor/jquery/js/jquery.jcarousel.min.js' %}"></script>
+    <!-- JQuery and Jquery UI -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" async="" src="{% static 'vendor/jquery/js/jquery-ui.js' %}"></script>
+    <script type="text/javascript" async="" src="{% static 'vendor/jquery/js/jquery.jcarousel.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.ba-bbq.min.js' %}"></script>
+
      
+    <!-- Main site JS -->
+    <script type="text/javascript" async="" src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript" async="" src="{% static 'js/highlight.js' %}"></script>
 
     <!-- Bootstrap -->
 
@@ -211,9 +194,6 @@ Bottom loading javascripts
     <!-- If you are using Google Analytics add your snippit to the ga.js file -->
     <script type="text/javascript" async="" src="{% static 'js/ga.js' %}"></script>
 
-    <!-- Main site JS -->
-    <script type="text/javascript" async="" src="{% static 'js/main.js' %}"></script>
-    <script type="text/javascript" async="" src="{% static 'js/highlight.js' %}"></script>
 
    
 

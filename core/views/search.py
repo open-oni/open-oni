@@ -62,7 +62,10 @@ def search_pages_results(request, view_type='gallery'):
         query['page'] = paginator._cur_page - 1
         previous_url = '?' + query.urlencode()
 
-    rows = q["rows"] if "rows" in q else 20
+    rows = query.get("rows", "20")
+    sort = query.get("sort", default="relevance")
+    seq_check = "checked" if query.get("sequence", "0") == "1" else ""
+
     crumbs = list(settings.BASE_CRUMBS)
 
     host = request.get_host()
@@ -212,6 +215,7 @@ def search_pages_navigation(request):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def search_advanced(request):
     adv_search_form = forms.AdvSearchPagesForm()
+    testing = forms.SearchResultsForm()
     template = "search/search_advanced.html"
     crumbs = list(settings.BASE_CRUMBS)
     page_title = 'Advanced Search'

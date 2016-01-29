@@ -27,10 +27,6 @@
     <link href="{% static 'css/viewer.css' %}" rel="stylesheet" />
 
 
-    <script type="text/javascript" src="{% static 'vendor/openseadragon/javascripts/openseadragon.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'vendor/jquery/css/jquery.ba-bbq.min.js' %}"></script> 
-    <script type="text/javascript" src="% static 'js/page.js' %}"></script>
-
 <!-- This rule has to be inline or it does not work. All other single page viewer rules are in external css file linked above -->
     <style type="text/css">
       #dummy { /* for specifying aspect ratio of viewer_container */
@@ -137,8 +133,6 @@
 
 {% block javascript %}
 {{ block.super }}
-    <script src="{% static 'js/openseadragon.min.js' %}"></script>
-    <script src="{% static 'js/jquery.ba-bbq.min.js' %}"></script> 
 
     <div id="page_data"
 	 data-static_url="{% static '' %}images/",
@@ -150,7 +144,8 @@
 	 data-navigation_url="{% url 'openoni_search_pages_navigation' %}?"
 	 ></div>
 
-    <script src="{% static 'js/page.js' %}"></script>
+    <script type="text/javascript" src="{% static 'vendor/openseadragon/javascripts/openseadragon.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
 
     <noscript><!-- without javascript the pageviewer does not work; display OCR in this case instead. -->
         <h3>Newspaper Page Text</h3>
