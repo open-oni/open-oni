@@ -1,5 +1,6 @@
 import json
 import datetime
+import random
 
 from django.conf import settings
 from django.http import Http404, HttpResponse
@@ -17,8 +18,9 @@ def home(request, date=None):
     today = datetime.date.today()
     context["date"] = date = today.replace(year=today.year-100)
     context["pages"] = _frontpages(request, date)
+    context["page"] = context["pages"][random.randint(0,19)]
+
     template = get_template("home.html")
-    # note the date is handled on the client side in javascript
     return HttpResponse(content=template.render(context))
 
 
