@@ -2,6 +2,7 @@
 
 {% load static from staticfiles %}
 {% load humanize %}
+{% load image_urls %}
  
 {% block content %}
 <div class="row">
@@ -18,7 +19,7 @@
     <p>{{ date|date:"F j, Y" }}</p>
     <div class="featured_content" id="featured_content">
       <a class="featured_page" href="{{ page.url }}">
-        <img src="{{ page.medium_url }}" alt="{{ page.label }}"/>
+        <img src="{% medium_image_url page.first_page %}" alt="{{ page.label }}"/>
       </a>
     </div>
   </div><!-- /col-md-8 -->

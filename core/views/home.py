@@ -46,10 +46,10 @@ def _frontpages(request, date):
         results.append({
             'label': "%s" % issue.title.display_name,
             'url': url,
-            'thumbnail_url': first_page.thumb_url,
-            'medium_url': first_page.medium_url,
             'place_of_publication': issue.title.place_of_publication,
-            'pages': issue.pages.count()})
+            'pages': issue.pages.count(),
+            'first_page': first_page
+        })
     return results
 
 
