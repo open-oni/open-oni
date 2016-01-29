@@ -215,7 +215,6 @@ def search_pages_navigation(request):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def search_advanced(request):
     adv_search_form = forms.AdvSearchPagesForm()
-    testing = forms.SearchResultsForm()
     template = "search/search_advanced.html"
     crumbs = list(settings.BASE_CRUMBS)
     page_title = 'Advanced Search'
