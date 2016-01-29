@@ -14,6 +14,7 @@ from datetime import datetime
 import simplejson as json
 
 from lxml import etree
+from PIL import Image
 from solr import SolrConnection
 
 from django.core import management
@@ -388,7 +389,10 @@ class BatchLoader(object):
                         width, length = j2k.dimensions(page.jp2_abs_filename)
                         page.jp2_width = width
                         page.jp2_length = length
-                    #raise BatchLoaderException("Could not determine dimensions of jp2 for issue: %s page: %s" % (page.issue, page))
+                    else:
+                        im = Image.open(page.jp2_abs_filename)
+                        page.jp2_width, page.jp2_length = im.size
+
                 if not page.jp2_width:
                     raise BatchLoaderException("No jp2 width for issue: %s page: %s" % (page.issue, page))
                 if not page.jp2_length:
