@@ -685,16 +685,6 @@ class Page(models.Model):
 
     @property
     @permalink
-    def thumb_url(self):
-        return ('openoni_page_thumbnail', (), self._url_parts())
-
-    @property
-    @permalink
-    def medium_url(self):
-        return ('openoni_page_medium', (), self._url_parts())
-
-    @property
-    @permalink
     def jp2_url(self):
         return ('openoni_page_jp2', (), self._url_parts())
 
