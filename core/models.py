@@ -854,6 +854,16 @@ class Place(models.Model):
     latitude = models.FloatField(null=True)
     longitude = models.FloatField(null=True)
 
+    @property
+    def get_city_county(self):
+        if self.city and self.county:
+            return "{}, {}".format(self.city, self.county)
+        if self.city:
+            return self.city
+        if self.county:
+            return self.county
+        return "Unknown"
+
     def __unicode__(self):
         return u"%s, %s, %s" % (self.city, self.county, self.state)
 
