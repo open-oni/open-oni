@@ -436,18 +436,6 @@ def terms(request):
                               context_instance=RequestContext(request))
 
 
-@cache_page(settings.API_TTL_SECONDS)
-def pages_on_flickr(request):
-    page_title = "Flickr Report"
-    flickr_urls = models.FlickrUrl.objects.all().order_by('-created')
-    if len(flickr_urls) > 0:
-        last_update = flickr_urls[0].created
-    else:
-        last_update = None
-    return render_to_response('reports/pages_on_flickr.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
-
-
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def batch_summary(request, format='html'):
     page_title = "Batch Summary"
