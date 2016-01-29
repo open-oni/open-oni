@@ -662,6 +662,18 @@ class Page(models.Model):
         else:
             return None
 
+    @property
+    def relative_image_path(self):
+        """Returns the relative path to the TIFF or JP2 image (relative to the
+        batch directory), depending on settings (USE_TIFF)"""
+        import sys
+        if settings.USE_TIFF:
+            filename = self.tiff_filename
+        else:
+            filename = self.jp2_filename
+        batch = self.issue.batch
+        return os.path.join(batch.name, "data", filename)
+
     def _url_parts(self):
         date = self.issue.date_issued
         return {'lccn': self.issue.title.lccn,
