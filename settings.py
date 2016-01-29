@@ -13,6 +13,13 @@ def override_solr(conf):
   if conf.has_option("solr", "URL"):
     SOLR = conf.get("solr", "URL")
 
+def override_image_server(conf):
+  global RESIZE_SERVER, TILE_SERVER
+  if conf.has_option("images", "RESIZE_SERVER"):
+    RESIZE_SERVER = conf.get("images", "RESIZE_SERVER")
+  if conf.has_option("images", "TILE_SERVER"):
+    TILE_SERVER = conf.get("images", "TILE_SERVER")
+
 def override_secrets(conf):
   global SECRET_KEY
   if conf.has_option("secrets", "SECRET_KEY"):
@@ -29,6 +36,9 @@ if os.path.isfile(conffile):
 
   if conf.has_section("solr"):
     override_solr(conf)
+
+  if conf.has_section("images"):
+    override_image_server(conf)
 
   if conf.has_section("secrets"):
     override_secrets(conf)
