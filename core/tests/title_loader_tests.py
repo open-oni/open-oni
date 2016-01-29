@@ -173,7 +173,7 @@ class TitleLoaderTests(TestCase):
         loader = TitleLoader()
         filename = abs_filename('./test-data/bib-with-vague-dates.xml')
         loader.load_file(filename)
-        t = Title.objects.get(lccn='00062183')
+        t = Title.objects.get(lccn='sn83030846')
         self.assertEqual(t.start_year_int, 1900)
         self.assertEqual(t.end_year_int, 1999)
 
