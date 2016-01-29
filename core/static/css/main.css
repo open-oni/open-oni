@@ -1,0 +1,232 @@
+/* 
+Note: 
+
+If you are going to change the site significantly, it is highly reccomended that you make all your core changes to bootstrap first, and then include a new bootstrap.min.css file and work from there. Otherwise you'll be hunting down a lot of color changes, etc. You can generate this at the bootstrap site http://getbootstrap.com/customize/ or you can download the LESS or SASS and go from there. */
+
+
+/* This is where I am importing a web font from google.com/fonts. 
+If you'd like to use a different font for the headers, go there, find a new font, and replace this @import command. 
+Beware that adding too many fonts will affect page load times.*/
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700);
+
+/* Setting all heads to the font included above. If you include a different font, change this */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Libre Baskerville', serif;
+    color:#291C14;
+}
+
+.search_results img {max-width:100%}
+
+
+.search_results_option_set {
+    border-bottom: solid 1px #ececec;
+    padding: 0px 0px 10px 0px ;
+    margin-bottom: 10px;
+}
+
+
+/* ---------------------- 
+Changes to integrate */
+
+#newspaper_nav {
+    border: solid 2px #ececec;
+    border-right: none;
+    border-left: none;
+    padding:5px 0;
+    margin-bottom: 5px;
+}
+
+#footer {
+    background-color: #fff;
+    padding:10px 0;
+    margin-top: 20px;
+    border-top:solid 1px #ececec;
+}
+
+.breadcrumb {background-color: #fff;}
+
+dl dd {
+    margin-left: 1.5em;
+}
+
+.glyphicon-search .search_text {display: none;} /* Hides the word "search" in favor of the icon */
+
+/* calendar */
+
+.calendar_wrapper {
+    /*font-family: arial;*/
+}
+
+.calendar_month {
+    display: inline-block;
+    margin: 0 10px 0 0px;
+    background-color: #fff;
+    text-align: center;
+    vertical-align: top;
+}
+
+.calendar_wrapper .title {
+    background-color: #deded8;
+    font-size: 1em;
+}
+
+div.calendar_wrapper .calendar_month td {
+    padding: 4px;
+}
+
+div.calendar_wrapper  .dropdown-toggle {
+    padding: 0;
+    margin: 0;
+}
+
+.calendar_wrapper .table {
+    padding: 0;
+    margin: 0;
+}
+
+
+div.calendar_wrapper table.month td.single {
+    background-color: #e6e8e0;
+    
+}
+div.calendar_wrapper table.month td.multiple {
+    
+    background-color: #c8cac3;
+    
+}
+
+.calendar_wrapper .btn-group a {
+    color: #860e00;
+    text-decoration: none;
+    
+}
+
+.calendar_wrapper td {
+    width: 2.2em;
+}
+
+/* Individual Newspapers pages */
+
+
+.title_subnav {
+    margin: 10px 0
+}
+
+.issues_single, .issues_multiple {
+    padding:5px;
+    border: 1px solid #ddd;
+    /*display: inline-block;
+    float: right;*/
+}
+
+.issues_single {
+    background-color: #e6e8df;
+    
+}
+
+.issues_multiple {
+    background-color: #c6c7c1;
+}
+
+
+table.tablesorter tbody tr.odd td {
+    background-color:#fff;
+}
+
+.city_list h3 {
+    background-color: #390b00;
+    padding: 5px;
+    font-size: 1.2em;
+    color: #fff;
+}
+
+
+/* -------------------------- */
+
+
+
+/* Colors */
+/*
+ * You should be able to search/replace these if you want to change them
+ * 
+ * Darker beige/header : F7F2EB
+ * Background: FFF9F2
+ * Header and Title color: 291C14
+ * 
+ */
+
+body {
+    background-color: #FFF9F2;
+}
+
+/* Header */
+
+.header_title {
+    background-color: #F7F2EB;
+    text-align: center;
+    
+}
+
+.header_title h1.title {
+    font-weight:700;
+    font-size: 4.5em;
+    text-shadow: 2px 2px 2px #fff,4px 4px 4px #aaa;
+    margin: .5em 0 .5em 0;
+    color:#291C14;
+}
+
+.navbar-nav>li.nav_advanced_search>a {
+     font-size:.8em; 
+    text-align:center; 
+    margin:-.3em 0 -.2em 0; 
+    line-height:1.2em;
+}
+
+
+/*The name of the state and the workd "newspapers" are wrapped in seperate spans so you can style differently if needed or add space for a graphic in between like a newspaper header might have. See http://nebnewspapers.unl.edu/ for an example */
+.title_state {}
+.title_newspapers {}
+
+/* Links (Bootstrap override) */
+
+a {
+  text-decoration:underline; /*Adding an underline for usability purposes. Change link colors here if needed.*/
+} 
+a:hover {}
+a:visited {}
+
+/* Removing underlines for certain elements */
+.navbar a, 
+.nav-tabs a, 
+.nav-pills a, 
+.list-group a {
+  text-decoration:none;
+}
+
+/* Other Bootstrap Overrides */
+
+.navbar {font-size: 1.1em; font-family: 'Libre Baskerville', serif; }
+
+.navbar-default {background-color:#fff}
+
+.navbar-inverse {background-color:#291C14;}
+
+.navbar-inverse .navbar-nav>li>a {color: #fff;}
+.navbar-inverse .navbar-nav>li>a:hover {color: #FAAA7A;}
+
+.jumbotron {background-color:#fff;}
+
+/* Getting rid of the border radius on many elements, uncomment if you like rounded corners :) */
+.btn, .alert, .navbar, .label {border-radius:0;}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color:#fff;
+}
+
+/* an example of changing a bunch of "danger" elements to blue. As noted at the top of the file, it's best to regenerate bootstrap.min.css, but this is included in case you can't do that. */
+/*.btn-danger, 
+.label-danger, 
+.alert-danger, 
+.progress-bar-danger, 
+.panel-danger .panel-heading 
+{background-color:blue; border-color:#000;}*/

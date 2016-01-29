@@ -162,49 +162,6 @@
         return tile_url + 'image_'+tile_width+'x'+tile_height+'_from_'+x1+','+y1+'_to_'+x2+','+y2+'.jpg';
     }
 
-    function updateSearchNav(data) {
-        if (!data) return;
-
-        jQuerynav_result = $(".nav_result");
-        jQuerynav_result.find("a.backtoresults").attr("href", data.results);
-        jQuerynav_result.find(".current").text(data.current);
-        jQuerynav_result.find(".total").text(data.total);
-
-        if (data.next_result) {
-            var url = data.next_result;
-            jQuerynav_result.find(".next")
-            .removeClass("disabled")
-            .find("a")
-            .wrapInner($('<a>').attr('href', url));
-        }
-        if (data.previous_result) {
-            var url = data.previous_result;
-            jQuerynav_result.find(".previous")
-            .removeClass("disabled")
-            .find("a")
-            .wrapInner($('<a>').attr('href', url));
-        }
-        jQuerynav_result.slideDown("fast");
-    }
-
-    function addSearchNav() {
-        var params, search_qs;
-
-        params = $.extend($.deparam.querystring(), $.deparam.fragment());
-        search_qs = $.param(params, true);
-
-        var view_type = params.view_type || 'gallery';
-
-        if (!search_qs || !search_qs.match(/searchType/)) return;
-
-        $.ajax({
-            url: navigation_url + search_qs,
-            dataType: "json",
-            cache: true,
-            success: updateSearchNav
-        });
-    }
-
     function initPage() {
 	page_url = $('#page_data').data("page_url")
 	tile_url = $('#page_data').data("tile_url")
@@ -215,7 +172,6 @@
 	static_url = $('#page_data').data("static_url")
 
         var viewer = null;
-        addSearchNav();
 
         var tileSize = 512;
         var tileOverlap = 1;

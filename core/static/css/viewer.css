@@ -1,0 +1,86 @@
+#viewer_container_container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+#viewer_container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0px;
+    padding: 0px;
+    background-color: black;
+    border: 1px solid black;
+    color: white;   /* for error messages, etc. */
+}
+.overlay
+{
+    border: 1px solid red;
+    opacity: 0.4;      
+    -moz-opacity: 0.4;
+    -webkit-opacity: 0.4;
+    background: red;
+}
+.pagetools a.disabled,
+.pagetools a.disabled:hover {
+    color: #999999;
+}
+
+.toolbar
+{
+    float: left;
+    height:     33px;
+    border:     none;
+    color:      #333;
+    padding:    0px;
+    background-color: transparent;
+    z-index:    999999;
+}
+
+.toolbar.fullpage
+{
+    height: 0px;
+}
+
+
+#imageViewer_nav {
+    background-color:#fff;
+}
+
+#item-ctrl {
+    position: relative;
+}
+
+.other_controls {
+    margin-left:160px;
+    display: inline-block;
+    border-left:solid 1px #aaa;
+    
+}
+
+.imageViewer_pagejump {
+    width:3em;
+    font-size: 1.2em;
+}
+
+#imageViewer_nav .control {
+    border-right:solid 1px #aaa;
+    padding:7px 12px;
+    display: inline-block;
+
+}
+
+#imageViewer_nav .control_pages {
+
+}
+
+#imageViewer_nav select {
+    display: inline;
+}
+
+.form-control {
+
+}

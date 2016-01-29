@@ -1,7 +1,7 @@
 {% load static from staticfiles %}
 
 <div class="search_results_ctrl">
-    <span class="nav"><a href="{% url 'openoni_issues_title' issue.title.lccn %}" class="ar-back">Back to Browse All Available Issues</a> 
+    <span class="nav">
 
 |
 {% if issue.previous %}
@@ -17,7 +17,7 @@
 <span class="off">Next Issue</span>
 {% endif %}
 
-| <a href="{% url 'openoni_issues_first_pages' title.lccn %}"><strong>Show all front pages</strong></a>
+<!-- | <a href="{% url 'openoni_issues_first_pages' title.lccn %}"><strong>Show all front pages</strong></a> -->
 </span>
 
 {% if paginator.num_pages > 1 %}
