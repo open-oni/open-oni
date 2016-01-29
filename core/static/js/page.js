@@ -172,7 +172,6 @@
 	static_url = $('#page_data').data("static_url")
 
         var viewer = null;
-        addSearchNav();
 
         var tileSize = 512;
         var tileOverlap = 1;
