@@ -12,15 +12,26 @@
   </div> <!-- /col-md-4 -->
 
   <div class="col-md-8">
-    <h3>
-      <a href='{% url 'openoni_search_pages_results' %}?dateFilterType=range&date1={{date|date:"m/d/Y" }}&date2={{date|date:"m/d/Y"}}/'>100 Years Ago Today</a>
-    </h3>
-    <p>{{ date|date:"F j, Y" }}</p>
-    <div class="featured_content" id="featured_content">
-      <a class="featured_page" href="{{ page.url }}">
-        <img src="{{ page.medium_url }}" alt="{{ page.label }}"/>
-      </a>
-    </div>
+    {% if page %}
+      <h3>
+        <a href='{% url 'openoni_search_pages_results' %}?dateFilterType=range&date1={{date|date:"m/d/Y" }}&date2={{date|date:"m/d/Y"}}/'>{{ heading }}</a>
+      </h3>
+      <p>{{ date|date:"F j, Y" }}</p>
+      <div class="featured_content" id="featured_content">
+        <a class="featured_page" href="{{ page.url }}">
+          <img src="{{ page.medium_url }}" alt="{{ page.label }}"/>
+        </a>
+      </div>
+    {% else %}
+      <h3>{{ heading }}</h3>
+      <div class="featured_content">
+        <p><a href="{% url 'openoni_issues' %}">Browse issues by date</a></p>
+        <p><a href="{% url 'openoni_newspapers' %}">Browse by newspaper title</a></p>
+        <p><a href="{% url 'openoni_about' %}">
+          Learn about the Open Online Newspaper Initiative
+        </a></p>
+      </div>
+    {% endif %}
   </div><!-- /col-md-8 -->
 </div><!-- /row -->
 {% endblock content %}
