@@ -25,24 +25,31 @@ jQuery(function($){
 {% endblock %}
 
 {% block subcontent %}
+
     <div id="std_box">
         {% block extra_nav %}
-            <div id="col2_left">
-                <form>
-                    <label class="bold" for="year_select">Issues for:</label>&nbsp; {{select_year_form.year}}
-                </form>
-                <p class="rule-top gray">Single edition:<br /> dates in <b>bold</b>.</p>
-                <p class="gray">Multiple editions:<br /> dates in <b><i>bold italics</i></b>.</p>
-            </div><!-- end id:col2_left -->
+        <div class="row">
+    <div class="col-md-4">
+        <form>
+            <label class="bold" for="year_select">Issues for:</label>&nbsp; {{select_year_form.year}}
+        </form></div>
+    <div class="col-md-4">
+        <p class="issues_single">Single edition</p>
+    </div>
+    <div class="col-md-4">
+        <p class="issues_multiple">Multiple editions</p>
+    </div>
+</div><!-- /row -->
+        
         {% endblock extra_nav %}
 
         {% block newspaper_content %}
-            <div id="col2_right" class='row'>
+            
                 {{year_view|safe}}
-            </div><!-- end id:col2_right -->
+            
         {% endblock newspaper_content %}
 
-        <div class="clear"><!-- --></div>
+       
     </div><!-- end id:std_box -->
 {% endblock subcontent %}
 

@@ -1,59 +1,227 @@
+<!-- http://localhost/search/pages/results/?rows=20&searchType=basic&proxtext=water -->
+
 {% extends "site_base.html" %} 
 {% load static from staticfiles %}
 {% load custom_filters %}
 
 {% block content %}
 
-<div class="content">
-  <div class="row">
-    <div class="span6">
-      <div class="pagination pagination-small">
-	<ul>
-	  <li><a {% if page.has_previous %}{% else %}class="disabled"{% endif %} href="{{previous_url}}" class="prev">prev</a></li>
-     
-	  {% for page_number in page_range_short %}
-
-	  {% ifequal page_number "..." %}
-	  <li><span>...</span></li>
-	  {% else %}
-
-	  {% ifequal page_number page.number %}
-	  <li class="disabled"><span>{{page_number}}</span></li>
-	  {% else %}
-	  <li><a href="?{{q}}&amp;page={{page_number}}&amp;sort={{sort}}">{{page_number}}</a></li>
-	  {% endifequal %}
-
-	  {% endifequal %}
-	  {% endfor %}
-            
-	  <li><a {% if page.has_next %}{% else %}class="disabled"{% endif %} href="{{ next_url }}" class="next">next</a></li>
-	</ul>
-      </div>
-    </div>
-
-  </div>  
-
-  <ul class="thumbnails newspaper_pages clearfix">
-    {% for object in page.object_list %}
-    <li class="span4">
-	<a href="{{ object.highlight_url }}" class="thumbnail" title="{% with object.issue.title as title %}{{title.display_name}} ({{title.place_of_publication}}), {{object.issue|label}}, {{object|label}}{% endwith %}">
-	  <img src="{{ object.thumb_url }}" alt=""
-	       class="highlight_words"
-	       data-script_name="{{script_name}}"
-	       data-id="{{object.url}}"
-	       data-words="{{object.words|join:' '}}">
-	</a>
-    </li>
+<!-- Search results description -->
+<h4 class="term">{{ paginator.count }} results 
+    {% if english_search %}containing{% endif %} 
+    {% for part in english_search %}
+      <strong>&ldquo;{{ part }}&rdquo;</strong>
+      {% if not forloop.last %}<em>and</em>{% endif %}
     {% endfor %}
-  </ul>
+    {% if request.REQUEST.date1 and request.REQUEST.date2 %}
+      &nbsp; for date range {{ request.REQUEST.date1 }} -
+      {{ request.REQUEST.date2 }}
+      <a href="#" id="cancel_date_filter"><img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/></a>
+    {% endif %}
+    {% if request.REQUEST.language %}
+      %nbsp for languages {{ request.REQUEST.language }}
+      <a href="#" id="cancel_language_filter"><img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/></a>
+    {% endif %}
+    {% if request.REQUEST.city %}
+      &nbsp; for cities {{ request.REQUEST.city }}
+      <a href="#" id="cancel_city_filter"><img src="/media/images/btn_remove.png" title="clear city filter" alt="remove city filter"/></a>
+    {% endif %}
+    {% if request.REQUEST.frequency %}
+      &nbsp; for frequency {{ request.REQUEST.frequency }}
+      <a href="#" id="cancel_frequency_filter"><img src="/media/images/btn_remove.png" title="clear frequency filter" alt="remove frequency filter"/></a>
+    {% endif %}
+</h4>
 
+<div class="row search_results_option_set">
+  <div class="col-md-7">
+    <!-- Pagination -->
+    <nav>
+      <ul class="pagination pagination-sm" style="margin:0;"> <!-- TODO: put in CSS file -->
+        <li {% if page.has_previous %}{% else %}class="disabled"{% endif %}>
+          <a href="{{previous_url}}" aria-label="Next">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+
+      {% for page_number in page_range_short %}
+      {% if not forloop.first %}{% endif %}
+
+      {% ifequal page_number "..." %}
+      <li class="disabled"><a href="#">…</a></li>
+      {% else %}
+
+      {% ifequal page_number page.number %}
+        <li class="active"><a href="#">{{page_number}}</a></li>
+      {% else %}
+        <li><a href="?{{q}}&amp;page={{page_number}}&amp;sort={{sort}}">{{page_number}}</a> </li>
+      {% endifequal %}
+
+      {% endifequal %}
+      {% endfor %}
+
+      <li {% if page.has_next %}{% else %}class="disabled"{% endif %}>
+        <a href="{{next_url}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /pagination -->
+  </div>
+  <div class="col-md-3">
+  <!-- Jump to page -->
+    <form action="" method="GET" class="jumptopage">
+      <label for="jumptopage">Jump to page:</label> 
+      <input class="std" type="text" id="jumptopage" name="page" value="" size="5" />
+      <input type="hidden" name="ortext" value="{{query.ortext}}" />
+      <input type="hidden" name="andtext" value="{{query.andtext}}" />
+      <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
+      <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
+      <input type="hidden" name="proxValue" value="{{query.proxValue}}" />
+      <input type="hidden" name="date1" value="{{query.date1}}" />
+      <input type="hidden" name="date2" value="{{query.date2}}" />
+      <input type="hidden" name="year" value="{{query.year}}" />
+      <input type="hidden" name="sort" value="{{query.sort}}" />
+      <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
+      <input type="hidden" name="state" value="{{query.state}}" />
+      <input type="hidden" name="lccn" value="{{query.lccn}}" />
+      <input type="hidden" name="rows" value="{{query.rows}}" />
+      <input type="hidden" name="sequence" value="{{query.sequence}}" />
+      <input type="hidden" name="language" value="{{query.language}}" />
+      <input type="submit" class="submit" value="GO" /> 
+    </form>
+  </div>
+  <div class="col-md-2"><!-- todo: fix this, list is missing template and it does not mark which you have chosen -->
+    <!-- Gallery or List view -->
+    {% ifequal view_type 'list' %}
+      <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+      <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+    {% else %}
+      <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+      <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+      
+    {% endifequal %}
+    <!-- /Gallery or List view -->
+  </div>
+</div><!-- /row -->
+
+<form class="form-inline search_results_form" action="" method="GET">
+  <div class="row search_results_option_set">
+    <div class="col-md-3">
+      <input name="sequence" value="1" type="checkbox" {{ seq_check }}/>
+      <label class="norm" for="sequence">Front pages only</label>
+    </div>
+    <div class="col-md-3">
+      <label class="norm" for="rows">Results per page:</label> 
+      <select class="form-control input-sm" name="rows" id="rows" value="50">
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="norm" for="sort">Sort by:</label> 
+      <select class="form-control input-sm" name="sort" id="sort">
+        <option value="relevance">Relevance</option>
+        <option value="title">Title</option>
+        <option value="date">Date</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-default">Refine Search</button>
+    </div>
+  </div>
+
+  <!-- commented out in order to focus on smaller set of functionality in given time period -->
+  <!-- <div class="row search_results_option_set">
+    <div class="col-md-12">
+        <label class="norm" for="filter_select">Filter results by: </label>
+          <select class="sel" name="filter_results" id="filter_select_year">
+              <option value="" disabled selected> year </option>
+              {% for year, count in page.facets.year %}
+                  <option value={{year}}>{{year}} ({{count}})</option>
+              {% endfor %}
+          </select>
+          <select class="sel" name="rpp_select" id="filter_select_language">
+              <option value="" disabled selected> language </option>
+              {% for language, count in page.facets.language %}
+                  {# This is a bit of a hack, but since we only have two languages
+                     just put in code for cze and eng to avoid sending page_titles the full solr name#}
+                  {% if language == 'English' %}
+                    <option value="eng">English ({{count}})</option>
+                  {% elif language == 'Czech' %}
+                    <option value="cze">Czech ({{count}})</option>
+                  {% endif %}
+                  {# <option value={{language}}>{{language}} ({{count}})</option> #}
+              {% endfor %}
+          </select>
+          <select class="sel" name="rpp_select" id="filter_select_city">
+              <option value="" disabled selected> city </option>
+              {% for city, count in page.facets.city %}
+                  <option value="{{city}}">{{city}} ({{count}})</option>
+              {% endfor %}
+          </select>
+          <select class="sel" name="rrp_select" id="filter_select_frequency">
+              <option value="" disabled selected> frequency </option>
+              {% for freq, count in page.facets.frequency %}
+                  <option value="{{freq}}">{{freq}} ({{count}})</option>
+              {% endfor %}
+          </select>
+    </div>
+  </div> --><!-- /row -->
+  <input type="hidden" name="ortext" value="{{query.ortext}}" />
+  <input type="hidden" name="andtext" value="{{query.andtext}}" />
+  <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
+  <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
+  <input type="hidden" name="proxValue" value="{{query.proxValue}}" />
+  <input type="hidden" name="date1" value="{{query.date1}}" />
+  <input type="hidden" name="date2" value="{{query.date2}}" />
+  <input type="hidden" name="year" value="{{query.year}}" />
+  <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
+  <input type="hidden" name="state" value="{{query.state}}" />
+  <input type="hidden" name="lccn" value="{{query.lccn}}" />
+  <input type="hidden" name="language" value="{{query.language}}" />
+  
+</form>
+
+<!-- ======================
+Thumbnails
+======================== -->
+
+
+{% block search_results_box %}
+<div class="content search_results">
+  <span class="results">Results {{ start }}-{{ end }}<!-- of {{ paginator.count }} removed because it's repeated in another template--></span>
+
+<br/><br/>
+
+<div class="row">
+  {% for object in page.object_list %}
+    <div class="col-md-3">
+      <a href="{{ object.highlight_url }}" class="thumbnail" title="{% with object.issue.title as title %}{{title.display_name}} ({{title.place_of_publication}}), {{object.issue|label}}, {{object|label}}{% endwith %}">
+        <img src="{{ object.thumb_url }}" alt=""
+                class="highlight_words"
+                data-script_name="{{script_name}}"
+                data-id="{{object.url}}"
+                data-words="{{object.words|join:' '}}">
+      </a>
+    </div>
+  {% endfor %}
+  </div><!-- /row -->
 </div>
-
+{% endblock search_results_box %}
 
 {% endblock %}
 
 
 {% block javascript %}
 {{ block.super }}
-    <script src="{% static 'js/highlight.js' %}"></script>
+    <script type="text/javascript">
+      jQuery(function($){
+        // set initial values in dropdowns based on parameters
+        // TODO use django forms instead of html + javascript
+        $("#rows option[value='{{rows}}']").attr("selected", true);
+        $("#sort option[value='{{sort}}']").attr("selected", true);
+      });
+
+    </script>
 {% endblock %}

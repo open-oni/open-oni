@@ -14,7 +14,6 @@ except ImportError:
 
 from openoni import core
 from openoni.core import index
-from openoni.core.essay_loader import load_essays
 from openoni.core.management.commands import configure_logging
 from openoni.core.models import Place, Title
 from openoni.core.utils.utils import validate_bib_dir
@@ -24,19 +23,13 @@ _logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    skip_essays = make_option('--skip-essays',
-                              action='store_true',
-                              dest='skip_essays',
-                              default=False,
-                              help='Skip essay loading.')
-
     pull_title_updates = make_option('--pull-title-updates',
                                      action='store_true',
                                      dest='pull_title_updates',
                                      default=False,
                                      help='Pull down a new set of titles.')
 
-    option_list = BaseCommand.option_list + (skip_essays, pull_title_updates)
+    option_list = BaseCommand.option_list + (pull_title_updates)
 
     help = 'Runs title pull and title load for a complete title refresh.'
     args = ''
@@ -104,10 +97,6 @@ class Command(BaseCommand):
             tnu = self.find_titles_not_updated(limited=False)
             _logger.info("Running pre-deletion checks for these titles.")
 
-        # Make sure that our essays are up to date
-        if not options['skip_essays']:
-            load_essays(settings.ESSAYS_FEED)
-
         if bib_in_settings:
             if len(tnu):
                 # Delete titles haven't been update & do not have essays or issues attached.
@@ -153,7 +142,11 @@ class Command(BaseCommand):
         _CORE_ROOT = os.path.abspath(os.path.dirname(core.__file__))
         filename = os.path.join(_CORE_ROOT, './fixtures/place_links.json')
         for p in json.load(file(filename)):
-            place = Place.objects.get(name=p['name'])
+            try:
+                place = Place.objects.get(name=p['name'])
+            except Place.DoesNotExist:
+                _logger.warning('Unable to load place with name %s', p['name'], extra={'data': p})
+                continue
             place.longitude = p['longitude']
             place.latitude = p['latitude']
             place.geonames = p['geonames']

@@ -1,5 +1,6 @@
 import json
 import datetime
+import random
 
 from django.conf import settings
 from django.http import Http404, HttpResponse
@@ -17,18 +18,24 @@ def home(request, date=None):
     today = datetime.date.today()
     context["date"] = date = today.replace(year=today.year-100)
     context["pages"] = _frontpages(request, date)
+    page_nums = len(context["pages"])
+    if page_nums > 0:
+        context["page"] = context["pages"][random.randint(0,page_nums-1)]
+        context["heading"] = "100 Years Ago Today"
+    else:
+        context["page"] = None
+        context["heading"] = "Browse Newspaper Content"
     template = get_template("home.html")
-    # note the date is handled on the client side in javascript
     return HttpResponse(content=template.render(context))
 
 
-def _frontpages(request, date):
+def _frontpages(request, date, num_pages=20):
     # if there aren't any issues default to the first 20 which
     # is useful for testing the homepage when there are no issues
     # for a given date
     issues = models.Issue.objects.filter(date_issued=date)
     if issues.count() == 0:
-        issues = models.Issue.objects.all()[0:20]
+        issues = models.Issue.objects.all()[0:num_pages]
 
     results = []
     for issue in issues:

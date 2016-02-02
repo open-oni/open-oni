@@ -156,11 +156,6 @@ FEED_TTL_SECONDS = _ONEWEEK
 # JP2s if you don't have Aware, but significantly more memory-intense.
 USE_TIFF = False
 
-#???
-# URL for essays... ?????
-#???
-ESSAYS_FEED = "http://ndnp-essays.rdc.lctl.gov/feed/"
-
 # Set this to a server load value at which you want Open ONI to stop handling
 # web requests.  If you aren't sure, just leave this alone.
 TOO_BUSY_LOAD_AVERAGE = 64 
