@@ -65,6 +65,7 @@ class TitlePullTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        super(TitlePullTests, cls).setUpClass()
         cls.t = TitlePuller()
         cls.srw = '{http://www.loc.gov/zing/srw/}'
         cls.test_case_rec = cls.t.generate_requests(oclc='18475650')
@@ -79,6 +80,7 @@ class TitlePullTests(TestCase):
         cleared = _clear_test_dir(cls.test_dir)
         if cleared:
             os.rmdir(cls.test_dir)
+        super(TitlePullTests, cls).tearDownClass()
 
     def test_str_value(self):
         test_value = str_value(42)

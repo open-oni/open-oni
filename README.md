@@ -91,7 +91,7 @@ everytime you log in.
 
 Next you will need to initialize database schema and load some initial data:
 
-    django-admin.py syncdb --noinput --migrate
+    django-admin.py syncdb --noinput
     django-admin.py openoni_sync --skip-essays
 
 And finally you will need to collect static files (stylesheets, images) 
