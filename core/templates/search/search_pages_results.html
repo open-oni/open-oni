@@ -3,6 +3,7 @@
 {% extends "site_base.html" %} 
 {% load static from staticfiles %}
 {% load custom_filters %}
+{% load image_urls %}
 
 {% block content %}
 
@@ -198,7 +199,7 @@ Thumbnails
   {% for object in page.object_list %}
     <div class="col-md-3">
       <a href="{{ object.highlight_url }}" class="thumbnail" title="{% with object.issue.title as title %}{{title.display_name}} ({{title.place_of_publication}}), {{object.issue|label}}, {{object|label}}{% endwith %}">
-        <img src="{{ object.thumb_url }}" alt=""
+        <img src="{% thumb_image_url object %}" alt=""
                 class="highlight_words"
                 data-script_name="{{script_name}}"
                 data-id="{{object.url}}"

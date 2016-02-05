@@ -1,4 +1,4 @@
-{% load custom_filters %}<?xml version="1.0" encoding="utf-8"?>
+{% load image_urls %}{% load custom_filters %}<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
     <title>Recent Titles from Chronicling America</title>
@@ -28,7 +28,7 @@
                 Issues were added on {{ issue.batch.released|date:"Y-m-d" }} for {{ issue.title.display_name }}
                 <br />
                 <a href="http://{{ host }}{{ page.url }}">
-                    <img src="http://{{ host }}{{ page.thumb_url }}" />
+                    <img src="{% thumb_image_url page %}" />
                 </a>
             </div>
             {% endwith %}
