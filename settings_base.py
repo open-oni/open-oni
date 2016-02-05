@@ -143,8 +143,12 @@ SOUTH_TESTS_MIGRATE = False
 # should also make this overrideable in the INI file.
 IS_PRODUCTION = False
 
+# These must be overridden to point to the image server
+RESIZE_SERVER = "http://example.com/images/resize"
+TILE_SERVER = "http://example.com/images/tile"
+
 # How big should thumbnails be?
-THUMBNAIL_WIDTH = 360
+THUMBNAIL_WIDTH = 240
 
 # These determine the life of various caches (via cache_page)
 DEFAULT_TTL_SECONDS = _ONEDAY

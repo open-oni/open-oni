@@ -1,8 +1,7 @@
 {% extends "newspaper_base.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
-
-
+{% load image_urls %}
 
 {% block extrahead %}
 <link rel="alternate" href="{% url 'openoni_issue_pages_dot_json' title.lccn issue.date_issued issue.edition %}" />
@@ -28,8 +27,8 @@
             <div class="col-md-3">
                 <div class="highlite">
                     <a href="{{url}}">
-                    {% if page.jp2_filename %}
-                    <img src="{% url 'openoni_page_thumbnail' title.lccn page.issue.date_issued page.issue.edition page.sequence %}" alt="Thumbnail for {{page.number}}"/>
+                    {% if page.relative_image_path %}
+                    <img src="{% thumb_image_url page %}" alt="Thumbnail for {{page.number}}"/>
                     {% else %}
                         <div style="height: auto; margin-bottom: 3em;">
                         No Image. {{page.noteAboutReproduction.text}}<br/>

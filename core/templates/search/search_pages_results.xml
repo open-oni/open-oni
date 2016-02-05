@@ -1,4 +1,4 @@
-{% load custom_filters %}<?xml version="1.0" encoding="utf-8"?>
+{% load image_urls %}{% load custom_filters %}<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"
       xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
 
@@ -25,7 +25,7 @@
         <updated>{{p.created|rfc3339}}</updated>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                <img src="http://{{host}}{{ p.thumb_url }}" />
+                <img src="{% thumb_image_url p %}" />
             </div>
         </content>
     </entry>

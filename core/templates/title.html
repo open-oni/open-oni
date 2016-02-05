@@ -3,6 +3,7 @@
 {% extends "newspaper_base.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
+{% load image_urls %}
 
 {% block lc_metadata %}
 {% with title.display_name as title_metadata %}
@@ -231,7 +232,7 @@
             <div class="frontpage">
             {% if title.first_issue.first_page_with_image.jp2_filename and title.first_issue.first_page_with_image.sequence %}
             <a href="{% url 'openoni_page' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page_with_image.sequence %}">
-                <img class="thumbnail" src="{% url 'openoni_page_thumbnail' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page_with_image.sequence %}" alt="" />
+                <img class="thumbnail" src="{% thumb_image_url title.first_issue.first_page_with_image %}" alt="" />
             </a>
             {% else %}
                 Missing Page: {{explanation}}
