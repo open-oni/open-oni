@@ -34,6 +34,6 @@ def coordinates(request, lccn, date, edition, sequence, words=None):
     for key in data.get('coords'):
         return_coords['coords'][re.sub(non_lexemes, '', key)] = data['coords'][key]
 
-    r = HttpResponse(mimetype='application/json')
+    r = HttpResponse(content_type='application/json')
     r.write(json.dumps(return_coords))
     return r

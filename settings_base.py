@@ -15,12 +15,6 @@ DIRNAME = os.path.abspath(os.path.dirname(__file__))
 # IN PRODUCTION!
 DEBUG = True
 
-# DEPRECATED as of Django 1.8!
-#
-# If TRUE *and* DEBUG is true, provides detailed information when template
-# rendering causes exceptions.
-TEMPLATE_DEBUG = DEBUG
-
 # Time zone name for django internally to use
 TIME_ZONE = 'America/New_York'
 
@@ -66,12 +60,6 @@ DATABASES = {
 # either in settings_local.py or /etc/openoni.ini.
 SECRET_KEY = ''
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
 # Classes which implement request/response middleware
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -80,25 +68,41 @@ MIDDLEWARE_CLASSES = (
     'openoni.core.middleware.TooBusyMiddleware',
 )
 
-# DEPRECATED as of django 1.8!
-#
-# Callables which alter the request context
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'openoni.core.context_processors.extra_request_info',
-    'openoni.core.context_processors.newspaper_info',
-)
+# Template configuration (1.8+)
+TEMPLATES = [
+    {
+        # Whether engine looks inside application directories for templates
+        'APP_DIRS': True,
 
-# DEPRECATED as of django 1.8!
-#
-# Where to look for HTML templates
-TEMPLATE_DIRS = (
-    os.path.join(DIRNAME, 'templates'),
-)
+        # Template engine
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+
+        # Template-containing directories
+        'DIRS': [
+            os.path.join(DIRNAME, 'templates'),
+        ],
+
+        'OPTIONS': {
+            # Callables which alter the request context
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'openoni.core.context_processors.extra_request_info',
+                'openoni.core.context_processors.newspaper_info',
+            ],
+
+            # Template engine debug info; Defaults to the value of DEBUG
+            #'debug': True,
+        },
+    },
+]
 
 # List of configuration classes / app packages in order of priority (i.e., the
 # first item in the list has final say when collisions occur)
 INSTALLED_APPS = (
-    'south',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'djcelery',
@@ -129,10 +133,6 @@ ALLOWED_HOSTS = []
 
 # This is a setting for Celery to know where to put data
 BROKER_TRANSPORT = "django"
-
-# This tells South to create the test database via syncdb rather than running
-# all the migrations
-SOUTH_TESTS_MIGRATE = False
 
 ####################################################################
 # OPEN-ONI SETTINGS

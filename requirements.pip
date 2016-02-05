@@ -1,5 +1,5 @@
 distribute>=0.6.28
-Django==1.5.4
+Django>=1.8,<1.9
 MySQL-python
 lxml
 pymarc
@@ -8,7 +8,6 @@ Pillow
 simplejson
 feedparser
 rfc3339==5
-south
 mimeparse
 NativeImaging
 html5lib==0.95
