@@ -3,7 +3,7 @@ from datetime import datetime
 from rdflib import ConjunctiveGraph, Namespace, Literal, URIRef, RDF, RDFS
 from rfc3339 import rfc3339
 
-import openoni.core.utils.image_urls
+from openoni.core.utils import image_urls
 
 DC = Namespace('http://purl.org/dc/elements/1.1/')
 ORE = Namespace('http://www.openarchives.org/ore/terms/')
@@ -121,7 +121,7 @@ def page_to_graph(p, g=None):
     g.add((uri, ORE.aggregates, txt_uri))
     g.add((txt_uri, DC['format'], Literal('text/plain')))
 
-    thumb_uri = image_urls.thumb_image_url(page)
+    thumb_uri = image_urls.thumb_image_url(p)
     g.add((uri, ORE.aggregates, thumb_uri))
     g.add((uri, FOAF.depiction, thumb_uri))
     g.add((thumb_uri, DC['format'], Literal('image/jpeg')))
