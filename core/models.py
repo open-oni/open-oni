@@ -17,6 +17,7 @@ from urllib import url2pathname
 from django.db import models
 from django.db.models import permalink, Q
 from django.conf import settings
+from django.utils.http import urlquote
 
 from openoni.core.utils import strftime
 
@@ -614,6 +615,9 @@ class Page(models.Model):
     reel = models.ForeignKey('Reel', related_name='pages', null=True)
     indexed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
+
+    def iiif_id(self):
+        return "/images/iiif/" + urlquote(self.relative_image_path, safe="")
 
     def json(self, host, serialize=True):
         j = {

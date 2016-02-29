@@ -136,6 +136,7 @@
 
     <div id="page_data"
 	 data-static_url="{% static '' %}images/",
+         data-iiif_id="{{page.iiif_id}}",
 	 data-width="{{page.jp2_width}}"
 	 data-height="{{page.jp2_length}}"
 	 data-page_url="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.sequence %}"

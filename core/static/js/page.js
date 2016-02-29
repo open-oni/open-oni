@@ -33,6 +33,7 @@
     }
     
     function resizePrint(viewer) {
+        if (! viewer.viewport) return;
         var image = viewer.source;
         var zoom = viewer.viewport.getZoom(); 
         var size = new OpenSeadragon.Rect(0, 0, image.dimensions.x, image.dimensions.y);
@@ -126,42 +127,6 @@
         });
     }
 
-    function getTileUrl(level, column, row) {
-        var px = 0
-        if (column!=0) {
-            px = this.tileSize * column - this.tileOverlap;
-        }
-        var py = 0
-        if (row!=0) {
-            py = this.tileSize * row - this.tileOverlap;
-        }
-        var scale = this.getLevelScale(level);
-        var dimensionsScaled = this.dimensions.times(scale);
-
-        // find the dimension of the tile, adjust for no
-        // overlap data on top and left edges
-        sx = this.tileSize + (column==0 ? 1 : 2) * this.tileOverlap;
-        sy = this.tileSize + (row==0 ? 1 : 2) * this.tileOverlap;
-
-        // adjust size for single-tile levels where the image
-        // size is smaller than the regular tile size, and for
-        // tiles on the bottom and right edges that would
-        // exceed the image bounds.
-        sx = Math.min(sx, dimensionsScaled.x - px)
-        sy = Math.min(sy, dimensionsScaled.y - py)
-
-        var x1 = parseInt(px / scale);
-        var y1 = parseInt(py / scale);
-        var x2 = parseInt((px + sx) / scale);
-        var y2 = parseInt((py + sy) / scale);
-
-        // tile width/height dimension can't be more than image sides 
-        var tile_width = Math.min(parseInt(sx), (x2-x1));
-        var tile_height = Math.min(parseInt(sy), (y2-y1));
-
-        return tile_url + 'image_'+tile_width+'x'+tile_height+'_from_'+x1+','+y1+'_to_'+x2+','+y2+'.jpg';
-    }
-
     function initPage() {
 	page_url = $('#page_data').data("page_url")
 	tile_url = $('#page_data').data("tile_url")
@@ -170,27 +135,32 @@
 	width = $('#page_data').data("width")
 	height = $('#page_data').data("height")
 	static_url = $('#page_data').data("static_url")
+	iiif_id = $('#page_data').data("iiif_id")
 
         var viewer = null;
 
-        var tileSize = 512;
-        var tileOverlap = 1;
-        var minLevel = 8;
-        var maxLevel = Math.ceil(Math.log(Math.max(width, height)) / Math.log(2));
-
-        var ts = new OpenSeadragon.TileSource(width, height, tileSize, tileOverlap, minLevel, maxLevel);
-        ts.getTileUrl =  getTileUrl;
-
-        var viewer = new OpenSeadragon.Viewer({
-            id: "viewer_container",
-            toolbar: "item-ctrl",
-            prefixUrl: static_url,
-            autoHideControls: false,
-            nextButton: "next",
-            previousButton: "previous",
-            tileSources: ts,
-            timeout: 60000
-        });
+	var viewer = OpenSeadragon({
+	  id: "viewer_container",
+          toolbar: "item-ctrl",
+	  prefixUrl: static_url,
+          autoHideControls: false,
+          showNavigator: true,
+          nextButton: "next",
+          previousButton: "previous",
+          timeout: 60000,
+	  tileSources: [{
+	    "@context": "http://iiif.io/api/image/2/context.json",
+	    "@id": iiif_id,
+	    "height": height,
+            "width": width,
+	    "profile": [ "http://iiif.io/api/image/2/level2.json" ],
+	    "protocol": "http://iiif.io/api/image",
+	    "tiles": [{
+	      "scaleFactors": [ 1, 2, 4, 8, 16, 32 ],
+	      "width": 1024
+	    }]
+	  }]
+	});
 
         viewer.addHandler("open", addOverlays);
         viewer.addHandler("open", resizePrint);
