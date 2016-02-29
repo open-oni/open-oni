@@ -144,8 +144,7 @@ BROKER_TRANSPORT = "django"
 IS_PRODUCTION = False
 
 # These must be overridden to point to the image server
-RESIZE_SERVER = "http://example.com/images/resize"
-TILE_SERVER = "http://example.com/images/tile"
+IIIF_SERVER = "http://example.com/images/iiif"
 
 # How big should thumbnails be?
 THUMBNAIL_WIDTH = 240
