@@ -7,32 +7,6 @@
     var height;
     var static_url;
 
-    function fullscreen(event) {
-        var viewer = event.eventSource;
-        if (viewer.isFullPage()) { 
-            $.bbq.pushState({"fullscreen": true});
-            rewritePagingLinks();
-        } else {
-            window.history.pushState("",$(document).find("title").text(),$("#pageNum").val());
-            $.bbq.removeState("fullscreen");
-            rewritePagingLinks();
-        }
-    }
-
-    function rewritePagingLinks() {
-        if ($.bbq.getState("fullscreen")) {
-            $("#item-ctrl a[rel]").each(function(i, a) {
-                var href = $(a).attr("href") + "#fullscreen=true";
-                $(a).attr({href: href}); 
-            });
-        } else {
-            $("#item-ctrl a[rel]").each(function(i, a) {
-                var href = $(a).attr("href").replace("#fullscreen=true", "");
-                $(a).attr({href: href});
-            });
-        }
-    }
-    
     function resizePrint(event) {
         var viewer = event.eventSource;
         var image = viewer.source;
@@ -167,21 +141,10 @@
         viewer.addHandler("open", addOverlays);
         viewer.addHandler("open", resizePrint);
         viewer.addHandler("animation-finish", resizePrint);
-        viewer.addHandler("resize", fullscreen);
-
-        if ($.bbq.getState("fullscreen")) {
-            viewer.setFullPage(true);
-            rewritePagingLinks();
-        }
 
         $("#pageNum").change(function(event) { 
-            viewer.close();
             page_url = $("#pageNum").val();
-            tile_url = $("#pageNum").val();
-            viewer.openTileSource(ts);
-            if (!($.bbq.getState("fullscreen"))) {
-                window.history.pushState("",$(document).find("title").text(),$("#pageNum").val());
-            }
+            window.location = page_url;
         });
 
     }
