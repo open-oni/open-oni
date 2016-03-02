@@ -7,7 +7,8 @@
     var height;
     var static_url;
 
-    function fullscreen(viewer) {
+    function fullscreen(event) {
+        var viewer = event.eventSource;
         if (viewer.isFullPage()) { 
             $.bbq.pushState({"fullscreen": true});
             rewritePagingLinks();
@@ -32,8 +33,8 @@
         }
     }
     
-    function resizePrint(viewer) {
-        if (! viewer.viewport) return;
+    function resizePrint(event) {
+        var viewer = event.eventSource;
         var image = viewer.source;
         var zoom = viewer.viewport.getZoom(); 
         var size = new OpenSeadragon.Rect(0, 0, image.dimensions.x, image.dimensions.y);
@@ -101,7 +102,8 @@
         viewer.drawer.addOverlay(div, rect);
     }
 
-    function addOverlays(viewer) {
+    function addOverlays(event) {
+        var viewer = event.eventSource;
         var params = $.deparam.fragment();
         var words = params["words"] || "";
         var dimensions = viewer.source.dimensions;
@@ -128,43 +130,43 @@
     }
 
     function initPage() {
-	page_url = $('#page_data').data("page_url")
-	tile_url = $('#page_data').data("tile_url")
-	coordinates_url = $('#page_data').data("coordinates_url")
-	navigation_url = $('#page_data').data("navigation_url")
-	width = $('#page_data').data("width")
-	height = $('#page_data').data("height")
-	static_url = $('#page_data').data("static_url")
-	iiif_id = $('#page_data').data("iiif_id")
+        page_url = $('#page_data').data("page_url")
+        tile_url = $('#page_data').data("tile_url")
+        coordinates_url = $('#page_data').data("coordinates_url")
+        navigation_url = $('#page_data').data("navigation_url")
+        width = $('#page_data').data("width")
+        height = $('#page_data').data("height")
+        static_url = $('#page_data').data("static_url")
+        iiif_id = $('#page_data').data("iiif_id")
 
         var viewer = null;
 
-	var viewer = OpenSeadragon({
-	  id: "viewer_container",
-          toolbar: "item-ctrl",
-	  prefixUrl: static_url,
-          autoHideControls: false,
-          showNavigator: true,
-          nextButton: "next",
-          previousButton: "previous",
-          timeout: 60000,
-	  tileSources: [{
-	    "@context": "http://iiif.io/api/image/2/context.json",
-	    "@id": iiif_id,
-	    "height": height,
-            "width": width,
-	    "profile": [ "http://iiif.io/api/image/2/level2.json" ],
-	    "protocol": "http://iiif.io/api/image",
-	    "tiles": [{
-	      "scaleFactors": [ 1, 2, 4, 8, 16, 32 ],
-	      "width": 1024
-	    }]
-	  }]
-	});
+        var viewer = OpenSeadragon({
+            id: "viewer_container",
+            toolbar: "item-ctrl",
+            prefixUrl: static_url,
+            autoHideControls: false,
+            showNavigator: true,
+            nextButton: "next",
+            previousButton: "previous",
+            timeout: 60000,
+            tileSources: [{
+                "@context": "http://iiif.io/api/image/2/context.json",
+                "@id": iiif_id,
+                "height": height,
+                "width": width,
+                "profile": [ "http://iiif.io/api/image/2/level2.json" ],
+                "protocol": "http://iiif.io/api/image",
+                "tiles": [{
+                    "scaleFactors": [ 1, 2, 4, 8, 16, 32 ],
+                    "width": 1024
+                }]
+            }]
+        });
 
         viewer.addHandler("open", addOverlays);
         viewer.addHandler("open", resizePrint);
-        viewer.addHandler("animationfinish", resizePrint);
+        viewer.addHandler("animation-finish", resizePrint);
         viewer.addHandler("resize", fullscreen);
 
         if ($.bbq.getState("fullscreen")) {
