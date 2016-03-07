@@ -8,8 +8,7 @@
 {% block main_content %}
 <div id="std_box">
 <h2>Introduction</h2> 
-<p>Chronicling America provides access to information about historic
-newspapers and select digitized newspaper pages.  To encourage a wide
+<p>Open ONI provides access to information about digitized newspaper pages. To encourage a wide
 range of potential uses, we designed several different views of the
 data we provide, all of which are publicly visible.  Each uses common
 Web protocols, and access is not restricted in any way.  You do not
@@ -21,13 +20,13 @@ explore all of our data in many ways.</p>
 right in, though, we use HTML link conventions to advertise the
 availability of these views.  If you are a software developer
 or researcher or anyone else who might be interested in programmatic
-access to the data in Chronicling America, we encourage you to look
+access to the data in Open ONI, we encourage you to look
 around the site, &quot;view source&quot; often, and follow where the
-different links take you to get started.  When describing Chronicling America as the source of content, please use the URL and a Web site citation, such as &quot;from the Library of Congress, Chronicling America: Historic American Newspapers site&quot;.</p> 
+different links take you to get started.</p>
 
 <p>For more information about the open source Open ONI software 
-please see the <a href="https://github.com/open-oni/open-oni">Open ONI/openoni</a> GitHub site.
-Also, please consider subscribing to the <a href="http://listserv.loc.gov/archives/chronam-users.html">chronam-Users</a> discussion list
+please see the <a href="https://github.com/Open ONI/Open ONI">Open ONI/openoni</a> GitHub site.
+Also, please consider subscribing to the <a href="http://listserv.loc.gov/archives/chronam-users.html">chronam-users</a> discussion list
 if you want to discuss how to use or extend the software or data from its
 APIs.</p>
  
@@ -37,62 +36,19 @@ APIs.</p>
 <li><a href="#search">Search</a> the newspaper directory and digitized page contents using OpenSearch.</li> 
 <li><a href="#autosuggest">Auto Suggest</a> API for looking up newspaper
 titles</li>
-<li><a href="#link">Link</a> using our stable URL pattern for Chronicling
-America resources.</li>
-<li><a href="#linked-data">JSON</a> views of Chronicling America resources.</li> 
-<li><a href="#linked-data">Linked Data</a> views of Chronicling American resources.</li> 
+<li><a href="#link">Link</a> using our stable URL pattern for Open ONI resources.</li>
+<li><a href="#linked-data">JSON</a> views of Open ONI resources.</li> 
+<li><a href="#linked-data">Linked Data</a> views of Open ONI resources.</li> 
 <li><a href="#bulk-data">Bulk Data</a> for research and external services.</li>
 <li><a href="#cors_jsonp">CORS and JSONP</a> support for your JavaScript
 applications.</li>
 </ul> 
  
 <a name="search"></a> 
-<h3>Searching the directory and newspaper pages using OpenSearch</h3> 
-<p>The <a href="/search/titles/">directory of
-newspaper titles</a> contains nearly 140,000 records of newspapers and
-libraries that hold copies of these newspapers. The title records are based
-on MARC data gathered and enhanced as part of the NDNP program.</p> 
-<p>Searching the title records is possible using the <a class="external"
-href="http://opensearch.org/">OpenSearch protocol</a>. This
-is advertised in a LINK header element of the site's HTML
-template as &quot;NDNP Title Search&quot;, using <a 
-href="/search/titles/opensearch.xml">this
-OpenSearch Description document</a>.</p> 
-<p>Title search parameters:</p> 
-<ul> 
-<li>terms: the search query</li> 
-<li>format: 'html' (default), 'json', or 'atom' (optional)</li> 
-<li>page: for paging results (optional)</li> 
-</ul> 
-<p>Examples:</p> 
-<p>Note that all example URLs below use the same protocol and server name,
-<a href="/">http://chroniclingamerica.loc.gov/</a>.
-We only show the URL paths and parameters below to save space.</p> 
-<ul> 
-<li> 
-<a href="/search/titles/results/?terms=michigan">/search/titles/results/?terms=michigan</a> 
-<br /> 
-search for &quot;michigan&quot;, HTML response
-</li> 
-<li> 
-<a href="/search/titles/results/?terms=michigan&format=atom">/search/titles/results/?terms=michigan&amp;format=atom</a> 
-<br /> 
-search for &quot;michigan&quot;, Atom response
-</li> 
-<li> 
-<a href="/search/titles/results/?terms=michigan&format=json&page=5">/search/titles/results/?terms=michigan&amp;format=json&amp;page=5</a> 
-<br /> 
-search for &quot;michigan&quot;, JSON response, starting at page 5
-</li> 
-</ul> 
-<p>There are millions of <a href="/search/pages/results/">digitized
-newspaper pages</a> in Chronicling America.  These pages span
-several decades and many U.S. states and territories.  New batches of
-data come in from partner institutions throughout the year and are
-added to the site regularly.</p> 
-<p>Searching newspaper pages is also possible via OpenSearch. This is
+<h3>Searching newspaper pages using OpenSearch</h3> 
+<p>Searching newspaper pages is possible via OpenSearch. This is
 advertised in a LINK header element of the site's HTML template as
-&quot;NDNP Page Search&quot;, using <a
+&quot;Open ONI Page Search&quot;, using <a
 href="/search/pages/opensearch.xml">this
 OpenSearch Description document</a>.</p> 
 <p>Page search parameters:</p> 
@@ -123,33 +79,18 @@ search for &quot;thomas&quot;, Atom response, starting at page 11
 
 <a name="autosuggest"></a>
 
-<h3>Using the Directory's AutoSuggest API</h3>
-<p>The Chronicling America Directory contains hundreds of thousands of
-bibliographic records for American newspaper titles. To allow the directory to
-be integrated into your own applications you can use the OpenSearch 
-AutoSuggest API to dynamically lookup these newspaper titles. For example:</p>
-
-<ul>
-    <li><a href="/suggest/titles/?q=Florida">/suggest/titles/?q=Florida</a></li>
-</ul>
-
-<p>The response will be application/x-suggestions+json as described by the the <a href="http://www.opensearch.org/Specifications/OpenSearch/Extensions/Suggestions/1.1">OpenSearch Suggestions</a> extension.</p>
-
-<p class="backtotop"><a href="#skip_menu">Top</a></p>
 
 
 <a name="link"></a> 
-<h3>Link to Chronicling America Resources</h3> 
-<p>The Chronicling America Web site uses links that follow a
+<h3>Link to Open ONI Resources</h3> 
+<p>Open ONI uses links that follow a
 straightforward pattern.  You can use this pattern to construct links
 into specific newspaper titles, to any of its available issues and
 their editions, and even to specific pages.  These links can be readily
 bookmarked and shared on other sites.</p> 
 <p>We are committed to supporting this link pattern over time, so even if we change
 how the site works, we will redirect any requests to the system using
-this specific pattern into the new site.  We established redirect rules
-for links into the previous version of the site when we released a new
-version in early 2009, and we intend to sustain those rules.</p> 
+this specific pattern.</p> 
 <p>The link pattern uses <a href="http://www.loc.gov/marc/lccn.html">LCCNs</a>, dates, issue
 numbers, edition numbers, and page sequence numbers.</p> 
 <p>Examples:</p> 
@@ -182,7 +123,7 @@ third available page from first edition, January 5, 1900
 <h3>JSON Views</h3>
 <p>
 In addition to the use of JSON in OpenSearch results, there are also JSON views
-available for various resources in Chronicling America. These JSON views are
+available for various resources. These JSON views are
 typically linked from their HTML representation using the &lt;link&gt; element.
 For example: 
 <ul> 
@@ -210,14 +151,6 @@ a list of all batches of content that have been loaded
 <br>
 detailed information about a specific batch
 </li>
-<li><a href="/awardees.json">/awardees.json</a>
-<br>
-a list of all NDNP Awardees as JSON
-</li>
-<li><a href="/awardees/dlc.json">/awardees/dlc.json</a>
-<br>
-detailed information about a specific awardee
-</li>
 </ul>   
 
 You will notice that many of these JSON views link to each other. This allows
@@ -231,8 +164,8 @@ related entity.
 <a name="linked-data"></a> 
 <h3>Linked Data</h3> 
 <p><a href="http://linkeddata.org/">Linked Data</a> allows us to connect the
-information in Chronicling America directly to related data on the Web 
-explicitly.  Chronicling America provides several Linked Data views to
+information in Open ONI directly to related data on the Web 
+explicitly.  Open ONI provides several Linked Data views to
 make it easy to connect with other information resources and to process
 and analyze newspaper information with conceptual precision.</p> 
 <p>We use concepts like Title (defined in <a class="external"
@@ -242,19 +175,7 @@ href="http://bibliontology.com/">the Bibliographic Ontology</a>) to
 describe newspaper titles and issues available in the data.  Using
 these concepts, defined in existing ontologies, can help to ensure that
 what we mean by &quot;title&quot; and &quot;issue&quot; is consistent with the intent of other
-publishers of linked data.  We also define other concepts not
-already defined in existing ontologies. This
-vocabulary includes elements suitable for newspaper information
-and the NDNP program, including these elements:</p> 
-<ul> 
-<li>Awardee</li> 
-<li>Batch</li> 
-<li>Page</li> 
-<li>bag</li> 
-<li>number</li> 
-<li>section</li> 
-<li>sequence</li> 
-</ul> 
+publishers of linked data. 
 <p>These elements are used in RDF views of several types of pages, ranging
 from a list of the newspaper titles available on the site and
 information about each, to enumerations of all the pages that make
@@ -276,7 +197,6 @@ information about <a href="/lccn/sn83045555/1889-11-21/ed-1/">the November 21, 1
 <br /> 
 details about all of the files associated with the <a href="/lccn/sn83030214/1905-01-15/ed-1/seq-25/">25th image of the January 15, 1905 issue</a> of New-York Tribune (New York [N.Y.]) 1886-1924
 </li> 
-<li><a href="/awardees/mohi.rdf">/awardees/mohi.rdf</a><br />information about <a href="/awardees/mohi/">awardee State Historical Society of Missouri</a></li> 
 <li><a href="/newspapers.rdf">/newspapers.rdf</a><br />list of <a href="/newspapers/">available newspaper titles</a></li> 
 </ul> 
 <p>Comparing the RDF versions of the links above with their HTML
@@ -293,11 +213,10 @@ availability of the additional views.  In many views, such as newspaper
 page images, we also provide LINK elements pointing to the various
 available files (image, text, OCR coordinate XML) for each available
 page or other potentially useful information.  We encourage you to
-explore the entire site and to look for and use these LINK elements 
-if you find them useful when working with NDNP data.  Just follow your nose, 
+explore the entire site and to look for and use these LINK elements.  Just follow your nose, 
 and view the source.</p> 
 <p>In addition to the concepts describe above, we use concepts from
-several other vocabularies in describing NDNP materials and also in
+several other vocabularies in describing materials and also in
 linking to related data available on other sites.  These additional
 vocabularies and external sites include:</p> 
 <ul> 
@@ -325,16 +244,15 @@ vocabularies are introduced.</p>
 <p>
 In certain situations the granular access provided by the API may be somewhat
 constraining. For example, perhaps you are a researcher who would like to 
-try out new indexing techniques on the millions of pages of OCR data in
-Chronicling America. Or perhaps you are a service provider and anticipate
+try out new indexing techniques on the millions of pages of OCR data. Or perhaps you are a service provider and anticipate
 needing to support a high volume of fulltext searches across the corpus, and 
-do not want the Chronicling America API as an external dependency.
+do not want the Open ONI API as an external dependency.
 
 To support these and other potential use cases we are beginning to provide
 bulk access to the underlying data sets. The initial bulk data sets include:
 
 <ul>
-    <li>Batches: each batch of digitized content that is provided by awardees is
+    <li>Batches: each batch of digitized content is
     made available via the Batches <a href="{% url 'openoni_batches' %}">HTML</a>,
     <a href="{% url 'openoni_batches_atom' %}">Atom</a> and 
     <a href="{% url 'openoni_batches_json' %}">JSON</a> views. These views provide
@@ -354,12 +272,11 @@ bulk access to the underlying data sets. The initial bulk data sets include:
 <a name="cors_jsonp"></a>
 <h3>CORS and JSONP Support</h3>
 <p>
-To help you integrate Chronicling America into your JavaScript applications, 
+To help you integrate Open ONI into your JavaScript applications, 
 the OpenSearch and AutoSuggest JSON responses support both 
 <a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing (CORS)</a> 
 and <a href="http://en.wikipedia.org/wiki/JSONP">JSON with Padding (JSONP)</a>.
-CORS and JSONP allow your JavaScript applications to talk to services 
-hosted at chroniclingamerica.loc.gov without the need to proxy the requests
+CORS and JSONP allow your JavaScript applications to talk to services without the need to proxy the requests
 yourself. 
 </p>
 
