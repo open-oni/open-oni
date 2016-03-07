@@ -658,12 +658,12 @@ class Page(models.Model):
                 "@id": tile_server_for_page(self),
                 "@type": "oa:Annotation",
                 "rendering": [
-                    {"@id": self.pdf_url, "format": "application/pdf"},
-                    {"@id": self.jp2_url, "format": "image/jp2"},
-                    {"@id": self.url, "format": "text/html"}
+                    {"@id": "http://" + host + self.pdf_url, "format": "application/pdf"},
+                    {"@id": "http://" + host + self.jp2_url, "format": "image/jp2"},
+                    {"@id": "http://" + host + self.url, "format": "text/html"}
                 ],
                 "seeAlso": [
-                    {"@id": self.ocr_url, "format": "text/xml"}
+                    {"@id": "http://" + host + self.ocr_url, "format": "text/xml"}
                 ]
             }],
             "label": str(self.sequence),

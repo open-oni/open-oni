@@ -104,14 +104,21 @@ def newspapers(request, state=None, format='html'):
 
     elif format == "json":
         host = request.get_host()
-        results = {"newspapers": []}
+
+        results = {
+            "@context": "http://iiif.io/api/presentation/2/context.json", 
+            "@id": request.get_absolute_uri(),
+            "@type": "sc:Collection",
+            "label": "Newspapers",
+            "manifests": [],
+        }
+
         for state, titles in newspapers_by_state:
             for title in titles:
-                results["newspapers"].append({
-                    "lccn": title.lccn,
-                    "title": title.display_name,
-                    "url": "http://" + host + title.json_url,
-                    "state": state
+                results["manifests"].append({
+                    "@id": title.json_url,
+                    "@type": "sc:Manifest",
+                    "label": title.display_name
                 })
 
         return HttpResponse(json.dumps(results, indent=2), content_type='application/json')
