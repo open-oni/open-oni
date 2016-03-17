@@ -131,10 +131,6 @@
                 "width": width,
                 "profile": [ "http://iiif.io/api/image/2/level2.json" ],
                 "protocol": "http://iiif.io/api/image",
-                "tiles": [{
-                    "scaleFactors": [ 1, 2, 4, 8, 16, 32 ],
-                    "width": 1024
-                }]
             }]
         });
 
