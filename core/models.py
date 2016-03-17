@@ -52,11 +52,19 @@ class Awardee(models.Model):
     def abstract_url(self):
         return self.url.rstrip('/') + '#awardee'
 
-    def json(self, host, serialize=True):
+    def json(self, host, include_batches, serialize=True):
         j = {
-            "name": self.name,
-            "url": 'http://' + host + self.json_url
+            "@context": "http://iiif.io/api/presentation/2/context.json", 
+            "@id": "http://" + host + self.json_url,
+            "@type": "sc:Collection",
+            "label": self.name,
+            "collections": [],
         }
+
+        if include_batches:
+            for batch in self.batches.all():
+                j['collections'].append(batch.json(host, include_issues=True, serialize=False))
+
         if serialize:
             return json.dumps(j, indent=2)
         return j
@@ -144,28 +152,25 @@ class Batch(models.Model):
         super(Batch, self).delete(*args, **kwargs)
 
     def json(self, host, include_issues=True, serialize=True):
-        b = {}
-        b['name'] = self.name
-        b['ingested'] = rfc3339(self.created)
-        b['page_count'] = self.page_count
-        b['lccns'] = self.lccns()
-        b['awardee'] = {
-            "name": self.awardee.name,
-            "url": "http://" + host + self.awardee.json_url
+        b = {
+            "@context": "http://iiif.io/api/presentation/2/context.json",
+            "@id": "http://" + host + self.json_url,
+            "@type": "sc:Collection",
+            "label": self.name,
+            "metadata": [
+                {"label": "Ingested", "value": rfc3339(self.created)},
+                {"label": "Pages", "value": self.page_count},
+                {"label": "Awardee", "value": self.awardee.name},
+            ],
         }
-        b['url'] = "http://" + host + self.json_url
         if include_issues:
-            b['issues'] = []
+            b['manifests'] = []
             for issue in self.issues.all():
-                i = {
-                    "title": {
-                        "name": issue.title.display_name,
-                        "url": "http://" + host + issue.title.json_url,
-                    },
-                    "date_issued": strftime(issue.date_issued, "%Y-%m-%d"),
-                    "url": "http://" + host + issue.json_url
-                }
-                b['issues'].append(i)
+                b['manifests'].append({
+                    "@id": "http://" + host + issue.json_url,
+                    "@type": "sc:Manifest",
+                    "label": str(issue)
+                })
         if serialize:
             return json.dumps(b)
         else:
@@ -328,7 +333,7 @@ class Title(models.Model):
     def json(self, host, serialize=True):
         j = {
             "@context": "http://iiif.io/api/presentation/2/context.json", 
-            "@id": self.json_url,
+            "@id": "http://" + host + self.json_url,
             "@type": "sc:Collection",
             "label": self.display_name,
             "manifests": [],
@@ -337,7 +342,7 @@ class Title(models.Model):
 
         for issue in self.issues.all():
             j["manifests"].append({
-                "@id": issue.json_url,
+                "@id": "http://" + host + issue.json_url,
                 "@type": "sc:Manifest",
                 "label": strftime(issue.date_issued, "%Y-%m-%d")
             })

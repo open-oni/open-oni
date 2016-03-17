@@ -107,17 +107,17 @@ def newspapers(request, state=None, format='html'):
 
         results = {
             "@context": "http://iiif.io/api/presentation/2/context.json", 
-            "@id": request.get_absolute_uri(),
+            "@id": "http://" + host + request.get_full_path(),
             "@type": "sc:Collection",
             "label": "Newspapers",
-            "manifests": [],
+            "collections": [],
         }
 
         for state, titles in newspapers_by_state:
             for title in titles:
-                results["manifests"].append({
-                    "@id": title.json_url,
-                    "@type": "sc:Manifest",
+                results["collections"].append({
+                    "@id": "http://" + host + title.json_url,
+                    "@type": "sc:Collection",
                     "label": title.display_name
                 })
 
