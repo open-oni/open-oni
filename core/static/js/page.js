@@ -124,14 +124,7 @@
             nextButton: "next",
             previousButton: "previous",
             timeout: 60000,
-            tileSources: [{
-                "@context": "http://iiif.io/api/image/2/context.json",
-                "@id": iiif_id,
-                "height": height,
-                "width": width,
-                "profile": [ "http://iiif.io/api/image/2/level2.json" ],
-                "protocol": "http://iiif.io/api/image",
-            }]
+            tileSources: iiif_id
         });
 
         viewer.addHandler("open", addOverlays);
