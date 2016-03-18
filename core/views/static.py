@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core import urlresolvers
+from openoni.core.models import Batch, Title, Issue, Page
 from openoni.core.decorator import cache_page
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -18,6 +19,7 @@ def about(request):
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def about_api(request):
+    host = "http://" + request.get_host()
     page_title = "About the Site and API"
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([
@@ -25,6 +27,12 @@ def about_api(request):
          'href': urlresolvers.reverse('openoni_about_api'),
          'active': True},
     ])
+    batch = Batch.objects.all()[0]
+    lccn = batch.lccns()[0]
+    title = Title.objects.get(lccn=lccn)
+    issue = title.issues.all()[0]
+    page = issue.pages.all()[0]
+
     return render_to_response('about_api.html', dictionary=locals(),
                               context_instance=RequestContext(request))
 

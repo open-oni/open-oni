@@ -530,6 +530,15 @@ class Issue(models.Model):
                  'edition': self.edition})
 
     @property
+    @permalink
+    def rdf_url(self):
+        date = self.date_issued
+        return ('openoni_issue_pages_dot_rdf', (),
+                {'lccn': self.title.lccn,
+                 'date': "%04i-%02i-%02i" % (date.year, date.month, date.day),
+                 'edition': self.edition})
+
+    @property
     def abstract_url(self):
         return self.url.rstrip('/') + '#issue'
 
@@ -737,6 +746,12 @@ class Page(models.Model):
     @permalink
     def json_url(self):
         return ('openoni_page_dot_json', (), self._url_parts())
+
+    @property
+    @permalink
+    def rdf_url(self):
+        return ('openoni_page_dot_rdf', (), self._url_parts())
+
 
     @property
     def abstract_url(self):

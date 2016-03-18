@@ -37,7 +37,7 @@ APIs.</p>
 <li><a href="#autosuggest">Auto Suggest</a> API for looking up newspaper
 titles</li>
 <li><a href="#link">Link</a> using our stable URL pattern for Open ONI resources.</li>
-<li><a href="#linked-data">JSON</a> views of Open ONI resources.</li> 
+<li><a href="#iiif-views">IIIF</a> views of Open ONI resources.</li> 
 <li><a href="#linked-data">Linked Data</a> views of Open ONI resources.</li> 
 <li><a href="#bulk-data">Bulk Data</a> for research and external services.</li>
 <li><a href="#cors_jsonp">CORS and JSONP</a> support for your JavaScript
@@ -60,17 +60,17 @@ OpenSearch Description document</a>.</p>
 <p>Examples:</p> 
 <ul> 
 <li> 
-<a href="/search/pages/results/?andtext=thomas">/search/pages/results/?andtext=thomas</a> 
+<a href="/search/pages/results/?andtext=thomas">{{ host }}/search/pages/results/?andtext=thomas</a> 
 <br /> 
 search for &quot;thomas&quot;, HTML response
 </li> 
 <li> 
-<a href="/search/pages/results/?andtext=thomas&format=atom">/search/pages/results/?andtext=thomas&amp;format=atom</a> 
+<a href="/search/pages/results/?andtext=thomas&format=atom">{{ host }}/search/pages/results/?andtext=thomas&amp;format=atom</a> 
 <br /> 
 search for &quot;thomas&quot;, Atom response
 </li> 
 <li> 
-<a href="/search/pages/results/?andtext=thomas&format=atom&page=11">/search/pages/results/?andtext=thomas&amp;format=atom&amp;page=11</a> 
+<a href="/search/pages/results/?andtext=thomas&format=atom&page=11">{{ host }}/search/pages/results/?andtext=thomas&amp;format=atom&amp;page=11</a> 
 <br /> 
 search for &quot;thomas&quot;, Atom response, starting at page 11
 </li> 
@@ -95,68 +95,58 @@ this specific pattern.</p>
 numbers, edition numbers, and page sequence numbers.</p> 
 <p>Examples:</p> 
 <ul> 
-<li><a href="/lccn/sn86069873/">/lccn/sn86069873/</a> 
+<li><a href="{{ title.url }}">{{ host }}{{ title.url }}</a> 
 <br /> 
 title information for LCCN sn 86069873
 </li> 
-<li><a href="/lccn/sn86069873/issues/">/lccn/sn86069873/issues/</a> 
+<li><a href="{{ issue.url }}">{{ host }}{{ issue.url }}</a> 
 <br /> 
-calendar view of available issues
+first available edition from {{ issue.date_issued }}
 </li> 
-<li><a href="/lccn/sn86069873/issues/first_pages/">/lccn/sn86069873/issues/first_pages/</a> 
+<li><a href="{{ page.url }}">{{ host }}{{ page.url }}</a> 
 <br /> 
-browse first pages of available issues
-</li> 
-<li><a href="/lccn/sn86069873/1900-01-05/ed-1/">/lccn/sn86069873/1900-01-05/ed-1/</a> 
-<br /> 
-first available edition from January 5, 1900
-</li> 
-<li><a href="/lccn/sn86069873/1900-01-05/ed-1/seq-3/">/lccn/sn86069873/1900-01-05/ed-1/seq-3/</a> 
-<br /> 
-third available page from first edition, January 5, 1900
+first available page from first edition, January 5, 1900
 </li> 
 </ul> 
 <p class="backtotop"><a href="#skip_menu">Top</a></p> 
 
 
-<a name="json-views"></a>
-<h3>JSON Views</h3>
+<a name="iiif-views"></a>
+<h3>IIIF Views</h3>
 <p>
-In addition to the use of JSON in OpenSearch results, there are also JSON views
-available for various resources. These JSON views are
+In addition to the use of JSON in OpenSearch results, there are also 
+<a href="http://iiif.io">IIIF</a> Presentation API and Image API
+JSON views available for various resources. These IIIF views are
 typically linked from their HTML representation using the &lt;link&gt; element.
 For example: 
 <ul> 
-<li><a href="/lccn/sn86069873.json">/lccn/sn86069873.json</a> 
+<li><a href="{{ title.json_url }}">{{ host }}{{ title.json_url }}</a> 
 <br /> 
-title information for LCCN sn 86069873
+title information for LCCN sn86069873 as an IIIF Collection
 </li> 
-<li><a href="/lccn/sn86069873/1900-01-05/ed-1.json">/lccn/sn86069873/1900-01-05/ed-1.json</a> 
+<li><a href="{{ issue.json_url }}">{{ host }}{{ issue.json_url }}</a> 
 <br />
-first available edition from January 5, 1900
+first available edition from January 5, 1900 as an IIIF Manifest
 </li> 
-<li><a href="/lccn/sn86069873/1900-01-05/ed-1/seq-3.json">/lccn/sn86069873/1900-01-05/ed-1/seq-3.json</a> 
+<li><a href="{{ page.json_url }}">{{ host }}{{ page.json_url }}</a> 
 <br />
-third available page from first edition, January 5, 1900
+first available page from first edition, January 5, 1900 as an IIIF Canvas
 </li> 
-<li><a href="/newspapers.json">/newspapers.json</a>
+<li><a href="/newspapers.json">{{ host }}/newspapers.json</a>
 <br>
-a list of all newspaper titles for which there is digital content
+a list of all newspaper titles for which there is digital content represented as
+a IIIF Collection
 </li>
-<li><a href="/batches.json">/batches.json</a>
+<li><a href="/batches.json">{{ host }}/batches.json</a>
 <br>
 a list of all batches of content that have been loaded
 </li>
-<li><a href="/batches/batch_dlc_jamaica_ver01.json">/batches/batch_dlc_jamaica_ver01.json</a>
+<li><a href="{{ batch.json_url }}">{{ host }}{{ batch.json_url }}</a>
 <br>
-detailed information about a specific batch
+detailed information about a specific batch as a IIIF Collection
 </li>
 </ul>   
 
-You will notice that many of these JSON views link to each other. This allows
-the JSON to stay relatively compact by including only information about a 
-particular entity, while providing a link to fetch more detail about a 
-related entity.
 </p>
 <p class="backtotop"><a href="#skip_menu">Top</a></p> 
 
@@ -183,21 +173,21 @@ up each issue and all of the files available for each page.</p>
 <p>Examples:</p> 
 <ul> 
 <li> 
-<a href="/lccn/sn85038615.rdf">/lccn/sn85038615.rdf</a> 
+<a href="{% url "openoni_title_dot_rdf" title.lccn %}">{{ host }}{% url "openoni_title_dot_rdf" title.lccn %}</a> 
 <br /> 
-information about <a href="/lccn/sn85038615/">The Times Dispatch</a> (Richmond, Va.) 1903-1914
+information about <a href="{{ title.url }}">{{ title.name }}</a>
 </li> 
 <li> 
-<a href="/lccn/sn83045555/1889-11-21/ed-1.rdf">/lccn/sn83045555/1889-11-21/ed-1.rdf</a> 
+<a href="{{ issue.rdf_url }}">{{ host }}{{ issue.rdf_url }}</a> 
 <br /> 
-information about <a href="/lccn/sn83045555/1889-11-21/ed-1/">the November 21, 1889 first edition issue</a> of Deseret Evening News (Great Salt Lake City [Utah])
+information about <a href="{{ issue.url }}">{{ issue }}</a>
 </li> 
 <li> 
-<a href="/lccn/sn83030214/1905-01-15/ed-1/seq-25.rdf">/lccn/sn83030214/1905-01-15/ed-1/seq-25.rdf</a> 
+<a href="{{ page.rdf_url }}">{{ host }}{{ page.rdf_url }}</a> 
 <br /> 
-details about all of the files associated with the <a href="/lccn/sn83030214/1905-01-15/ed-1/seq-25/">25th image of the January 15, 1905 issue</a> of New-York Tribune (New York [N.Y.]) 1886-1924
+details about all of the files associated with the <a href="{{ page.url }}">{{ page }}</a>
 </li> 
-<li><a href="/newspapers.rdf">/newspapers.rdf</a><br />list of <a href="/newspapers/">available newspaper titles</a></li> 
+<li><a href="/newspapers.rdf">{{ host }}/newspapers.rdf</a><br />list of <a href="/newspapers/">available newspaper titles</a></li> 
 </ul> 
 <p>Comparing the RDF versions of the links above with their HTML
 counterpart links, you might notice that the URI pattern we follow for these
