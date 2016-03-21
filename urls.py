@@ -362,8 +362,6 @@ urlpatterns += patterns(
         name='openoni_batches_atom_page'), 
     url(r'^batches\.json$', 'batches_json', name='openoni_batches_json'),
     url(r'^batches\.csv$', 'batches_csv', name='openoni_batches_csv'),
-    url(r'^batches/(?P<page_number>\d+).json$', 'batches_json',
-        name='openoni_batches_json_page'),
     url(r'^batches/(?P<batch_name>.+)/$', 'batch', name='openoni_batch'),
     url(r'^batches/(?P<batch_name>.+).rdf$', 'batch_rdf', 
         name='openoni_batch_dot_rdf'),

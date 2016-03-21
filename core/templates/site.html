@@ -24,10 +24,6 @@ CSS FILES
   <link href="{% static 'css/tablesort.css' %}" rel="stylesheet" media="screen">
   <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
     
-  <!-- Jquery UI -->
-  <link href="{% static 'vendor/jquery/css/jquery-ui.css' %}" rel="stylesheet" />
-
-
 <!-- ===========
 JS FILES
 ============= -->
@@ -99,7 +95,7 @@ HEADER
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li class="nav_advanced_search"><a href="{% url 'openoni_search_advanced' %">Advanced<br/>Search</a></li>
+        <li class="nav_advanced_search"><a href="{% url 'openoni_search_advanced' %}">Advanced<br/>Search</a></li>
       </ul>
       
       <form class="form-inline navbar-form navbar-right"  action="{% url 'openoni_search_pages_results' %}" method="get">
@@ -174,10 +170,8 @@ Bottom loading javascripts
 
     {% block javascript %}
 
-    <!-- JQuery and Jquery UI -->
+    <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" async="" src="{% static 'vendor/jquery/js/jquery-ui.js' %}"></script>
-    <script type="text/javascript" async="" src="{% static 'vendor/jquery/js/jquery.jcarousel.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.ba-bbq.min.js' %}"></script>
 
      

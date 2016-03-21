@@ -17,8 +17,10 @@ from urllib import url2pathname
 from django.db import models
 from django.db.models import permalink, Q
 from django.conf import settings
+from django.utils.http import urlquote
 
 from openoni.core.utils import strftime
+from openoni.core.utils.image_urls import thumb_image_url, tile_server_for_page
 
 from django.core import urlresolvers
 
@@ -50,11 +52,19 @@ class Awardee(models.Model):
     def abstract_url(self):
         return self.url.rstrip('/') + '#awardee'
 
-    def json(self, host, serialize=True):
+    def json(self, host, include_batches, serialize=True):
         j = {
-            "name": self.name,
-            "url": 'http://' + host + self.json_url
+            "@context": "http://iiif.io/api/presentation/2/context.json", 
+            "@id": "http://" + host + self.json_url,
+            "@type": "sc:Collection",
+            "label": self.name,
+            "collections": [],
         }
+
+        if include_batches:
+            for batch in self.batches.all():
+                j['collections'].append(batch.json(host, include_issues=True, serialize=False))
+
         if serialize:
             return json.dumps(j, indent=2)
         return j
@@ -142,28 +152,25 @@ class Batch(models.Model):
         super(Batch, self).delete(*args, **kwargs)
 
     def json(self, host, include_issues=True, serialize=True):
-        b = {}
-        b['name'] = self.name
-        b['ingested'] = rfc3339(self.created)
-        b['page_count'] = self.page_count
-        b['lccns'] = self.lccns()
-        b['awardee'] = {
-            "name": self.awardee.name,
-            "url": "http://" + host + self.awardee.json_url
+        b = {
+            "@context": "http://iiif.io/api/presentation/2/context.json",
+            "@id": "http://" + host + self.json_url,
+            "@type": "sc:Collection",
+            "label": self.name,
+            "metadata": [
+                {"label": "Ingested", "value": rfc3339(self.created)},
+                {"label": "Pages", "value": self.page_count},
+                {"label": "Awardee", "value": self.awardee.name},
+            ],
         }
-        b['url'] = "http://" + host + self.json_url
         if include_issues:
-            b['issues'] = []
+            b['manifests'] = []
             for issue in self.issues.all():
-                i = {
-                    "title": {
-                        "name": issue.title.display_name,
-                        "url": "http://" + host + issue.title.json_url,
-                    },
-                    "date_issued": strftime(issue.date_issued, "%Y-%m-%d"),
-                    "url": "http://" + host + issue.json_url
-                }
-                b['issues'].append(i)
+                b['manifests'].append({
+                    "@id": "http://" + host + issue.json_url,
+                    "@type": "sc:Manifest",
+                    "label": str(issue)
+                })
         if serialize:
             return json.dumps(b)
         else:
@@ -308,22 +315,37 @@ class Title(models.Model):
 
         return doc
 
+    @property
+    def metadata(self):
+        meta = []
+        for k, v in self.solr_doc.items():
+            if not v or k in ("country"):
+                continue
+            k = k.replace("_", " ")
+            m = {"label": k}
+            if type(v) != list:
+                m["value"] = v
+            else:
+                m["value"] = [{"@value": val} for val in v]
+            meta.append(m)
+        return meta
+
     def json(self, host, serialize=True):
         j = {
-            "url": "http://" + host + self.json_url,
-            "lccn": self.lccn,
-            "name": self.display_name,
-            "place_of_publication": self.place_of_publication,
-            "publisher": self.publisher,
-            "start_year": self.start_year,
-            "end_year": self.end_year,
-            "subject": [s.heading for s in self.subjects.all()],
-            "place": [p.name for p in self.places.all()],
-            "issues": [{
-                "url": "http://" + host + i.json_url,
-                "date_issued": strftime(i.date_issued, "%Y-%m-%d")
-            } for i in self.issues.all()]
+            "@context": "http://iiif.io/api/presentation/2/context.json", 
+            "@id": "http://" + host + self.json_url,
+            "@type": "sc:Collection",
+            "label": self.display_name,
+            "manifests": [],
+            "metadata": self.metadata
         }
+
+        for issue in self.issues.all():
+            j["manifests"].append({
+                "@id": "http://" + host + issue.json_url,
+                "@type": "sc:Manifest",
+                "label": strftime(issue.date_issued, "%Y-%m-%d")
+            })
 
         if serialize:
             return json.dumps(j, indent=2)
@@ -508,6 +530,15 @@ class Issue(models.Model):
                  'edition': self.edition})
 
     @property
+    @permalink
+    def rdf_url(self):
+        date = self.date_issued
+        return ('openoni_issue_pages_dot_rdf', (),
+                {'lccn': self.title.lccn,
+                 'date': "%04i-%02i-%02i" % (date.year, date.month, date.day),
+                 'edition': self.edition})
+
+    @property
     def abstract_url(self):
         return self.url.rstrip('/') + '#issue'
 
@@ -578,19 +609,19 @@ class Issue(models.Model):
 
     def json(self, host, serialize=True, include_pages=True):
         j = {
-            'url': 'http://' + host + self.json_url,
-            'date_issued': strftime(self.date_issued, "%Y-%m-%d"),
-            'volume': self.volume,
-            'number': self.number,
-            'edition': self.edition,
-            'title': {"name": self.title.display_name, "url": 'http://' + host + self.title.json_url},
-            'batch': {"name": self.batch.name, "url": 'http://' + host + self.batch.json_url},
+            "@context": "http://iiif.io/api/presentation/2/context.json", 
+            "@id": 'http://' + host + self.json_url,
+            "@type": "sc:Manifest",
+            "label": str(self),
         }
 
-        j['pages'] = [{
-            "url": "http://" + host + p.json_url,
-            "sequence": p.sequence
-        } for p in self.pages.all()]
+        if include_pages:
+            j["sequences"] = [{
+                "@id": "normal",
+                "@type": "sc:Sequence",
+                "label": "issue order",
+                "canvases": [p.json(host, False) for p in self.pages.all()]
+            }]
 
         if serialize:
             return json.dumps(j, indent=2)
@@ -615,20 +646,45 @@ class Page(models.Model):
     indexed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def iiif_id(self):
+        return settings.IIIF_SERVER + "/" + urlquote(self.relative_image_path, safe="")
+
     def json(self, host, serialize=True):
         j = {
-            "sequence": self.sequence,
-            "issue": {
-                "date_issued": strftime(self.issue.date_issued, "%Y-%m-%d"),
-                "url": "http://" + host + self.issue.json_url},
-            "jp2": "http://" + host + self.jp2_url,
-            "ocr": "http://" + host + self.ocr_url,
-            "text": "http://" + host + self.txt_url,
-            "pdf": "http://" + host + self.pdf_url,
-            "title": {
-                "name": self.issue.title.display_name,
-                "url": "http://" + host + self.issue.title.json_url}
+            "thumbnail": thumb_image_url(self),
+            "height": self.jp2_length,
+            "width": self.jp2_width,
+            "images": [{
+                "resource": {
+                    "service": {
+                        "@id": tile_server_for_page(self),
+                        "@context": "http://iiif.io/api/image/2/context.json",
+                        "profile": "http://iiif.io/api/image/2/level0.json"
+                    },
+                    "format": "image/jpeg",
+                    "height": self.jp2_length,
+                    "width": self.jp2_width,
+                    "@id": tile_server_for_page(self),
+                    "@type": "dctypes:Image"
+                },
+                "motivation": "sc:painting",
+                "@id": tile_server_for_page(self),
+                "@type": "oa:Annotation",
+                "rendering": [
+                    {"@id": "http://" + host + self.pdf_url, "format": "application/pdf"},
+                    {"@id": "http://" + host + self.jp2_url, "format": "image/jp2"},
+                    {"@id": "http://" + host + self.url, "format": "text/html"}
+                ],
+                "seeAlso": [
+                    {"@id": "http://" + host + self.ocr_url, "format": "text/xml"}
+                ]
+            }],
+            "label": str(self.sequence),
+            "@id": tile_server_for_page(self),
+            "@type": "sc:Canvas"
         }
+
         if serialize:
             return json.dumps(j, indent=2)
         return j
@@ -690,6 +746,12 @@ class Page(models.Model):
     @permalink
     def json_url(self):
         return ('openoni_page_dot_json', (), self._url_parts())
+
+    @property
+    @permalink
+    def rdf_url(self):
+        return ('openoni_page_dot_rdf', (), self._url_parts())
+
 
     @property
     def abstract_url(self):

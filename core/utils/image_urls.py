@@ -1,17 +1,16 @@
 from django.conf import settings
 
+from django.utils.http import urlquote
+
 def thumb_image_url(page):
-    # TODO: FIX THIS!  Use a real URL lib, use IIIF, etc
-    return settings.RESIZE_SERVER + "/" + page.relative_image_path + "/%dx%d" % (settings.THUMBNAIL_WIDTH, 0)
+    return tile_server_for_page(page) + "/0,0,%s,%s/%s,/0/default.jpg" % (page.jp2_width, page.jp2_length, settings.THUMBNAIL_WIDTH)
 
 def medium_image_url(page):
-    # TODO: FIX THIS!  Use a real URL lib, use IIIF, etc
-    return settings.RESIZE_SERVER + "/" + page.relative_image_path + "/%dx%d" % (550, 0)
+    return tile_server_for_page(page) + "/0,0,%s,%s/%s,/0/default.jpg" % (page.jp2_width, page.jp2_length, 550)
 
 def specific_tile_url(page, w, h, x1, y1, x2, y2):
-    # TODO: FIX THIS!  Use a real URL lib, use IIIF, etc
-    return settings.TILE_SERVER + "/" + page.relative_image_path + "/image_%sx%s_from_%s,%s_to_%s,%s.jpg" % (w, h, x1, y1, x2, y2)
-
+    x1, y1, x2, y2 = map(int, [x1, y1, x2, y2])
+    return tile_server_for_page(page) + "/%s,%s,%s,%s/%s,%s/0/default.jpg" % (x1, y1, x2-x1, y2-y1, w, h)
+    
 def tile_server_for_page(page):
-    # TODO: FIX THIS!  Use a real URL lib, use IIIF, etc
-    return settings.TILE_SERVER + "/" + page.relative_image_path + "/"
+    return settings.IIIF_SERVER + "/" + urlquote(page.relative_image_path, safe="")

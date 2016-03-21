@@ -47,7 +47,7 @@
 <div id="item-wrapper"> 
 
 <div id="imageViewer_nav">
-  <span id="item-ctrl">
+  <span id="item-ctrl" class="toolbar">
   <!-- This is where the open seadragon controls are inserted via javascript -->
   </span>
   <span class="other_controls">
@@ -135,7 +135,8 @@
 {{ block.super }}
 
     <div id="page_data"
-	 data-static_url="{% static '' %}images/",
+	 data-static_url="{% static '' %}images/"
+   data-iiif_id="{% tile_server_for_page page %}"
 	 data-width="{{page.jp2_width}}"
 	 data-height="{{page.jp2_length}}"
 	 data-page_url="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.sequence %}"

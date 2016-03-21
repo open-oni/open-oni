@@ -54,21 +54,17 @@ def batches_atom(request, page_number=1):
 
 @cors
 @cache_page(settings.API_TTL_SECONDS)
-def batches_json(request, page_number=1):
-    batches = models.Batch.viewable_batches()
-    paginator = Paginator(batches, 25)
-    page = paginator.page(page_number)
+def batches_json(request):
     host = request.get_host()
-    b = [batch.json(serialize=False, include_issues=False, host=host) for batch in page.object_list]
-    j = {'batches': b}
-
-    if page.has_next():
-        url_next = urlresolvers.reverse('openoni_batches_json_page', args=[page.next_page_number()])
-        j['next'] = "http://" + host + url_next
-
-    if page.has_previous():
-        url_prev = urlresolvers.reverse('openoni_batches_json_page', args=[page.previous_page_number()])
-        j['previous'] = "http://" + host + url_prev
+    j = {
+        "@context": "http://iiif.io/api/presentation/2/context.json",
+        "@id": "http://" + host + request.get_full_path(),
+        "@type": "sc:Collection",
+        "label": "Batches",
+        "collections": []
+    }
+    for batch in models.Batch.objects.all():
+        j['collections'].append(batch.json(serialize=False, include_issues=False, host=host))
     return HttpResponse(json.dumps(j, indent=2), content_type='application/json')
 
 
@@ -387,12 +383,16 @@ def awardees(request):
 @cors
 @cache_page(settings.API_TTL_SECONDS)
 def awardees_json(request):
-    awardees = {"awardees": []}
     host = request.get_host()
+    awardees = {
+        "@context": "http://iiif.io/api/presentation/2/context.json",
+        "@id": "http://" + host + request.get_full_path(),
+        "@type": "sc:Collection",
+        "label": "Awardees",
+        "collections": []
+    }
     for awardee in models.Awardee.objects.all().order_by('name'):
-        a = {'url': 'http://' + host + awardee.json_url,
-             'name': awardee.name, }
-        awardees['awardees'].append(a)
+        awardees["collections"].append(awardee.json(host, include_batches=False, serialize=False))
 
     return HttpResponse(json.dumps(awardees, indent=2),
                         content_type='application/json')
@@ -412,10 +412,7 @@ def awardee(request, institution_code):
 def awardee_json(request, institution_code):
     awardee = get_object_or_404(models.Awardee, org_code=institution_code)
     host = request.get_host()
-    j = awardee.json(serialize=False, host=host)
-    j['batches'] = []
-    for batch in awardee.batches.all():
-        j['batches'].append({"name": batch.name, "url": 'http://' + host + batch.json_url})
+    j = awardee.json(serialize=False, include_batches=True, host=host)
     return HttpResponse(json.dumps(j, indent=2), content_type='application/json')
 
 
