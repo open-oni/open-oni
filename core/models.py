@@ -20,7 +20,7 @@ from django.conf import settings
 from django.utils.http import urlquote
 
 from openoni.core.utils import strftime
-from openoni.core.utils.image_urls import thumb_image_url, tile_server_for_page
+from openoni.core.utils.image_urls import thumb_image_url, iiif_info_for_page
 
 from django.core import urlresolvers
 
@@ -646,10 +646,6 @@ class Page(models.Model):
     indexed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
-    @property
-    def iiif_id(self):
-        return settings.IIIF_SERVER + "/" + urlquote(self.relative_image_path, safe="")
-
     def json(self, host, serialize=True):
         j = {
             "thumbnail": thumb_image_url(self),
@@ -658,18 +654,18 @@ class Page(models.Model):
             "images": [{
                 "resource": {
                     "service": {
-                        "@id": tile_server_for_page(self),
+                        "@id": iiif_info_for_page(self),
                         "@context": "http://iiif.io/api/image/2/context.json",
                         "profile": "http://iiif.io/api/image/2/level0.json"
                     },
                     "format": "image/jpeg",
                     "height": self.jp2_length,
                     "width": self.jp2_width,
-                    "@id": tile_server_for_page(self),
+                    "@id": iiif_info_for_page(self),
                     "@type": "dctypes:Image"
                 },
                 "motivation": "sc:painting",
-                "@id": tile_server_for_page(self),
+                "@id": iiif_info_for_page(self),
                 "@type": "oa:Annotation",
                 "rendering": [
                     {"@id": "http://" + host + self.pdf_url, "format": "application/pdf"},
@@ -681,7 +677,7 @@ class Page(models.Model):
                 ]
             }],
             "label": str(self.sequence),
-            "@id": tile_server_for_page(self),
+            "@id": iiif_info_for_page(self),
             "@type": "sc:Canvas"
         }
 

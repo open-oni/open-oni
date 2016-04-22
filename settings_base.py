@@ -143,8 +143,15 @@ BROKER_TRANSPORT = "django"
 # should also make this overrideable in the INI file.
 IS_PRODUCTION = False
 
-# These must be overridden to point to the image server
-IIIF_SERVER = "http://example.com/images/iiif"
+# Public URLs to the image server endpoints
+#
+# These must be overridden to point to the image server.  They may be set to
+# the same value, but they're kept apart to allow for having static thumbnails,
+# thumbnail caching separated from resize caching, etc.  Thumbnails are a much
+# smaller subset of possible images and therefore benefit a great deal from
+# being cached and/or pregenerated.
+RESIZE_SERVER = "http://example.com/images/iiif"
+TILE_SERVER = "http://example.com/images/iiif"
 
 # How big should thumbnails be?
 THUMBNAIL_WIDTH = 240

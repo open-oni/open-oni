@@ -14,9 +14,11 @@ def override_solr(conf):
     SOLR = conf.get("solr", "URL")
 
 def override_image_server(conf):
-  global IIIF_SERVER
-  if conf.has_option("images", "IIIF_SERVER"):
-    IIIF_SERVER = conf.get("images", "IIIF_SERVER")
+  global RESIZE_SERVER, TILE_SERVER
+  if conf.has_option("images", "RESIZE_SERVER"):
+    RESIZE_SERVER = conf.get("images", "RESIZE_SERVER")
+  if conf.has_option("images", "TILE_SERVER"):
+    TILE_SERVER = conf.get("images", "TILE_SERVER")
 
 def override_secrets(conf):
   global SECRET_KEY
