@@ -195,8 +195,10 @@ Thumbnails
 
 <br/><br/>
 
-<div class="row">
-  {% for object in page.object_list %}
+{% for object in page.object_list %}
+  {% if forloop.counter|divisibleby:4 %}
+    <div class="row">
+  {% endif %}
     <div class="col-md-3">
       <a href="{{ object.highlight_url }}" class="thumbnail" title="{% with object.issue.title as title %}{{title.display_name}} ({{title.place_of_publication}}), {{object.issue|label}}, {{object|label}}{% endwith %}">
         <img src="{% thumb_image_url object %}" alt=""
@@ -206,8 +208,11 @@ Thumbnails
                 data-words="{{object.words|join:' '}}">
       </a>
     </div>
-  {% endfor %}
-  </div><!-- /row -->
+  {% if forloop.counter|divisibleby:4 %}
+    </div><!-- /row -->
+  {% endif %}
+{% endfor %}
+
 </div>
 {% endblock search_results_box %}
 
