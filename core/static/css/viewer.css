@@ -83,6 +83,8 @@
     display: inline;
 }
 
-.form-control {
-
+a.disabled, a.disabled:link, a.disabled:hover, a.disabled:focus {
+    color: #666;
+    pointer-events: none;
+    cursor: not-allowed;
 }

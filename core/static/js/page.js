@@ -7,6 +7,11 @@
     var height;
     var static_url;
 
+    function disablePrint(viewer) {
+        $("#clip").attr('href', "");
+        $("#clip").addClass("disabled");
+    }
+
     function resizePrint(event) {
         var viewer = event.eventSource;
         var image = viewer.source;
@@ -22,6 +27,7 @@
         var d = fitWithinBoundingBox(box, new OpenSeadragon.Point(681, 817));
         var dimension = page_url+'print/image_'+d.x+'x'+d.y+'_from_'+ scaledBox.x+','+scaledBox.y+'_to_'+scaledBox.getBottomRight().x+','+scaledBox.getBottomRight().y;
         $("#clip").attr('href', dimension);
+        $("#clip").removeClass("disabled");
         $(".locshare-print-button").find('a:first').attr('href', dimension).click(function(event) {
             window.open($(this).attr('href'), "print");
         });
@@ -130,6 +136,7 @@
         viewer.addHandler("open", addOverlays);
         viewer.addHandler("open", resizePrint);
         viewer.addHandler("animation-finish", resizePrint);
+        viewer.addHandler("animation-start", disablePrint);
 
         $("#pageNum").change(function(event) { 
             page_url = $("#pageNum").val();
