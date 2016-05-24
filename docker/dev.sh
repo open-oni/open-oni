@@ -148,6 +148,3 @@ docker run -itd \
   -v $(pwd):/opt/openoni:Z \
   -v $(pwd)/docker/data:/opt/openoni/data:z \
   open-oni:dev
-
-docker logs -f openoni-dev
-
