@@ -1,5 +1,4 @@
 (function($) {
-
     function add_highlights(image) {
         if (image.data('highlighted')==true) {
             return
@@ -23,12 +22,13 @@
                     var coordinates = all_coordinates["coords"][word];
                     for (k in coordinates) {
                         var v = coordinates[k];
-                        div.append("<div style='position: absolute; " +
-    "TOP: " +  (v[1] * vScale) + '%; ' +
-    "LEFT: " +       (v[0] * hScale) + '%; ' +
-    "HEIGHT: " +     (v[3] * vScale) + '%; ' +
-    "WIDTH: " +      (v[2] * hScale) + "%;'/>");
-
+                        div.append(
+                          "<div style='position: absolute; " +
+                          "TOP: "     + (v[1] * vScale) + '%; ' +
+                          "LEFT: "    + (v[0] * hScale) + '%; ' +
+                          "HEIGHT: "  + (v[3] * vScale) + '%; ' +
+                          "WIDTH: "   + (v[2] * hScale) + "%;'/>"
+                        );
                     }
                 });
             });
