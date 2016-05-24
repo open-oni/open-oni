@@ -1,0 +1,41 @@
+FROM ubuntu:trusty
+MAINTAINER Mark Cooper <mark.cooper@lyrasis.org>
+
+ENV DJANGO_SETTINGS_MODULE openoni.settings
+
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
+  apache2 \
+  ca-certificates \
+  gcc \
+  git \
+  graphicsmagick \
+  libapache2-mod-wsgi \
+  libmysqlclient-dev \
+  libxml2-dev \
+  libxslt-dev \
+  libjpeg-dev \
+  mysql-client \
+  python-dev \
+  python-virtualenv \
+  supervisor
+
+RUN a2enmod cache expires rewrite proxy_http
+ADD apache/openoni.conf /etc/apache2/sites-available/openoni-orig.conf
+RUN a2dissite 000-default.conf
+
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+VOLUME /opt/openoni
+WORKDIR /opt/openoni
+
+ADD pip-install.sh /
+ADD load_batch.sh /
+ADD collect_static.sh /
+ADD startup.sh /
+ADD test.sh /
+ADD openoni.ini /etc/openoni.ini.orig
+
+RUN chmod u+x /*.sh
+
+EXPOSE 80
+CMD ["/startup.sh"]

@@ -1,0 +1,58 @@
+[mysqld]
+# Connections
+max_connections                 = 128
+max_user_connections            = 128
+thread_cache_size               = 8
+
+# Logging
+log_queries_not_using_indexes   = 0
+long_query_time                 = 3
+
+# Memory Tables
+max_heap_table_size             = 64M   # User MEMORY table size limit
+tmp_table_size                  = 64M   # Max limit = max_heap_table_size
+
+# Query Caching
+query_cache_size                = 32M
+
+
+#### InnoDB ####
+# Concurrency / Contention
+innodb_io_capacity              = 200   # Write IOPS benchmark from `fio`
+                                        # RAIDs/SSDs benefit from higher values
+innodb_read_io_threads          = 8
+innodb_write_io_threads         = 8
+
+# Disk (Files, Flushing, I/O)
+innodb_fast_shutdown            = 1
+innodb_flush_log_at_trx_commit  = 1
+#innodb_flush_method             = O_DSYNC  # Enable if write performance poor
+innodb_log_file_size            = 512M
+innodb_log_files_in_group       = 2
+
+# Memory
+innodb_buffer_pool_instances    = 2
+innodb_buffer_pool_size         = 1024M
+innodb_log_buffer_size          = 8M
+
+
+#### MyISAM ####
+# Global
+key_buffer_size                 = 256M
+table_open_cache                = 2048
+ft_min_word_len                 = 3
+
+# Session
+bulk_insert_buffer_size         = 64M
+myisam_sort_buffer_size         = 64M
+read_buffer_size                = 2M
+read_rnd_buffer_size            = 8M
+sort_buffer_size                = 4M
+
+
+
+[myisamchk]
+key_buffer_size                 = 64M
+read_buffer                     = 2M
+sort_buffer_size                = 4M
+write_buffer                    = 2M
