@@ -14,7 +14,7 @@
             $.getJSON(script_name+id+'coordinates/', function(all_coordinates) {
                 image.wrap('<div class="highlight_words" style="display: inline-block; position: relative; margin: 0px; padding: 0px; height: auto; width: auto;" />');
                 var div = image.parents("div.highlight_words")
-		div.wrap('<div style="text-align: center" />')
+                div.wrap('<div style="text-align: center" />')
 
                 var vScale = 100 / all_coordinates["height"];
                 var hScale = 100 / all_coordinates["width"];
@@ -41,9 +41,9 @@
         });
         $("img.highlight_words").each(function(i) {
             if (this.complete) {
-		add_highlights($(this));
-	    }
-	});
+                add_highlights($(this));
+            }
+        });
     };
 
     $(init);
