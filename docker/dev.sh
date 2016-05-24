@@ -70,7 +70,6 @@ MYSQL_STATUS=$(docker inspect --type=container --format="{{ .State.Running }}" o
 if [ -z "$MYSQL_STATUS" ]; then
   echo "Starting mysql ..."
   docker run -d \
-    -p 3306:3306 \
     --name openoni-dev-mysql \
     -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD \
     -e MYSQL_DATABASE=openoni \
@@ -111,7 +110,6 @@ SOLR_STATUS=$(docker inspect --type=container --format="{{ .State.Running }}" op
 if [ -z "$SOLR_STATUS" ]; then
   echo "Starting solr ..."
   docker run -d \
-    -p 8983:8983 \
     --name openoni-dev-solr \
     -v $(pwd)/docker/solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z \
     -v $(pwd)/docker/solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z \
