@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# This should be run from the app root directory, not docker/.  It's just in
+# here to keep all the docker stuff centralized.
 
 set -u
 
@@ -39,8 +42,8 @@ container_start () {
 }
 
 # Make sure settings_local.py exists so the app doesn't crash
-if [ ! -f open-oni/settings_local.py ]; then
-  touch open-oni/settings_local.py
+if [ ! -f settings_local.py ]; then
+  touch settings_local.py
 fi
 
 # Make persistent data containers
@@ -58,10 +61,10 @@ fi
 
 # Make containers for mysql and solr
 echo "Building openoni for development"
-docker build -t open-oni:dev -f Dockerfile-dev .
+docker build -t open-oni:dev -f docker/Dockerfile-dev docker/
 
 # Copy latest openoni MySQL config into directory with dev overrides
-cp $(pwd)/open-oni/conf/mysql/openoni.cnf $(pwd)/mysql/
+cp $(pwd)/conf/mysql/openoni.cnf $(pwd)/docker/mysql/
 
 MYSQL_STATUS=$(docker inspect --type=container --format="{{ .State.Running }}" openoni-dev-mysql 2> /dev/null)
 if [ -z "$MYSQL_STATUS" ]; then
@@ -110,8 +113,8 @@ if [ -z "$SOLR_STATUS" ]; then
   docker run -d \
     -p 8983:8983 \
     --name openoni-dev-solr \
-    -v /$(pwd)/solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z \
-    -v /$(pwd)/solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z \
+    -v $(pwd)/docker/solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z \
+    -v $(pwd)/docker/solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z \
     --volumes-from openoni-dev-data-solr \
     makuk66/docker-solr:$SOLR && sleep $SOLRDELAY
 else
@@ -127,7 +130,7 @@ if [ -z "$RAIS_STATUS" ]; then
     -e TILESIZES=512,1024 \
     -e IIIFURL="$APP_URL/images/iiif" \
     -e PORT=12415 \
-    -v $(pwd)/data/batches:/var/local/images:z \
+    -v $(pwd)/docker/data/batches:/var/local/images:z \
     uolibraries/rais
 
 else
@@ -144,8 +147,8 @@ docker run -itd \
   --link openoni-dev-mysql:db \
   --link openoni-dev-solr:solr \
   --link openoni-dev-rais:rais \
-  -v $(pwd)/open-oni:/opt/openoni:Z \
-  -v $(pwd)/data:/opt/openoni/data:z \
+  -v $(pwd):/opt/openoni:Z \
+  -v $(pwd)/docker/data:/opt/openoni/data:z \
   open-oni:dev
 
 docker logs -f openoni-dev
