@@ -3,14 +3,12 @@
 # Stop and remove the docker containers necessary for open ONI
 # except for the persistent data containers
 
-echo "stopping ..."
-docker stop openoni-dev
-docker stop openoni-dev-mysql
-docker stop openoni-dev-solr
+for service in openoni-dev openoni-dev-mysql openoni-dev-solr; do
+  echo "stopping $service"
+  docker stop $service
 
-echo "removing ..."
-docker rm openoni-dev
-docker rm openoni-dev-mysql
-docker rm openoni-dev-solr
+  echo "removing $service"
+  docker rm $service
+done
 
 echo "Run ./dev.sh to set your environment back up"
