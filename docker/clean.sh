@@ -3,7 +3,7 @@
 # Stop and remove the docker containers necessary for open ONI
 # except for the persistent data containers
 
-for service in openoni-dev openoni-dev-mysql openoni-dev-solr; do
+for service in openoni-dev openoni-dev-mysql openoni-dev-solr openoni-dev-rais; do
   echo "stopping $service"
   docker stop $service
 
