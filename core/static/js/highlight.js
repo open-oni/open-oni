@@ -5,7 +5,7 @@
         }
         var width = image.width();
         var height = image.height();    
-        if (width>0 && height>0) {
+        if (width>50 && height>50) {
             image.data('highlighted', true)
             var script_name = image.data('script_name');
             var id = image.data('id');
