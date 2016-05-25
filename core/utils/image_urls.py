@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.utils.http import urlquote
 
+# Enums / constants for telling image_server_for_page which URL prefix to use
 RESIZE = 0
 TILE = 1
 
