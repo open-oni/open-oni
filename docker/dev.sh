@@ -2,6 +2,12 @@
 #
 # This should be run from the app root directory, not docker/.  It's just in
 # here to keep all the docker stuff centralized.
+#
+# Example usage:
+#
+#     cd /path/to/open-oni
+#     export APP_URL="http://192.168.56.99"
+#     ./docker/dev.sh
 
 set -u
 
