@@ -21,11 +21,7 @@ example:
     export APP_URL=http://oregonnews.uoregon.edu
 
 You may want to put that in your `~/.profile` or equivalent so you don't forget
-to set it. As a convenience if you are using `docker-machine` on Windows or OS
-X and have named your virtual machine `default` then `dev.sh` will attempt to
-set APP_URL using using the virtual machine's IP address.  Note that this may
-or may not work, and the only indication of failure (right now) is that images
-won't show up.  If you don't see images, try exporting APP_URL explictitly.
+to set it.
 
 Now run [`./docker/dev.sh`](dev.sh) from the root of this project.  This will
 set up all the containers in order, and make sure the app is ready to run.

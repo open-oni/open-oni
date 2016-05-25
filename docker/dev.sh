@@ -19,13 +19,9 @@ PORT=${DOCKERPORT:-80}
 
 APP_URL=${APP_URL:-}
 if [ -z "$APP_URL" ]; then
-  if [ $(command -v docker-machine) ]; then
-    ip=$(docker-machine ip default)
-    APP_URL="http://$ip"
-  else
-    echo "Please set the APP_URL environment variable"
-    exit -1
-  fi
+  echo "Please set the APP_URL environment variable"
+  echo "e.g., 'export APP_URL=\"http://192.168.56.99\"'"
+  exit -1
 
   if [ $PORT != 80 ]; then
     APP_URL=$APP_URL:$PORT
