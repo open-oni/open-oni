@@ -1,9 +1,9 @@
-Docker Open ONI
+Open ONI In Docker
 ===============
 
 Install Docker.  We have comprehensive instructions for
 [installing Docker on OS X](https://github.com/open-oni/open-oni/wiki/Docker-Setup-OS-X)
-on the open-oni wiki.
+on the wiki.
 
 production
 ---
@@ -13,16 +13,6 @@ production
 Open ONI Development
 ---
 
-Clone this repo, and then clone open-oni inside it:
-
-```bash
-git clone https://github.com/open-oni/docker-open-oni.git
-
-# Wait until the clone is finished, then:
-cd docker-open-oni
-git clone https://github.com/open-oni/open-oni.git
-```
-
 ### Quick setup
 
 First, please set `APP_URL` to the public URL for your open-oni instance, for
@@ -31,14 +21,16 @@ example:
     export APP_URL=http://oregonnews.uoregon.edu
 
 You may want to put that in your `~/.profile` or equivalent so you don't forget
-to set it. As a convenience if you are using `docker-machine` on Windows or 
-OS X and have named your virtual machine `default` then `dev.sh` will attempt 
-to set APP_URL using using the virtual machine's IP address
+to set it. As a convenience if you are using `docker-machine` on Windows or OS
+X and have named your virtual machine `default` then `dev.sh` will attempt to
+set APP_URL using using the virtual machine's IP address.  Note that this may
+or may not work, and the only indication of failure (right now) is that images
+won't show up.  If you don't see images, try exporting APP_URL explictitly.
 
-Now run [`./dev.sh`](dev.sh) which will set up all the containers in order, 
-and makes sure the app is ready to run.
+Now run [`./docker/dev.sh`](dev.sh) from the root of this project.  This will
+set up all the containers in order, and make sure the app is ready to run.
 
-For Linux users who can't (or don't want to) expose port 80, the environment 
+For Linux users who can't (or don't want to) expose port 80, the environment
 variable `DOCKERPORT` will override the default of using port 80.
 
 ### Manual setup
@@ -48,7 +40,7 @@ For more control, you can run the commands manually:
 #### Build the app image
 
 ```bash
-docker build -t open-oni:dev -f Dockerfile-dev .
+docker build -t open-oni:dev -f docker/Dockerfile-dev docker/
 ```
 
 #### Build data containers for mysql and solr
@@ -94,8 +86,8 @@ what openoni uses.
 docker run -d \
   -p 8983:8983 \
   --name openoni-dev-solr \
-  -v /$(pwd)/solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z \
-  -v /$(pwd)/solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z \
+  -v /$(pwd)/docker/solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z \
+  -v /$(pwd)/docker/solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z \
   --volumes-from openoni-dev-data-solr \
   makuk66/docker-solr:4.10.4
 ```
@@ -109,8 +101,10 @@ JP2 images:
 docker run -d \
   -p 12415:12415 \
   --name openoni-dev-rais \
+  -e TILESIZES=512,1024 \
+  -e IIIFURL="$APP_URL/images/iiif" \
   -e PORT=12415 \
-  -v $(pwd)/data/batches:/var/local/images:z \
+  -v $(pwd)/docker/data/batches:/var/local/images:z \
   uolibraries/rais
 ```
 
