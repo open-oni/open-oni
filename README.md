@@ -37,6 +37,8 @@ work with and/or publish the content.
 Install
 -------
 
+**Please note**: for development, you may find the [docker setup](docker/README.md) far simpler.
+
 System level dependencies can be installed by following these operating system
 specific instructions:
 
