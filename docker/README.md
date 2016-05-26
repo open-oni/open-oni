@@ -21,7 +21,9 @@ example:
     export APP_URL=http://oregonnews.uoregon.edu
 
 You may want to put that in your `~/.profile` or equivalent so you don't forget
-to set it.
+to set it.  If you are using docker-machine, you can look up your IP with `docker-machine ls` and then add it:
+
+    export APP_URL=http://192.168.99.100
 
 Now run [`./docker/dev.sh`](dev.sh) from the root of this project.  This will
 set up all the containers in order, and make sure the app is ready to run.
@@ -157,6 +159,8 @@ docker exec -it openoni-dev /pip-install.sh
 ```
 
 **Load data**
+
+Since you are using docker, you will put data in `docker/data` rather than the `data` directory at the root of the project.  You can either wget a batch from Chronicling America like below, or you can put some of our [short sample batches](https://github.com/open-oni/sample-data) into the data directory.
 
 ```bash
 cd data
