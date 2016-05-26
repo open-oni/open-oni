@@ -20,7 +20,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
   python-virtualenv \
   supervisor
 
-RUN a2enmod cache expires rewrite proxy_http
+RUN a2enmod cache cache_disk expires rewrite proxy_http
+RUN mkdir -p /var/cache/httpd/mod_disk_cache
+RUN chown -R www-data:www-data /var/cache/httpd
 ADD apache/openoni.conf /etc/apache2/sites-available/openoni-orig.conf
 RUN a2dissite 000-default.conf
 
