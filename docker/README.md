@@ -169,6 +169,12 @@ cd ..
 docker exec -it openoni-dev /load_batch.sh batch_uuml_thys_ver01
 ```
 
+**Purge a batch**
+
+```
+docker exec -it openoni-dev /purge_batch.sh batch_uuml_thys_ver01
+```
+
 **Run tests**
 
 ```bash

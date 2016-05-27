@@ -30,6 +30,7 @@ WORKDIR /opt/openoni
 
 ADD pip-install.sh /
 ADD load_batch.sh /
+ADD purge_batch.sh /
 ADD collect_static.sh /
 ADD startup.sh /
 ADD test.sh /
