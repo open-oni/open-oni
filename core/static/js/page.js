@@ -1,6 +1,5 @@
 (function($) {
     var page_url;
-    var tile_url;
     var coordinates_url;
     var navigation_url;
     var width;
@@ -105,7 +104,6 @@
 
     function initPage() {
         page_url = $('#page_data').data("page_url")
-        tile_url = $('#page_data').data("tile_url")
         coordinates_url = $('#page_data').data("coordinates_url")
         navigation_url = $('#page_data').data("navigation_url")
         width = $('#page_data').data("width")
