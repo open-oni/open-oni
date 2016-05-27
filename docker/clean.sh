@@ -11,4 +11,4 @@ for service in openoni-dev openoni-dev-mysql openoni-dev-solr openoni-dev-rais; 
   docker rm $service
 done
 
-echo "Run ./dev.sh to set your environment back up"
+echo "Run ./docker/dev.sh to set your environment back up"
