@@ -40,10 +40,11 @@ ADD settings.py /opt/openoni/settings.py
 RUN install -d /opt/openoni/static && install -d /opt/openoni/.python-eggs
 
 ADD load_batch.sh /load_batch.sh
+ADD purge_batch.sh /purge_batch.sh
 ADD startup.sh /startup.sh
 ADD test.sh /test.sh
 
-RUN chmod u+x /load_batch.sh && chmod u+x /startup.sh && chmod u+x /test.sh
+RUN chmod u+x /load_batch.sh && chmod u+x /purge_batch.sh && chmod u+x /startup.sh && chmod u+x /test.sh
 
 EXPOSE 80
 CMD ["/startup.sh"]
