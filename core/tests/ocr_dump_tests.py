@@ -19,6 +19,9 @@ class OcrDumpTests(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        # Make sure TestCase does its setup (fixtures are loaded and whatnot)
+        super(OcrDumpTests, cls).setUpClass()
+
         # Create temp directories for batch and ocr
         cls.batchDir = tempfile.mkdtemp()
         cls.dumpDir = tempfile.mkdtemp()
@@ -36,6 +39,9 @@ class OcrDumpTests(TestCase):
         # Kill all temp files
         shutil.rmtree(cls.batchDir)
         shutil.rmtree(cls.dumpDir)
+
+        # Make sure TestCase does its teardown, too
+        super(OcrDumpTests, cls).tearDownClass()
 
     def test_ocr_dump(self):
         loader = BatchLoader()

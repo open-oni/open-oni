@@ -13,15 +13,21 @@ from openoni.core.models import Title
 from openoni.core.models import Batch
 
 class BatchLoaderTest(TestCase):
-    fixtures = ['countries.json', 'titles.json']
+    fixtures = ['countries.json', 'titles.json', 'languages.json']
 
     @classmethod
     def setUpClass(cls):
-      cls.batchDir = tempfile.mkdtemp()
+        # Make sure TestCase does its setup (fixtures are loaded and whatnot)
+        super(BatchLoaderTest, cls).setUpClass()
+
+        cls.batchDir = tempfile.mkdtemp()
 
     @classmethod
     def tearDownClass(cls):
-      shutil.rmtree(cls.batchDir)
+        shutil.rmtree(cls.batchDir)
+
+        # Make sure TestCase does its teardown, too
+        super(BatchLoaderTest, cls).tearDownClass()
 
     def test_fixture(self):
         title = Title.objects.get(lccn = 'sn83030214')
