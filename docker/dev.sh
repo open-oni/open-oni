@@ -125,13 +125,11 @@ RAIS_STATUS=$(docker inspect --type=container --format="{{ .State.Running }}" op
 if [ -z "$RAIS_STATUS" ]; then
   echo "Starting RAIS ..."
   docker run -d \
-    -p 12415:12415 \
     --name openoni-dev-rais \
-    -e TILESIZES=512,1024 \
+    -e RAIS_IIIFURL="$APP_URL/images/iiif" \
     -e IIIFURL="$APP_URL/images/iiif" \
-    -e PORT=12415 \
     -v $(pwd)/docker/data/batches:/var/local/images:z \
-    uolibraries/rais
+    uolibraries/rais:2.6
 
 else
   container_start "openoni-dev-rais" $RAIS_STATUS
