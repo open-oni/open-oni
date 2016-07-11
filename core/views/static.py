@@ -19,7 +19,6 @@ def about(request):
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def about_api(request):
-    host = "http://" + request.get_host()
     page_title = "About the Site and API"
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([

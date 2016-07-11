@@ -218,7 +218,7 @@ class Title(models.Model):
     start_year = models.CharField(max_length=10)
     end_year = models.CharField(max_length=10)
     country = models.ForeignKey('Country')
-    version = models.DateTimeField()  # http://www.loc.gov/marc/bibliographic/bd005.html
+    version = models.DateTimeField()
     created = models.DateTimeField(auto_now_add=True)
     has_issues = models.BooleanField(default=False, db_index=True)
     uri = models.URLField(null=True, max_length=500, help_text="856$u")
