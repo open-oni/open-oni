@@ -1,5 +1,3 @@
-<!-- http://localhost/lccn/sn83045396/1911-09-17/ed-1/seq-1/ From sample batch -->
-
 {% extends "site_base.html" %}
 {% load static from staticfiles %}
 {% load image_urls %}
@@ -15,7 +13,7 @@
     <link rel="alternate" type="application/pdf" href="{% url 'openoni_page_pdf' title.lccn issue.date_issued issue.edition page.sequence %}" />
     <link rel="alternate" type="application/xml" href="{% url 'openoni_page_ocr_xml' title.lccn issue.date_issued issue.edition page.sequence %}" />
     <link rel="alternate" type="text/plain" href="{% url 'openoni_page_ocr_txt' title.lccn issue.date_issued issue.edition page.sequence %}" />
-    <link rel="canonical" href="http://{{host}}{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.sequence %}" />
+    <link rel="canonical" href="{{BASE_URL}}{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.sequence %}" />
     <link rel="up" href="{{ issue.url }}" />
     <link rel="up" href="{{ issue.batch.url }}" />
     {% if page.reel.number %}<link rel="up" href="{% url 'openoni_reel' page.reel.number %}" />{% endif %}

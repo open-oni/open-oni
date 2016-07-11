@@ -199,5 +199,6 @@ TOPICS_SUBJECT_URL = '/topicsSubject.html'
 
 # BASE_URL is the URL at which this site is hosted, e.g.,
 # http://oregonnews.uoregon.edu.  If this isn't set in the INI file, it *must*
-# be set in settings_local.py.  Leaving it at the default will not work.
-BASE_URL = 'https://example.com'
+# be set in settings_local.py.  Leaving it at the default will not work for
+# production or demoing purposes.
+BASE_URL = 'http://localhost'
