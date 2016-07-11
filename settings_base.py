@@ -201,4 +201,6 @@ TOPICS_SUBJECT_URL = '/topicsSubject.html'
 # http://oregonnews.uoregon.edu.  If this isn't set in the INI file, it *must*
 # be set in settings_local.py.  Leaving it at the default will not work for
 # production or demoing purposes.
+#
+# NOTE: as of now this can NOT include any path elements!
 BASE_URL = 'http://localhost'
