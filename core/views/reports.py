@@ -58,7 +58,7 @@ def batches_json(request):
     host = request.get_host()
     j = {
         "@context": "http://iiif.io/api/presentation/2/context.json",
-        "@id": "http://" + host + request.get_full_path(),
+        "@id": settings.BASE_URL + request.get_full_path(),
         "@type": "sc:Collection",
         "label": "Batches",
         "collections": []
@@ -386,7 +386,7 @@ def awardees_json(request):
     host = request.get_host()
     awardees = {
         "@context": "http://iiif.io/api/presentation/2/context.json",
-        "@id": "http://" + host + request.get_full_path(),
+        "@id": settings.BASE_URL + request.get_full_path(),
         "@type": "sc:Collection",
         "label": "Awardees",
         "collections": []

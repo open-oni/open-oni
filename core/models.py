@@ -55,7 +55,7 @@ class Awardee(models.Model):
     def json(self, host, include_batches, serialize=True):
         j = {
             "@context": "http://iiif.io/api/presentation/2/context.json", 
-            "@id": "http://" + host + self.json_url,
+            "@id": settings.BASE_URL + self.json_url,
             "@type": "sc:Collection",
             "label": self.name,
             "collections": [],
@@ -154,7 +154,7 @@ class Batch(models.Model):
     def json(self, host, include_issues=True, serialize=True):
         b = {
             "@context": "http://iiif.io/api/presentation/2/context.json",
-            "@id": "http://" + host + self.json_url,
+            "@id": settings.BASE_URL + self.json_url,
             "@type": "sc:Collection",
             "label": self.name,
             "metadata": [
@@ -167,7 +167,7 @@ class Batch(models.Model):
             b['manifests'] = []
             for issue in self.issues.all():
                 b['manifests'].append({
-                    "@id": "http://" + host + issue.json_url,
+                    "@id": settings.BASE_URL + issue.json_url,
                     "@type": "sc:Manifest",
                     "label": str(issue)
                 })
@@ -333,7 +333,7 @@ class Title(models.Model):
     def json(self, host, serialize=True):
         j = {
             "@context": "http://iiif.io/api/presentation/2/context.json", 
-            "@id": "http://" + host + self.json_url,
+            "@id": settings.BASE_URL + self.json_url,
             "@type": "sc:Collection",
             "label": self.display_name,
             "manifests": [],
@@ -342,7 +342,7 @@ class Title(models.Model):
 
         for issue in self.issues.all():
             j["manifests"].append({
-                "@id": "http://" + host + issue.json_url,
+                "@id": settings.BASE_URL + issue.json_url,
                 "@type": "sc:Manifest",
                 "label": strftime(issue.date_issued, "%Y-%m-%d")
             })
@@ -610,7 +610,7 @@ class Issue(models.Model):
     def json(self, host, serialize=True, include_pages=True):
         j = {
             "@context": "http://iiif.io/api/presentation/2/context.json", 
-            "@id": 'http://' + host + self.json_url,
+            "@id": settings.BASE_URL + self.json_url,
             "@type": "sc:Manifest",
             "label": str(self),
         }
@@ -668,12 +668,12 @@ class Page(models.Model):
                 "@id": iiif_info_for_page(self),
                 "@type": "oa:Annotation",
                 "rendering": [
-                    {"@id": "http://" + host + self.pdf_url, "format": "application/pdf"},
-                    {"@id": "http://" + host + self.jp2_url, "format": "image/jp2"},
-                    {"@id": "http://" + host + self.url, "format": "text/html"}
+                    {"@id": settings.BASE_URL + self.pdf_url, "format": "application/pdf"},
+                    {"@id": settings.BASE_URL + self.jp2_url, "format": "image/jp2"},
+                    {"@id": settings.BASE_URL + self.url, "format": "text/html"}
                 ],
                 "seeAlso": [
-                    {"@id": "http://" + host + self.ocr_url, "format": "text/xml"}
+                    {"@id": settings.BASE_URL + self.ocr_url, "format": "text/xml"}
                 ]
             }],
             "label": str(self.sequence),
@@ -1253,7 +1253,7 @@ class OcrDump(models.Model):
             "created": rfc3339(self.created),
             "size": self.size,
             "sha1": self.sha1,
-            "url": "http://" + host + self.url
+            "url": settings.BASE_URL + self.url
         }
         if serialize:
             return json.dumps(i, indent=2)

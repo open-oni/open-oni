@@ -46,10 +46,10 @@ def write_sitemaps():
             _logger.info("writing %s" % sitemap_path)
             sitemap = open(sitemap_path, 'w')
             sitemap.write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
-            sitemap_index.write('<sitemap><loc>http://chroniclingamerica.loc.gov/%s</loc></sitemap>\n' % sitemap_file)
+            sitemap_index.write('<sitemap><loc>%s/%s</loc></sitemap>\n' % (settings.BASE_URL, sitemap_file))
 
         # add a url to the sitemap
-        sitemap.write("<url><loc>http://chroniclingamerica.loc.gov%s</loc><lastmod>%s</lastmod></url>\n" % (loc, rfc3339(last_mod)))
+        sitemap.write("<url><loc>%s%s</loc><lastmod>%s</lastmod></url>\n" % (settings.BASE_URL, loc, rfc3339(last_mod)))
         url_count += 1
 
         # necessary to avoid memory bloat when settings.DEBUG = True

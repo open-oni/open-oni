@@ -60,17 +60,17 @@ OpenSearch Description document</a>.</p>
 <p>Examples:</p> 
 <ul> 
 <li> 
-<a href="/search/pages/results/?andtext=thomas">{{ host }}/search/pages/results/?andtext=thomas</a> 
+<a href="/search/pages/results/?andtext=thomas">{{BASE_URL}}/search/pages/results/?andtext=thomas</a> 
 <br /> 
 search for &quot;thomas&quot;, HTML response
 </li> 
 <li> 
-<a href="/search/pages/results/?andtext=thomas&format=atom">{{ host }}/search/pages/results/?andtext=thomas&amp;format=atom</a> 
+<a href="/search/pages/results/?andtext=thomas&format=atom">{{BASE_URL}}/search/pages/results/?andtext=thomas&amp;format=atom</a> 
 <br /> 
 search for &quot;thomas&quot;, Atom response
 </li> 
 <li> 
-<a href="/search/pages/results/?andtext=thomas&format=atom&page=11">{{ host }}/search/pages/results/?andtext=thomas&amp;format=atom&amp;page=11</a> 
+<a href="/search/pages/results/?andtext=thomas&format=atom&page=11">{{BASE_URL}}/search/pages/results/?andtext=thomas&amp;format=atom&amp;page=11</a> 
 <br /> 
 search for &quot;thomas&quot;, Atom response, starting at page 11
 </li> 
@@ -95,15 +95,15 @@ this specific pattern.</p>
 numbers, edition numbers, and page sequence numbers.</p> 
 <p>Examples:</p> 
 <ul> 
-<li><a href="{{ title.url }}">{{ host }}{{ title.url }}</a> 
+<li><a href="{{ title.url }}">{{BASE_URL}}{{ title.url }}</a> 
 <br /> 
 title information for LCCN sn 86069873
 </li> 
-<li><a href="{{ issue.url }}">{{ host }}{{ issue.url }}</a> 
+<li><a href="{{ issue.url }}">{{BASE_URL}}{{ issue.url }}</a> 
 <br /> 
 first available edition from {{ issue.date_issued }}
 </li> 
-<li><a href="{{ page.url }}">{{ host }}{{ page.url }}</a> 
+<li><a href="{{ page.url }}">{{BASE_URL}}{{ page.url }}</a> 
 <br /> 
 first available page from first edition, January 5, 1900
 </li> 
@@ -120,28 +120,28 @@ JSON views available for various resources. These IIIF views are
 typically linked from their HTML representation using the &lt;link&gt; element.
 For example: 
 <ul> 
-<li><a href="{{ title.json_url }}">{{ host }}{{ title.json_url }}</a> 
+<li><a href="{{ title.json_url }}">{{BASE_URL}}{{ title.json_url }}</a> 
 <br /> 
 title information for LCCN sn86069873 as an IIIF Collection
 </li> 
-<li><a href="{{ issue.json_url }}">{{ host }}{{ issue.json_url }}</a> 
+<li><a href="{{ issue.json_url }}">{{BASE_URL}}{{ issue.json_url }}</a> 
 <br />
 first available edition from January 5, 1900 as an IIIF Manifest
 </li> 
-<li><a href="{{ page.json_url }}">{{ host }}{{ page.json_url }}</a> 
+<li><a href="{{ page.json_url }}">{{BASE_URL}}{{ page.json_url }}</a> 
 <br />
 first available page from first edition, January 5, 1900 as an IIIF Canvas
 </li> 
-<li><a href="/newspapers.json">{{ host }}/newspapers.json</a>
+<li><a href="/newspapers.json">{{BASE_URL}}/newspapers.json</a>
 <br>
 a list of all newspaper titles for which there is digital content represented as
 a IIIF Collection
 </li>
-<li><a href="/batches.json">{{ host }}/batches.json</a>
+<li><a href="/batches.json">{{BASE_URL}}/batches.json</a>
 <br>
 a list of all batches of content that have been loaded
 </li>
-<li><a href="{{ batch.json_url }}">{{ host }}{{ batch.json_url }}</a>
+<li><a href="{{ batch.json_url }}">{{BASE_URL}}{{ batch.json_url }}</a>
 <br>
 detailed information about a specific batch as a IIIF Collection
 </li>
@@ -173,21 +173,21 @@ up each issue and all of the files available for each page.</p>
 <p>Examples:</p> 
 <ul> 
 <li> 
-<a href="{% url "openoni_title_dot_rdf" title.lccn %}">{{ host }}{% url "openoni_title_dot_rdf" title.lccn %}</a> 
+<a href="{% url "openoni_title_dot_rdf" title.lccn %}">{{BASE_URL}}{% url "openoni_title_dot_rdf" title.lccn %}</a> 
 <br /> 
 information about <a href="{{ title.url }}">{{ title.name }}</a>
 </li> 
 <li> 
-<a href="{{ issue.rdf_url }}">{{ host }}{{ issue.rdf_url }}</a> 
+<a href="{{ issue.rdf_url }}">{{BASE_URL}}{{ issue.rdf_url }}</a> 
 <br /> 
 information about <a href="{{ issue.url }}">{{ issue }}</a>
 </li> 
 <li> 
-<a href="{{ page.rdf_url }}">{{ host }}{{ page.rdf_url }}</a> 
+<a href="{{ page.rdf_url }}">{{BASE_URL}}{{ page.rdf_url }}</a> 
 <br /> 
 details about all of the files associated with the <a href="{{ page.url }}">{{ page }}</a>
 </li> 
-<li><a href="/newspapers.rdf">{{ host }}/newspapers.rdf</a><br />list of <a href="/newspapers/">available newspaper titles</a></li> 
+<li><a href="/newspapers.rdf">{{BASE_URL}}/newspapers.rdf</a><br />list of <a href="/newspapers/">available newspaper titles</a></li> 
 </ul> 
 <p>Comparing the RDF versions of the links above with their HTML
 counterpart links, you might notice that the URI pattern we follow for these
