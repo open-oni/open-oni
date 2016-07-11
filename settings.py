@@ -2,6 +2,11 @@ import ConfigParser
 from settings_base import *
 from settings_local import *
 
+def override_core(conf):
+  global BASE_URL
+  if conf.has_option("core", "BASE_URL"):
+    BASE_URL = conf.get("core", "BASE_URL")
+
 def override_db(conf):
   global DATABASES
   for key in ("ENGINE", "HOST", "PORT", "NAME", "USER", "PASSWORD"):
@@ -30,6 +35,9 @@ conffile = "/etc/openoni.ini"
 if os.path.isfile(conffile):
   conf = ConfigParser.RawConfigParser(allow_no_value=True)
   conf.read(conffile)
+
+  if conf.has_section("core"):
+    override_core(conf)
 
   if conf.has_section("database"):
     override_db(conf)
