@@ -102,6 +102,3 @@ class ApiTests(TestCase):
         self.assertTrue(b['awardee']['url'].endswith('/awardees/curiv.json'))
 
         self.assertTrue(b['ingested'].startswith('2009-03-26T20:59:28'))
-
-    # TODO: test conneg on JSON views
-    # TODO: test RDF views?
