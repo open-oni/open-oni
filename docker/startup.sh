@@ -26,7 +26,7 @@ service apache2 reload
 
 cd /opt/openoni
 source ENV/bin/activate
-django-admin.py syncdb --noinput
+django-admin.py migrate
 django-admin.py openoni_sync
 django-admin.py collectstatic --noinput
 
