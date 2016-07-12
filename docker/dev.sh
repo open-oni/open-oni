@@ -78,7 +78,7 @@ if [ -z "$MYSQL_STATUS" ]; then
     -e MYSQL_USER=openoni \
     -e MYSQL_PASSWORD=openoni \
     --volumes-from openoni-dev-data-mysql \
-    -v /$(pwd)/mysql:/etc/mysql/conf.d:Z \
+    -v /$(pwd)/docker/mysql:/etc/mysql/conf.d:Z \
     mysql
 
   while [ $DB_READY == 0 ]
