@@ -1,7 +1,7 @@
 import json
 
 from django.test import TestCase
-
+from django.conf import settings
 
 class ApiTests(TestCase):
     """Tests the current API. Note URLs are hardwired instead of dynamic
@@ -17,91 +17,188 @@ class ApiTests(TestCase):
         r = self.client.get("/newspapers.json")
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
-        self.assertEqual(len(j['newspapers']), 1)
-        self.assertEqual(j['newspapers'][0]['lccn'], 'sn83030214')
-        self.assertEqual(j['newspapers'][0]['state'], 'New York')
-        self.assertEqual(j['newspapers'][0]['title'], 'New-York tribune.')
-        self.assertTrue(j['newspapers'][0]['url'].endswith('/lccn/sn83030214.json'))
+        self.maxDiff = None
+        self.assertEqual(j,
+            {u'@context': u'http://iiif.io/api/presentation/2/context.json',
+             u'@id': u'https://oni.example.com/newspapers.json',
+             u'@type': u'sc:Collection',
+             u'collections': [{u'@id': u'https://oni.example.com/lccn/sn83030214.json',
+                               u'@type': u'sc:Collection',
+                               u'label': u'New-York tribune.'}],
+             u'label': u'Newspapers'})
 
     def test_title_json(self):
         r = self.client.get("/lccn/sn83030214.json")
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
-        self.assertEqual(j['place_of_publication'], 'New York [N.Y.]')
-        self.assertEqual(j['lccn'], 'sn83030214')
-        self.assertEqual(j['start_year'], '1866')
-        self.assertEqual(j['place'][0], 'New York--Brooklyn--New York City')
-        self.assertEqual(j['name'], 'New-York tribune.')
-        self.assertTrue(j['url'].endswith('/lccn/sn83030214.json'))
-        self.assertEqual(j['subject'][0], 'New York (N.Y.)--Newspapers.')
-        self.assertEqual(j['issues'][0]['date_issued'], '1898-01-01')
+        self.maxDiff = None
+        self.assertEqual(j,
+            {u'@context': u'http://iiif.io/api/presentation/2/context.json',
+             u'@id': u'https://oni.example.com/lccn/sn83030214.json',
+             u'@type': u'sc:Collection',
+             u'label': u'New-York tribune.',
+             u'manifests': [{u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1.json',
+                             u'@type': u'sc:Manifest',
+                             u'label': u'1898-01-01'}],
+             u'metadata': [{u'label': u'county',
+                            u'value': [{u'@value': u'Brooklyn'}, {u'@value': u'Queens'}]},
+                           {u'label': u'frequency', u'value': u'Daily'},
+                           {u'label': u'id', u'value': u'/lccn/sn83030214/'},
+                           {u'label': u'subject',
+                            u'value': [{u'@value': u'New York (N.Y.)--Newspapers.'},
+                                       {u'@value': u'New York County (N.Y.)--Newspapers.'}]},
+                           {u'label': u'city',
+                            u'value': [{u'@value': u'New York City'},
+                                       {u'@value': u'New York City'}]},
+                           {u'label': u'title', u'value': u'New-York tribune.'},
+                           {u'label': u'end year', u'value': 1924},
+                           {u'label': u'note',
+                            u'value': [{u'@value': u"I'll take Manhattan"},
+                                       {u'@value': u'The Big Apple'}]},
+                           {u'label': u'state',
+                            u'value': [{u'@value': u'New York'},
+                                       {u'@value': u'New York'}]},
+                           {u'label': u'type', u'value': u'title'},
+                           {u'label': u'place of publication',
+                            u'value': u'New York [N.Y.]'},
+                           {u'label': u'start year', u'value': 1866},
+                           {u'label': u'publisher', u'value': u'New York Tribune'},
+                           {u'label': u'language', u'value': [{u'@value': u'English'}]},
+                           {u'label': u'lccn', u'value': u'sn83030214'},
+                           {u'label': u'title normal', u'value': u'New-York tribune.'},
+                           {u'label': u'place',
+                            u'value': [{u'@value': u'New York--Brooklyn--New York City'},
+                                       {u'@value': u'New York--Queens--New York City'}]}]})
 
     def test_issue_json(self):
         r = self.client.get("/lccn/sn83030214/1898-01-01/ed-1.json")
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
-        self.assertTrue(j['url'].endswith('/lccn/sn83030214/1898-01-01/ed-1.json'))
-        self.assertTrue(j['title']['url'].endswith('/lccn/sn83030214.json'))
-        self.assertEqual(j['title']['name'], 'New-York tribune.')
-        self.assertEqual(j['date_issued'], '1898-01-01')
-        self.assertEqual(j['volume'], '83')
-        self.assertEqual(j['number'], '32')
-        self.assertEqual(j['edition'], 1)
-        self.assertEqual(j['pages'][0]['sequence'], 1)
-        self.assertTrue(j['pages'][0]['url'].endswith('/lccn/sn83030214/1898-01-01/ed-1/seq-1.json'))
+        self.maxDiff = None
+        self.assertEqual(j,
+            {u'@context': u'http://iiif.io/api/presentation/2/context.json',
+             u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1.json',
+             u'@type': u'sc:Manifest',
+             u'label': u'New-York tribune. [1898-01-01]',
+             u'sequences': [{u'@id': u'normal',
+                             u'@type': u'sc:Sequence',
+                             u'canvases': [{u'@id': u'https://oni.example.com/images/tile/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/info.json',
+                                            u'@type': u'sc:Canvas',
+                                            u'height': 8677,
+                                            u'images': [{u'@id': u'https://oni.example.com/images/tile/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/info.json',
+                                                         u'@type': u'oa:Annotation',
+                                                         u'motivation': u'sc:painting',
+                                                         u'rendering': [{u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-1.pdf',
+                                                                         u'format': u'application/pdf'},
+                                                                        {u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-1.jp2',
+                                                                         u'format': u'image/jp2'},
+                                                                        {u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-1/',
+                                                                         u'format': u'text/html'}],
+                                                         u'resource': {u'@id': u'https://oni.example.com/images/tile/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/info.json',
+                                                                       u'@type': u'dctypes:Image',
+                                                                       u'format': u'image/jpeg',
+                                                                       u'height': 8677,
+                                                                       u'service': {u'@context': u'http://iiif.io/api/image/2/context.json',
+                                                                                    u'@id': u'https://oni.example.com/images/tile/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/info.json',
+                                                                                    u'profile': u'http://iiif.io/api/image/2/level0.json'},
+                                                                       u'width': 6394},
+                                                         u'seeAlso': [{u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-1/ocr.xml',
+                                                                       u'format': u'text/xml'}]}],
+                                            u'label': u'1',
+                                            u'thumbnail': u'https://oni.example.com/images/resize/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/full/240,/0/default.jpg',
+                                            u'width': 6394}],
+                             u'label': u'issue order'}]})
 
     def test_page_json(self):
         r = self.client.get("/lccn/sn83030214/1898-01-01/ed-1/seq-1.json")
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
-        self.assertTrue(j['jp2'].endswith('/lccn/sn83030214/1898-01-01/ed-1/seq-1.jp2'))
-        self.assertTrue(j['ocr'].endswith('/lccn/sn83030214/1898-01-01/ed-1/seq-1/ocr.xml'))
-        self.assertTrue(j['pdf'].endswith('/lccn/sn83030214/1898-01-01/ed-1/seq-1.pdf'))
-        self.assertTrue(j['text'].endswith('/lccn/sn83030214/1898-01-01/ed-1/seq-1/ocr.txt'))
-        self.assertEqual(j['sequence'], 1)
-        self.assertEqual(j['title']['name'], 'New-York tribune.')
-        self.assertTrue(j['title']['url'].endswith('/lccn/sn83030214.json'))
-        self.assertTrue(j['issue']['date_issued'], '1898-01-01')
-        self.assertTrue(j['issue']['url'].endswith('/lccn/sn83030214/1898-01-01/ed-1.json'))
+        self.maxDiff = None
+        self.assertEqual(j,
+            {u'@id': u'https://oni.example.com/images/tile/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/info.json',
+             u'@type': u'sc:Canvas',
+             u'height': 8677,
+             u'images': [{u'@id': u'https://oni.example.com/images/tile/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/info.json',
+                          u'@type': u'oa:Annotation',
+                          u'motivation': u'sc:painting',
+                          u'rendering': [{u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-1.pdf',
+                                          u'format': u'application/pdf'},
+                                         {u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-1.jp2',
+                                          u'format': u'image/jp2'},
+                                         {u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-1/',
+                                          u'format': u'text/html'}],
+                          u'resource': {u'@id': u'https://oni.example.com/images/tile/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/info.json',
+                                        u'@type': u'dctypes:Image',
+                                        u'format': u'image/jpeg',
+                                        u'height': 8677,
+                                        u'service': {u'@context': u'http://iiif.io/api/image/2/context.json',
+                                                     u'@id': u'https://oni.example.com/images/tile/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/info.json',
+                                                     u'profile': u'http://iiif.io/api/image/2/level0.json'},
+                                        u'width': 6394},
+                          u'seeAlso': [{u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-1/ocr.xml',
+                                        u'format': u'text/xml'}]}],
+             u'label': u'1',
+             u'thumbnail': u'https://oni.example.com/images/resize/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/full/240,/0/default.jpg',
+             u'width': 6394})
 
     def test_batch_json(self):
         r = self.client.get("/batches/batch_curiv_ahwahnee_ver01.json")
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
-        self.assertEqual(j['name'], 'batch_curiv_ahwahnee_ver01')
-        self.assertEqual(j['page_count'], 1)
-        self.assertEqual(j['awardee']['name'], 'University of California, Riverside')
-        self.assertTrue(j['awardee']['url'].endswith('/awardees/curiv.json'))
-        self.assertEqual(j['lccns'], ['sn83030214'])
-        self.assertTrue(j['ingested'].startswith('2009-03-26T20:59:28'))
-        self.assertEqual(j['issues'][0]['date_issued'], '1898-01-01')
-        self.assertTrue(j['issues'][0]['url'].endswith('/lccn/sn83030214/1898-01-01/ed-1.json'))
-        self.assertEqual(j['issues'][0]['title']['name'], 'New-York tribune.')
-        self.assertTrue(j['issues'][0]['title']['url'].endswith('/lccn/sn83030214.json'))
+        self.maxDiff = None
+        self.assertEqual(j,
+            {u'@context': u'http://iiif.io/api/presentation/2/context.json',
+             u'@id': u'https://oni.example.com/batches/batch_curiv_ahwahnee_ver01.json',
+             u'@type': u'sc:Collection',
+             u'label': u'batch_curiv_ahwahnee_ver01',
+             u'manifests': [{u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1.json',
+                             u'@type': u'sc:Manifest',
+                             u'label': u'New-York tribune. [1898-01-01]'}],
+             u'metadata': [{u'label': u'Ingested',
+                            u'value': u'2009-03-26T20:59:28-04:00'},
+                           {u'label': u'Pages', u'value': 1},
+                           {u'label': u'Awardee',
+                            u'value': u'University of California, Riverside'}]})
 
     def test_awardee_json(self):
         r = self.client.get("/awardees/curiv.json")
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
-        self.assertEqual(j['name'], 'University of California, Riverside')
-        self.assertTrue(j['url'].endswith('/awardees/curiv.json'))
-        self.assertTrue(j['batches'][0]['url'].endswith('/batches/batch_curiv_ahwahnee_ver01.json'))
-        self.assertEqual(j['batches'][0]['name'], 'batch_curiv_ahwahnee_ver01')
+        self.maxDiff = None
+        self.assertEqual(j,
+            {u'@context': u'http://iiif.io/api/presentation/2/context.json',
+             u'@id': u'https://oni.example.com/awardees/curiv.json',
+             u'@type': u'sc:Collection',
+             u'collections': [{u'@context': u'http://iiif.io/api/presentation/2/context.json',
+                               u'@id': u'https://oni.example.com/batches/batch_curiv_ahwahnee_ver01.json',
+                               u'@type': u'sc:Collection',
+                               u'label': u'batch_curiv_ahwahnee_ver01',
+                               u'manifests': [{u'@id': u'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1.json',
+                                               u'@type': u'sc:Manifest',
+                                               u'label': u'New-York tribune. [1898-01-01]'}],
+                               u'metadata': [{u'label': u'Ingested',
+                                              u'value': u'2009-03-26T20:59:28-04:00'},
+                                             {u'label': u'Pages', u'value': 1},
+                                             {u'label': u'Awardee',
+                                              u'value': u'University of California, Riverside'}]}],
+             u'label': u'University of California, Riverside'})
 
     def test_batches_json(self):
         r = self.client.get("/batches.json")
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
-        self.assertEqual(len(j['batches']), 1)
-        b = j['batches'][0]
-        self.assertEqual(b['name'], 'batch_curiv_ahwahnee_ver01')
-        self.assertTrue(b['url'].endswith('/batches/batch_curiv_ahwahnee_ver01.json'))
-        self.assertEqual(b['page_count'], 1)
-        self.assertEqual(b['lccns'], ['sn83030214'])
-        self.assertEqual(b['awardee']['name'], 'University of California, Riverside')
-        self.assertTrue(b['awardee']['url'].endswith('/awardees/curiv.json'))
-
-        self.assertTrue(b['ingested'].startswith('2009-03-26T20:59:28'))
-
-    # TODO: test conneg on JSON views
-    # TODO: test RDF views?
+        self.maxDiff = None
+        self.assertEqual(j,
+            {u'@context': u'http://iiif.io/api/presentation/2/context.json',
+             u'@id': u'https://oni.example.com/batches.json',
+             u'@type': u'sc:Collection',
+             u'collections': [{u'@context': u'http://iiif.io/api/presentation/2/context.json',
+                               u'@id': u'https://oni.example.com/batches/batch_curiv_ahwahnee_ver01.json',
+                               u'@type': u'sc:Collection',
+                               u'label': u'batch_curiv_ahwahnee_ver01',
+                               u'metadata': [{u'label': u'Ingested',
+                                              u'value': u'2009-03-26T20:59:28-04:00'},
+                                             {u'label': u'Pages', u'value': 1},
+                                             {u'label': u'Awardee',
+                                              u'value': u'University of California, Riverside'}]}],
+             u'label': u'Batches'})
