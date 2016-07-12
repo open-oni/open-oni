@@ -86,14 +86,6 @@ def _fulltext_range():
         else:
             max_year = MAX_YEAR
 
-        # removing these bits for https://rdc.lctl.gov/trac/openoni/ticket/1025
-        # See: https://rdc.lctl.gov/trac/ndnp/ticket/446
-        #min_year = max(min_year, MIN_YEAR)
-
-        # I don't understand why... just doing what's asked. See:
-        # https://rdc.lctl.gov/trac/ndnp/ticket/241
-        #max_year = min(max_year, MAX_YEAR)
-
         fulltext_range = (min_year, max_year)
         cache.set('fulltext_range', fulltext_range)
     return fulltext_range

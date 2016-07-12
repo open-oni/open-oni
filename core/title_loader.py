@@ -164,7 +164,6 @@ class TitleLoader(object):
         marc.xml = record_to_xml(record)
         marc.save()
 
-        # for context see: https://rdc.lctl.gov/trac/ndnp/ticket/375
         if _is_openoni_electronic_resource(title, record):
             _logger.info("deleting title record for openoni electronic resource: %s" % title)
             title.delete()
@@ -476,7 +475,6 @@ def _normal_oclc(value):
 def _is_openoni_electronic_resource(title, record):
     # delete the Title if it is for an electronic resource
     # and it contains a link to chronicling america
-    # https://rdc.lctl.gov/trac/ndnp/ticket/375
     if record['245']['h'] != '[electronic resource].':
         return False
     if len(title.issues.all()) != 0:

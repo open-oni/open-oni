@@ -1,18 +1,16 @@
-<!-- http://192.168.99.100/search/titles/results/?&terms=salt -->
-
 {% extends "site_base.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
 
 {% block extrahead %}
     {% if page.has_previous %}
-    <link rel="prev" href="http://{{host}}{% url 'openoni_search_titles_results' %}{{previous_url}}" />
+    <link rel="prev" href="{{BASE_URL}}{% url 'openoni_search_titles_results' %}{{previous_url}}" />
     {% endif %}
     {% if page.has_next %}
-    <link rel="next" href="http://{{host}}{% url 'openoni_search_titles_results' %}{{next_url}}" />
+    <link rel="next" href="{{BASE_URL}}{% url 'openoni_search_titles_results' %}{{next_url}}" />
     {% endif %}
-    <link rel="alternate" type="application/atom+xml" link="http://{{host}}{% url 'openoni_search_titles_results' %}?{{q}}&amp;page={{page.number}}&amp;format=atom" />
-    <link rel="alternate" type="application/json" link="http://{{host}}{% url 'openoni_search_titles_results' %}?{{q}}&amp;page={{page.number}}&amp;format=json" />
+    <link rel="alternate" type="application/atom+xml" link="{{BASE_URL}}{% url 'openoni_search_titles_results' %}?{{q}}&amp;page={{page.number}}&amp;format=atom" />
+    <link rel="alternate" type="application/json" link="{{BASE_URL}}{% url 'openoni_search_titles_results' %}?{{q}}&amp;page={{page.number}}&amp;format=json" />
 {% endblock %}
 
 {% block javascript %}

@@ -10,13 +10,13 @@
     <opensearch:startIndex>{{page.start_index}}</opensearch:startIndex>
     <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
     <link rel="search" type="application/opensearchdescription+xml" href="{% url 'openoni_search_pages_opensearch' %}" />
-    {% if previous_url %}<link rel="previous" type="application/atom+xml" href="http://{{host}}{% url 'openoni_search_pages_results' %}{{ previous_url }}" />{% endif %}
-    {% if next_url %}<link rel="next" type="application/atom+xml" href="http://{{host}}{% url 'openoni_search_pages_results' %}{{ next_url }}" />{% endif %}
+    {% if previous_url %}<link rel="previous" type="application/atom+xml" href="{{BASE_URL}}{% url 'openoni_search_pages_results' %}{{ previous_url }}" />{% endif %}
+    {% if next_url %}<link rel="next" type="application/atom+xml" href="{{BASE_URL}}{% url 'openoni_search_pages_results' %}{{ next_url }}" />{% endif %}
 
     {% for title in page.object_list %}
     <entry>
         <title>{{title.display_name}}</title>
-        <link href="http://{{host}}{{title.url}}" />
+        <link href="{{BASE_URL}}{{title.url}}" />
         <id>info:lccn/{{title.lccn}}</id>
         <author><name>Library of Congress</name></author>
         <updated>{{title.created|rfc3339}}</updated>

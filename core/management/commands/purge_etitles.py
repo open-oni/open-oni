@@ -20,7 +20,7 @@ class Command(BaseCommand):
     for an electronic only version of a title 245 $h == [electronic resource].
 
     The script is careful not to purge any records that have issues attached 
-    to them.  See https://rdc.lctl.gov/trac/ndnp/ticket/375 for context.
+    to them.
 
     If you want to see the records that will be purged use the --pretend
     option.

@@ -91,14 +91,13 @@ def newspapers(request, state=None, format='html'):
         writer.writerow(csv_header_labels)
         for state, titles in newspapers_by_state:
             for title in titles:
-                writer.writerow(('http://%s%s' % (request.get_host(), 
+                writer.writerow(('%s%s' % (settings.BASE_URL,
                                                   reverse('openoni_issues_title', 
                                                            kwargs={'lccn': title.lccn}),),
                                  state, title, title.lccn or '', title.oclc or '',
                                  title.issn or '', title.issues.count(), title.first, 
                                  title.last, 
-                                 'http://%s%s' % (request.get_host(),
-                                                  reverse('openoni_title_essays',
+                                 '%s%s' % (settings.BASE_URL, reverse('openoni_title_essays',
                                                            kwargs={'lccn': title.lccn}),),))
         return response
 
@@ -107,7 +106,7 @@ def newspapers(request, state=None, format='html'):
 
         results = {
             "@context": "http://iiif.io/api/presentation/2/context.json", 
-            "@id": "http://" + host + request.get_full_path(),
+            "@id": settings.BASE_URL + request.get_full_path(),
             "@type": "sc:Collection",
             "label": "Newspapers",
             "collections": [],
@@ -116,7 +115,7 @@ def newspapers(request, state=None, format='html'):
         for state, titles in newspapers_by_state:
             for title in titles:
                 results["collections"].append({
-                    "@id": "http://" + host + title.json_url,
+                    "@id": settings.BASE_URL + title.json_url,
                     "@type": "sc:Collection",
                     "label": title.display_name
                 })
@@ -239,7 +238,7 @@ def search_titles_results(request):
         page_list.append((page_start, page.object_list[p]))
 
     if format == 'atom':
-        feed_url = 'http://' + host + request.get_full_path()
+        feed_url = settings.BASE_URL + request.get_full_path()
         updated = rfc3339(datetime.datetime.now())
         return render_to_response('search/search_titles_results.xml',
                                   dictionary=locals(),
@@ -256,7 +255,7 @@ def search_titles_results(request):
         }
         # add url for the json view
         for i in results['items']:
-            i['url'] = 'http://' + request.get_host() + i['id'].rstrip("/") + ".json"
+            i['url'] = settings.BASE_URL + i['id'].rstrip("/") + ".json"
         json_text = json.dumps(results, indent=2)
         # jsonp?
         if request.GET.get('callback') is not None:
