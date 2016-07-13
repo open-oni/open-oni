@@ -252,10 +252,6 @@ def page(request, lccn, date, edition, sequence, words=None):
     host = request.get_host()
 
     template = "page.html"
-    page_topics = None
-    if page.topicpages_set.count():
-        page_topics = map(lambda tp: {'name': tp.topic.name, 'id': tp.topic.id}, 
-                          page.topicpages_set.all())
     related_pages = index.similar_pages(page)
     response = render_to_response(template, dictionary=locals(),
                                   context_instance=RequestContext(request))
