@@ -54,146 +54,136 @@ Metadata Etc.
     {% endblock head_content %}
   </head>
 
-  <body role="document">{% block body_content %}
+  <body role="document">
+    {% block body_content %}
 
-<!-- ===========
-HEADER
-============= -->
+      <!-- ===========
+      HEADER
+      ============= -->
 
-  <!-- Site Title/Head -->
+      <!-- Site Title/Head -->
       
-      <div class="header_title">
+      {% block header_title %}
+        <div class="header_title">
+          <div class="container">
+            <h1 class="title">{{ site_title }}</h1>
+          </div>
+        </div><!-- /header -->
+      {% endblock header_title %}
+      <nav class="navbar navbar-inverse">
         <div class="container">
-          <h1 class="title"><span class="title_state">State</span> <span class="title_newspapers">Newspapers</span></h1>
-        </div>
-      </div><!-- /header -->
-
-  
-   <nav class="navbar navbar-inverse">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      
-    </div>
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
 
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="/">Home</a></li><!--TODO: Is this linked properly? -->
-        <li><a href="{% url 'openoni_newspapers' %}">Newspapers</a></li>
-        <li><a href="{% url 'openoni_about' %}">About</a></li>
-        <li><a href="{% url 'openoni_about_api' %}">API</a></li>
-        <li><a href="{% url 'openoni_issues' %}">Browse by Date</a></li>
-        {# <li><a href="{% url 'openoni_reports' %}">Reports</a></li> <!-- Commenting out because reports should not be available to public -->  #}
-        <li><a href="/help/">Help</a></li>
-      </ul>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li><!--TODO: Is this linked properly? -->
+              <li><a href="{% url 'openoni_newspapers' %}">Newspapers</a></li>
+              <li><a href="{% url 'openoni_about' %}">About</a></li>
+              <li><a href="{% url 'openoni_about_api' %}">API</a></li>
+              <li><a href="{% url 'openoni_issues' %}">Browse by Date</a></li>
+              {# <li><a href="{% url 'openoni_reports' %}">Reports</a></li> <!-- Commenting out because reports should not be available to public -->  #}
+              <li><a href="/help/">Help</a></li>
+            </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li class="nav_advanced_search"><a href="{% url 'openoni_search_advanced' %}">Advanced<br/>Search</a></li>
-      </ul>
-      
-      <form class="form-inline navbar-form navbar-right"  action="{% url 'openoni_search_pages_results' %}" method="get">
-        <div class="form-group">
-          <input type="hidden" name="rows" id="rows" alt="rows" value="20" />
-          <input type="hidden" name="searchType" alt="searchType" value="basic" />
-          <input class="form-control" type="text" name="proxtext" placeholder="search words">
-        </div><!-- /form-group -->
+            <ul class="nav navbar-nav navbar-right">
+              <li class="nav_advanced_search"><a href="{% url 'openoni_search_advanced' %}">Advanced<br/>Search</a></li>
+            </ul>
+          
+            <form class="form-inline navbar-form navbar-right"  action="{% url 'openoni_search_pages_results' %}" method="get">
+              <div class="form-group">
+                <input type="hidden" name="rows" id="rows" alt="rows" value="20" />
+                <input type="hidden" name="searchType" alt="searchType" value="basic" />
+                <input class="form-control" type="text" name="proxtext" placeholder="search words">
+              </div><!-- /form-group -->
 
-        <button type="submit" class="btn btn-default">
-          <span class="glyphicon glyphicon-search" aria-hidden="true"><span class="search_text">Search</span></span>
-        </button>
-    </form>
+              <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"><span class="search_text">Search</span></span>
+              </button>
+            </form>
 
-         </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
 
 
-<!-- ===========
-MAIN CONTENT
-============= -->
+      <!-- ===========
+      MAIN CONTENT
+      ============= -->
 
-    <div class="container main_content">
-      {% if crumbs and crumbs|length > 1 %}
+      <div class="container main_content">
+        {% if crumbs and crumbs|length > 1 %}
 
-    <ol class="breadcrumb">
-      {% for crumb in crumbs %}
-            <li {% if crumb.active %}class="active"{% endif %}>
-              <a href="{{crumb.href}}">{{crumb.label}}</a>
-              {% if forloop.last %}
-              {% else %}
-              {% endif %}
-            </li>
-          {% endfor %}
+          <ol class="breadcrumb">
+            {% for crumb in crumbs %}
+              <li {% if crumb.active %}class="active"{% endif %}>
+                <a href="{{crumb.href}}">{{crumb.label}}</a>
+              </li>
+            {% endfor %}
+          </ol>
+        {% endif %}
 
-     </ol>
-      {% endif %}
-      {% block content %}
-        {% block page_head_container %}
-          {% block page_head %}
-            {% block sub_page_head %}
-              {% if page_title %}
-                <h1>{{ page_title }}</h1>
-              {% endif %}
-            {% endblock sub_page_head %}
-          {% endblock page_head%}
-        {% endblock page_head_container %}
-        <div>
-          <a name="skip_menu"></a>{% block main_content %}{% endblock main_content %}
-        </div>
-        {% block subcontent %}{% endblock subcontent %}
-      {% endblock content %}
-    </div><!--/main_content -->{% endblock body_content %}
+        {% block content %}
+          {% block page_head_container %}
+            {% block page_head %}
+              {% block sub_page_head %}
+                {% if page_title %}
+                  <h1>{{ page_title }}</h1>
+                {% endif %}
+              {% endblock sub_page_head %}
+            {% endblock page_head%}
+          {% endblock page_head_container %}
+          <div>
+            <a name="skip_menu"></a>{% block main_content %}{% endblock main_content %}
+          </div>
+          {% block subcontent %}{% endblock subcontent %}
+        {% endblock content %}
+      </div><!--/main_content -->
+    {% endblock body_content %}
 
-<!-- ===========
-FOOTER
-============= -->
+    <!-- ===========
+    FOOTER
+    ============= -->
 
-<div id="footer">
-<div class="container">
+    <div id="footer">
+      <div class="container">
+        <p>All your footer things like logos and such go here.</p>
+        <p>Site created using <a href="https://github.com/open-oni/open-oni">open-oni</a> software, built off the Library of Congress's <a href="https://github.com/LibraryofCongress/chronam">chronam</a>.</p>
 
-<p>All your footer things like logos and such go here.</p>
-<p>Site created using <a href="https://github.com/open-oni/open-oni">open-oni</a> software, built off the Library of Congress's <a href="https://github.com/LibraryofCongress/chronam">chronam</a>.</p>
+      </div><!-- /container -->
+    </div><!-- /footer -->
 
-</div><!-- /container -->
-</div><!-- /footer -->
-
-<!-- ===========
-Bottom loading javascripts
-============= -->
+    <!-- ===========
+    Bottom loading javascripts
+    ============= -->
 
     {% block javascript %}
+      <!-- JQuery -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.ba-bbq.min.js' %}"></script>
 
-    <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.ba-bbq.min.js' %}"></script>
+      <!-- Main site JS -->
+      <script type="text/javascript" async="" src="{% static 'js/main.js' %}"></script>
+      <script type="text/javascript" async="" src="{% static 'js/highlight.js' %}"></script>
 
-     
-    <!-- Main site JS -->
-    <script type="text/javascript" async="" src="{% static 'js/main.js' %}"></script>
-    <script type="text/javascript" async="" src="{% static 'js/highlight.js' %}"></script>
+      <!-- Bootstrap -->
+      <script type="text/javascript" async="" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+      
+      <!-- Google Analytics -->
+      <!-- If you are using Google Analytics add your snippit to the ga.js file -->
+      <script type="text/javascript" async="" src="{% static 'js/ga.js' %}"></script>
+    {% endblock javascript %}
 
-    <!-- Bootstrap -->
-
-    <script type="text/javascript" async="" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-  
-    
-    <!-- Google Analytics -->
-    <!-- If you are using Google Analytics add your snippit to the ga.js file -->
-    <script type="text/javascript" async="" src="{% static 'js/ga.js' %}"></script>
-
-
-   
-
-      {% endblock javascript %}
-      <script type="text/javascript">
+    <script type="text/javascript">
       (function($) {
         function initPage() {
           $('ul.nav > li > a[href="' + document.location.pathname + '"]').parent().addClass('active');

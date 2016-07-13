@@ -1,7 +1,7 @@
 {% load image_urls %}{% load custom_filters %}<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-    <title>Recent Titles from Chronicling America</title>
+    <title>Recent Titles from {{ site_title }}</title>
     <subtitle>This feed lists newspaper titles that have had new content added to them.</subtitle>
     <link rel="self" type="application/atom+xml" href="{{BASE_URL}}{% url 'openoni_newspapers_atom' %}" />
     <link rel="alternate" type="text/html" href="{{BASE_URL}}{% url 'openoni_newspapers' %}" />

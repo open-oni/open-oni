@@ -179,7 +179,7 @@ class TitleLoaderTests(TestCase):
 
     def test_etitle(self):
         # we shouldn't load in [electronic resource] records for 
-        # chronicling america titles, since they muddle up search results
+        # titles, since they muddle up search results
         loader = TitleLoader()
         loader.load_file(abs_filename('./test-data/etitle.xml'))
         self.assertRaises(Title.DoesNotExist, Title.objects.get,

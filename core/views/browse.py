@@ -580,7 +580,7 @@ def issues_first_pages(request, lccn, page_number=1):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def recommended_topics(request):
     sort_order = request.REQUEST.get('sort_by', None)
-    page_title = 'Topics in Chronicling America'
+    page_title = 'Topics in ' + settings.SITE_TITLE
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([{'label': 'Recommended Topics', 
                    'href': urlresolvers.reverse('recommended_topics')}])

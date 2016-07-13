@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"
       xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
 
-    <title>Chronicling America Page Search Results</title>
+    <title>{{ site_title }} Page Search Results</title>
     <link href="{{feed_url}}" rel="self" />
     <id>{{feed_url}}</id>
     <updated>{{updated}}</updated>
