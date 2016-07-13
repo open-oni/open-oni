@@ -1,7 +1,7 @@
 {% load image_urls %}{% load custom_filters %}<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-    <title>Chronicling America Title Feed: {{ title }}</title>
+    <title>{{ site_title }} Title Feed: {{ title }}</title>
     <link rel="self" type="application/atom+xml" href="{{BASE_URL}}{% url 'openoni_title_atom' title.lccn %}" />
     <link rel="alternate" type="text/html" href="{{BASE_URL}}{% url 'openoni_title' title.lccn %}" />
     <id>info:lc/ndnp/titles/{{ title.lccn }}</id>

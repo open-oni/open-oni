@@ -2,8 +2,8 @@
 <OpenSearchDescription 
     xmlns="http://a9.com/-/spec/opensearch/1.1/"
     xmlns:openoni="{{BASE_URL}}">
-    <ShortName>Chronicling America Pages Search</ShortName>
-    <Description>Search digital newspaper content from the Library of Congress</Description>
+    <ShortName>{{ site_title }} Pages Search</ShortName>
+    <Description>Search digital newspaper content from {{ site_title }}</Description>
     <InputEncoding>UTF-8</InputEncoding>
     <Image width="16" height="16" type="image/x-icon">{{BASE_URL}}/favicon.ico</Image>
     <Url type="text/html" template="{{BASE_URL}}{% url 'openoni_search_pages_results' %}?andtext={searchTerms}&amp;page={startPage?}&amp;ortext={openoni:booleanOrText?}&amp;year={openoni:year?}&amp;date1={openoni:date?}&amp;date2={openoni:date?}&amp;phrasetext={openoni:phraseText?}&amp;proxText={openoni:proxText?}&amp;proximityValue={openoni:proximityValue?}" />
