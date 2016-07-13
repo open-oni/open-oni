@@ -200,3 +200,13 @@ BASE_CRUMBS = [{'label':'Home', 'href': '/'}]
 #
 # NOTE: as of now this can NOT include any path elements!
 BASE_URL = 'http://localhost'
+
+# SITE_TITLE that will be used for display purposes throughout app
+# PROJECT_NAME may be the same as SITE_TITLE but can be used
+# for longer descriptions that will only show up occasionally
+# Example "Open ONI" for most headers, "Open Online Newspapers Initiative"
+# for introduction / about / further information / etc
+# Both should be overridden in settings_local.py
+SITE_TITLE = "Open ONI"
+PROJECT_NAME = "Open Online Newspapers Initiative"
+

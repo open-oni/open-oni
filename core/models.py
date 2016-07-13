@@ -1126,9 +1126,9 @@ class Country(models.Model):
     A model for capturing MARC country codes found at:
     http://www.loc.gov/marc/countries/
 
-    It's used primarily for state information since Chronicling America
-    is about the United States and the MARC country codes contains
-    distinct codes for each US state. Go figure.
+    It's used primarily for state information since the original
+    Chronicling American project is about the United States and 
+    the MARC country codes contains distinct codes for each US state.
     """
     code = models.CharField(null=False, max_length=3, primary_key=True)
     name = models.CharField(null=False, max_length=100)
