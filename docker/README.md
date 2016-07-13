@@ -2,7 +2,7 @@ Open ONI In Docker
 ===============
 
 See [our Open ONI docker
-page](https://github.com/open-oni/open-oni/wiki/Docker-Setup-OS-X) on the wiki
+page](https://github.com/open-oni/open-oni/wiki/Docker) on the wiki
 for our full Docker instructions.
 
 For manual installation, please use [`dev.sh`](dev.sh) as a template for
