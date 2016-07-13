@@ -7,7 +7,7 @@ from django.template import RequestContext
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def about(request):
-    page_title = "About Chronicling America"
+    page_title = "About " + settings.SITE_TITLE
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([
         {'label':'About',

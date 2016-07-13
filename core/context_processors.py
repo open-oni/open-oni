@@ -11,7 +11,8 @@ def extra_request_info(request):
     """
     fulltext_range = _fulltext_range()
     return {
-        'site_title': 'Chronicling America',
+        'site_title': settings.SITE_TITLE if "SITE_TITLE" in dir(settings) else None,
+        'project_name': settings.PROJECT_NAME if "PROJECT_NAME" in dir(settings) else None,
         'omniture_url': settings.OMNITURE_SCRIPT if "OMNITURE_SCRIPT" in dir(settings) else None,
         'sharetool_url': settings.SHARETOOL_URL if "SHARETOOL_URL" in dir(settings) else None,
         'fulltext_startdate': fulltext_range[0],
