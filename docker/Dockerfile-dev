@@ -39,11 +39,12 @@ ADD purge_batch.sh /
 ADD collect_static.sh /
 ADD startup.sh /
 ADD test.sh /
-ADD django_admin /
+ADD manage /usr/local/bin/manage
+ADD manage /usr/local/bin/django-admin
 ADD openoni.ini /etc/openoni.ini.orig
 
 RUN chmod u+x /*.sh
-RUN chmod u+x /django_admin
+RUN chmod u+x /usr/local/bin/*
 
 EXPOSE 80
 CMD ["/startup.sh"]
