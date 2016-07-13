@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Installs pip dependencies
-cd /opt/openoni
 virtualenv ENV
 source ENV/bin/activate
 cp conf/openoni.pth ENV/lib/python2.7/site-packages/openoni.pth
