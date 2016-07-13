@@ -1,8 +1,8 @@
-{% extends "newspaper_base.html" %}
+{% extends "_newspaper_base.html" %}
 
-{% block lc_metadata %}
-{% include "includes/lc_metadata.html" %}
-{% endblock %}
+{% block head_item_metadata %}
+    {% include "includes/lc_metadata.html" %}
+{% endblock head_item_metadata %}
 
 {% block javascript %}
 {{ block.super }}

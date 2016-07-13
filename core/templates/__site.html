@@ -4,54 +4,66 @@
 {% load custom_tags %}
 
 <html lang="en">
-  <head profile="http://dublincore.org/documents/2008/08/04/dc-html/">
-  {% block head_content %}
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html" />
-    <meta http-equiv="Content-Language" content="en-us" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>{% if page_title %}{{page_title}} « {% endif %}{% if site_title %}{{site_title}} « {% endif %}</title>
+  <head profile="http://dublincore.org/documents/2008/08/04/dc-html/"><!-- todo: I'm not sure this dc declaration should be on pages without dc meta tags -kmd -->
+  {% block head_all %}
     
-<!-- ===========
-CSS FILES
-============= -->
+    {% block head_page_meta %}
+      <meta charset="utf-8">
+      <meta http-equiv="Content-Type" content="text/html" />
+      <meta http-equiv="Content-Language" content="en-us" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     
+    {% endblock head_page_meta %}
+
+    <title>
+      {% block head_page_title %}
+        {{page_title}}
+      {% endblock head_page_title %}
+    </title>
     
-  <!-- Bootstrap core CSS -->
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-  
-  <!-- Local CSS -->
-  <link href="{% static 'css/highlights.css' %}" rel="stylesheet" media="screen">
-  <link href="{% static 'css/tablesort.css' %}" rel="stylesheet" media="screen">
-  <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
-    
-<!-- ===========
-JS FILES
-============= -->
+    <!-- ===========
+    CSS FILES
+    ============= -->
+        
+    {% block head_page_css %}
+      <!-- Bootstrap core CSS -->
+      <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+      
+      <!-- Local CSS -->
+      <link href="{% static 'css/highlights.css' %}" rel="stylesheet" media="screen">
+      <link href="{% static 'css/tablesort.css' %}" rel="stylesheet" media="screen">
+      <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
+    {% endblock head_page_css %}
+        
+    <!-- ===========
+    JS FILES
+    ============= -->
 
-    <!-- additional scripts loaded at the bottom: Jquery, Jquery UI, Bootstrap -->
-    
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    {% block head_page_top_js %}
+        <!-- additional scripts loaded at the bottom: Jquery, Jquery UI, Bootstrap -->
+        
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    {% endblock head_page_top_js %}
 
 
-<!-- ===========
-Metadata Etc.
-============= -->
+    <!-- ===========
+    Metadata Etc.
+    ============= -->
 
-    {% block lc_metadata %}{% endblock lc_metadata %}
-    <link title="NDNP Page Search" href="{% url 'openoni_search_pages_opensearch' %}" rel="search" type="application/opensearchdescription+xml" />
-    <link title="NDNP Title Search" href="{% url 'openoni_search_titles_opensearch' %}" rel="search" type="application/opensearchdescription+xml" />
+    {% block head_item_metadata %}{% endblock head_item_metadata %} <!-- formerly lc_metadata -->
 
-    <meta name="description" content="">
-    <meta name="author" content="">
+    {% block head_opensearch %}
+      <link title="NDNP Page Search" href="{% url 'openoni_search_pages_opensearch' %}" rel="search" type="application/opensearchdescription+xml" />
+      <link title="NDNP Title Search" href="{% url 'openoni_search_titles_opensearch' %}" rel="search" type="application/opensearchdescription+xml" />
+    {% endblock head_opensearch %}
 
     <!-- Extra head data from other pages will be included here -->
-    {% block extrahead %}{% endblock extrahead %}
+    {% block head_extra %}{% endblock head_extra %}
   
-    {% endblock head_content %}
+  {% endblock head_all %}
   </head>
 
   <body role="document">

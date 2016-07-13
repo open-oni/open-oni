@@ -1,4 +1,4 @@
-{% extends "newspaper_base.html" %}
+{% extends "_newspaper_base.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
 {% load image_urls %}
@@ -7,9 +7,9 @@
 <link rel="alternate" href="{% url 'openoni_issue_pages_dot_json' title.lccn issue.date_issued issue.edition %}" />
 {% endblock %}
 
-{% block lc_metadata %}
-{% include "includes/lc_metadata.html" %}
-{% endblock %}
+{% block head_item_metadata %}
+    {% include "includes/lc_metadata.html" %}
+{% endblock head_item_metadata %}
 
 {% block newspaper_content %}
 {% if first_pages %}
