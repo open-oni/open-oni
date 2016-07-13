@@ -61,12 +61,6 @@ urlpatterns += patterns(
     # explainOCR.html
     url(r'^ocr/$', 'ocr', name="openoni_ocr"),
 
-    # recommended topics
-    url(r'^recommended-topics/$', 'recommended_topics', name="recommended_topics"),
-
-    # topic page
-    url(r'^recommended-topics/(?P<topic_id>\d+)/$', 'openoni_topic', name="openoni_topic"),
-
     # API docs
     url(r'^about/api/$', 'about_api', name="openoni_about_api"),
 

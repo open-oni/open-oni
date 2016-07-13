@@ -650,24 +650,6 @@ width:393px;
 float:left;
 clear:right;
 }
-/* topics about */
-#col2_topics_left {
-width:598px;  /**************** LINKED *****************/
-margin-right:15px;
-float:left;
-clear:left;
-}
-#col2_topics_right {
-width:310px;
-float:left;
-clear:right;
-}
-#col2_topics_left.main {
-width:454px;  /**************** LINKED *****************/
-}
-#col2_topics_right.main {
-width:454px;
-}
 
 /*********************   
 clear
