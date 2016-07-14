@@ -66,13 +66,3 @@ def frontpages(request, date):
         raise Http404
     results = _frontpages(request, date)
     return HttpResponse(json.dumps(results), content_type="application/json")
-
-
-def tabs(request, date=None):
-    params = request.GET if request.GET else None
-    form = forms.SearchPagesForm()
-    adv_form = forms.AdvSearchPagesForm(params)
-    context = RequestContext(request, {'search_form': form,
-                                       'adv_search_form': adv_form})
-    template = get_template("includes/tabs.html")
-    return HttpResponse(content=template.render(context))

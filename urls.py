@@ -33,10 +33,6 @@ urlpatterns = patterns(
         cache_page(home.frontpages, settings.DEFAULT_TTL_SECONDS),
         name="openoni_frontpages_date_json"),
 
-    url(r'^tabs$',
-        cache_page(home.tabs, settings.DEFAULT_TTL_SECONDS),
-        name="openoni_tabs"),
-
     # example: /lccn/sn85066387/1907-03-17/ed-1/seq-4/coordinates/
     url(r'^lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)/coordinates/$',
         cache_page(image.coordinates, settings.PAGE_IMAGE_TTL_SECONDS),
