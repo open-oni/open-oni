@@ -20,6 +20,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
   python-virtualenv \
   supervisor
 
+# Force apache error logs to stderr
+RUN ln -sf /proc/self/fd/1 /var/log/apache2/error.log
+
 RUN a2enmod cache cache_disk expires rewrite proxy_http
 RUN mkdir -p /var/cache/httpd/mod_disk_cache
 RUN chown -R www-data:www-data /var/cache/httpd
@@ -36,11 +39,12 @@ ADD purge_batch.sh /
 ADD collect_static.sh /
 ADD startup.sh /
 ADD test.sh /
-ADD django_admin /
+ADD manage /usr/local/bin/manage
+ADD manage /usr/local/bin/django-admin
 ADD openoni.ini /etc/openoni.ini.orig
 
 RUN chmod u+x /*.sh
-RUN chmod u+x /django_admin
+RUN chmod u+x /usr/local/bin/*
 
 EXPOSE 80
 CMD ["/startup.sh"]

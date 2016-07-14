@@ -8,9 +8,9 @@ from rdflib import Literal, URIRef, RDF
 
 
 class RdfTests(TestCase):
-    fixtures = ['countries.json', 'titles.json',
-                'awardee.json', 'batch.json', 'issue.json',
-                'page.json']
+    fixtures = ['test/countries.json', 'test/titles.json',
+                'test/awardee.json', 'test/batch.json', 
+                'test/issue.json', 'test/page.json']
 
     def test_title(self):
         t = Title.objects.get(lccn='sn83030214')

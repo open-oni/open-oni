@@ -16,7 +16,7 @@ def abs_filename(rel_filename):
 
 
 class TitleLoaderTests(TestCase):
-    fixtures = ['languages.json', 'countries.json']
+    fixtures = ['test/languages.json', 'test/countries.json']
 
     def setUp(self):
         # wipe the slate clean

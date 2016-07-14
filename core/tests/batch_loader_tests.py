@@ -13,7 +13,7 @@ from openoni.core.models import Title
 from openoni.core.models import Batch
 
 class BatchLoaderTest(TestCase):
-    fixtures = ['countries.json', 'titles.json', 'languages.json']
+    fixtures = ['test/countries.json', 'test/titles.json', 'test/languages.json']
 
     @classmethod
     def setUpClass(cls):

@@ -193,10 +193,6 @@ TEMP_TEST_DATA = os.path.join(STORAGE, "temp_test_data")
 # List of breadcrumbs that will be shown on all pages
 BASE_CRUMBS = [{'label':'Home', 'href': '/'}]
 
-# Settings for the sync_topics admin command (used in core.topic_loader)
-TOPICS_ROOT_URL = 'http://www.loc.gov/rr/news/topics'
-TOPICS_SUBJECT_URL = '/topicsSubject.html'
-
 # BASE_URL is the URL at which this site is hosted, e.g.,
 # http://oregonnews.uoregon.edu.  If this isn't set in the INI file, it *must*
 # be set in settings_local.py.  Leaving it at the default will not work for

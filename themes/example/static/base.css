@@ -761,28 +761,6 @@ line-height: 1.25em;
     float:left;
     clear:right;
 }
-/* topics about */
-#col2_topics_left {
-width:405px;  /**************** LINKED *****************/
-padding-right:20px;
-float:left;
-clear:left;
-background: transparent url(./img-std/dot_v.gif) 100% top repeat-y;
-}
-#col2_topics_right {
-width:247px;
-margin-left:20px;
-float:left;
-clear:right;
-}
-#col2_topics_left.main {
-width:335px;  /**************** LINKED *****************/
-background:none;
-}
-#col2_topics_right.main {
-width:335px;
-margin-left:0;
-}
 
 /********************* clear *********************/
 .clear {

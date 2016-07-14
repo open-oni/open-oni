@@ -10,7 +10,7 @@ class IndexTests(TestCase):
     """
     Exercise some search form -> solr query translations
     """
-    fixtures = ['ethnicities.json', 'languages.json']
+    fixtures = ['test/ethnicities.json', 'test/languages.json']
     ocr_langs = ['ocr_%s' %l for l in settings.SOLR_LANGUAGES]
 
     def test_page_search_lccn(self):
