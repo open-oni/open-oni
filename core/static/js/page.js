@@ -11,6 +11,17 @@
         $("#clip").addClass("disabled");
     }
 
+    // returns current window's hash parameters
+    function fragmentArgs() {
+        var collection = {};
+        var paramString = window.location.hash.substr(1);
+        paramString.split("&").forEach(function(param) {
+            var keyVal = param.replace("+", " ").split("=");
+            collection[keyVal[0]] = keyVal[1]
+        });
+        return collection;
+    };
+
     function resizePrint(event) {
         var viewer = event.eventSource;
         var image = viewer.source;
@@ -78,12 +89,12 @@
         var rect = new OpenSeadragon.Rect(x1, y1, x2, y2);
 
         div.className = "overlay";
-        viewer.drawer.addOverlay(div, rect);
+        viewer.addOverlay(div, rect);
     }
 
     function addOverlays(event) {
         var viewer = event.eventSource;
-        var params = $.deparam.fragment();
+        var params = fragmentArgs();
         var words = params["words"] || "";
         var dimensions = viewer.source.dimensions;
         $.getJSON(coordinates_url, function(all_coordinates) {
