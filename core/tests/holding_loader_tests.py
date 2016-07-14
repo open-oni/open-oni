@@ -9,7 +9,7 @@ from openoni.core.holding_loader import HoldingLoader
 import openoni.core
 
 class HoldingLoaderTests(TestCase):
-    fixtures = ['countries.json', 'languages.json', 'institutions.json']
+    fixtures = ['test/countries.json', 'test/languages.json', 'test/institutions.json']
 
     def test_holdings(self):
         # title data

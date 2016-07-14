@@ -8,7 +8,7 @@ except ImportError:
 from openoni.core import models as m
 
 class JsonTests(TestCase):
-    fixtures = ['batch.json']
+    fixtures = ['test/batch.json']
 
     def test_speedups(self):
         # simplejson needs to have c bits comiled to be fast enough
