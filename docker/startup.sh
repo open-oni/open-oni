@@ -27,13 +27,12 @@ service apache2 reload
 cd /opt/openoni
 source ENV/bin/activate
 
+echo "-------" >&2
 echo "Migrating database" >&2
 django-admin.py migrate
 
-echo "Running openoni_sync" >&2
-django-admin.py openoni_sync
-
-echo "Running collectstatis" >&2
+echo "-------" >&2
+echo "Running collectstatic" >&2
 django-admin.py collectstatic --noinput
 
 # Remove any pre-existing PID file which prevents Apache from starting
