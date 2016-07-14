@@ -1,3 +1,6 @@
+<!-- For pages like:
+    http://BASE_URI/lccn/sn83045350/marc/ -->
+
 {% extends "__l_newspaper.html" %}
 
 {% load static from staticfiles %}
@@ -18,7 +21,7 @@
 
 <br />
  
-<div style="text-align: center;"> 
+<div class="xml_link"> 
 <a href="{% url 'openoni_title_marcxml' title.lccn %}">XML</img>
 </a>
 </div>
