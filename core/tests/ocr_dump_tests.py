@@ -15,7 +15,7 @@ from openoni.core.models import Batch, OcrDump
 dumps_dir = settings.OCR_DUMP_STORAGE
 
 class OcrDumpTests(TestCase):
-    fixtures = ['countries.json', 'titles.json']
+    fixtures = ['test/countries.json', 'test/titles.json']
 
     @classmethod
     def setUpClass(cls):

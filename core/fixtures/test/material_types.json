@@ -1,0 +1,37 @@
+[
+  {
+    "pk": "Online Resource",
+    "model": "core.materialtype",
+    "fields": {}
+  },
+  {
+    "pk": "Microfilm Master",
+    "model": "core.materialtype",
+    "fields": {}
+  },
+  {
+    "pk": "Microfilm Print Master",
+    "model": "core.materialtype",
+    "fields": {}
+  },
+  {
+    "pk": "Microfilm Service Copy",
+    "model": "core.materialtype",
+    "fields": {}
+  },
+  {
+    "pk": "Microform",
+    "model": "core.materialtype",
+    "fields": {}
+  },
+  {
+    "pk": "Original",
+    "model": "core.materialtype",
+    "fields": {}
+  },
+  {
+    "pk": "Unspecified",
+    "model": "core.materialtype",
+    "fields": {}
+  }
+]
