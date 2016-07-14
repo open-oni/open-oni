@@ -154,8 +154,8 @@
               {% endblock sub_page_head %}
             {% endblock page_head%}
           {% endblock page_head_container %}
-          <div>
-            <a name="skip_menu"></a>{% block main_content %}{% endblock main_content %}
+          <div id="skip_menu">
+            {% block main_content %}{% endblock main_content %}
           </div>
           {% block subcontent %}{% endblock subcontent %}
         {% endblock content %}

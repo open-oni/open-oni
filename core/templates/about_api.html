@@ -1,4 +1,4 @@
-{% extends "_site_base.html" %}
+{% extends "__l_main.html" %}
 
 {% load static from staticfiles %}
 
@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block main_content %}
+
 <div id="std_box">
 <h2>Introduction</h2> 
 <p>Open ONI provides access to information about digitized newspaper pages. To encourage a wide
@@ -34,8 +35,8 @@ APIs.</p>
 <h3>Jump to:</h3> 
 <ul class="anchor"> 
 <li><a href="#search">Search</a> the newspaper directory and digitized page contents using OpenSearch.</li> 
-<li><a href="#autosuggest">Auto Suggest</a> API for looking up newspaper
-titles</li>
+<!-- <li><a href="#autosuggest">Auto Suggest</a> API for looking up newspaper
+titles</li> Could not find this section so am removing the link -kmd -->
 <li><a href="#link">Link</a> using our stable URL pattern for Open ONI resources.</li>
 <li><a href="#iiif-views">IIIF</a> views of Open ONI resources.</li> 
 <li><a href="#linked-data">Linked Data</a> views of Open ONI resources.</li> 
@@ -43,46 +44,46 @@ titles</li>
 <li><a href="#cors_jsonp">CORS and JSONP</a> support for your JavaScript
 applications.</li>
 </ul> 
- 
-<a name="search"></a> 
-<h3>Searching newspaper pages using OpenSearch</h3> 
-<p>Searching newspaper pages is possible via OpenSearch. This is
-advertised in a LINK header element of the site's HTML template as
-&quot;Open ONI Page Search&quot;, using <a
-href="/search/pages/opensearch.xml">this
-OpenSearch Description document</a>.</p> 
-<p>Page search parameters:</p> 
-<ul> 
-<li>andtext: the search query</li> 
-<li>format: 'html' (default), or 'json', or 'atom' (optional)</li> 
-<li>page: for paging results (optional)</li> 
-</ul> 
-<p>Examples:</p> 
-<ul> 
-<li> 
-<a href="/search/pages/results/?andtext=thomas">{{BASE_URL}}/search/pages/results/?andtext=thomas</a> 
-<br /> 
-search for &quot;thomas&quot;, HTML response
-</li> 
-<li> 
-<a href="/search/pages/results/?andtext=thomas&format=atom">{{BASE_URL}}/search/pages/results/?andtext=thomas&amp;format=atom</a> 
-<br /> 
-search for &quot;thomas&quot;, Atom response
-</li> 
-<li> 
-<a href="/search/pages/results/?andtext=thomas&format=atom&page=11">{{BASE_URL}}/search/pages/results/?andtext=thomas&amp;format=atom&amp;page=11</a> 
-<br /> 
-search for &quot;thomas&quot;, Atom response, starting at page 11
-</li> 
-</ul> 
+
+
+<h3 id="search">Searching newspaper pages using OpenSearch</h3> 
+  <p>Searching newspaper pages is possible via OpenSearch. This is
+  advertised in a LINK header element of the site's HTML template as
+  &quot;Open ONI Page Search&quot;, using <a
+  href="/search/pages/opensearch.xml">this
+  OpenSearch Description document</a>.</p> 
+  
+  <ul> 
+    <li>andtext: the search query</li> 
+    <li>format: 'html' (default), or 'json', or 'atom' (optional)</li> 
+    <li>page: for paging results (optional)</li> 
+  </ul> 
+
+  <p>Examples:</p> 
+
+  <ul> 
+    <li> 
+    <a href="/search/pages/results/?andtext=thomas">{{BASE_URL}}/search/pages/results/?andtext=thomas</a> 
+    <br /> 
+    search for &quot;thomas&quot;, HTML response
+    </li> 
+    <li> 
+    <a href="/search/pages/results/?andtext=thomas&format=atom">{{BASE_URL}}/search/pages/results/?andtext=thomas&amp;format=atom</a> 
+    <br /> 
+    search for &quot;thomas&quot;, Atom response
+    </li> 
+    <li> 
+    <a href="/search/pages/results/?andtext=thomas&format=atom&page=11">{{BASE_URL}}/search/pages/results/?andtext=thomas&amp;format=atom&amp;page=11</a> 
+    <br /> 
+    search for &quot;thomas&quot;, Atom response, starting at page 11
+    </li> 
+  </ul> 
+
 <p class="backtotop"><a href="#skip_menu">Top</a></p> 
 
-<a name="autosuggest"></a>
 
 
-
-<a name="link"></a> 
-<h3>Link to Open ONI Resources</h3> 
+<h3 id="link">Link to Open ONI Resources</h3> 
 <p>Open ONI uses links that follow a
 straightforward pattern.  You can use this pattern to construct links
 into specific newspaper titles, to any of its available issues and
@@ -93,26 +94,27 @@ how the site works, we will redirect any requests to the system using
 this specific pattern.</p> 
 <p>The link pattern uses <a href="http://www.loc.gov/marc/lccn.html">LCCNs</a>, dates, issue
 numbers, edition numbers, and page sequence numbers.</p> 
+
 <p>Examples:</p> 
+
 <ul> 
-<li><a href="{{ title.url }}">{{BASE_URL}}{{ title.url }}</a> 
-<br /> 
-title information for LCCN sn 86069873
-</li> 
-<li><a href="{{ issue.url }}">{{BASE_URL}}{{ issue.url }}</a> 
-<br /> 
-first available edition from {{ issue.date_issued }}
-</li> 
-<li><a href="{{ page.url }}">{{BASE_URL}}{{ page.url }}</a> 
-<br /> 
-first available page from first edition, January 5, 1900
-</li> 
+  <li><a href="{{ title.url }}">{{BASE_URL}}{{ title.url }}</a> 
+  <br /> 
+  title information for LCCN sn 86069873
+  </li> 
+  <li><a href="{{ issue.url }}">{{BASE_URL}}{{ issue.url }}</a> 
+  <br /> 
+  first available edition from {{ issue.date_issued }}
+  </li> 
+  <li><a href="{{ page.url }}">{{BASE_URL}}{{ page.url }}</a> 
+  <br /> 
+  first available page from first edition, January 5, 1900
+  </li> 
 </ul> 
+
 <p class="backtotop"><a href="#skip_menu">Top</a></p> 
 
-
-<a name="iiif-views"></a>
-<h3>IIIF Views</h3>
+<h3 id="iiif-views">IIIF Views</h3>
 <p>
 In addition to the use of JSON in OpenSearch results, there are also 
 <a href="http://iiif.io">IIIF</a> Presentation API and Image API
@@ -120,44 +122,45 @@ JSON views available for various resources. These IIIF views are
 typically linked from their HTML representation using the &lt;link&gt; element.
 For example: 
 <ul> 
-<li><a href="{{ title.json_url }}">{{BASE_URL}}{{ title.json_url }}</a> 
-<br /> 
-title information for LCCN sn86069873 as an IIIF Collection
-</li> 
-<li><a href="{{ issue.json_url }}">{{BASE_URL}}{{ issue.json_url }}</a> 
-<br />
-first available edition from January 5, 1900 as an IIIF Manifest
-</li> 
-<li><a href="{{ page.json_url }}">{{BASE_URL}}{{ page.json_url }}</a> 
-<br />
-first available page from first edition, January 5, 1900 as an IIIF Canvas
-</li> 
-<li><a href="/newspapers.json">{{BASE_URL}}/newspapers.json</a>
-<br>
-a list of all newspaper titles for which there is digital content represented as
-a IIIF Collection
-</li>
-<li><a href="/batches.json">{{BASE_URL}}/batches.json</a>
-<br>
-a list of all batches of content that have been loaded
-</li>
-<li><a href="{{ batch.json_url }}">{{BASE_URL}}{{ batch.json_url }}</a>
-<br>
-detailed information about a specific batch as a IIIF Collection
-</li>
+  <li><a href="{{ title.json_url }}">{{BASE_URL}}{{ title.json_url }}</a> 
+  <br /> 
+  title information for LCCN sn86069873 as an IIIF Collection
+  </li> 
+  <li><a href="{{ issue.json_url }}">{{BASE_URL}}{{ issue.json_url }}</a> 
+  <br />
+  first available edition from January 5, 1900 as an IIIF Manifest
+  </li> 
+  <li><a href="{{ page.json_url }}">{{BASE_URL}}{{ page.json_url }}</a> 
+  <br />
+  first available page from first edition, January 5, 1900 as an IIIF Canvas
+  </li> 
+  <li><a href="/newspapers.json">{{BASE_URL}}/newspapers.json</a>
+  <br>
+  a list of all newspaper titles for which there is digital content represented as
+  a IIIF Collection
+  </li>
+  <li><a href="/batches.json">{{BASE_URL}}/batches.json</a>
+  <br>
+  a list of all batches of content that have been loaded
+  </li>
+  <li><a href="{{ batch.json_url }}">{{BASE_URL}}{{ batch.json_url }}</a>
+  <br>
+  detailed information about a specific batch as a IIIF Collection
+  </li>
 </ul>   
 
 </p>
 <p class="backtotop"><a href="#skip_menu">Top</a></p> 
 
 
-<a name="linked-data"></a> 
-<h3>Linked Data</h3> 
+<h3 id="linked-data">Linked Data</h3> 
+
 <p><a href="http://linkeddata.org/">Linked Data</a> allows us to connect the
 information in Open ONI directly to related data on the Web 
 explicitly.  Open ONI provides several Linked Data views to
 make it easy to connect with other information resources and to process
 and analyze newspaper information with conceptual precision.</p> 
+
 <p>We use concepts like Title (defined in <a class="external"
 href="http://dublincore.org/documents/dcmi-terms/">DCMI Metadata
 Terms</a>) and Issue (defined in <a class="external"
@@ -166,34 +169,38 @@ describe newspaper titles and issues available in the data.  Using
 these concepts, defined in existing ontologies, can help to ensure that
 what we mean by &quot;title&quot; and &quot;issue&quot; is consistent with the intent of other
 publishers of linked data. 
+
 <p>These elements are used in RDF views of several types of pages, ranging
 from a list of the newspaper titles available on the site and
 information about each, to enumerations of all the pages that make
 up each issue and all of the files available for each page.</p> 
 <p>Examples:</p> 
+
 <ul> 
-<li> 
-<a href="{% url "openoni_title_dot_rdf" title.lccn %}">{{BASE_URL}}{% url "openoni_title_dot_rdf" title.lccn %}</a> 
-<br /> 
-information about <a href="{{ title.url }}">{{ title.name }}</a>
-</li> 
-<li> 
-<a href="{{ issue.rdf_url }}">{{BASE_URL}}{{ issue.rdf_url }}</a> 
-<br /> 
-information about <a href="{{ issue.url }}">{{ issue }}</a>
-</li> 
-<li> 
-<a href="{{ page.rdf_url }}">{{BASE_URL}}{{ page.rdf_url }}</a> 
-<br /> 
-details about all of the files associated with the <a href="{{ page.url }}">{{ page }}</a>
-</li> 
-<li><a href="/newspapers.rdf">{{BASE_URL}}/newspapers.rdf</a><br />list of <a href="/newspapers/">available newspaper titles</a></li> 
+  <li> 
+  <a href="{% url "openoni_title_dot_rdf" title.lccn %}">{{BASE_URL}}{% url "openoni_title_dot_rdf" title.lccn %}</a> 
+  <br /> 
+  information about <a href="{{ title.url }}">{{ title.name }}</a>
+  </li> 
+  <li> 
+  <a href="{{ issue.rdf_url }}">{{BASE_URL}}{{ issue.rdf_url }}</a> 
+  <br /> 
+  information about <a href="{{ issue.url }}">{{ issue }}</a>
+  </li> 
+  <li> 
+  <a href="{{ page.rdf_url }}">{{BASE_URL}}{{ page.rdf_url }}</a> 
+  <br /> 
+  details about all of the files associated with the <a href="{{ page.url }}">{{ page }}</a>
+  </li> 
+  <li><a href="/newspapers.rdf">{{BASE_URL}}/newspapers.rdf</a><br />list of <a href="/newspapers/">available newspaper titles</a></li> 
 </ul> 
+
 <p>Comparing the RDF versions of the links above with their HTML
 counterpart links, you might notice that the URI pattern we follow for these
 views is to remove the final slash, replacing it with &quot;.rdf&quot;.
 We follow this pattern to comply with best practices for publishing
 linked data, and also to keep the URIs easy to understand and use.</p> 
+
 <p>For each of the HTML pages with a linked data counterpart in RDF,
 we provide links to those alternate views from the
 HTML page using the LINK header element.  This can support automating
@@ -205,23 +212,26 @@ available files (image, text, OCR coordinate XML) for each available
 page or other potentially useful information.  We encourage you to
 explore the entire site and to look for and use these LINK elements.  Just follow your nose, 
 and view the source.</p> 
+
 <p>In addition to the concepts describe above, we use concepts from
 several other vocabularies in describing materials and also in
 linking to related data available on other sites.  These additional
 vocabularies and external sites include:</p> 
+
 <ul> 
-<li><a class="external" href="http://dbpedia.org/">DBpedia</a></li> 
-<li><a class="external" href="http://purl.org/dc/elements/1.1/">Dublin Core</a> and 
-<a class="external" href="http://dublincore.org/documents/dcmi-terms/">DCMI Terms</a></li> 
-<li><a class="external" href="http://purl.org/vocab/frbr/core#">FRBR concepts in RDF</a></li> 
-<li><a class="external" href="http://sws.geonames.org/">GeoNames</a></li> 
-<li><a href="http://lccn.loc.gov/">LCCN Permalink</a></li> 
-<li><a class="external" href="http://www.lingvoj.org/">lingvoj.org</a></li> 
-<li><a class="external" href="http://www.openarchives.org/ore/">OAI-ORE</a> (more about aggregations below)</li> 
-<li><a class="external" href="http://www.w3.org/2002/07/owl#">OWL</a></li> 
-<li><a class="external" href="http://metadataregistry.org/schema/show/id/1.html">RDA</a></li> 
-<li><a class="external" href="http://www.worldcat.org/">WorldCat</a></li> 
+  <li><a class="external" href="http://dbpedia.org/">DBpedia</a></li> 
+  <li><a class="external" href="http://purl.org/dc/elements/1.1/">Dublin Core</a> and 
+  <a class="external" href="http://dublincore.org/documents/dcmi-terms/">DCMI Terms</a></li> 
+  <li><a class="external" href="http://purl.org/vocab/frbr/core#">FRBR concepts in RDF</a></li> 
+  <li><a class="external" href="http://sws.geonames.org/">GeoNames</a></li> 
+  <li><a href="http://lccn.loc.gov/">LCCN Permalink</a></li> 
+  <li><a class="external" href="http://www.lingvoj.org/">lingvoj.org</a></li> 
+  <li><a class="external" href="http://www.openarchives.org/ore/">OAI-ORE</a> (more about aggregations below)</li> 
+  <li><a class="external" href="http://www.w3.org/2002/07/owl#">OWL</a></li> 
+  <li><a class="external" href="http://metadataregistry.org/schema/show/id/1.html">RDA</a></li> 
+  <li><a class="external" href="http://www.worldcat.org/">WorldCat</a></li> 
 </ul> 
+
 <p>We are grateful to all of these providers and we hope we can follow
 their lead in encouraging additional connections between data and
 vocabulary providers.  Please be aware that how we use these vocabularies
@@ -229,8 +239,8 @@ will likely change over time, as they continue to develop, and as new
 vocabularies are introduced.</p> 
 <p class="backtotop"><a href="#skip_menu">Top</a></p> 
 
-<a name="bulk-data"></a>
-<h3>Bulk Data</h3>
+
+<h3 id="bulk-data">Bulk Data</h3>
 <p>
 In certain situations the granular access provided by the API may be somewhat
 constraining. For example, perhaps you are a researcher who would like to 
@@ -259,8 +269,8 @@ bulk access to the underlying data sets. The initial bulk data sets include:
 </p>
 <p class="backtotop"><a href="#skip_menu">Top</a></p> 
 
-<a name="cors_jsonp"></a>
-<h3>CORS and JSONP Support</h3>
+
+<h3 id="cors_jsonp">CORS and JSONP Support</h3>
 <p>
 To help you integrate Open ONI into your JavaScript applications, 
 the OpenSearch and AutoSuggest JSON responses support both 
