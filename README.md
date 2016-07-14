@@ -143,4 +143,4 @@ After that you should be able to:
 License
 -------
 
-This software is in the Public Domain.
+[Licensed](https://github.com/open-oni/open-oni/blob/master/LICENSE) under the Apache License, Version 2.0.
