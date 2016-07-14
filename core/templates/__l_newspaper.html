@@ -7,13 +7,13 @@
     {% endwith %}
 {% endblock head_item_metadata %}
 
-{% block extrahead %}
+{% block head_extra %}
 <link rel="primaryTopic" href="{{ title.abstract_url }}" />
 <link rel="resourcemap" type="application/rdf+xml" href="{% url 'openoni_title_dot_rdf' title.lccn %}" title="ORE Resource Map" />
 <link rel="alternate" type="application/marc+xml" href="{% url 'openoni_title_marcxml' title.lccn %}" title="MARCXML Record for {{ title.display_name }}" />
 <link rel="alternate" type="application/atom+xml" href="{% url 'openoni_title_atom' title.lccn %}" title="Update Feed for {{ title.display_name }}" />
 
-{% endblock %}
+{% endblock head_extra %}
 
 {% block download_links %}
 {
@@ -57,15 +57,15 @@
     </div>
 
 </div> 
-{% endblock %}
+{% endblock page_nav %}
 
 <div id="std_box"> 
     {% block extra_nav %}
     {% endblock %}
     
     {% block newspaper_content %}
-    {% endblock %}
+    {% endblock newspaper_content %}
 
     <div class="clear"><!-- --></div> 
 </div><!-- end id:std_box --> 
-{% endblock %}
+{% endblock subcontent%}

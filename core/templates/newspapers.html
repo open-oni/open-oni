@@ -3,11 +3,11 @@
 {% load static from staticfiles %}
 {% load humanize %}
 
-{% block extrahead %}
+{% block head_extra %}
 <link rel="alternate" title="Newspapers Atom Feed" href="{% url 'openoni_newspapers_atom' %}" />
 <link rel="alternate" title="Newspapers JSON Feed" href="{% url 'openoni_newspapers_format' "json" %}" />
 <link href="{% static 'css/tablesort.css' %}" rel="stylesheet" media="screen">
-{% endblock %}
+{% endblock head_extra %}
 
 {% block subcontent %}
 {% if titles.count > 0 %}

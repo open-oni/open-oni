@@ -2,13 +2,13 @@
 
 {% load static from staticfiles %}
 
-{% block extrahead %}
+{% block head_extra %}
 {{ block.super }}
     <link rel="alternate" 
           type="application/marc+xml" 
           href="{% url 'openoni_title_marcxml' title.lccn %}" />
 
-{% endblock %}
+{% endblock head_extra %}
 
 {% block newspaper_content %}
 

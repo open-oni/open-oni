@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% load custom_filters %}
 
-{% block extrahead %}
+{% block head_extra %}
     {% if page.has_previous %}
     <link rel="prev" href="{{BASE_URL}}{% url 'openoni_search_titles_results' %}{{previous_url}}" />
     {% endif %}
@@ -11,7 +11,7 @@
     {% endif %}
     <link rel="alternate" type="application/atom+xml" link="{{BASE_URL}}{% url 'openoni_search_titles_results' %}?{{q}}&amp;page={{page.number}}&amp;format=atom" />
     <link rel="alternate" type="application/json" link="{{BASE_URL}}{% url 'openoni_search_titles_results' %}?{{q}}&amp;page={{page.number}}&amp;format=json" />
-{% endblock %}
+{% endblock head_extra %}
 
 {% block javascript %}
 {{ block.super }}

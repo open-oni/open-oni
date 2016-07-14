@@ -1,0 +1,56 @@
+/* ==============
+calendar
+=============== */
+
+.calendar_wrapper {
+}
+
+.calendar_month {
+    display: inline-block;
+    margin: 0 10px 0 0px;
+    text-align: center;
+    vertical-align: top;
+}
+
+.calendar_wrapper .title {
+   
+}
+
+div.calendar_wrapper .calendar_month td {
+    padding: 4px;
+}
+
+div.calendar_wrapper  .dropdown-toggle {
+    padding: 0;
+}
+
+.calendar_wrapper .btn-group a {   
+}
+
+.calendar_wrapper td {
+    width: 2.7em;
+}
+
+.issues_single, .issues_multiple {
+    padding:5px;
+    border: 1px solid #ddd;
+}
+
+/* calendar colors - single */
+.issues_single {
+    background-color: #e6e8df; 
+}
+
+div.calendar_wrapper table.month td.single {
+    background-color: #e6e8df; 
+}
+
+/* calendar colors - multiple */
+
+.issues_multiple {
+    background-color: #c6c7c1;
+}
+
+div.calendar_wrapper table.month td.multiple {
+    background-color: #c6c7c1;
+}

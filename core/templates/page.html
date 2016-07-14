@@ -2,7 +2,7 @@
 {% load static from staticfiles %}
 {% load image_urls %}
 
-{% block head_content %}{{ block.super }}
+{% block head_all %}{{ block.super }}
     {% with page as title_metadata %}
     {% include "includes/lc_metadata.html" %}
     {% endwith %}
@@ -32,7 +32,7 @@
       }
     </style>
 
-{% endblock head_content %}
+{% endblock head_all %}
 
 
 

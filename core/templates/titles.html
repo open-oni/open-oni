@@ -1,6 +1,6 @@
 {% extends "__l_main.html" %}
 {% load static from staticfiles %}
-{% block extrahead %}
+{% block head_extra %}
     {% if page.has_previous %}
         {% if start %}
         <link rel="prev" href="{% url 'openoni_titles_start_page' start page.previous_page_number %}" />
@@ -15,7 +15,7 @@
         <link rel="next" href="{% url 'openoni_titles_page' page.next_page_number %}" />
         {% endif %}
     {% endif %}
-{% endblock %}
+{% endblock head_extra %}
 
 {% block subcontent %}
 
