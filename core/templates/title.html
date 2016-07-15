@@ -1,3 +1,6 @@
+<!-- for individual newspaper title pages e.g.:
+        http://BASE_URL/lccn/sn83045350/ -->
+
 {% extends "__l_newspaper.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
@@ -218,9 +221,7 @@
         <!-- end class:more -->
         {% endif %}
         </div><!-- /title_essay -->
-    </div><!-- end id:col2_left -->
-
-    
+    </div><!-- /col-md-7 -->
 
     <div class="col-md-5">
         {% if title.has_issues %}
@@ -248,7 +249,7 @@
             </div>
         </div><!-- end class:more -->
         {% endif %}
-    </div><!-- end id:col2_right -->
-</div>
+    </div><!-- /col_md_5 -->
+</div><!-- /row -->
 {% endblock %}
 

@@ -32,7 +32,7 @@
 .toolbar
 {
     float: left;
-    height: 33px;
+    /*height: 33px;*/
     width: 140px;
     border: none;
     color: #333;

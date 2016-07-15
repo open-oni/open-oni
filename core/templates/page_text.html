@@ -1,10 +1,12 @@
+<!-- template for viewing the OCR version of pages, e.g.:
+        http://BASE_URL/lccn/sn99021999/1887-03-07/ed-1/seq-1/ocr/ -->
+
 {% extends "__l_main.html" %}
 {% load static from staticfiles %}
-
 {% block subcontent %}
 
 <div id="head_nav">
-    <p>
+    <h4>
     Below is the <a href="{% url 'openoni_ocr' %}">OCR text representation</a>
     for this newspapers page. It is also available as 
     <a href="{% url 'openoni_page_ocr_txt' title.lccn issue.date_issued issue.edition page.sequence %}">plain text</a> as well as 
@@ -12,10 +14,10 @@
     </p>
 </div> 
 
-    <div>
+    <div class="ocr_text"><pre>
     {{page.ocr.text|escape}}
-    </div>
+    </pre></div>
 
     <p>
-{% endblock %}
+{% endblock subcontent %}
 

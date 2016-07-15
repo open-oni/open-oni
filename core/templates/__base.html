@@ -82,6 +82,8 @@
           </div>
         </div><!-- /header -->
       {% endblock header_title %}
+
+      {% block navbar %}
       <nav class="navbar navbar-inverse">
         <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -127,12 +129,16 @@
         </div><!-- /.container-fluid -->
       </nav>
 
+      {% endblock navbar %}
+
 
       <!-- ===========
       MAIN CONTENT
       ============= -->
 
       <div class="container main_content">
+
+      {% block breadcrumbs %}
         {% if crumbs and crumbs|length > 1 %}
 
           <ol class="breadcrumb">
@@ -144,12 +150,14 @@
           </ol>
         {% endif %}
 
+        {% endblock breadcrumbs %}
+
         {% block content %}
           {% block page_head_container %}
             {% block page_head %}
               {% block sub_page_head %}
                 {% if page_title %}
-                  <h1>{{ page_title }}</h1>
+                  <h2>{{ page_title }}</h2>
                 {% endif %}
               {% endblock sub_page_head %}
             {% endblock page_head%}
@@ -166,6 +174,7 @@
     FOOTER
     ============= -->
 
+    {% block footer %}
     <div id="footer">
       <div class="container">
         <p>All your footer things like logos and such go here.</p>
@@ -173,6 +182,7 @@
 
       </div><!-- /container -->
     </div><!-- /footer -->
+    {% endblock footer %}
 
     <!-- ===========
     Bottom loading javascripts
