@@ -143,6 +143,8 @@ BROKER_TRANSPORT = "django"
 # should also make this overrideable in the INI file.
 IS_PRODUCTION = False
 
+LOG_LOCATION = "/opt/openoni/log/"
+
 # Public URLs to the image server endpoints
 #
 # These must be overridden to point to the image server.  They may be set to
@@ -209,4 +211,3 @@ BASE_URL = 'http://localhost'
 # Both should be overridden in settings_local.py
 SITE_TITLE = "Open ONI"
 PROJECT_NAME = "Open Online Newspapers Initiative"
-

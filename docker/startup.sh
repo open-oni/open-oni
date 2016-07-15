@@ -3,6 +3,7 @@
 export APACHE_RUN_USER=www-data
 export APACHE_RUN_GROUP=www-data
 mkdir -p /var/tmp/django_cache && chown -R www-data:www-data /var/tmp/django_cache
+mkdir -p /opt/openoni/log
 
 if [ ! -d /opt/openoni/ENV ]; then
   /pip-install.sh
