@@ -197,7 +197,6 @@ a:visited {}
 
 /* Removing underlines for certain elements */
 .navbar a, 
-.nav-tabs a, 
 .nav-pills a, 
 .list-group a {
   text-decoration:none;

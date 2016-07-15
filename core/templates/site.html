@@ -169,18 +169,12 @@ Metadata Etc.
     {% block javascript %}
       <!-- JQuery -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.ba-bbq.min.js' %}"></script>
 
-      <!-- Main site JS -->
-      <script type="text/javascript" async="" src="{% static 'js/main.js' %}"></script>
+      <!-- Highlighting JS (keyword search results and page views -->
       <script type="text/javascript" async="" src="{% static 'js/highlight.js' %}"></script>
 
       <!-- Bootstrap -->
       <script type="text/javascript" async="" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-      
-      <!-- Google Analytics -->
-      <!-- If you are using Google Analytics add your snippit to the ga.js file -->
-      <script type="text/javascript" async="" src="{% static 'js/ga.js' %}"></script>
     {% endblock javascript %}
 
     <script type="text/javascript">
