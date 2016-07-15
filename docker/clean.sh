@@ -11,6 +11,9 @@ for service in openoni-dev openoni-dev-mysql openoni-dev-solr openoni-dev-rais; 
   docker rm $service
 done
 
+echo "Removing cached .pyc files"
+find -path "./ENV" -prune -o -name "*.pyc" -print0 | xargs -0 rm -f
+
 nuclear=${1:-}
 if [ "$nuclear" == "--nuclear" ]; then
   echo "OMG GOING NUCLEAR!  All your Solr and MySQL data is GONE."
