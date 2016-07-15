@@ -1,0 +1,46 @@
+{% extends "__base.html" %}
+
+{% comment %}
+  This file sits between base and layouts (__l_zzz.html files) so you can 
+  override parts of __base.html.
+
+  To customize the look and feel of your installation, create
+  a new "__overrides.html" file in the appropriate theme 
+  (themes/your_theme/templates/__overrides.html) and override blocks of code
+  from "__base.html" as desired.
+
+  All of the templates should be building off of this template, so
+  there is no need to alter "__base.html" nor to duplicate it in new themes.
+{% endcomment %}
+
+<!-- Page Title -->
+
+{% block head_page_title %}
+  {% if page_title %}{{page_title}} {% endif %}{% if site_title %}{{site_title}} « {% endif %}
+{% endblock head_page_title %}
+
+<!-- Other Options -->
+
+<!-- 
+
+head_all
+  head_page_meta
+  head_page_css
+  head_page_top_js
+  head_page_metadata 
+  head_opensearch
+  head_extra (often used by other templates, so if you overwrite this it's best to use block.super first)
+
+-->
+
+  <!-- adding some page level metadata -->
+
+  {% block head_page_meta %}
+
+  {{ block.super }} {% comment %} block.super gets the contents of this block from parent template {% endcomment %}
+
+  <!-- Adding some extra page metadata -->
+  <meta name="description" content="A site for newspapers">
+  <meta name="author" content="The author of this site">
+
+  {% endblock head_page_meta %}
