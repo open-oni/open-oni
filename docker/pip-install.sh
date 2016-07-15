@@ -3,7 +3,7 @@
 # Installs pip dependencies
 virtualenv ENV
 source ENV/bin/activate
-pip install -U distribute
+pip install -U setuptools
 pip install -r requirements.pip --allow-all-external
 
 install -d /opt/openoni/static
