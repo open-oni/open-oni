@@ -3,9 +3,6 @@
 {% load static from staticfiles %}
 {% load humanize %}
 
-{% block head_content %}{{ block.super }}
-<link href="{% static 'bootstrap/css/datepicker.css' %}" rel="stylesheet" media="screen">
-{% endblock head_content %}
 {% block subcontent %}
 <div>
     <form action="{% url 'openoni_search_pages_results' %}" method="get" name="fulltext2" id="fulltext2">
@@ -83,13 +80,3 @@
     </form>
 </div><!-- end id:tab_advanced_search -->
 {% endblock subcontent %}
-{% block javascript %}
-{{ block.super }}
-<script src="{% static 'bootstrap/js/bootstrap-datepicker.js' %}"></script>
-<script type="text/javascript">
-(function($){
-    $('#id_date_from').datepicker();
-    $('#id_date_to').datepicker();
-})(jQuery);
-</script>
-{% endblock javascript %}
