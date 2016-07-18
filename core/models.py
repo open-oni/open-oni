@@ -3,6 +3,7 @@ import os.path
 import re
 import json
 import time
+import datetime
 import hashlib
 import logging
 import tarfile
@@ -20,6 +21,7 @@ from django.conf import settings
 from django.utils.http import urlquote
 
 from openoni.core.utils import strftime
+from openoni.core.utils import strdate_to_ordinal
 from openoni.core.utils.image_urls import thumb_image_url, iiif_info_for_page
 
 from django.core import urlresolvers
@@ -626,6 +628,22 @@ class Issue(models.Model):
         if serialize:
             return json.dumps(j, indent=2)
         return j
+
+    @property
+    def copyright_link(self):
+        public_domain_date = strdate_to_ordinal("1923-01-01")
+        public_domain_uri = "http://creativecommons.org/publicdomain/mark/1.0/"
+        int_date = self.date_issued.toordinal()
+        try:
+            if int_date < public_domain_date:
+                copyright = Copyright.objects.filter(uri=public_domain_uri)
+                return copyright[0]
+            uris = LccnDateCopyright.objects.filter(lccn = self.title.lccn).filter(start_date__lt=int_date).filter(end_date__gt=int_date)
+            if uris.exists():
+                copyright = Copyright.objects.filter(uri=uris[0].uri.uri)
+                return copyright[0]
+        except:
+            return
 
     class Meta:
         ordering = ('date_issued',)
@@ -1315,3 +1333,14 @@ def coordinates_path(url_parts):
     if not os.path.exists(full_path):
         os.makedirs(full_path)
     return os.path.join(full_path, "coordinates.json.gz")
+
+class Copyright(models.Model):
+    uri = models.CharField(max_length=100, primary_key=True)
+    label = models.CharField(max_length=200)
+
+class LccnDateCopyright(models.Model):
+    lccn = models.CharField(max_length=25)
+    start_date = models.IntegerField()
+    end_date = models.IntegerField()
+    uri = models.ForeignKey('Copyright', related_name='lccn_date_copyright')
+
