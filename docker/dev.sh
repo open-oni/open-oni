@@ -151,3 +151,11 @@ docker run -itd \
   -v $(pwd):/opt/openoni:Z \
   -v $(pwd)/docker/data:/opt/openoni/data:z \
   open-oni:dev
+
+port=$(_port $APP_URL)
+dport=${DOCKERPORT:-}
+if [[ $port != $dport ]]; then
+  echo
+  echo "[31;1mWARNING[0m - APP_URL's port ($port) doesn't match DOCKERPORT ($dport)"
+  echo "This may be valid in certain setups, but could indicate a problem."
+fi
