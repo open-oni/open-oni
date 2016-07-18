@@ -1,11 +1,11 @@
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # "Private" aliases for seconds in a day and week
 _ONEDAY = 60 * 60 * 24
 _ONEWEEK = _ONEDAY * 7
-
-# Local variable for making fairly decent assumptions
-DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
 ####################################################################
 # DJANGO SETTINGS
@@ -40,7 +40,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStora
 STATIC_URL = '/media/'
 
 # Directory path to static files
-STATIC_ROOT = os.path.join(DIRNAME, '.static-media')
+STATIC_ROOT = os.path.join(BASE_DIR, '.static-media')
 
 # Module which processes URL routing
 ROOT_URLCONF = 'openoni.urls'
@@ -79,7 +79,7 @@ TEMPLATES = [
 
         # Template-containing directories
         'DIRS': [
-            os.path.join(DIRNAME, 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
 
         'OPTIONS': {
