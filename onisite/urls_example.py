@@ -3,6 +3,6 @@
 from django.conf.urls import url, include
 
 urlpatterns = [
-  url('', include("openoni.core.urls")),
-  # url('map/', include("openoni.dynamic-map.urls"))
+  url('', include("core.urls")),
+  # url('map/', include("statemap.urls"))
 ]
