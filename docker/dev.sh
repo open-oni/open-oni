@@ -22,10 +22,6 @@ if [ -z "$APP_URL" ]; then
   echo "Please set the APP_URL environment variable"
   echo "e.g., 'export APP_URL=\"http://192.168.56.99\"'"
   exit -1
-
-  if [ $PORT != 80 ]; then
-    APP_URL=$APP_URL:$PORT
-  fi
 fi
 
 SOLR=4.10.4
