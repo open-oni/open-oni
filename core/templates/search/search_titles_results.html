@@ -13,51 +13,6 @@
     <link rel="alternate" type="application/json" link="{{BASE_URL}}{% url 'openoni_search_titles_results' %}?{{q}}&amp;page={{page.number}}&amp;format=json" />
 {% endblock %}
 
-{% block javascript %}
-{{ block.super }}
-    <script type="text/javascript">
-    jQuery( function($){
-        $("#sort_select option[value='{{sort}}']").attr("selected", true);
-        $("#rpp_select option[value='{{rows}}']").attr("selected", true);
-        $("#rpp_select").change(function(){
-            window.location=setUrlVar('rows', this.value);
-        });
-        $("#sort_select").change(function(){
-            window.location=setUrlVar('sort', this.value);
-        });
-        $("#cancel_state_filter").on("click", function(e) {
-                window.location=$.param.querystring(location.href, 
-                                                {"state": ""});
-        }); 
-        $("#cancel_county_filter").on("click", function(e) {
-                window.location=$.param.querystring(location.href, 
-                                                {"county": ""});
-        });
-        $("#cancel_date_filter").on("click", function(e) {
-                window.location=$.param.querystring(location.href, 
-                                                {"year1": "",
-                                                 "year2": ""});
-        });
-        $("#filter_select_state").change(function(){
-            window.location=$.param.querystring(location.href, {'state': this.value});
-        });
-        $("#filter_select_county").change(function(){
-            window.location=$.param.querystring(location.href, {'county': this.value});
-        });
-        $("#filter_select_from_year").change(function(){
-            var year = this.value;
-            window.location=$.param.querystring(location.href, 
-                                                {"year1": year});
-        });
-        $("#filter_select_to_year").change(function(){
-            var year = this.value;
-            window.location=$.param.querystring(location.href, 
-                                                {"year2": year});
-        });
-    });
-    </script>
-{% endblock %}
-
 {% block subcontent %}
 
 {% ifequal paginator.count 0 %}
@@ -82,49 +37,79 @@
         {% if request.GET.year1 or request.GET.year2 %}
             <a href="#" id="cancel_date_filter"><img src="{% static 'images/btn_remove.png' %}" title="clear date filter" alt="remove date filter"/></a>
         {% endif %}
-        <br /></p> 
-        <form>
-            <p>
-            <label class="norm" for="filter_results">filter results: </label>
-            <select class="sel" name="filter_select_state" id="filter_select_state">
-                <option value="" disabled selected> by state </option>
-                {% for state, count in paginator.state_facets %}
-                    <option value="{{state}}">{{state}} ({{count}})</option>
-                {% endfor %}
-            </select> 
-            <select class="sel" name="filter_select_county" id="filter_select_county">
-                <option value="" disabled selected> by county </option>
-                {% for county, count in paginator.county_facets %}
-                    <option value="{{county}}">{{county}} ({{count}})</option>
-                {% endfor %}
-            </select> &nbsp;  
-
-            <label class="norm" for="filter_select">by date range: </label>
-            <select class="sel" name="filter_select_year" id="filter_select_from_year">
-                <option value="" disabled selected> from year</option>
-                {% for year in paginator.year_facets %}
-                    <option value="{{year}}">{{year}}</option>
-                {% endfor %}
-            </select> 
-            <select class="sel" name="filter_select_year" id="filter_select_to_year">
-                <option value="" disabled selected> to year</option>
-                {% for year in paginator.year_facets %}
-                    <option value="{{year}}">{{year}}</option>
-                {% endfor %}
-            </select> &nbsp;
-            <label class="norm" for="sort_select">Sort by:</label> 
-            <select class="sel" name="sort_select" id="sort_select">
-                <option value="relevance">Relevance</option>
-                <option value="state">State</option>
-                <option value="title">Title</option>
-                <option value="date">Date</option>
-            </select> &nbsp;  &nbsp; 
-            <label class="norm" for="rpp_select">Results per page:</label> 
-            <select class="sel" name="rpp_select" id="rpp_select">
-                <option value="20">20</option>
-                <option value="50">50</option>
-            </select>
-            </p>
+        <br />
+        </p> 
+        <form class="form-inline search_results_form" method="GET">
+            <!-- first row of filters -->
+            <div class="row search_results_options_set">
+                <div class="col-md-2">Filter Results:</div>
+                <!-- state -->
+                <div class="col-md-2">
+                    <label class="norm" for="state">State</label>
+                    <select class="sel" name="state" id="state">
+                        <option value="" selected></option>
+                        {% for state, count in paginator.state_facets %}
+                            <option value="{{state}}" {% ifequal state request.GET.state %} selected=selected {% endifequal %}>{{state}} ({{count}})</option>
+                        {% endfor %}
+                    </select> 
+                </div>
+                <!-- county -->
+                <div class="col-md-2">
+                    <label for="county">County</label>
+                    <select class="sel" name="county" id="county">
+                        <option value="" selected></option>
+                        {% for county, count in paginator.county_facets %}
+                            <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- date range -->
+                <div class="col-md-3">
+                    <label class="norm" for="year1">Date Range: </label>
+                    <select class="sel" name="year1" id="year1">
+                        <option value="" selected> from year</option>
+                        {% for year in paginator.year_facets %}
+                            {% with year_str=year|stringformat:"i" %}
+                                <option value="{{year}}" {% ifequal year_str request.GET.year1 %} selected=selected {% endifequal %}>{{year}}</option>
+                            {% endwith %}
+                        {% endfor %}
+                    </select> 
+                </div>
+                <div class="col-md-2">
+                    <select class="sel" name="year2" id="year2">
+                        <option value="" selected> to year</option>
+                        {% for year in paginator.year_facets %}
+                            {% with year_str=year|stringformat:"i" %}
+                                <option value="{{year}}" {% ifequal year_str request.GET.year2 %} selected=selected {% endifequal %}>{{year}}</option>
+                            {% endwith %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <!-- second row of filters -->
+            <div class="row search_results_options_set">
+                <!-- sorting -->
+                <div class="col-md-3">
+                    <label class="norm" for="sort">Sort by:</label> 
+                    <select class="sel" name="sort" id="sort">
+                        <option value="relevance">Relevance</option>
+                        <option value="state">State</option>
+                        <option value="title">Title</option>
+                        <option value="date">Date</option>
+                    </select>
+                </div>
+                <!-- result rows -->
+                <div class="col-md-3">
+                    <label class="norm" for="rows">Results per page:</label> 
+                    <select class="sel" name="rows" id="rows">
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-default">Refine Search</button>
+                </div>
+            </div>
         </form>
     </div>
     
