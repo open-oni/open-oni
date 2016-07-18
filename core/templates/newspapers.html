@@ -1,16 +1,19 @@
-{% extends "site_base.html" %}
+<!-- http://BASE_URL/newspapers/ -->
+
+{% extends "__l_main.html" %}
 {% load custom_filters %}
 {% load static from staticfiles %}
 {% load humanize %}
 
-{% block extrahead %}
+{% block head_extra %}
 <link rel="alternate" title="Newspapers Atom Feed" href="{% url 'openoni_newspapers_atom' %}" />
 <link rel="alternate" title="Newspapers JSON Feed" href="{% url 'openoni_newspapers_format' "json" %}" />
 <link href="{% static 'css/tablesort.css' %}" rel="stylesheet" media="screen">
-{% endblock %}
+{% endblock head_extra %}
 
 {% block subcontent %}
 {% if titles.count > 0 %}
+
 <div class="search_results_body">
     <div class="results_nav">
         <p class="term">
@@ -64,7 +67,7 @@
 {% else %}
 <h2>No Results</h2>
 {% endif %}
-{% endblock %}
+{% endblock subcontent %}
 
 
 {% block javascript %}{{ block.super }}
@@ -116,4 +119,4 @@
 
 </script>
 
-{% endblock %}
+{% endblock javascript %}

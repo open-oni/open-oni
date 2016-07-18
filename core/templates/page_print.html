@@ -1,11 +1,19 @@
-{% extends "site_base.html" %}
+<!-- used when user selects to clip/print a page image e.g.:
+    http://BASE_URL/lccn/sn99021999/1887-03-07/ed-1/seq-1/print/image_638x817_from_2066%2C1346_to_3478%2C3154/ -->
+
+{% extends "__l_print.html" %}
 {% load image_urls %}
 {% block content %}
-<p>
-  <img src="{% specific_tile_url page width height x1 y1 x2 y2 %}" alt="Page" />
-</p>
 
-<p>Image provided by {{issue.batch.awardee.name}}</p>
-<p>Persistent link: <a href="{{url}}">{{BASE_URL}}{{url}}</a></p>
+<h4>{{ page_title }}</h4>
+
+<p>Image provided by {{issue.batch.awardee.name}}<br/>
+Persistent link: <a href="{{url}}">{{BASE_URL}}{{url}}</a></p>
+
+
+  <img src="{% specific_tile_url page width height x1 y1 x2 y2 %}" alt="Page" />
+
+
+
 
 {% endblock %}

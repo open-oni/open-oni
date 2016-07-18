@@ -1,4 +1,7 @@
-{% extends "newspaper_base.html" %}
+<!-- for individual newspaper title pages e.g.:
+        http://BASE_URL/lccn/sn83045350/ -->
+
+{% extends "__l_newspaper.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
 {% load image_urls %}
@@ -200,9 +203,7 @@
             <dt>Holdings:</dt>
             <dd>
                 
-                <a href="{% url 'openoni_title_holdings' title.lccn %}">
-                    View complete holdings information
-                </a>
+                <p>Check OCLC WorldCat for more information on <a class="external" href="http://www.worldcat.org/search?qt=worldcat_org_all&q='{{ title.lccn_orig }}'">this title</a>.</p>
             </dd>
         
             
@@ -220,9 +221,7 @@
         <!-- end class:more -->
         {% endif %}
         </div><!-- /title_essay -->
-    </div><!-- end id:col2_left -->
-
-    
+    </div><!-- /col-md-7 -->
 
     <div class="col-md-5">
         {% if title.has_issues %}
@@ -250,7 +249,7 @@
             </div>
         </div><!-- end class:more -->
         {% endif %}
-    </div><!-- end id:col2_right -->
-</div>
+    </div><!-- /col_md_5 -->
+</div><!-- /row -->
 {% endblock %}
 

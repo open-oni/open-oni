@@ -1,0 +1,48 @@
+  {% comment %} called from __base.html {% endcomment %}
+
+
+      <nav class="navbar navbar-inverse">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li><!--TODO: Is this linked properly? -->
+              <li><a href="{% url 'openoni_newspapers' %}">Newspapers</a></li>
+              <li><a href="{% url 'openoni_about' %}">About</a></li>
+              <li><a href="{% url 'openoni_about_api' %}">API</a></li>
+              <li><a href="{% url 'openoni_issues' %}">Browse by Date</a></li>
+              {# <li><a href="{% url 'openoni_reports' %}">Reports</a></li> <!-- Commenting out because reports should not be available to public -->  #}
+              <li><a href="/help/">Help</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li class="nav_advanced_search"><a href="{% url 'openoni_search_advanced' %}">Advanced Search</a></li>
+            </ul>
+          
+            <form class="form-inline navbar-form navbar-right"  action="{% url 'openoni_search_pages_results' %}" method="get">
+              <div class="form-group">
+                <input type="hidden" name="rows" id="rows" alt="rows" value="20" />
+                <input type="hidden" name="searchType" alt="searchType" value="basic" />
+                <input class="form-control" type="text" name="proxtext" placeholder="search words">
+              </div><!-- /form-group -->
+
+              <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"><span class="search_text">Search</span></span>
+              </button>
+            </form>
+
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+

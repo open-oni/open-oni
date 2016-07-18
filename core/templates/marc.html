@@ -1,14 +1,17 @@
-{% extends "newspaper_base.html" %}
+<!-- For pages like:
+    http://BASE_URI/lccn/sn83045350/marc/ -->
+
+{% extends "__l_newspaper.html" %}
 
 {% load static from staticfiles %}
 
-{% block extrahead %}
+{% block head_extra %}
 {{ block.super }}
     <link rel="alternate" 
           type="application/marc+xml" 
           href="{% url 'openoni_title_marcxml' title.lccn %}" />
 
-{% endblock %}
+{% endblock head_extra %}
 
 {% block newspaper_content %}
 
@@ -18,7 +21,7 @@
 
 <br />
  
-<div style="text-align: center;"> 
+<div class="xml_link"> 
 <a href="{% url 'openoni_title_marcxml' title.lccn %}">XML</img>
 </a>
 </div>

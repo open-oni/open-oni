@@ -1,11 +1,18 @@
-{% extends "site_base.html" %}
+<!-- Individual page view, e.g.:
+    http://BASE_URL/lccn/sn83045350/1878-01-03/ed-1/seq-1/ -->
+
+{% extends "__l_main.html" %}
 {% load static from staticfiles %}
 {% load image_urls %}
 
-{% block head_content %}{{ block.super }}
+{% block head_item_metadata %}
+
+    {{ block.super }}
+
     {% with page as title_metadata %}
-    {% include "includes/lc_metadata.html" %}
+      {% include "includes/lc_metadata.html" %}
     {% endwith %}
+
     <link rel="primaryTopic" href="{{ page.abstract_url }}" />
     <link rel="resourcemap" type="application/rdf+xml" href="{% url 'openoni_page_dot_rdf' page.issue.title.lccn page.issue.date_issued page.issue.edition page.sequence %}" />
     <link rel="alternate" type="application/json" href="{% url 'openoni_page_dot_json' page.issue.title.lccn page.issue.date_issued page.issue.edition page.sequence %}" />
@@ -20,47 +27,52 @@
     <meta property="og:image" content="{% thumb_image_url page %}" />
     <meta property="og:title" content="{{ page_title }}" />
     <meta property="og:description" content="{{ page_title }}, brought to you by {{ image_credit }}, and the National Digital Newspaper Program." />
-    
+
+{% endblock head_item_metadata %}
+
+{% block head_page_css %}
+
+    {{ block.super }}
+
     <!-- Include css code for viewer -->
     <link href="{% static 'css/viewer.css' %}" rel="stylesheet" />
 
-
-<!-- This rule has to be inline or it does not work. All other single page viewer rules are in external css file linked above -->
+    <!-- This rule has to be inline or it does not work. All other single page viewer rules are in external css file linked above -->
     <style type="text/css">
       #dummy { /* for specifying aspect ratio of viewer_container */
         padding-top:{% widthratio page.jp2_length page.jp2_width 100 %}%;
       }
     </style>
 
-{% endblock head_content %}
-
+{% endblock head_page_css %}
 
 
 {% block content %}
 
-<h2>
-{{ page_head_heading }}</h2>
-<p class="page_about">About <a href="{% url 'openoni_title' title.lccn %}">{{page_head_subheading}}</a> | <a href="../">View This Issue</a></p>
 
-<div id="item-wrapper"> 
+<h2>{{ page_head_heading }}</h2>
 
-<div id="imageViewer_nav">
-  <span id="item-ctrl" class="toolbar">
-  <!-- This is where the open seadragon controls are inserted via javascript -->
-  </span>
-  <span class="other_controls">
-    <span class="control">
-      {% if page.previous %}
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.previous.sequence %}">prev</a>
-      {% endif %}
-      Page: 
-      <select name="pageNum" id="pageNum" class="input-small">
-            {% for p in issue.pages.all %}
+  <p class="page_about">About <a href="{% url 'openoni_title' title.lccn %}">{{page_head_subheading}}</a> | <a href="../">View This Issue</a></p>
+
+  <div id="item-wrapper"> 
+
+    <div id="imageViewer_nav">
+      <span id="item-ctrl" class="toolbar">
+      <!-- This is where the open seadragon controls are inserted via javascript -->
+      </span>
+      <span class="other_controls">
+        <span class="control">
+        {% if page.previous %}
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.previous.sequence %}">prev</a>
+        {% endif %}
+        Page: 
+        <select name="pageNum" id="pageNum" class="input-small">
+          {% for p in issue.pages.all %}
             <option value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}" {% ifequal p.sequence page.sequence %}selected="selected"{% endifequal %}>{{p.sequence}}</option>
-            {% endfor %}
-          </select>
-          of {{issue.pages.all|length}}
+          {% endfor %}
+        </select>
+        of {{issue.pages.all|length}}
       {% if page.next %}
         <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.next.sequence %}">next</a>
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
@@ -97,34 +109,35 @@
     </span><!-- /control -->
     <span class="control">
       <span class="glyphicon glyphicon-scissors" aria-hidden="true"></span>
-      <a id="clip" href="#" target="print">Clip Image</a>
+      <a id="clip" href="#" target="print">Clip/Print Image</a>
     </span><!-- /control -->
     {% endif %}
   </span><!-- /other_controls -->
 </div><!-- /imageViewer_nav -->
 
 
+{% if page.jp2_filename %}
 
-   
-      
-      {% if page.jp2_filename %}
-      
-      <div id="viewer_container_container">
+<div id="viewer_container_container">
 	<div id="dummy"></div>
 	<div id="viewer_container" class="openseadragon">
 	  <div id="item-ctrl" class="toolbar"></div>
 	</div>
-      </div>
+</div><!-- /viewer_container_container -->
+
+{% else %}
+
+<div class="missing">
+  <h3>Missing Page: {{explanation}}</h3>
+</div><!-- /missing -->
+
+{% endif %}
+
+</div><!-- /item_wrapper -->
 
 
-      {% else %}
-      <div class="missing">
-        <h3>Missing Page: {{explanation}}</h3>
-      </div>
-      {% endif %}
-    </div>
 
-    </div></div>
+
       
 {% endblock content %}
 

@@ -1,22 +1,31 @@
-{% extends "newspaper_base.html" %}
+<!-- for pages like: http://BASE_URI/lccn/sn99021999/1887-03-09/ed-1/
+                     http://BASE_URI/lccn/sn99021999/issues/first_pages/-->
+
+{% extends "__l_newspaper.html" %}
 {% load static from staticfiles %}
 {% load custom_filters %}
 {% load image_urls %}
 
-{% block extrahead %}
-<link rel="alternate" href="{% url 'openoni_issue_pages_dot_json' title.lccn issue.date_issued issue.edition %}" />
-{% endblock %}
+{% block head_page_css %}
+    {{ block.super }}
 
-{% block lc_metadata %}
-{% include "includes/lc_metadata.html" %}
-{% endblock %}
+    <link href="{% static 'css/calendar.css' %}" rel="stylesheet" media="screen">
+{% endblock head_page_css %}
+
+{% block head_extra %}
+    <link rel="alternate" href="{% url 'openoni_issue_pages_dot_json' title.lccn issue.date_issued issue.edition %}" />
+{% endblock head_extra %}
+
+{% block head_item_metadata %}
+    {% include "includes/lc_metadata.html" %}
+{% endblock head_item_metadata %}
 
 {% block newspaper_content %}
-{% if first_pages %}
-{% include "includes/issue_frontpages_ctrl.html" %}
-{% else %}
-{% include "includes/issue_pages_ctrl.html" %}
-{% endif %}
+    {% if first_pages %}
+    {% include "includes/issue_frontpages_ctrl.html" %}
+    {% else %}
+    {% include "includes/issue_pages_ctrl.html" %}
+    {% endif %}
 
 <div class="search_results_body gallery issues">
     {% if page.object_list %}
@@ -65,7 +74,9 @@
 {% else %}
 {% include "includes/issue_pages_ctrl.html" %}
 {% endif %}
-{% endblock %}
+
+
+{% endblock newspaper_content %}
 
 {% block javascript %}
 {{ block.super }}
@@ -82,4 +93,4 @@ jQuery(function($) {
     });
 });
 </script>
-{% endblock %}
+{% endblock javascript %}
