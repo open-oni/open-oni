@@ -122,6 +122,13 @@
         <h3>Missing Page: {{explanation}}</h3>
       </div>
       {% endif %}
+
+      {% if issue.copyright_link %}
+        <div class="item-foot">Copyright Statement:&nbsp;
+          <a href="{{issue.copyright_link.uri}}">{{issue.copyright_link.label}}</a>
+        </div>
+      {% endif %}
+
     </div>
 
     </div></div>

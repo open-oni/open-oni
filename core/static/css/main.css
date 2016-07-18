@@ -140,6 +140,10 @@ table.tablesorter tbody tr.odd td {
     color: #fff;
 }
 
+/*page.html*/
+.item-foot {
+    margin-top: 40px;
+}
 
 /* -------------------------- */
 
