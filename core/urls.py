@@ -1,6 +1,6 @@
 import os
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import patterns, url
 from django.conf import settings
 from django.utils import cache
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
