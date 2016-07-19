@@ -4,7 +4,7 @@ import datetime
 
 from celery.schedules import crontab
 
-from openoni.settings import *
+from onisite.settings import *
 
 APP_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 

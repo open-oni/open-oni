@@ -43,7 +43,7 @@ STATIC_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, '.static-media')
 
 # Module which processes URL routing
-ROOT_URLCONF = 'openoni.urls'
+ROOT_URLCONF = 'onisite.urls'
 
 # Database settings.  This should be overridden in settings_local.py or
 # /etc/openoni.ini.
