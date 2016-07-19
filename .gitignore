@@ -7,6 +7,9 @@ data/ocr
 data/word_coordinates
 .static-media/
 
+# :P
+.DS_Store
+
 #Ignore all user added themes, but keep default
 themes/*
 !themes/default
