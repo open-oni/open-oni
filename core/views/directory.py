@@ -11,11 +11,11 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.encoding import smart_str
 
-from openoni.core.decorator import cache_page, opensearch_clean, rdf_view, cors
-from openoni.core.utils.utils import _page_range_short, _rdf_base
-from openoni.core import models, index
-from openoni.core.rdf import titles_to_graph
-from openoni.core.utils.url import unpack_url_path
+from core.decorator import cache_page, opensearch_clean, rdf_view, cors
+from core.utils.utils import _page_range_short, _rdf_base
+from core import models, index
+from core.rdf import titles_to_graph
+from core.utils.url import unpack_url_path
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)

@@ -18,9 +18,9 @@ import feedparser
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
-from openoni.core.management.commands import configure_logging
-from openoni.core.rdf import rdf_uri
-from openoni.core import models as m
+from core.management.commands import configure_logging
+from core.rdf import rdf_uri
+from core import models as m
 
 configure_logging("release.config", "release.log")
 

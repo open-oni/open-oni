@@ -13,11 +13,11 @@ from django.core.paginator import Paginator, InvalidPage
 from django.db import connection
 from django.utils import datetime_safe
 
-from openoni.core import index, models
-from openoni.core.rdf import batch_to_graph, awardee_to_graph
-from openoni.core.utils.url import unpack_url_path
-from openoni.core.decorator import cache_page, rdf_view, cors
-from openoni.core.utils.utils import _page_range_short, _rdf_base, _get_tip
+from core import index, models
+from core.rdf import batch_to_graph, awardee_to_graph
+from core.utils.url import unpack_url_path
+from core.decorator import cache_page, rdf_view, cors
+from core.utils.utils import _page_range_short, _rdf_base, _get_tip
 
 
 @cache_page(settings.API_TTL_SECONDS)

@@ -11,10 +11,10 @@ from django.db import connection, reset_queries
 from django.http import QueryDict
 from django.conf import settings
 
-from openoni.core import models
-from openoni.core.forms import _fulltext_range
-from openoni.core.utils import utils
-from openoni.core.title_loader import _normal_lccn
+from core import models
+from core.forms import _fulltext_range
+from core.utils import utils
+from core.title_loader import _normal_lccn
 
 _log = logging.getLogger(__name__)
 

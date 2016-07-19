@@ -3,7 +3,7 @@ import logging
 from django.core.cache import cache
 from django.core.management.base import BaseCommand, CommandError
 
-from openoni.core.management.commands import configure_logging
+from core.management.commands import configure_logging
 
 configure_logging('', 'purge_django_cache.log' )
 

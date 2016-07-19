@@ -6,10 +6,10 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 
-from openoni.core import title_loader
-from openoni.core.index import index_titles
-from openoni.core.models import Title
-from openoni.core.management.commands import configure_logging
+from core import title_loader
+from core.index import index_titles
+from core.models import Title
+from core.management.commands import configure_logging
 
 configure_logging('load_titles_logging.config', 'load_titles.log')
 _logger = logging.getLogger(__name__)

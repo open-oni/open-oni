@@ -1,5 +1,5 @@
 from django import template
-from openoni.core.utils import image_urls
+from core.utils import image_urls
 
 register = template.Library()
 

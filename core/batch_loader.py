@@ -28,10 +28,10 @@ try:
 except ImportError:
     j2k = None
 
-from openoni.core import models
-from openoni.core.models import Batch, Issue, Title, Awardee, Page, OCR
-from openoni.core.models import LoadBatchEvent
-from openoni.core.ocr_extractor import ocr_extractor
+from core import models
+from core.models import Batch, Issue, Title, Awardee, Page, OCR
+from core.models import LoadBatchEvent
+from core.ocr_extractor import ocr_extractor
 
 # some xml namespaces used in batch metadata
 ns = {

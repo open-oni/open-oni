@@ -8,8 +8,8 @@ from django.template import RequestContext
 from django.template.loader import get_template
 from django.core import urlresolvers
 
-from openoni.core import models
-from openoni.core import forms
+from core import models
+from core import forms
 
 
 def home(request, date=None):

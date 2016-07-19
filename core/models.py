@@ -19,8 +19,8 @@ from django.db.models import permalink, Q
 from django.conf import settings
 from django.utils.http import urlquote
 
-from openoni.core.utils import strftime
-from openoni.core.utils.image_urls import thumb_image_url, iiif_info_for_page
+from core.utils import strftime
+from core.utils.image_urls import thumb_image_url, iiif_info_for_page
 
 from django.core import urlresolvers
 

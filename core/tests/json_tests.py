@@ -5,7 +5,7 @@ try:
 except ImportError:
     import json
 
-from openoni.core import models as m
+from core import models as m
 
 class JsonTests(TestCase):
     fixtures = ['test/batch.json']

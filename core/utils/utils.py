@@ -10,7 +10,7 @@ from django.http import HttpResponse, Http404
 from django.utils.http import http_date
 from django.utils import datetime_safe
 
-from openoni.core import models
+from core import models
 
 
 def _rdf_base(request):

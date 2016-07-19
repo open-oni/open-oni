@@ -65,7 +65,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
-    'openoni.core.middleware.TooBusyMiddleware',
+    'core.middleware.TooBusyMiddleware',
 )
 
 # Template configuration (1.8+)
@@ -90,8 +90,8 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
-                'openoni.core.context_processors.extra_request_info',
-                'openoni.core.context_processors.newspaper_info',
+                'core.context_processors.extra_request_info',
+                'core.context_processors.newspaper_info',
             ],
 
             # Template engine debug info; Defaults to the value of DEBUG
@@ -107,8 +107,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djcelery',
     'djkombu',
-    'openoni.themes.default',
-    'openoni.core',
+
+    'themes.default',
+    'core',
 )
 
 

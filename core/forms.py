@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.db.models import Min, Max
 
-from openoni.core import models
+from core import models
 
 MIN_YEAR = 1860
 MAX_YEAR = 1922
