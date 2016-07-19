@@ -20,25 +20,25 @@
 {% else %}
 <div class="search_results_ctrl top fix-float">
     {% include 'includes/titles_results_ctrl.html' %}
-</div><!-- end class:search_results_ctrl --> 
+</div><!-- end class:search_results_ctrl -->
 
 <div class="search_results_body">
     <div class="results_nav">
-        <p class="term">Your title search returned {{ paginator.count }} results 
+        <p class="term">Your title search returned {{ paginator.count }} results
         {% if request.GET.state %}
               &nbsp for states {{ request.GET.state }}
               <a href="#" id="cancel_state_filter"><img src="{% static 'images/btn_remove.png' %}" title="clear state filter" alt="remove state filter"/></a>
-        {% endif %} 
+        {% endif %}
         {% if request.GET.county %}
               &nbsp for county {{ request.GET.county }}
               <a href="#" id="cancel_county_filter"><img src="{% static 'images/btn_remove.png' %}" title="clear county filter" alt="remove county filter"/></a>
-        {% endif %} 
+        {% endif %}
         &nbsp for date range {% firstof request.GET.year1 '1690' %} - {% firstof request.GET.year2 'present' %}
         {% if request.GET.year1 or request.GET.year2 %}
             <a href="#" id="cancel_date_filter"><img src="{% static 'images/btn_remove.png' %}" title="clear date filter" alt="remove date filter"/></a>
         {% endif %}
         <br />
-        </p> 
+        </p>
         <form class="form-inline search_results_form" method="GET">
             <!-- first row of filters -->
             <div class="row search_results_options_set">
@@ -51,7 +51,7 @@
                         {% for state, count in paginator.state_facets %}
                             <option value="{{state}}" {% ifequal state request.GET.state %} selected=selected {% endifequal %}>{{state}} ({{count}})</option>
                         {% endfor %}
-                    </select> 
+                    </select>
                 </div>
                 <!-- county -->
                 <div class="col-md-2">
@@ -73,7 +73,7 @@
                                 <option value="{{year}}" {% ifequal year_str request.GET.year1 %} selected=selected {% endifequal %}>{{year}}</option>
                             {% endwith %}
                         {% endfor %}
-                    </select> 
+                    </select>
                 </div>
                 <div class="col-md-2">
                     <select class="sel" name="year2" id="year2">
@@ -90,7 +90,7 @@
             <div class="row search_results_options_set">
                 <!-- sorting -->
                 <div class="col-md-3">
-                    <label class="norm" for="sort">Sort by:</label> 
+                    <label class="norm" for="sort">Sort by:</label>
                     <select class="sel" name="sort" id="sort">
                         <option value="relevance">Relevance</option>
                         <option value="state">State</option>
@@ -100,7 +100,7 @@
                 </div>
                 <!-- result rows -->
                 <div class="col-md-3">
-                    <label class="norm" for="rows">Results per page:</label> 
+                    <label class="norm" for="rows">Results per page:</label>
                     <select class="sel" name="rows" id="rows">
                         <option value="20">20</option>
                         <option value="50">50</option>
@@ -112,7 +112,7 @@
             </div>
         </form>
     </div>
-    
+
     {% block search_results_box %}
     <ul class="results_list">
         {% for number, object_list in page_list %}
