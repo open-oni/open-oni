@@ -51,6 +51,11 @@ if [ ! -f onisite/settings_local.py ]; then
   touch onisite/settings_local.py
 fi
 
+# Make sure we have a default urls.py
+if [ ! -f onisite/urls.py ]; then
+  cp onisite/urls_example.py onisite/urls.py
+fi
+
 # Make persistent data containers
 # If these containers are removed, you will lose all mysql and solr data
 MYSQL_DATA_STATUS=$(docker inspect --type=container --format="{{ .State.Running }}" openoni-dev-data-mysql 2> /dev/null)
