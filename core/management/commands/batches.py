@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from openoni.core import models
+from core import models
     
 class Command(BaseCommand):
     help = "Displays information about batches"

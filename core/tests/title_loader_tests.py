@@ -3,14 +3,14 @@ import os
 
 from lxml import etree
 
-import openoni.core
-from openoni.core.models import Title
-from openoni.core.title_loader import TitleLoader
+import core
+from core.models import Title
+from core.title_loader import TitleLoader
 
 
 def abs_filename(rel_filename):
     abs_filename = os.path.join(
-        os.path.dirname(openoni.core.__file__),
+        os.path.dirname(core.__file__),
         rel_filename)
     return abs_filename
 
@@ -23,7 +23,7 @@ class TitleLoaderTests(TestCase):
         Title.objects.all().delete()
         # load a title
         loader = TitleLoader()
-        titlexml = os.path.join(os.path.dirname(openoni.core.__file__),
+        titlexml = os.path.join(os.path.dirname(core.__file__),
             'test-data', 'title.xml')
         loader.load_file(titlexml)
 

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core import urlresolvers
-from openoni.core.models import Batch, Title, Issue, Page
-from openoni.core.decorator import cache_page
+from core.models import Batch, Title, Issue, Page
+from core.decorator import cache_page
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 

@@ -9,8 +9,8 @@ try:
 except ImportError:
     import json
 
-from openoni.core import models
-from openoni.core.management.commands import configure_logging
+from core import models
+from core.management.commands import configure_logging
 
 configure_logging("openoni_link_places.config", "openoni_link_places.log")
 _logger = logging.getLogger(__name__)

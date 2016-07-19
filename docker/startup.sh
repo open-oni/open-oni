@@ -30,11 +30,11 @@ source ENV/bin/activate
 
 echo "-------" >&2
 echo "Migrating database" >&2
-django-admin.py migrate
+/opt/openoni/manage.py migrate
 
 echo "-------" >&2
 echo "Running collectstatic" >&2
-django-admin.py collectstatic --noinput
+/collectstatic.sh
 
 # Remove any pre-existing PID file which prevents Apache from starting
 #   thus causing the container to close immediately after

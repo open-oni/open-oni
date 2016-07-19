@@ -8,8 +8,8 @@ from django.core.management.base import BaseCommand
 from django.core.paginator import Paginator
 from django.db import reset_queries
 
-from openoni.core import models as m
-from openoni.core.rdf import rdf_uri
+from core import models as m
+from core.rdf import rdf_uri
 
 class Command(BaseCommand):
     help = "Indexes new batches in the sitemap"

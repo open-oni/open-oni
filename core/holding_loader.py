@@ -6,8 +6,8 @@ from time import time
 from pymarc import map_xml
 from django.db import reset_queries
 
-from openoni.core.title_loader import _normal_oclc, _extract
-from openoni.core import models
+from core.title_loader import _normal_oclc, _extract
+from core import models
 
 _logger = logging.getLogger(__name__)
 

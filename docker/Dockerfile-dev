@@ -1,8 +1,6 @@
 FROM ubuntu:trusty
 MAINTAINER Mark Cooper <mark.cooper@lyrasis.org>
 
-ENV DJANGO_SETTINGS_MODULE openoni.settings
-
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
   apache2 \
@@ -40,7 +38,7 @@ ADD collect_static.sh /
 ADD startup.sh /
 ADD test.sh /
 ADD manage /usr/local/bin/manage
-ADD manage /usr/local/bin/django-admin
+ADD django-admin /usr/local/bin/django-admin
 ADD openoni.ini /etc/openoni.ini.orig
 
 RUN chmod u+x /*.sh

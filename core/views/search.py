@@ -11,10 +11,10 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.template import RequestContext
 
-from openoni.core import index, models
-from openoni.core import forms
-from openoni.core.decorator import opensearch_clean, cache_page, cors
-from openoni.core.utils.utils import _page_range_short
+from core import index, models
+from core import forms
+from core.decorator import opensearch_clean, cache_page, cors
+from core.utils.utils import _page_range_short
 
 
 def search_pages_paginator(request):

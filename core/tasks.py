@@ -7,8 +7,8 @@ from django.conf import settings
 from django.core import management
 from django.core.cache import cache
 
-from openoni.core.models import Batch, OcrDump
-from openoni.core.batch_loader import BatchLoader
+from core.models import Batch, OcrDump
+from core.batch_loader import BatchLoader
 
 logger = logging.getLogger(__name__)
 

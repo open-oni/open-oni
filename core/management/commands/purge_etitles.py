@@ -6,9 +6,9 @@ from optparse import make_option
 from django.core.management.base import BaseCommand
 import pymarc
 
-from openoni.core.management.commands import configure_logging
-from openoni.core import index
-from openoni.core.models import Title
+from core.management.commands import configure_logging
+from core import index
+from core.models import Title
 
 configure_logging("openoni_purge_titles.config", "openoni_purge_etitles.log")
 _log = logging.getLogger(__name__)

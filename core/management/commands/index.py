@@ -2,8 +2,8 @@ import logging
 
 from django.core.management.base import BaseCommand
     
-from openoni.core.management.commands import configure_logging
-from openoni.core.index import index_titles, index_pages
+from core.management.commands import configure_logging
+from core.index import index_titles, index_pages
 
 configure_logging("index_logging.config", "index.log")
 

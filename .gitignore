@@ -1,6 +1,7 @@
 *.pyc
 ENV
-settings_local.py
+onisite/settings_local.py
+onisite/urls.py
 *.log
 data/batches
 data/ocr

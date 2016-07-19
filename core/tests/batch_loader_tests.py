@@ -7,10 +7,10 @@ import tarfile
 from django.conf import settings
 from django.test import TestCase
 
-import openoni.core
-from openoni.core.batch_loader import BatchLoader
-from openoni.core.models import Title
-from openoni.core.models import Batch
+import core
+from core.batch_loader import BatchLoader
+from core.models import Title
+from core.models import Batch
 
 class BatchLoaderTest(TestCase):
     fixtures = ['test/countries.json', 'test/titles.json', 'test/languages.json']
@@ -35,7 +35,7 @@ class BatchLoaderTest(TestCase):
 
     def test_load_batch(self):
         # Extract mini-batch tarball to /tmp somewhere
-        tarpath = os.path.join(os.path.dirname(openoni.core.__file__), 'test-data', 'testbatch.tgz')
+        tarpath = os.path.join(os.path.dirname(core.__file__), 'test-data', 'testbatch.tgz')
         tar = tarfile.open(tarpath)
         tar.extractall(path = BatchLoaderTest.batchDir)
         tar.close()

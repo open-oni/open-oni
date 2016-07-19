@@ -7,7 +7,7 @@ including all its page and ocr models as a json fixture for testing purposes
 
 import json
 from django.core import serializers
-from openoni.core.models import Batch, OCR, Reel, LanguageText
+from core.models import Batch, OCR, Reel, LanguageText
 
 b = Batch.objects.get(name="batch_dlc_jamaica_ver01")
 i = b.issues.all()[0]
