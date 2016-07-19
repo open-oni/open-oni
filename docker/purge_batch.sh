@@ -1,6 +1,3 @@
 #!/bin/bash
-
-BATCH=$1
-
 source /opt/openoni/ENV/bin/activate
-django-admin.py purge_batch $BATCH
+/opt/openoni/manage.py purge_batch $1

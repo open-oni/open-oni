@@ -1,3 +1,3 @@
 #!/bin/bash
 source /opt/openoni/ENV/bin/activate
-django-admin.py collectstatic --noinput
+/opt/openoni/manage.py collectstatic --noinput
