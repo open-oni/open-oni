@@ -82,8 +82,8 @@ def newspapers(request, state=None, format='html'):
                                   context_instance=RequestContext(request),
                                   content_type="text/plain")
     elif format == "csv":
-        csv_header_labels = ('Persistent Link', 'State', 'Title', 'LCCN', 'OCLC', 
-                             'ISSN', 'No. of Issues', 'First Issue Date', 
+        csv_header_labels = ('Persistent Link', 'State', 'Title', 'LCCN', 'OCLC',
+                             'ISSN', 'No. of Issues', 'First Issue Date',
                              'Last Issue Date', 'More Info')
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="openoni_newspapers.csv"'
@@ -92,11 +92,11 @@ def newspapers(request, state=None, format='html'):
         for state, titles in newspapers_by_state:
             for title in titles:
                 writer.writerow(('%s%s' % (settings.BASE_URL,
-                                                  reverse('openoni_issues_title', 
+                                                  reverse('openoni_issues_title',
                                                            kwargs={'lccn': title.lccn}),),
                                  state, title, title.lccn or '', title.oclc or '',
-                                 title.issn or '', title.issues.count(), title.first, 
-                                 title.last, 
+                                 title.issn or '', title.issues.count(), title.first,
+                                 title.last,
                                  '%s%s' % (settings.BASE_URL, reverse('openoni_title_essays',
                                                            kwargs={'lccn': title.lccn}),),))
         return response
@@ -105,7 +105,7 @@ def newspapers(request, state=None, format='html'):
         host = request.get_host()
 
         results = {
-            "@context": "http://iiif.io/api/presentation/2/context.json", 
+            "@context": "http://iiif.io/api/presentation/2/context.json",
             "@id": settings.BASE_URL + request.get_full_path(),
             "@type": "sc:Collection",
             "label": "Newspapers",
@@ -156,8 +156,8 @@ def newspapers_atom(request):
 def search_titles_results(request):
     page_title = 'Title Search Results'
     crumbs = list(settings.BASE_CRUMBS)
-    crumbs.extend([{'label': 'Title Search',
-                    'href': reverse('openoni_search_titles')},
+    crumbs.extend([{'label': 'Advanced Search',
+                    'href': reverse('openoni_search_advanced')},
                    ])
 
     def prep_title_for_return(t):
@@ -168,22 +168,22 @@ def search_titles_results(request):
 
     format = request.GET.get('format', None)
 
-    # check if requested format is CSV before building pages for response. CSV 
+    # check if requested format is CSV before building pages for response. CSV
     # response does not make use of pagination, instead all matching titles from
     # SOLR are returned at once
     if format == 'csv':
         query = request.GET.copy()
         q, fields, sort_field, sort_order, facets = index.get_solr_request_params_from_query(query)
-        
+
         # return all titles in csv format. * May hurt performance. Assumption is that this
-        # request is not made often. 
+        # request is not made often.
         # TODO: revisit if assumption is incorrect
-        solr_response = index.execute_solr_query(q, fields, sort_field, 
+        solr_response = index.execute_solr_query(q, fields, sort_field,
                                                  sort_order, index.title_count(), 0)
         titles = index.get_titles_from_solr_documents(solr_response)
 
         csv_header_labels = ('lccn', 'title', 'place_of_publication', 'start_year',
-                             'end_year', 'publisher', 'edition', 'frequency', 'subject', 
+                             'end_year', 'publisher', 'edition', 'frequency', 'subject',
                              'state', 'city', 'country', 'language', 'oclc',
                              'holding_type',)
         response = HttpResponse(content_type='text/csv')
@@ -193,15 +193,15 @@ def search_titles_results(request):
         for title in titles:
             writer.writerow(map(lambda val: smart_str(val or '--'),
                                (title.lccn, title.name, title.place_of_publication,
-                                title.start_year, title.end_year, title.publisher, 
-                                title.edition, title.frequency, 
-                                map(str, title.subjects.all()), 
-                                set(map(lambda p: p.state, title.places.all())), 
+                                title.start_year, title.end_year, title.publisher,
+                                title.edition, title.frequency,
+                                map(str, title.subjects.all()),
+                                set(map(lambda p: p.state, title.places.all())),
                                 map(lambda p: p.city, title.places.all()),
                                 str(title.country), map(str, title.languages.all()),
                                 title.oclc, title.holding_types)))
         return response
- 
+
     try:
         curr_page = int(request.GET.get('page', 1))
     except ValueError, e:

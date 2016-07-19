@@ -1,4 +1,4 @@
-from search import search_pages_results, search_titles, \
+from search import search_pages_results, \
      search_titles_opensearch,  search_pages_opensearch, suggest_titles
 
 from browse import issues, issues_title, title_holdings, title_marc, \

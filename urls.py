@@ -181,8 +181,6 @@ urlpatterns += patterns(
 
     url('search/titles/opensearch.xml', 'search_titles_opensearch',
         name='openoni_search_titles_opensearch'),
-    url(r'^search/titles/$', 'search_titles', 
-        name="openoni_search_titles"),
     url(r'^search/titles/results/$', 'search_titles_results', 
         name='openoni_search_titles_results'),
     url(r'^suggest/titles/$', 'suggest_titles',
