@@ -108,8 +108,7 @@ def search_pages_results(request, view_type='gallery'):
     lccns = query.getlist('lccn')
     states = query.getlist('state')
 
-    # figure out the sort that's in use
-    sort = query.get('sort', 'relevance')
+    form = forms.SearchResultsForm({"rows": rows, "sort": sort})
     if view_type == "list":
         template = "search/search_pages_results_list.html"
     else:
