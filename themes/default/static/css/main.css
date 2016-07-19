@@ -1,0 +1,138 @@
+/* =====================================
+
+Main stylesheet
+Default Theme
+
+This is where you will put all the styles for your site. 
+Please see the theme's README.md for information on how to override bootstrap if needed. 
+
+======================================== */
+
+/* Include a google font for headers */
+@import url(https://fonts.googleapis.com/css?family=Rokkitt:700);
+
+/* Set background color */
+body {
+    background-color: #f7f6f2;
+}
+
+/* ==========
+Header
+=========== */
+
+.site_header {
+    background-image: url("../images/seamless_paper_texture.png");
+}
+
+.header_navbar {
+    background-color: RGBA(0,0,0,.7);
+    border: none;
+}
+
+.header_navbar a {
+    text-decoration:none;
+    color: #fff;
+}
+
+/* using .navbar-inverse rather than .header_navbar so 
+it is specific enough to overwrite bootstrap rules */
+
+.navbar-inverse .navbar-nav>li>a {
+    color:#fff;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+    color:#9d9d9d;
+}
+
+h1.title {
+    font-family: 'Rokkitt', serif;
+    font-weight:700;
+    text-align:center;
+    font-size: 4em; /* note bigger size in media queries below */
+    margin:10px;
+    color:RGBA(0,0,0,.6);
+    text-shadow: 1px 4px 6px #E1DFD7, 0 0 0 #000, 1px 4px 6px #E1DFD7; /* fancy inner shadow */
+}
+
+/* ==========
+Footer
+=========== */
+
+#footer {
+    background-image: url("../images/seamless_paper_texture.png");
+    padding:20px 0 90px 0;
+    border-top: solid 1px #43423f;
+    margin-top: 30px
+}
+
+/* ==============
+Basic HTML 
+============== */
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rokkitt', serif;
+    font-weight:700;
+    line-height:1em;
+    color: #D14536;
+}
+
+h1 {
+    font-size: 3.5em;
+}
+
+h2 {
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 2.5em;
+}
+
+h4 {
+    font-size: 2em;
+}
+
+h5 {
+    font-size: 1.5em;
+}
+
+h6 {
+    font-size: 1.3em;
+}
+
+a {
+    color: #296FB9;
+    text-decoration:underline;
+}
+
+a:visited {
+    color: #865EB8;
+}
+
+a:hover {
+    color: #D14536;
+}
+
+/* Fix for calendar page, newer bigger base font makes calendars wrap */
+
+.calendar_wrapper {
+    font-size: 14px;
+}
+
+/* =============
+Breakpoints (Based on bootstrap defaults)
+============== */
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width : 768px) {
+        body {
+            font-size: 16px;
+        } /* Make font bigger when screens are bigger */
+
+        h1.title {
+            font-size: 7em;
+        } /* Make font bigger when screens are bigger */
+    }
+
+   

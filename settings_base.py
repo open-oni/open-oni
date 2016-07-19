@@ -107,7 +107,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djcelery',
     'djkombu',
-
+    'openoni.themes.default',
     'openoni.core',
 )
 
