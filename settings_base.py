@@ -185,6 +185,11 @@ STORAGE = '/opt/openoni/data/'
 # URL path to the data directory
 STORAGE_URL = '/data/'
 
+# If LC is down, we've mirrored a few records for development use - just copy
+# the line below into settings_local.py and uncomment it:
+# MARC_RETRIEVAL_URLFORMAT = "https://raw.githubusercontent.com/open-oni/marc-mirror/master/%s/marc.xml"
+MARC_RETRIEVAL_URLFORMAT = "http://chroniclingamerica.loc.gov/lccn/%s/marc.xml"
+
 # Various storage subdirectories
 BATCH_STORAGE = os.path.join(STORAGE, "batches")
 BIB_STORAGE = os.path.join(STORAGE, "bib")
