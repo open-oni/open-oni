@@ -4,5 +4,8 @@ from django.conf.urls import url, include
 
 urlpatterns = [
   url('', include("core.urls")),
+  # If you were to add a plugin app that handles its own URLs, you might do
+  # something like this:
+  #
   # url('map/', include("statemap.urls"))
 ]
