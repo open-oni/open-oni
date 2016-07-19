@@ -154,9 +154,9 @@ def newspapers_atom(request):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 @opensearch_clean
 def search_titles_results(request):
-    page_title = 'US Newspaper Directory Search Results'
+    page_title = 'Title Search Results'
     crumbs = list(settings.BASE_CRUMBS)
-    crumbs.extend([{'label': 'Search Newspaper Directory',
+    crumbs.extend([{'label': 'Title Search',
                     'href': reverse('openoni_search_titles')},
                    ])
 
