@@ -12,7 +12,7 @@ import sys
 
 from django.core.wsgi import get_wsgi_application
 
-sys.path.append('/opt/openoni/onisite')
+sys.path.append('/opt/openoni')
 os.environ.setdefault("CELERY_LOADER", "django")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "onisite.settings")
 
