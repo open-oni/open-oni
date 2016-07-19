@@ -6,3 +6,7 @@ data/batches
 data/ocr
 data/word_coordinates
 .static-media/
+
+#Ignore all user added themes, but keep default
+themes/*
+!themes/default
