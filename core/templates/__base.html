@@ -95,8 +95,8 @@
       <!-- ===========
       MAIN CONTENT
       ============= -->
-
-      <div class="container main_content">
+<div class="main_content">
+      <div class="container">
 
       {% block breadcrumbs %}
         {% if crumbs and crumbs|length > 1 %}
@@ -127,6 +127,7 @@
           </div>
           {% block subcontent %}{% endblock subcontent %}
         {% endblock content %}
+        </div><!-- /container -->
       </div><!--/main_content -->
     {% endblock body_content %}
 
