@@ -37,6 +37,16 @@ PROX_CHOICES = (
     ("100", "100"),
 )
 
+RESULT_ROWS = (
+    ("20", "20"),
+    ("50", "50")
+)
+
+RESULT_SORT = (
+    ("revelance", "Relevance"),
+    ("title", "Title"),
+    ("date", "Date")
+)
 
 def _titles_states():
     """
@@ -116,6 +126,20 @@ class SearchPagesForm(forms.Form):
         self.fields["date2"].choices = self.years
         self.fields["date2"].initial = fulltextEndYear
         self.fields["sequence"].widget.attrs['value'] = 1
+
+
+class SearchResultsForm(forms.Form):
+    rows = fields.ChoiceField(label="Rows", choices=RESULT_ROWS)
+    sort = fields.ChoiceField(choices=RESULT_SORT)
+
+    # add classes
+    rows.widget.attrs["class"] = "form-control"
+    sort.widget.attrs["class"] = "form-control"
+
+    def __init__(self, *args, **kwargs):
+        super(SearchResultsForm, self).__init__(*args, **kwargs)
+        self.fields["rows"].initial = kwargs.get("rows", "20")
+        self.fields["sort"].initial = kwargs.get("sort", "relevance")
 
 
 class AdvSearchPagesForm(SearchPagesForm):
