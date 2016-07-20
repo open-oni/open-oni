@@ -12,6 +12,7 @@ from django.template import RequestContext
 from django.utils.encoding import smart_str
 
 from core.decorator import cache_page, opensearch_clean, rdf_view, cors
+from core import forms
 from core.utils.utils import _page_range_short, _rdf_base
 from core import models, index
 from core.rdf import titles_to_graph
@@ -272,6 +273,8 @@ def search_titles_results(request):
         del q['sort']
     q = q.urlencode()
     collapse_search_tab = True
+
+    form = forms.SearchResultsForm({"rows": rows, "sort": sort})
     return render_to_response('search/search_titles_results.html',
                               dictionary=locals(),
                               context_instance=RequestContext(request))
