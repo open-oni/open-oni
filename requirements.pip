@@ -1,21 +1,16 @@
-distribute>=0.6.28
 Django>=1.8,<1.9
-MySQL-python
-lxml
-pymarc
-solrpy
-Pillow
-simplejson
-feedparser
-rfc3339==5
-mimeparse
-NativeImaging
-html5lib==0.95
-rdflib==3.2.3
-requests
 django-celery
 django-kombu
+feedparser
+lxml
+mysqlclient
+Pillow
+pymarc
+python-mimeparse
+rdflib
+requests
+rfc3339==5
+setuptools
+simplejson
+solrpy
 worldcat
-
-# these are used at LC
-# git+https://git.rdc.lctl.gov/django-lc.git#egg=lc
