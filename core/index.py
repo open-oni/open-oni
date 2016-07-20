@@ -43,6 +43,9 @@ def solr_escape(value):
 def page_count():
     solr = SolrConnection(settings.SOLR)
     return solr.query('type:page', fields=['id']).numFound
+def _sort_facets_asc(solr_facets, field):
+    items = solr_facets.get('facet_fields')[field].items()
+    return sorted(items, lambda x, y: int(x) - int(y), lambda k: k[1], True)
 
 def title_count():
     solr = SolrConnection(settings.SOLR)
@@ -157,11 +160,10 @@ class SolrPaginator(Paginator):
                                    **params)
         solr_facets = solr_response.facet_counts
         # sort states by number of hits per state (desc)
-        facets = {'state': sorted(solr_facets.get('facet_fields')['state'].items(),
-                                  lambda x, y: x - y, lambda k: k[1], True),
-                  'year': solr_facets['facet_ranges']['year']['counts'],
-                  'county': sorted(solr_facets.get('facet_fields')['county'].items(),
-                                  lambda x, y: x - y, lambda k: k[1], True)}
+        facets = {
+            'state': _sort_facets_asc(solr_facets, 'state'),
+            'county': _sort_facets_asc(solr_facets, 'county')
+        }
         # sort by year (desc)
         facets['year'] = sorted(solr_facets['facet_ranges']['year']['counts'].items(),
                                 lambda x, y: int(x) - int(y), lambda k: k[0], True)
@@ -306,12 +308,8 @@ class SolrTitlesPaginator(Paginator):
         self._count = int(solr_response.results.numFound)
         self._num_pages = None
         self._cur_page = page
-        self.state_facets = sorted(solr_response.facet_counts.get(
-                                   'facet_fields')['state'].items(),
-                                  lambda x, y: x - y, lambda k: k[1], True)
-        self.county_facets = sorted(solr_response.facet_counts.get(
-                                   'facet_fields')['county'].items(),
-                                  lambda x, y: x - y, lambda k: k[1], True) 
+        self.state_facets = _sort_facets_asc(solr_response.facet_counts, 'state')
+        self.county_facets = _sort_facets_asc(solr_response.facet_counts, 'county')
         self.year_facets = year_facets
 
     def page(self, number):
