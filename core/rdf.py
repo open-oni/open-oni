@@ -121,7 +121,7 @@ def page_to_graph(p, g=None):
     g.add((uri, ORE.aggregates, txt_uri))
     g.add((txt_uri, DC['format'], Literal('text/plain')))
 
-    thumb_uri = image_urls.thumb_image_url(p)
+    thumb_uri = URIRef(image_urls.thumb_image_url(p))
     g.add((uri, ORE.aggregates, thumb_uri))
     g.add((uri, FOAF.depiction, thumb_uri))
     g.add((thumb_uri, DC['format'], Literal('image/jpeg')))
