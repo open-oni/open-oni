@@ -244,32 +244,6 @@ class SolrPaginator(Paginator):
         return parts
 
 
-
-    # TODO: see ticket #176
-    # i think this can be removed if the search pages results view uses
-    # css to orient pages, rather than fixing them in a table. other views
-    # currently do the floating css so it should be easy to copy, and it
-    # would be nice to simplify this module.
-    def results_table(self):
-        """
-        creates a two-dimensional array of results for easy
-        display as a table in a django template
-        """
-        table = []
-        page = self.page(self._cur_page)
-        objects = page.object_list
-        for i in range(0, len(objects), 2):
-            h = objects[i]
-            row = [h]
-            if i+1 < len(objects):
-                h = objects[i+1]
-                row.append(h)
-            else:
-                row.append(None)
-            table.append(row)
-        return table
-
-
 # TODO: remove/update this in light of solr.SolrPaginator
 
 class SolrTitlesPaginator(Paginator):
