@@ -46,7 +46,7 @@
                 <!-- state -->
                 <div class="col-md-2">
                     <label class="norm" for="state">State</label>
-                    <select class="sel" name="state" id="state">
+                    <select class="form-control" name="state" id="state">
                         <option value="" selected></option>
                         {% for state, count in paginator.state_facets %}
                             <option value="{{state}}" {% ifequal state request.GET.state %} selected=selected {% endifequal %}>{{state}} ({{count}})</option>
@@ -56,7 +56,7 @@
                 <!-- county -->
                 <div class="col-md-2">
                     <label for="county">County</label>
-                    <select class="sel" name="county" id="county">
+                    <select class="form-control" name="county" id="county">
                         <option value="" selected></option>
                         {% for county, count in paginator.county_facets %}
                             <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
@@ -66,7 +66,7 @@
                 <!-- date range -->
                 <div class="col-md-3">
                     <label class="norm" for="year1">Date Range: </label>
-                    <select class="sel" name="year1" id="year1">
+                    <select class="form-control" name="year1" id="year1">
                         <option value="" selected> from year</option>
                         {% for year in paginator.year_facets %}
                             {% with year_str=year|stringformat:"i" %}
@@ -76,7 +76,7 @@
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <select class="sel" name="year2" id="year2">
+                    <select class="form-control" name="year2" id="year2">
                         <option value="" selected> to year</option>
                         {% for year in paginator.year_facets %}
                             {% with year_str=year|stringformat:"i" %}
