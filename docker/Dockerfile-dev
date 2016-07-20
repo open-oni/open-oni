@@ -42,5 +42,8 @@ ADD openoni.ini /etc/openoni.ini.orig
 RUN chmod u+x /*.sh
 RUN chmod u+x /usr/local/bin/*
 
+RUN echo "/usr/local/bin/manage delete_cache" > /etc/cron.daily/delete_cache
+RUN chmod u+x /etc/cron.daily/delete_cache
+
 EXPOSE 80
 CMD ["/startup.sh"]
