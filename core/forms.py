@@ -200,7 +200,7 @@ class SearchTitlesForm(forms.Form):
     lccn = fields.CharField(max_length=255, label="LCCN:")
 
     form_control_items = [
-        state, county, city, year1, year2, terms,
+        state, county, city, terms,
         frequency, language, ethnicity, labor,
         material_type, lccn
     ]
