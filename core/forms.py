@@ -158,19 +158,27 @@ class SearchPagesForm(SearchPagesFormBase):
     proxdistance = fields.ChoiceField(choices=PROX_CHOICES)
     language = fields.ChoiceField()
 
+    form_control_items = [
+        date_month, date_day, lccn, state, date1, date2,
+        sequence, ortext, andtext, phrasetext, proxtext, 
+        proxdistance, language
+    ]
+    for item in form_control_items:
+        item.widget.attrs["class"] = "form-control"
+
     def __init__(self, *args, **kwargs):
         super(SearchPagesForm, self).__init__(*args, **kwargs)
 
         self.date = self.data.get('date1', '')
 
-        self.fields["lccn"].widget.attrs = {'id': 'id_lccns', 'size': '8'}
+        self.fields["lccn"].widget.attrs.update({'id': 'id_lccns', 'size': '8'})
         self.fields["lccn"].choices = self.titles
-        self.fields["state"].widget.attrs = {'id': 'id_states', 'size': '8'}
-        self.fields["date1"].widget.attrs = {"id": "id_date_from", "max_length": 10}
+        self.fields["state"].widget.attrs.update({'id': 'id_states', 'size': '8'})
+        self.fields["date1"].widget.attrs.update({"id": "id_date_from", "max_length": 10})
         self.fields["date1"].initial = ""
-        self.fields["date2"].widget.attrs = {"id": "id_date_to", "max_length": 10}
+        self.fields["date2"].widget.attrs.update({"id": "id_date_to", "max_length": 10})
         self.fields["date2"].initial = ""
-        self.fields["sequence"].widget.attrs = {"id": "id_char_sequence", "size": "3"}
+        self.fields["sequence"].widget.attrs.update({"id": "id_char_sequence", "size": "3"})
         self.fields["proxtext"].widget.attrs["id"] = "id_proxtext_adv"
         lang_choices = [("", "All"), ]
         lang_choices.extend((l, models.Language.objects.get(code=l).name) for l in settings.SOLR_LANGUAGES)
@@ -191,6 +199,14 @@ class SearchTitlesForm(forms.Form):
     material_type = fields.ChoiceField(choices=[], initial="", label="Material Type:")
     lccn = fields.CharField(max_length=255, label="LCCN:")
 
+    form_control_items = [
+        state, county, city, terms,
+        frequency, language, ethnicity, labor,
+        material_type, lccn
+    ]
+    for item in form_control_items:
+        item.widget.attrs["class"] = "form-control"
+
     def __init__(self, *args, **kwargs):
         super(SearchTitlesForm, self).__init__(*args, **kwargs)
 
@@ -200,11 +216,9 @@ class SearchTitlesForm(forms.Form):
             years.append(current_year)
         choices = [(year, year) for year in years]
         self.fields["year1"].choices = choices
-        self.fields["year1"].widget.attrs["class"] = "norm"
         self.fields["year1"].initial = choices[0][0]
         self.fields["year2"].choices = choices
         self.fields["year2"].initial = choices[-1][0]
-        self.fields["year2"].widget.attrs["class"] = "norm"
 
         # location
         cities = models.Place.objects.values('city').distinct()
