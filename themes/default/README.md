@@ -7,8 +7,6 @@ This theme is included as part of Open ONI to demonstrate how a theme functions.
 ```INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    'djcelery',
-    'djkombu',
     'openoni.themes.YOUR_THEME_NAME_HERE',
     'openoni.core',
 )```

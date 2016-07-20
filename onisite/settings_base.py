@@ -105,8 +105,6 @@ TEMPLATES = [
 INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    'djcelery',
-    'djkombu',
 
     'themes.default',
     'core',
@@ -132,8 +130,6 @@ ALLOWED_HOSTS = []
 # 3RD-PARTY LIB SETTINGS
 ####################################################################
 
-# This is a setting for Celery to know where to put data
-BROKER_TRANSPORT = "django"
 
 ####################################################################
 # OPEN-ONI SETTINGS
