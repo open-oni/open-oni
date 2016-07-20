@@ -3,7 +3,7 @@ from datetime import datetime
 from rdflib import ConjunctiveGraph, Namespace, Literal, URIRef, RDF, RDFS
 from rfc3339 import rfc3339
 
-from openoni.core.utils import image_urls
+from core.utils import image_urls
 
 DC = Namespace('http://purl.org/dc/elements/1.1/')
 ORE = Namespace('http://www.openarchives.org/ore/terms/')

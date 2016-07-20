@@ -11,10 +11,10 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.template import RequestContext
 
-from openoni.core import index, models
-from openoni.core import forms
-from openoni.core.decorator import opensearch_clean, cache_page, cors
-from openoni.core.utils.utils import _page_range_short
+from core import index, models
+from core import forms
+from core.decorator import opensearch_clean, cache_page, cors
+from core.utils.utils import _page_range_short
 
 
 def search_pages_paginator(request):
@@ -108,8 +108,7 @@ def search_pages_results(request, view_type='gallery'):
     lccns = query.getlist('lccn')
     states = query.getlist('state')
 
-    # figure out the sort that's in use
-    sort = query.get('sort', 'relevance')
+    form = forms.SearchResultsForm({"rows": rows, "sort": sort})
     if view_type == "list":
         template = "search/search_pages_results_list.html"
     else:
@@ -120,18 +119,22 @@ def search_pages_results(request, view_type='gallery'):
     return render_to_response(template, dictionary=locals(),
                               context_instance=RequestContext(request))
 
-
 @cache_page(settings.DEFAULT_TTL_SECONDS)
-def search_titles(request):
+def search_advanced(request):
+    # page form
+    pages_form = forms.SearchPagesForm()
+
+    # title form
     browse_val = [chr(n) for n in range(65, 91)]
     browse_val.extend([str(i) for i in range(10)])
-    form = forms.SearchTitlesForm()
+    titles_form = forms.SearchTitlesForm()
     title_count = models.Title.objects.all().count()
-    page_name = "directory"
-    page_title = "Search U.S. Newspaper Directory, 1690-Present"
-    template = "news_directory.html"
-    collapse_search_tab = True
+    title_test = models.Place.objects.values('city').distinct()
+
+    # general advanced search
     crumbs = list(settings.BASE_CRUMBS)
+    template = "search/search_advanced.html"
+    page_title = 'Advanced Search'
     return render_to_response(template, dictionary=locals(),
                               context_instance=RequestContext(request))
 
@@ -210,13 +213,3 @@ def search_pages_navigation(request):
     search['next_result'] = paginator.next_result
 
     return HttpResponse(json.dumps(search), content_type="application/json")
-
-
-@cache_page(settings.DEFAULT_TTL_SECONDS)
-def search_advanced(request):
-    adv_search_form = forms.AdvSearchPagesForm()
-    template = "search/search_advanced.html"
-    crumbs = list(settings.BASE_CRUMBS)
-    page_title = 'Advanced Search'
-    return render_to_response(template, dictionary=locals(),
-                              context_instance=RequestContext(request))

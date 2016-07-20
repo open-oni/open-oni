@@ -20,13 +20,13 @@ from django.template.defaultfilters import filesizeformat
 from django.utils import html
 from django.views.decorators.vary import vary_on_headers
 
-from openoni.core.utils.url import unpack_url_path
-from openoni.core import models, index
-from openoni.core.rdf import title_to_graph, issue_to_graph, page_to_graph
+from core.utils.url import unpack_url_path
+from core import models, index
+from core.rdf import title_to_graph, issue_to_graph, page_to_graph
 
-from openoni.core.utils.utils import HTMLCalendar, _get_tip, _stream_file, \
+from core.utils.utils import HTMLCalendar, _get_tip, _stream_file, \
     _page_range_short, _rdf_base, get_page, label, create_crumbs
-from openoni.core.decorator import cache_page, rdf_view
+from core.decorator import cache_page, rdf_view
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)

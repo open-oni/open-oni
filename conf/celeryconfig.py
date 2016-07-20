@@ -4,7 +4,7 @@ import datetime
 
 from celery.schedules import crontab
 
-from openoni.settings import *
+from onisite.settings import *
 
 APP_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -12,7 +12,7 @@ BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
 
 INSTALLED_APPS += ("djkombu", "djcelery" )
 
-CELERY_IMPORTS = ("openoni.core.tasks",)
+CELERY_IMPORTS = ("core.tasks",)
 CELERYD_LOG_FILE = os.path.join("/logs/celery", "celery.log")
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = 2
@@ -20,7 +20,7 @@ CELERYD_CONCURRENCY = 2
 CELERYBEAT_SCHEDULE = {
     # Executes every morning at 2:00 A.M
     "delete_django_cache": {
-        "task": "openoni.core.tasks.delete_django_cache",
+        "task": "core.tasks.delete_django_cache",
         "schedule": crontab(hour=2, minute=0),
     }
 }

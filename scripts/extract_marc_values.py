@@ -24,8 +24,8 @@ from random import choice
 from pymarc import map_xml
 from django.db.models import Count
 
-from openoni.core.models import Country
-from openoni.core.title_loader import _extract as extract
+from core.models import Country
+from core.title_loader import _extract as extract
 
 # FOLDER should be the location of the marcxml files.
 SOURCE = sys.argv[1]

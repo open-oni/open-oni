@@ -1,11 +1,11 @@
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # "Private" aliases for seconds in a day and week
 _ONEDAY = 60 * 60 * 24
 _ONEWEEK = _ONEDAY * 7
-
-# Local variable for making fairly decent assumptions
-DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
 ####################################################################
 # DJANGO SETTINGS
@@ -40,10 +40,10 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStora
 STATIC_URL = '/media/'
 
 # Directory path to static files
-STATIC_ROOT = os.path.join(DIRNAME, '.static-media')
+STATIC_ROOT = os.path.join(BASE_DIR, '.static-media')
 
 # Module which processes URL routing
-ROOT_URLCONF = 'openoni.urls'
+ROOT_URLCONF = 'onisite.urls'
 
 # Database settings.  This should be overridden in settings_local.py or
 # /etc/openoni.ini.
@@ -65,7 +65,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
-    'openoni.core.middleware.TooBusyMiddleware',
+    'core.middleware.TooBusyMiddleware',
 )
 
 # Template configuration (1.8+)
@@ -79,7 +79,7 @@ TEMPLATES = [
 
         # Template-containing directories
         'DIRS': [
-            os.path.join(DIRNAME, 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
 
         'OPTIONS': {
@@ -90,8 +90,8 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
-                'openoni.core.context_processors.extra_request_info',
-                'openoni.core.context_processors.newspaper_info',
+                'core.context_processors.extra_request_info',
+                'core.context_processors.newspaper_info',
             ],
 
             # Template engine debug info; Defaults to the value of DEBUG
@@ -107,8 +107,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djcelery',
     'djkombu',
-    'openoni.themes.default',
-    'openoni.core',
+
+    'themes.default',
+    'core',
 )
 
 
@@ -184,6 +185,11 @@ STORAGE = '/opt/openoni/data/'
 
 # URL path to the data directory
 STORAGE_URL = '/data/'
+
+# If LC is down, we've mirrored a few records for development use - just copy
+# the line below into settings_local.py and uncomment it:
+# MARC_RETRIEVAL_URLFORMAT = "https://raw.githubusercontent.com/open-oni/marc-mirror/master/%s/marc.xml"
+MARC_RETRIEVAL_URLFORMAT = "http://chroniclingamerica.loc.gov/lccn/%s/marc.xml"
 
 # Various storage subdirectories
 BATCH_STORAGE = os.path.join(STORAGE, "batches")

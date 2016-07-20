@@ -1,11 +1,15 @@
 *.pyc
 ENV
-settings_local.py
+onisite/settings_local.py
+onisite/urls.py
 *.log
 data/batches
 data/ocr
 data/word_coordinates
 .static-media/
+
+# :P
+.DS_Store
 
 #Ignore all user added themes, but keep default
 themes/*

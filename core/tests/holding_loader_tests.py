@@ -2,22 +2,22 @@ import os.path
 
 from django.test import TestCase
 
-from openoni.core.models import Title
-from openoni.core.title_loader import TitleLoader
-from openoni.core.holding_loader import HoldingLoader
+from core.models import Title
+from core.title_loader import TitleLoader
+from core.holding_loader import HoldingLoader
 
-import openoni.core
+import core
 
 class HoldingLoaderTests(TestCase):
     fixtures = ['test/countries.json', 'test/languages.json', 'test/institutions.json']
 
     def test_holdings(self):
         # title data
-        titlexml = os.path.join(os.path.dirname(openoni.core.__file__), 
+        titlexml = os.path.join(os.path.dirname(core.__file__), 
             'test-data', 'title.xml')
 
         # holdings data
-        holdingsxml = os.path.join(os.path.dirname(openoni.core.__file__), 
+        holdingsxml = os.path.join(os.path.dirname(core.__file__), 
             'test-data', 'holdings.xml')
 
         # first need to load the titles so we can link against them

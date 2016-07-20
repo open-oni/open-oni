@@ -28,10 +28,10 @@ try:
 except ImportError:
     j2k = None
 
-from openoni.core import models
-from openoni.core.models import Batch, Issue, Title, Awardee, Page, OCR
-from openoni.core.models import LoadBatchEvent
-from openoni.core.ocr_extractor import ocr_extractor
+from core import models
+from core.models import Batch, Issue, Title, Awardee, Page, OCR
+from core.models import LoadBatchEvent
+from core.ocr_extractor import ocr_extractor
 
 # some xml namespaces used in batch metadata
 ns = {
@@ -257,10 +257,11 @@ class BatchLoader(object):
         try:
             title = Title.objects.get(lccn=lccn)
         except Exception, e:
-            url = 'http://chroniclingamerica.loc.gov/lccn/%s/marc.xml' % lccn
+            url = settings.MARC_RETRIEVAL_URLFORMAT % lccn
             logging.info("attempting to load marc record from %s", url)
             management.call_command('load_titles', url)
             title = Title.objects.get(lccn=lccn)
+
         issue.title = title
 
         issue.batch = self.current_batch

@@ -2,8 +2,8 @@ from django import template
 
 from rfc3339 import rfc3339
 
-from openoni.core.utils import url
-from openoni.core.utils.utils import label
+from core.utils import url
+from core.utils.utils import label
 
 
 

@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.core.cache import cache
 
-from openoni.core import models, index
-from openoni.core.forms import _fulltext_range
+from core import models, index
+from core.forms import _fulltext_range
 
 
 def extra_request_info(request):

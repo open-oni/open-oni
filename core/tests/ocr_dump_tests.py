@@ -8,9 +8,9 @@ import datetime
 from django.conf import settings
 from django.test import TestCase
 
-import openoni.core
-from openoni.core.batch_loader import BatchLoader
-from openoni.core.models import Batch, OcrDump
+import core
+from core.batch_loader import BatchLoader
+from core.models import Batch, OcrDump
 
 dumps_dir = settings.OCR_DUMP_STORAGE
 
@@ -29,7 +29,7 @@ class OcrDumpTests(TestCase):
         settings.OCR_DUMP_STORAGE = cls.dumpDir
 
         # Extract mini-batch tarball to batch dir
-        tarpath = os.path.join(os.path.dirname(openoni.core.__file__), 'test-data', 'testbatch.tgz')
+        tarpath = os.path.join(os.path.dirname(core.__file__), 'test-data', 'testbatch.tgz')
         tar = tarfile.open(tarpath)
         tar.extractall(path = cls.batchDir)
         tar.close()

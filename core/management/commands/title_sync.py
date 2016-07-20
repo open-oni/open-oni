@@ -13,10 +13,10 @@ except ImportError:
     import json
 
 from openoni import core
-from openoni.core import index
-from openoni.core.management.commands import configure_logging
-from openoni.core.models import Place, Title
-from openoni.core.utils.utils import validate_bib_dir
+from core import index
+from core.management.commands import configure_logging
+from core.models import Place, Title
+from core.utils.utils import validate_bib_dir
 
 configure_logging("title_sync_logging.config", "title_sync.log")
 _logger = logging.getLogger(__name__)

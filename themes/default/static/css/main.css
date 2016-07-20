@@ -3,8 +3,8 @@
 Main stylesheet
 Default Theme
 
-This is where you will put all the styles for your site. 
-Please see the theme's README.md for information on how to override bootstrap if needed. 
+This is where you will put all the styles for your site.
+Please see the theme's README.md for information on how to override bootstrap if needed.
 
 ======================================== */
 
@@ -41,7 +41,7 @@ Header
     color: #fff;
 }
 
-/* using .navbar-inverse rather than .header_navbar so 
+/* using .navbar-inverse rather than .header_navbar so
 it is specific enough to overwrite bootstrap rules */
 
 .navbar-inverse .navbar-nav>li>a {
@@ -63,6 +63,16 @@ h1.title {
 }
 
 /* ==========
+Search
+=========== */
+
+/* TODO this should be moved to another css file in core? */
+.alpha_tag {
+    display: inline-block;
+    list-style-type: none;
+}
+
+/* ==========
 Footer
 =========== */
 
@@ -74,7 +84,7 @@ Footer
 }
 
 /* ==============
-Basic HTML 
+Basic HTML
 ============== */
 
 h1, h2, h3, h4, h5, h6 {
@@ -142,4 +152,4 @@ Breakpoints (Based on bootstrap defaults)
         } /* Make font bigger when screens are bigger */
     }
 
-   
+

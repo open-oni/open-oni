@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 import json
 from urllib import urlopen
 
-from openoni.core.models import Batch
+from core.models import Batch
 
 class Command(BaseCommand):
     help = "compares batches loaded with the public site"

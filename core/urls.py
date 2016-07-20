@@ -1,11 +1,11 @@
 import os
 
-from django.conf.urls import patterns, url, include
+from django.conf.urls import patterns, url
 from django.conf import settings
 from django.utils import cache
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-from openoni.core.views import home, image, search
+from core.views import home, image, search
 
 handler404 = 'django.views.defaults.page_not_found'
 handler500 = 'django.views.defaults.server_error'
@@ -21,7 +21,7 @@ def cache_page(function, ttl):
     return decorated_function
 
 urlpatterns = patterns(
-    'openoni.core.views',
+    'core.views',
 
     url(r'^$',
         cache_page(home.home, settings.DEFAULT_TTL_SECONDS),
@@ -46,7 +46,7 @@ urlpatterns = patterns(
 )
 
 urlpatterns += patterns(
-    'openoni.core.views',
+    'core.views',
 
     # TODO: url(r'^.*[A-Z]+.*$', 'lowercase', name="openoni_lowercase"),
 
@@ -181,8 +181,6 @@ urlpatterns += patterns(
 
     url('search/titles/opensearch.xml', 'search_titles_opensearch',
         name='openoni_search_titles_opensearch'),
-    url(r'^search/titles/$', 'search_titles', 
-        name="openoni_search_titles"),
     url(r'^search/titles/results/$', 'search_titles_results', 
         name='openoni_search_titles_results'),
     url(r'^suggest/titles/$', 'suggest_titles',
@@ -310,7 +308,7 @@ urlpatterns += patterns(
 # linked-data rdf/atom/json views
 
 urlpatterns += patterns(
-    'openoni.core.views',
+    'core.views',
 
     # newspapers
     url(r'^newspapers.rdf$', 'newspapers_rdf', name="openoni_newspapers_dot_rdf"),
