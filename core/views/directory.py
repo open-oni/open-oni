@@ -158,7 +158,7 @@ def search_titles_results(request):
     page_title = 'Title Search Results'
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([{'label': 'Advanced Search',
-                    'href': reverse('openoni_search_advanced')},
+                    'href': reverse('openoni_search_titles')},
                    ])
 
     def prep_title_for_return(t):
