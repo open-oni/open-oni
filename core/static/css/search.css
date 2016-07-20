@@ -1,0 +1,13 @@
+/* ==============
+search creation 
+and search results
+=============== */
+
+.alpha_tag {
+    display: inline-block;
+    list-style-type: none;
+}
+
+.pagination {
+    margin:0;
+}
