@@ -72,6 +72,10 @@ Search
     list-style-type: none;
 }
 
+.pagination {
+    margin:0;
+}
+
 /* ==========
 Footer
 =========== */
