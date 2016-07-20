@@ -26,23 +26,22 @@ PROX_DISTANCE_DEFAULT = 5
 
 ESCAPE_CHARS_RE = re.compile(r'(?<!\\)(?P<char>[&|+\-!(){}[\]^"~*?:])')
 
-def solr_escape(value):
+def page_count():
+    solr = SolrConnection(settings.SOLR)
+    return solr.query('type:page', fields=['id']).numFound
+
+def _solr_escape(value):
     """
     Escape un-escaped special characters and return escaped value.
-    >>> solr_escape(r'foo+') == r'foo\+'
+    >>> _solr_escape(r'foo+') == r'foo\+'
     True
-    >>> solr_escape(r'foo\+') == r'foo\+'
+    >>> _solr_escape(r'foo\+') == r'foo\+'
     True
-    >>> solr_escape(r'foo\\+') == r'foo\\+'
+    >>> _solr_escape(r'foo\\+') == r'foo\\+'
     True
     """
     return ESCAPE_CHARS_RE.sub(r'\\\g<char>', value)
 
-# TODO: prefix functions that are intended for local use only with _
-
-def page_count():
-    solr = SolrConnection(settings.SOLR)
-    return solr.query('type:page', fields=['id']).numFound
 def _sort_facets_asc(solr_facets, field):
     items = solr_facets.get('facet_fields')[field].items()
     return sorted(items, lambda x, y: int(x) - int(y), lambda k: k[1], True)
@@ -454,27 +453,27 @@ def page_search(d):
         q.append('+language:%s' % lang_full)
     ocr_lang = 'ocr_' + lang if lang else 'ocr'
     if d.get('ortext', None):
-        q.append('+((' + query_join(solr_escape(d['ortext']).split(' '), "ocr"))
+        q.append('+((' + query_join(_solr_escape(d['ortext']).split(' '), "ocr"))
         if lang:
-            q.append(' AND ' + query_join(solr_escape(d['ortext']).split(' '), ocr_lang))
-            q.append(') OR ' + query_join(solr_escape(d['ortext']).split(' '), ocr_lang))
+            q.append(' AND ' + query_join(_solr_escape(d['ortext']).split(' '), ocr_lang))
+            q.append(') OR ' + query_join(_solr_escape(d['ortext']).split(' '), ocr_lang))
         else:
             q.append(')')
             for ocr  in ocrs:
-                q.append('OR ' + query_join(solr_escape(d['ortext']).split(' '), ocr))
+                q.append('OR ' + query_join(_solr_escape(d['ortext']).split(' '), ocr))
         q.append(')')
     if d.get('andtext', None):
-        q.append('+((' + query_join(solr_escape(d['andtext']).split(' '), "ocr", and_clause=True))
+        q.append('+((' + query_join(_solr_escape(d['andtext']).split(' '), "ocr", and_clause=True))
         if lang:
-            q.append('AND ' + query_join(solr_escape(d['andtext']).split(' '), ocr_lang, and_clause=True))
-            q.append(') OR ' + query_join(solr_escape(d['andtext']).split(' '), ocr_lang, and_clause=True))
+            q.append('AND ' + query_join(_solr_escape(d['andtext']).split(' '), ocr_lang, and_clause=True))
+            q.append(') OR ' + query_join(_solr_escape(d['andtext']).split(' '), ocr_lang, and_clause=True))
         else:
             q.append(')')
             for ocr in ocrs:
-                q.append('OR ' + query_join(solr_escape(d['andtext']).split(' '), ocr, and_clause=True))
+                q.append('OR ' + query_join(_solr_escape(d['andtext']).split(' '), ocr, and_clause=True))
         q.append(')')
     if d.get('phrasetext', None):
-        phrase = solr_escape(d['phrasetext'])
+        phrase = _solr_escape(d['phrasetext'])
         q.append('+((' + 'ocr' + ':"%s"^10000' % (phrase))
         if lang:
             q.append('AND ocr_' + lang + ':"%s"' % (phrase))
@@ -487,7 +486,7 @@ def page_search(d):
 
     if d.get('proxtext', None):
         distance = d.get('proxdistance', PROX_DISTANCE_DEFAULT)
-        prox = solr_escape(d['proxtext'])
+        prox = _solr_escape(d['proxtext'])
         q.append('+((' + 'ocr' + ':("%s"~%s)^10000' % (prox, distance))
         if lang:
             q.append('AND ocr_' + lang + ':"%s"~%s' % (prox, distance))
@@ -520,7 +519,7 @@ def query_join(values, field, and_clause=False):
         values = [values]
 
     # escape solr chars
-    values = [solr_escape(v) for v in values]
+    values = [_solr_escape(v) for v in values]
 
     # quote values
     values = ['"%s"' % v for v in values]
