@@ -1,5 +1,11 @@
 {% extends "__l_main.html" %}
 {% load static from staticfiles %}
+
+{% block head_page_css %}
+  {{ block.super }}
+  <link href="{% static 'css/search.css' %}" rel="stylesheet" media="screen">
+{% endblock head_page_css %}
+
 {% block extrahead %}
     {% if page.has_previous %}
         {% if start %}

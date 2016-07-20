@@ -48,8 +48,6 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     'core.views',
 
-    # TODO: url(r'^.*[A-Z]+.*$', 'lowercase', name="openoni_lowercase"),
-
     url(r'^about/$', 'about', name="openoni_about"),
 
     url(r'^help/$', 'help', name="openoni_help"),

@@ -63,20 +63,6 @@ h1.title {
 }
 
 /* ==========
-Search
-=========== */
-
-/* TODO this should be moved to another css file in core? */
-.alpha_tag {
-    display: inline-block;
-    list-style-type: none;
-}
-
-.pagination {
-    margin:0;
-}
-
-/* ==========
 Footer
 =========== */
 
