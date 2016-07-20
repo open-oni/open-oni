@@ -121,9 +121,16 @@ def search_pages_results(request, view_type='gallery'):
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def search_advanced(request):
-    # page form
     pages_form = forms.SearchPagesForm()
+    crumbs = list(settings.BASE_CRUMBS)
+    template = "search/search_advanced.html"
+    page_title = 'Advanced Search'
+    return render_to_response(template, dictionary=locals(),
+                              context_instance=RequestContext(request))
 
+
+@cache_page(settings.DEFAULT_TTL_SECONDS)
+def search_titles(request):
     # title form
     browse_val = [chr(n) for n in range(65, 91)]
     browse_val.extend([str(i) for i in range(10)])
@@ -133,8 +140,8 @@ def search_advanced(request):
 
     # general advanced search
     crumbs = list(settings.BASE_CRUMBS)
-    template = "search/search_advanced.html"
-    page_title = 'Advanced Search'
+    template = "search/titles.html"
+    page_title = 'Search Titles'
     return render_to_response(template, dictionary=locals(),
                               context_instance=RequestContext(request))
 
