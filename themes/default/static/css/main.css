@@ -11,9 +11,15 @@ Please see the theme's README.md for information on how to override bootstrap if
 /* Include a google font for headers */
 @import url(https://fonts.googleapis.com/css?family=Rokkitt:700);
 
-/* Set background color */
+/* Set background, to be overridden for other sections */
 body {
-    background-color: #f7f6f2;
+    background-color:#fff;
+    background-image: url("../images/seamless_paper_texture.png");
+}
+
+.main_content {
+    background-color:#f7f6f2;
+    padding: 10px 0 60px 0
 }
 
 /* ==========
@@ -27,6 +33,7 @@ Header
 .header_navbar {
     background-color: RGBA(0,0,0,.7);
     border: none;
+    margin-bottom: 0
 }
 
 .header_navbar a {
@@ -73,7 +80,7 @@ Footer
     background-image: url("../images/seamless_paper_texture.png");
     padding:20px 0 90px 0;
     border-top: solid 1px #43423f;
-    margin-top: 30px
+    margin-top: 0px
 }
 
 /* ==============
