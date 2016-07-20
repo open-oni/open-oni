@@ -34,7 +34,7 @@ echo "Migrating database" >&2
 
 echo "-------" >&2
 echo "Running collectstatic" >&2
-/collectstatic.sh
+/opt/openoni/manage.py collectstatic --noinput
 
 # Remove any pre-existing PID file which prevents Apache from starting
 #   thus causing the container to close immediately after
