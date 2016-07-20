@@ -167,7 +167,7 @@ USE_TIFF = False
 
 # Set this to a server load value at which you want Open ONI to stop handling
 # web requests.  If you aren't sure, just leave this alone.
-TOO_BUSY_LOAD_AVERAGE = 64 
+TOO_BUSY_LOAD_AVERAGE = 64
 
 # URL to the Solr server.  This should be overridden in settings_local.py or
 # else /etc/openoni.ini.
