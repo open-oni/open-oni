@@ -26,7 +26,7 @@
       </a>
     {% endif %}
     {% if request.GET.language %}
-      &nbsp for languages {{ request.GET.language }}
+      &nbsp; for languages {{ request.GET.language }}
       <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'language' %}">
         <img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/>
       </a>
