@@ -1,4 +1,5 @@
 import socket
+from urllib import urlencode
 from urllib2 import urlopen
 
 from django import template
@@ -34,3 +35,16 @@ def get_ext_url(url, timeout=None):
         # store in cache for 1 day
         cache.set(url, content, 86400)
     return content
+
+@register.simple_tag
+def remove_param(aParams, field1, field2=None):
+    """
+    Given a request.GET or .POST object, shallow clone,
+     and remove given fields from the new object
+    """
+    params = aParams.copy()
+    if field1 in params:
+        del params[field1]
+    if field2 in params:
+        del params[field2]
+    return urlencode(params)
