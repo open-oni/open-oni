@@ -38,8 +38,8 @@
                 <img src="{% static 'images/btn_remove.png' %}" title="clear county filter" alt="remove county filter"/>
             </a>
         {% endif %}
-        &nbsp; for date range {% firstof request.GET.year1 '1690' %} - {% firstof request.GET.year2 'present' %}
         {% if request.GET.year1 or request.GET.year2 %}
+        &nbsp; for date range {{ request.GET.year1 }} - {{ request.GET.year2 }}
             <a href="{% url 'openoni_search_titles_results' %}?{% remove_param 'year1' 'year2' %}">
                 <img src="{% static 'images/btn_remove.png' %}" title="clear date filter" alt="remove date filter"/>
             </a>
