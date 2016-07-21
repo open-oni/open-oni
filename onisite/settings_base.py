@@ -110,7 +110,6 @@ INSTALLED_APPS = (
     'core',
 )
 
-
 # Determines how django does its caching
 CACHES = {
     'default': {
