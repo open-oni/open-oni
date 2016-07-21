@@ -1,6 +1,4 @@
 Django>=1.8,<1.9
-django-celery
-django-kombu
 feedparser
 lxml
 mysqlclient

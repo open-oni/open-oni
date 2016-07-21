@@ -7,15 +7,13 @@ This theme is included as part of Open ONI to demonstrate how a theme functions.
 ```INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    'djcelery',
-    'djkombu',
     'openoni.themes.YOUR_THEME_NAME_HERE',
     'openoni.core',
 )```
 
 The INSTALLED_APPS directive will overwrite the directive in `/settings_base.py`.
 
-Your folder structure will end up looking like this: 
+Your folder structure will end up looking like this:
 
 - ./themes
   - default
@@ -27,15 +25,15 @@ Any file from `/core` you have in your theme will use your file rather than `/co
 
 ### Includes and _overrides.html
 
-Common files to override will be includes (found in `.../template/includes`) and the `__overrides.html` file. Includes contain common html such as header, footer, and navbar. `__overrides.html` allows you to override blocks of code in `__base.html`. 
+Common files to override will be includes (found in `.../template/includes`) and the `__overrides.html` file. Includes contain common html such as header, footer, and navbar. `__overrides.html` allows you to override blocks of code in `__base.html`.
 
 #### Includes example
 
-You want to add icons to the footer of your site. So, you *copy* the `base_footer.html` file from `/core/templates/includes` to your theme `/theme/YOUR_THEME_NAME_HERE/template/includes` and make changes as needed. 
+You want to add icons to the footer of your site. So, you *copy* the `base_footer.html` file from `/core/templates/includes` to your theme `/theme/YOUR_THEME_NAME_HERE/template/includes` and make changes as needed.
 
-#### __override.html Example: 
+#### __override.html Example:
 
-You don't want to show breadcrumbs in your site. Looking in `__base.html` in `/core`, you can see that the breadcrumbs are contained in a block called breadcrumbs: 
+You don't want to show breadcrumbs in your site. Looking in `__base.html` in `/core`, you can see that the breadcrumbs are contained in a block called breadcrumbs:
 
 ```{% block breadcrumbs %}```
 
@@ -43,11 +41,11 @@ In `__overrides.html` you can disable breadcrumbs by adding
 
 ```{% block breadcrumbs %}{% endblock breadcrumbs %}```
 
-which will replace the breadcrumbs block in `__base.html` with nothing. 
+which will replace the breadcrumbs block in `__base.html` with nothing.
 
 ### bootstrap
 
-If you wanted to overwrite the `boostrap.min.css` file with your own, you could drop it into: 
+If you wanted to overwrite the `boostrap.min.css` file with your own, you could drop it into:
 
 - ./themes
   - YOUR_THEME_NAME_HERE
@@ -57,5 +55,5 @@ If you wanted to overwrite the `boostrap.min.css` file with your own, you could 
           - css
             - boostrap.min.css
 
-This may be useful if you want to compile your own `bootstrap.min.css` using sass or less or the online generator. 
+This may be useful if you want to compile your own `bootstrap.min.css` using sass or less or the online generator.
 

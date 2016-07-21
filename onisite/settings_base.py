@@ -105,8 +105,6 @@ TEMPLATES = [
 INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    'djcelery',
-    'djkombu',
 
     'themes.default',
     'core',
@@ -132,8 +130,6 @@ ALLOWED_HOSTS = []
 # 3RD-PARTY LIB SETTINGS
 ####################################################################
 
-# This is a setting for Celery to know where to put data
-BROKER_TRANSPORT = "django"
 
 ####################################################################
 # OPEN-ONI SETTINGS
@@ -171,7 +167,7 @@ USE_TIFF = False
 
 # Set this to a server load value at which you want Open ONI to stop handling
 # web requests.  If you aren't sure, just leave this alone.
-TOO_BUSY_LOAD_AVERAGE = 64 
+TOO_BUSY_LOAD_AVERAGE = 64
 
 # URL to the Solr server.  This should be overridden in settings_local.py or
 # else /etc/openoni.ini.
