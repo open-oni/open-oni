@@ -1,9 +1,9 @@
 #!/bin/bash
 
-APP=${1:-core}
-VERBOSITY=${2:-0}
+echo "Testing"
 
-echo "Testing $APP"
-
-source /opt/openoni/ENV/bin/activate
-/opt/openoni/manage.py test $APP --keepdb --verbosity=$VERBOSITY --settings=onisite.test_settings
+cd /opt/openoni
+source ENV/bin/activate
+coverage run --source="." manage.py test --keepdb --settings=onisite.test_settings
+rm -rf static/cov
+coverage html -d static/cov/ --omit="ENV/*"
