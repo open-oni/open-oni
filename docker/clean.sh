@@ -3,22 +3,72 @@
 # Stop and remove the docker containers necessary for open ONI
 # except for the persistent data containers
 
-for service in openoni-dev openoni-dev-mysql openoni-dev-solr openoni-dev-rais; do
-  echo "stopping $service"
-  docker stop $service
+remove_env() {
+  local success1=0
+  echo "-- Destroying ENV"
+  docker exec -it openoni-dev rm /opt/openoni/ENV -rf && success1=1
 
-  echo "removing $service"
-  docker rm $service
-done
+  local success2=0
+  echo "-- Destroying .python-eggs"
+  docker exec -it openoni-dev rm /opt/openoni/.python-eggs -rf && success2=1
 
-echo "Removing cached .pyc files"
-find -path "./ENV" -prune -o -name "*.pyc" -print0 | xargs -0 rm -f
+  if (( $success1 == 0 || $success2 == 0 )); then
+    echo
+    echo "Unable to destroy environment!  Aborting!"
+    exit
+  fi
+}
 
-nuclear=${1:-}
-if [ "$nuclear" == "--nuclear" ]; then
-  echo "OMG GOING NUCLEAR!  All your Solr and MySQL data is GONE."
-  docker rm openoni-dev-data-mysql openoni-dev-data-solr
-  docker volume rm $(docker volume ls -qf dangling=true)
+destroy_containers() {
+  for service in openoni-dev openoni-dev-mysql openoni-dev-solr openoni-dev-rais; do
+    echo "-- Stopping $service"
+    docker stop $service >/dev/null
+
+    echo "-- Removing $service"
+    docker rm $service >/dev/null
+  done
+}
+
+remove_data() {
+  echo "-- Removing data containers for mysql and solr"
+  docker rm openoni-dev-data-mysql openoni-dev-data-solr >/dev/null
+  docker volume rm $(docker volume ls -qf dangling=true) >/dev/null
+}
+
+clean_pyc() {
+  echo "-- Cleaning *.pyc files"
+  find -path "./ENV" -prune -o -name "*.pyc" -print0 | xargs -0 rm -f
+}
+
+echo "Cleaning in progress..."
+echo
+echo "Run ./docker/dev.sh to set your environment back up"
+echo
+
+option=${1:-}
+
+# --apocalypse runs all the cleaners and exits
+if [ "$option" == "--apocalypse" ]; then
+  echo "[1mOMFG[0m IT'S THE APOCALYPSE!"
+  echo
+  echo "Destroying all data as well as installed Python packages!"
+  remove_env
+  destroy_containers
+  remove_data
+  clean_pyc
+  exit
 fi
 
-echo "Run ./docker/dev.sh to set your environment back up"
+# --nuclear removes data and containers, then exits
+if [ "$option" == "--nuclear" ]; then
+  echo "OMG GOING NUCLEAR!  All your Solr and MySQL data is GONE."
+  destroy_containers
+  remove_data
+  clean_pyc
+  exit
+fi
+
+# No options means just cleaning non-data containers and *.pyc files; consider
+# this similar to a reboot
+destroy_containers
+clean_pyc

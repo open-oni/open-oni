@@ -1,9 +1,14 @@
 #!/bin/bash
 
-APP=${1:-core}
-VERBOSITY=${2:-0}
+echo "Testing"
 
-echo "Testing $APP"
+cd /opt/openoni
+source ENV/bin/activate
+coverage run --source="." --branch manage.py test --keepdb --settings=onisite.test_settings
+rm -rf static/cov
+coverage html -d static/cov/ --omit="ENV/*"
+coverage report --omit="ENV/*,*_example.py" >static/cov/raw.txt
 
-source /opt/openoni/ENV/bin/activate
-/opt/openoni/manage.py test $APP --keepdb --pattern="*_tests.py" --verbosity=$VERBOSITY --settings=onisite.test_settings
+echo
+echo "Visit $APP_URL/coverage to see a coverage report"
+echo "Visit $APP_URL/coverage/raw.txt to see the raw report, including branch information"
