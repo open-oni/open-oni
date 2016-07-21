@@ -21,25 +21,25 @@
     {% if request.GET.date1 and request.GET.date2 %}
       &nbsp; for date range {{ request.GET.date1 }} -
       {{ request.GET.date2 }}
-      <a href="{% url 'openoni_search_pages_results' %}?{% remove_param request.GET 'date1' 'date2' %}">
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}">
         <img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/>
       </a>
     {% endif %}
     {% if request.GET.language %}
       &nbsp for languages {{ request.GET.language }}
-      <a href="{% url 'openoni_search_pages_results' %}?{% remove_param request.GET 'language' %}">
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'language' %}">
         <img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/>
       </a>
     {% endif %}
     {% if request.GET.city %}
       &nbsp; for cities {{ request.GET.city }}
-      <a href="{% url 'openoni_search_pages_results' %}?{% remove_param request.GET 'city' %}">
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param  'city' %}">
         <img src="/media/images/btn_remove.png" title="clear city filter" alt="remove city filter"/>
       </a>
     {% endif %}
     {% if request.GET.frequency %}
       &nbsp; for frequency {{ request.GET.frequency }}
-      <a href="{% url 'openoni_search_pages_results' %}?{% remove_param request.GET 'frequency' %}">
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param  'frequency' %}">
         <img src="/media/images/btn_remove.png" title="clear frequency filter" alt="remove frequency filter"/>
       </a>
     {% endif %}

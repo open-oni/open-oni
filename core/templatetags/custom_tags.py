@@ -36,15 +36,16 @@ def get_ext_url(url, timeout=None):
         cache.set(url, content, 86400)
     return content
 
-@register.simple_tag
-def remove_param(aParams, field1, field2=None):
+
+@register.simple_tag(takes_context=True)
+def remove_param(context, *args):
     """
     Given a request.GET or .POST object, shallow clone,
-     and remove given fields from the new object
+     and remove list of fields from the new object
     """
-    params = aParams.copy()
-    if field1 in params:
-        del params[field1]
-    if field2 in params:
-        del params[field2]
+    request = context["request"]
+    params = request.GET.copy()
+    for arg in args:
+        if arg in params:
+            del params[arg]
     return urlencode(params)
