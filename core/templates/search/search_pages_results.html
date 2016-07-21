@@ -1,6 +1,7 @@
 {% extends "__l_main.html" %} 
 {% load static from staticfiles %}
 {% load custom_filters %}
+{% load custom_tags %}
 {% load image_urls %}
 
 {% block head_page_css %}
@@ -20,19 +21,27 @@
     {% if request.GET.date1 and request.GET.date2 %}
       &nbsp; for date range {{ request.GET.date1 }} -
       {{ request.GET.date2 }}
-      <a href="#" id="cancel_date_filter"><img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/></a>
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}">
+        <img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/>
+      </a>
     {% endif %}
     {% if request.GET.language %}
-      %nbsp for languages {{ request.GET.language }}
-      <a href="#" id="cancel_language_filter"><img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/></a>
+      &nbsp; for languages {{ request.GET.language }}
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'language' %}">
+        <img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/>
+      </a>
     {% endif %}
     {% if request.GET.city %}
       &nbsp; for cities {{ request.GET.city }}
-      <a href="#" id="cancel_city_filter"><img src="/media/images/btn_remove.png" title="clear city filter" alt="remove city filter"/></a>
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param  'city' %}">
+        <img src="/media/images/btn_remove.png" title="clear city filter" alt="remove city filter"/>
+      </a>
     {% endif %}
     {% if request.GET.frequency %}
       &nbsp; for frequency {{ request.GET.frequency }}
-      <a href="#" id="cancel_frequency_filter"><img src="/media/images/btn_remove.png" title="clear frequency filter" alt="remove frequency filter"/></a>
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param  'frequency' %}">
+        <img src="/media/images/btn_remove.png" title="clear frequency filter" alt="remove frequency filter"/>
+      </a>
     {% endif %}
 </h4>
 

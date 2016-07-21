@@ -1,36 +1,18 @@
-import socket
-from urllib2 import urlopen
-
 from django import template
-from django.core.cache import cache
+from urllib import urlencode
 
 register = template.Library()
 
-@register.simple_tag
-def get_ext_url(url, timeout=None):
+
+@register.simple_tag(takes_context=True)
+def remove_param(context, *args):
     """
-    Used for getting global header and footer
+    Given a request.GET or .POST object, shallow clone,
+     and remove list of fields from the new object
     """
-    content = cache.get(url)
-    if not content:
-        socket_default_timeout = socket.getdefaulttimeout()
-        if timeout is not None:
-            try:
-                socket_timeout = float(timeout)
-            except ValueError:
-                raise template.TemplateSyntaxError, "timeout argument of geturl tag, if provided, must be convertible to a float"
-            try:
-                socket.setdefaulttimeout(socket_timeout)
-            except ValueError:
-                raise template.TemplateSyntaxError, "timeout argument of geturl tag, if provided, cannot be less than zero"
-        try:
-            try:
-                content = urlopen(url).read()
-            finally: # reset socket timeout
-                if timeout is not None:
-                    socket.setdefaulttimeout(socket_default_timeout)
-        except:
-            content = ''
-        # store in cache for 1 day
-        cache.set(url, content, 86400)
-    return content
+    request = context["request"]
+    params = request.GET.copy()
+    for arg in args:
+        if arg in params:
+            del params[arg]
+    return urlencode(params)
