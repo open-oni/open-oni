@@ -7,7 +7,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
   ca-certificates \
   gcc \
   git \
-  graphicsmagick \
   libapache2-mod-wsgi \
   libmysqlclient-dev \
   libxml2-dev \
