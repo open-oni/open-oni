@@ -17,13 +17,12 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li><a href="/">Home</a></li><!--TODO: Is this linked properly? -->
+              <li><a href="{% url 'openoni_home' %}">Home</a></li>
               <li><a href="{% url 'openoni_newspapers' %}">Newspapers</a></li>
               <li><a href="{% url 'openoni_about' %}">About</a></li>
               <li><a href="{% url 'openoni_about_api' %}">API</a></li>
               <li><a href="{% url 'openoni_issues' %}">Browse by Date</a></li>
-              {# <li><a href="{% url 'openoni_reports' %}">Reports</a></li> <!-- Commenting out because reports should not be available to public -->  #}
-              <li><a href="/help/">Help</a></li>
+              <li><a href="{% url 'openoni_help' %}">Help</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
