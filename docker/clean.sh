@@ -37,15 +37,24 @@ remove_data() {
 
 clean_pyc() {
   echo "-- Cleaning *.pyc files"
-  find -path "./ENV" -prune -o -name "*.pyc" -print0 | xargs -0 rm -f
+  find . -path "./ENV" -prune -o -name "*.pyc" -print0 | xargs -0 rm -f
 }
+
+option=${1:-}
+
+if [ "$option" == "--help" ] || [ "$option" == "-h" ]; then
+  echo "Usage: ./docker/clean.sh [options]"
+  echo "    --apocalypse    destroys data, python packages, and containers"
+  echo "    --help          usage output"
+  echo "    --nuclear       destroys data and containers"
+  echo "Run without options, this script will remove the non-data containers"
+  exit
+fi
 
 echo "Cleaning in progress..."
 echo
 echo "Run ./docker/dev.sh to set your environment back up"
 echo
-
-option=${1:-}
 
 # --apocalypse runs all the cleaners and exits
 if [ "$option" == "--apocalypse" ]; then
