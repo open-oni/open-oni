@@ -11,7 +11,8 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.template import RequestContext
 
-from core import index, models
+from core import models
+from core import solr_index
 from core import forms
 from core.decorator import opensearch_clean, cache_page, cors
 from core.utils.utils import _page_range_short
@@ -31,7 +32,7 @@ def search_pages_paginator(request):
     q = request.GET.copy()
     q['rows'] = rows
     q['sequence'] = sequence
-    paginator = index.SolrPaginator(q)
+    paginator = solr_index.SolrPaginator(q)
     return paginator
 
 

@@ -13,7 +13,8 @@ from django.core.paginator import Paginator, InvalidPage
 from django.db import connection
 from django.utils import datetime_safe
 
-from core import index, models
+from core import models
+from core import solr_index
 from core.rdf import batch_to_graph, awardee_to_graph
 from core.utils.url import unpack_url_path
 from core.decorator import cache_page, rdf_view, cors
@@ -366,8 +367,8 @@ def status(request):
     title_count = models.Title.objects.all().count()
     holding_count = models.Holding.objects.all().count()
     essay_count = models.Essay.objects.all().count()
-    pages_indexed = index.page_count()
-    titles_indexed = index.title_count()
+    pages_indexed = solr_index.page_count()
+    titles_indexed = solr_index.title_count()
     return render_to_response('reports/status.html', dictionary=locals(),
                               context_instance=RequestContext(request))
 

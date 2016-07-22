@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand
 import pymarc
 
 from core.management.commands import configure_logging
-from core import index
+from core import solr_index
 from core.models import Title
 
 configure_logging("openoni_purge_titles.config", "openoni_purge_etitles.log")
@@ -39,8 +39,8 @@ class Command(BaseCommand):
                     print title
                 else:
                     _log.info("deleting %s [%s] from solr index")
-                    index.delete_title(title)
+                    solr_index.delete_title(title)
                     _log.info("purging %s [%s]" % (title, title.lccn))
                     title.delete()
         if not options['pretend']:
-            index.commit()
+            solr_index.commit()

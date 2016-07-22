@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.core.cache import cache
 
-from core import models, index
+from core import models
+from core import solr_index
 from core.forms import _fulltext_range
 
 
@@ -32,7 +33,7 @@ def cors(request):
 def newspaper_info(request):
     info = cache.get("newspaper_info")
     if info is None:
-        total_page_count = index.page_count()
+        total_page_count = solr_index.page_count()
         titles_with_issues = models.Title.objects.filter(has_issues=True)
         titles_with_issues_count = titles_with_issues.count()
 

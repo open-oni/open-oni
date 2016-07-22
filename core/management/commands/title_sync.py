@@ -13,7 +13,7 @@ except ImportError:
     import json
 
 from openoni import core
-from core import index
+from core import solr_index
 from core.management.commands import configure_logging
 from core.models import Place, Title
 from core.utils.utils import validate_bib_dir
@@ -127,7 +127,7 @@ class Command(BaseCommand):
         except Exception, e:
             _logger.exception(e)
 
-        index.index_titles()
+        solr_index.index_titles()
 
         # Time of full process run
         end = datetime.now()

@@ -21,7 +21,8 @@ from django.utils import html
 from django.views.decorators.vary import vary_on_headers
 
 from core.utils.url import unpack_url_path
-from core import models, index
+from core import models
+from core import solr_index
 from core.rdf import title_to_graph, issue_to_graph, page_to_graph
 
 from core.utils.utils import HTMLCalendar, _get_tip, _stream_file, \
@@ -252,7 +253,7 @@ def page(request, lccn, date, edition, sequence, words=None):
     host = request.get_host()
 
     template = "page.html"
-    related_pages = index.similar_pages(page)
+    related_pages = solr_index.similar_pages(page)
     response = render_to_response(template, dictionary=locals(),
                                   context_instance=RequestContext(request))
     return response
@@ -477,7 +478,7 @@ def _search_engine_words(request):
     # ['building', 'buildings', 'BUILDING', 'Buildings'] depending
     # on the actual OCR for the page id that is passed in
     words = words.split(' ')
-    words = index.word_matches_for_page(request.path, words)
+    words = solr_index.word_matches_for_page(request.path, words)
     return words
 
 

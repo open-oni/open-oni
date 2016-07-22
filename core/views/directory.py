@@ -14,7 +14,8 @@ from django.utils.encoding import smart_str
 from core.decorator import cache_page, opensearch_clean, rdf_view, cors
 from core import forms
 from core.utils.utils import _page_range_short, _rdf_base
-from core import models, index
+from core import models
+from core import solr_index
 from core.rdf import titles_to_graph
 from core.utils.url import unpack_url_path
 
@@ -174,14 +175,14 @@ def search_titles_results(request):
     # SOLR are returned at once
     if format == 'csv':
         query = request.GET.copy()
-        q, fields, sort_field, sort_order, facets = index.get_solr_request_params_from_query(query)
+        q, fields, sort_field, sort_order, facets = solr_index.get_solr_request_params_from_query(query)
 
         # return all titles in csv format. * May hurt performance. Assumption is that this
         # request is not made often.
         # TODO: revisit if assumption is incorrect
-        solr_response = index.execute_solr_query(q, fields, sort_field,
-                                                 sort_order, index.title_count(), 0)
-        titles = index.get_titles_from_solr_documents(solr_response)
+        solr_response = solr_index.execute_solr_query(q, fields, sort_field,
+                                                 sort_order, solr_index.title_count(), 0)
+        titles = solr_index.get_titles_from_solr_documents(solr_response)
 
         csv_header_labels = ('lccn', 'title', 'place_of_publication', 'start_year',
                              'end_year', 'publisher', 'edition', 'frequency', 'subject',
@@ -208,7 +209,7 @@ def search_titles_results(request):
     except ValueError, e:
         curr_page = 1
 
-    paginator = index.SolrTitlesPaginator(request.GET)
+    paginator = solr_index.SolrTitlesPaginator(request.GET)
 
     try:
         page = paginator.page(curr_page)

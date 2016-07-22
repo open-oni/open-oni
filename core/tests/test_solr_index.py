@@ -2,14 +2,15 @@ from django.test import TestCase
 from django.conf import settings
 from django.http import QueryDict as Q
 
-from core.index import page_search, title_search, find_words, \
+from core.solr_index import page_search, title_search, find_words, \
                               _solrize_date
 
 
-class IndexTests(TestCase):
+class SolrIndexTests(TestCase):
     """
     Exercise some search form -> solr query translations
     """
+
     fixtures = ['test/ethnicities.json', 'test/languages.json']
     ocr_langs = ['ocr_%s' %l for l in settings.SOLR_LANGUAGES]
 
