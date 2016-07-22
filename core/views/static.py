@@ -27,6 +27,11 @@ def about_api(request):
          'active': True},
     ])
     batches = Batch.objects.all()
+    batch = None
+    lccn = None
+    title = None
+    issue = None
+    page = None
 
     if len(batches) > 0:
       batch = batches[0]
