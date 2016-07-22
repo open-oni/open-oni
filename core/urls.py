@@ -388,26 +388,4 @@ urlpatterns += patterns(
     # ocr data
     url(r'^ocr/feed/$', 'ocr_atom', name='openoni_ocr_atom'),
     url(r'^ocr.json$', 'ocr_json', name='openoni_ocr_json'),
-    
 )
-
-_ROOT = os.path.abspath(os.path.dirname(__file__))
-_MEDIA_ROOT = os.path.join(_ROOT, 'media')
-
-# these are static files that will normally be served up by apache
-# in production deployments before django ever sees the request
-# but are useful when running in development environments
-
-urlpatterns += patterns(
-    '',
-
-    url(r'^data/(?P<path>.*)$', 'django.views.static.serve', 
-        {'document_root': _MEDIA_ROOT}, name="openoni_data_files"),
-
-    url(r'^(?P<path>sitemap.*)$', 'django.views.static.serve',
-        {'document_root': _MEDIA_ROOT + '/sitemaps'},
-        name="openoni_sitemaps"),
-)
-
-if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
