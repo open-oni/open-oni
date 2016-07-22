@@ -23,8 +23,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('lccn', models.CharField(max_length=25)),
-                ('start_date', models.IntegerField()),
-                ('end_date', models.IntegerField()),
+                ('start_date', models.DateField()),
+                ('end_date', models.DateField()),
                 ('uri', models.ForeignKey(related_name='lccn_date_copyright', to='core.Copyright')),
             ],
         ),

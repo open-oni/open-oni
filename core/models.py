@@ -630,14 +630,13 @@ class Issue(models.Model):
 
     @property
     def copyright_link(self):
-        public_domain_date = strdate_to_ordinal("1923-01-01")
+        public_domain_date = datetime.date(1923,01,01)
         public_domain_uri = "http://creativecommons.org/publicdomain/mark/1.0/"
-        int_date = self.date_issued.toordinal()
         try:
-            if int_date < public_domain_date:
+            if self.date_issued < public_domain_date:
                 copyright = Copyright.objects.filter(uri=public_domain_uri)
                 return copyright[0]
-            uris = LccnDateCopyright.objects.filter(lccn = self.title.lccn).filter(start_date__lt=int_date).filter(end_date__gt=int_date)
+            uris = LccnDateCopyright.objects.filter(lccn = self.title.lccn).filter(start_date__lt=self.date_issued).filter(end_date__gt=self.date_issued)
             if uris.exists():
                 copyright = Copyright.objects.filter(uri=uris[0].uri.uri)
                 return copyright[0]
@@ -1339,7 +1338,7 @@ class Copyright(models.Model):
 
 class LccnDateCopyright(models.Model):
     lccn = models.CharField(max_length=25)
-    start_date = models.IntegerField()
-    end_date = models.IntegerField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     uri = models.ForeignKey('Copyright', related_name='lccn_date_copyright')
 
