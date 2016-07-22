@@ -26,11 +26,14 @@ def about_api(request):
          'href': urlresolvers.reverse('openoni_about_api'),
          'active': True},
     ])
-    batch = Batch.objects.all()[0]
-    lccn = batch.lccns()[0]
-    title = Title.objects.get(lccn=lccn)
-    issue = title.issues.all()[0]
-    page = issue.pages.all()[0]
+    batches = Batch.objects.all()
+
+    if len(batches) > 0:
+      batch = batches[0]
+      lccn = batch.lccns()[0]
+      title = Title.objects.get(lccn=lccn)
+      issue = title.issues.all()[0]
+      page = issue.pages.all()[0]
 
     return render_to_response('about_api.html', dictionary=locals(),
                               context_instance=RequestContext(request))
