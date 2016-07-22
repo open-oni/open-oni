@@ -416,23 +416,6 @@ def title_essays(request, lccn):
         return HttpResponseNotFound()
 
 
-@cache_page(settings.DEFAULT_TTL_SECONDS)
-def awardees(request):
-    page_title = 'Awardees'
-    awardees = models.Awardee.objects.all().order_by('name')
-    return render_to_response('reports/awardees.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
-
-
-@cache_page(settings.DEFAULT_TTL_SECONDS)
-def awardee(request, institution_code):
-    awardee = get_object_or_404(models.Awardee, org_code=institution_code)
-    page_title = 'Awardee: %s' % awardee.name
-    batches = models.Batch.objects.filter(awardee=awardee)
-    return render_to_response('reports/awardee.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
-
-
 def _create_year_form(issues, year, all_issues):
     if issues.count() > 0:
         if year is None:
