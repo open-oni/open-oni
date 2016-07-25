@@ -102,6 +102,22 @@ def _fulltext_range():
     return fulltext_range
 
 
+class CityForm(forms.Form):
+    city = fields.ChoiceField(choices=[])
+    city.widget.attrs["class"] = "form-control"
+
+    def __init__(self, *args, **kwargs):
+        super(CityForm, self).__init__(*args, **kwargs)
+        cities = (models.Place
+                  .objects
+                  .order_by('city')
+                  .values('city')
+                  .distinct())
+        city = [("", "All Cities")]
+        city.extend((p["city"], p["city"]) for p in cities)
+        self.fields["city"].choices = city
+
+
 class SearchPagesFormBase(forms.Form):
     state = fields.ChoiceField(choices=[])
     date1 = fields.ChoiceField(choices=[])
