@@ -3,7 +3,7 @@ import logging
 from django.core.management.base import BaseCommand
     
 from core.management.commands import configure_logging
-from core.index import index_titles
+from core.solr_index import index_titles
 
 configure_logging("index_titles_logging.config", "index_titles.log")
 

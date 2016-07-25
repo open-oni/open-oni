@@ -7,7 +7,7 @@ from optparse import make_option
 from django.core.management.base import BaseCommand
 
 from core import title_loader
-from core.index import index_titles
+from core.solr_index import index_titles
 from core.models import Title
 from core.management.commands import configure_logging
 
