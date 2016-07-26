@@ -396,6 +396,9 @@ def page_search(d):
     if d.get('state', None):
         q.append(query_join(d.getlist('state'), 'state'))
 
+    if d.get('city', None):
+        q.append(query_join(d.getlist('city'), 'city'))
+
     date_filter_type = d.get('dateFilterType', None)
     date_boundaries = _fulltext_range()
     date1 = d.get('date1', None)
