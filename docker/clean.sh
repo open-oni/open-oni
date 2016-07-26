@@ -42,7 +42,7 @@ clean_pyc() {
 
 remove_static() {
   echo "-- Removing .static-media"
-  rm -rf .static-media
+  docker exec -it openoni-dev rm -rf .static-media
 }
 
 option=${1:-}
@@ -67,8 +67,8 @@ if [ "$option" == "--apocalypse" ]; then
   echo "[1mOMFG[0m IT'S THE APOCALYPSE!"
   echo
   echo "Destroying all data as well as installed Python packages!"
-  remove_env
   remove_static
+  remove_env
   destroy_containers
   remove_data
   clean_pyc
