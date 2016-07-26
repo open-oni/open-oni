@@ -40,6 +40,11 @@ clean_pyc() {
   find . -path "./ENV" -prune -o -name "*.pyc" -print0 | xargs -0 rm -f
 }
 
+remove_static() {
+  echo "-- Removing .static-media"
+  rm -rf .static-media
+}
+
 option=${1:-}
 
 if [ "$option" == "--help" ] || [ "$option" == "-h" ]; then
@@ -48,6 +53,7 @@ if [ "$option" == "--help" ] || [ "$option" == "-h" ]; then
   echo "    --help          usage output"
   echo "    --nuclear       destroys data and containers"
   echo "Run without options, this script will remove the non-data containers"
+  echo "and clear your static-media directory"
   exit
 fi
 
@@ -62,6 +68,7 @@ if [ "$option" == "--apocalypse" ]; then
   echo
   echo "Destroying all data as well as installed Python packages!"
   remove_env
+  remove_static
   destroy_containers
   remove_data
   clean_pyc
@@ -71,6 +78,7 @@ fi
 # --nuclear removes data and containers, then exits
 if [ "$option" == "--nuclear" ]; then
   echo "OMG GOING NUCLEAR!  All your Solr and MySQL data is GONE."
+  remove_static
   destroy_containers
   remove_data
   clean_pyc
@@ -79,5 +87,6 @@ fi
 
 # No options means just cleaning non-data containers and *.pyc files; consider
 # this similar to a reboot
+remove_static
 destroy_containers
 clean_pyc
