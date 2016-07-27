@@ -123,7 +123,6 @@ class SearchPagesFormBase(forms.Form):
     date1 = fields.ChoiceField(choices=[])
     date2 = fields.ChoiceField(choices=[])
     proxtext = fields.CharField()
-    # sequence = fields.BooleanField()
     issue_date = fields.BooleanField()
 
     def __init__(self, *args, **kwargs):
@@ -142,7 +141,6 @@ class SearchPagesFormBase(forms.Form):
         self.fields["date1"].initial = fulltextStartYear
         self.fields["date2"].choices = self.years
         self.fields["date2"].initial = fulltextEndYear
-        # self.fields["sequence"].widget.attrs['value'] = 1
 
 
 class SearchResultsForm(forms.Form):
