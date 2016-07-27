@@ -123,7 +123,7 @@ class SearchPagesFormBase(forms.Form):
     date1 = fields.ChoiceField(choices=[])
     date2 = fields.ChoiceField(choices=[])
     proxtext = fields.CharField()
-    sequence = fields.BooleanField()
+    # sequence = fields.BooleanField()
     issue_date = fields.BooleanField()
 
     def __init__(self, *args, **kwargs):
@@ -142,7 +142,7 @@ class SearchPagesFormBase(forms.Form):
         self.fields["date1"].initial = fulltextStartYear
         self.fields["date2"].choices = self.years
         self.fields["date2"].initial = fulltextEndYear
-        self.fields["sequence"].widget.attrs['value'] = 1
+        # self.fields["sequence"].widget.attrs['value'] = 1
 
 
 class SearchResultsForm(forms.Form):
@@ -160,24 +160,38 @@ class SearchResultsForm(forms.Form):
 
 
 class SearchPagesForm(SearchPagesFormBase):
-    date_month = fields.ChoiceField(choices=MONTH_CHOICES)
-    date_day = fields.ChoiceField(choices=DAY_CHOICES)
-    lccn = fields.MultipleChoiceField(choices=[])
-    state = fields.MultipleChoiceField(choices=[])
+    # locations
+    city = fields.ChoiceField(choices=[], initial="")
+    county = fields.ChoiceField(choices=[], initial="")
+    state = fields.ChoiceField()
+    # date
     date1 = fields.CharField()
     date2 = fields.CharField()
-    sequence = fields.CharField()
-    ortext = fields.CharField()
+    date_day = fields.ChoiceField(choices=DAY_CHOICES)
+    date_month = fields.ChoiceField(choices=MONTH_CHOICES)
+    # text
     andtext = fields.CharField()
+    ortext = fields.CharField()
     phrasetext = fields.CharField()
     proxtext = fields.CharField()
     proxdistance = fields.ChoiceField(choices=PROX_CHOICES)
-    language = fields.ChoiceField()
+    # misc
+    lccn = fields.CharField(label="LCCN")
+    sequence = fields.CharField(label="Page Number")
+    titles = fields.MultipleChoiceField(choices=[])
+    # filters
+    ethnicity = fields.ChoiceField(choices=[], label="Ethnicity Press")
+    frequency = fields.ChoiceField(choices=FREQUENCY_CHOICES, initial="", label="Frequency")
+    labor = fields.ChoiceField(choices=[], label="Labor Press")
+    language = fields.ChoiceField(label="Language")
+    material_type = fields.ChoiceField(choices=[], label="Material Type")
 
     form_control_items = [
-        date_month, date_day, lccn, state, date1, date2,
-        sequence, ortext, andtext, phrasetext, proxtext, 
-        proxdistance, language
+        city, county, state, 
+        date1, date2, date_day, date_month,
+        andtext, ortext, phrasetext, proxtext, proxdistance,
+        lccn, sequence, titles,
+        language, frequency, ethnicity, labor, material_type
     ]
     for item in form_control_items:
         item.widget.attrs["class"] = "form-control"
@@ -187,18 +201,49 @@ class SearchPagesForm(SearchPagesFormBase):
 
         self.date = self.data.get('date1', '')
 
-        self.fields["lccn"].widget.attrs.update({'id': 'id_lccns', 'size': '8'})
-        self.fields["lccn"].choices = self.titles
-        self.fields["state"].widget.attrs.update({'id': 'id_states', 'size': '8'})
+        self.fields["titles"].widget.attrs.update({'size': '8'})
+        self.fields["titles"].choices = self.titles
+        self.fields["state"].widget.attrs.update({'id': 'id_states'})
         self.fields["date1"].widget.attrs.update({"id": "id_date_from", "max_length": 10})
         self.fields["date1"].initial = ""
         self.fields["date2"].widget.attrs.update({"id": "id_date_to", "max_length": 10})
         self.fields["date2"].initial = ""
-        self.fields["sequence"].widget.attrs.update({"id": "id_char_sequence", "size": "3"})
+        self.fields["sequence"].widget.attrs.update({"id": "id_char_sequence"})
         self.fields["proxtext"].widget.attrs["id"] = "id_proxtext_adv"
         lang_choices = [("", "All"), ]
         lang_choices.extend((l, models.Language.objects.get(code=l).name) for l in settings.SOLR_LANGUAGES)
         self.fields["language"].choices = lang_choices
+
+        cities = models.Place.objects.values('city').distinct()
+        city = [("", "City")]
+        city.extend((p["city"], p["city"]) for p in cities)
+        self.fields["city"].choices = city
+        self.fields["city"].label = "City"
+
+        counties = models.Place.objects.values('county').distinct()
+        county = [("", "County")]
+        county.extend((p["county"], p["county"]) for p in counties)
+        self.fields["county"].choices = county
+        self.fields["county"].label = "County"
+
+        states = models.Place.objects.values('state').distinct()
+        state = [("", "State")]
+        state.extend((p["state"], p["state"]) for p in states)
+        self.fields["state"].choices = state
+        self.fields["state"].label = "State"
+
+        ethnicity = [("", "Select"), ]
+        ethnicity.extend((e.name, e.name) for e in models.Ethnicity.objects.all())
+        self.fields["ethnicity"].choices = ethnicity
+
+        labor = [("", "Select"), ]
+        labor.extend((l.name, l.name) for l in models.LaborPress.objects.all())
+        self.fields["labor"].choices = labor
+
+        material = [("", "Select")]
+        material.extend((m.name, m.name) for m in models.MaterialType.objects.all())
+        self.fields["material_type"].choices = material
+
 
 
 class SearchTitlesForm(forms.Form):
