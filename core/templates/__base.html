@@ -79,11 +79,66 @@
       {% block header %}
 
         {% block header_title %}
-          {% include 'includes/base_header.html' %}
+          <div class="header_title">
+            <div class="container">
+              <h1 class="title">{{ site_title }}</h1>
+            </div>
+          </div><!-- /header -->
         {% endblock header_title %}
 
+   <!-- ===========
+      Navbar
+      ============= -->
         {% block navbar %}
-          {% include 'includes/base_navbar.html' %}
+        <nav class="navbar navbar-inverse header_navbar">
+          <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                {% block navbar_home %}<li><a href="{% url 'openoni_home' %}">Home</a></li>{% endblock navbar_home %}
+                {% block navbar_pos1 %}<li><a href="{% url 'openoni_newspapers' %}">Newspapers</a></li>{% endblock navbar_pos1 %}
+                {% block navbar_pos2 %}<li><a href="{% url 'openoni_about' %}">About</a></li>{% endblock navbar_pos2 %}
+                {% block navbar_pos3 %}<li><a href="{% url 'openoni_about_api' %}">API</a></li>{% endblock navbar_pos3 %}
+                {% block navbar_pos4 %}<li><a href="{% url 'openoni_issues' %}">Browse by Date</a></li>{% endblock navbar_pos4 %}
+                {% block navbar_pos5 %}<li><a href="{% url 'openoni_help' %}">Help</a></li>{% endblock navbar_pos5 %}
+              </ul>
+
+              {% block navbar_advancedsearch %}
+              <ul class="nav navbar-nav navbar-right">
+                <li class="nav_advanced_search"><a href="{% url 'openoni_search_advanced' %}">Advanced Search</a></li>
+              </ul>
+              {% endblock navbar_advancedsearch %}
+            
+              {% block navbar_search %}
+              <form class="form-inline navbar-form navbar-right"  action="{% url 'openoni_search_pages_results' %}" method="get">
+                <div class="form-group">
+                  {{ city_form.city }}
+                  <input type="hidden" name="rows" id="rows" alt="rows" value="20" />
+                  <input type="hidden" name="searchType" alt="searchType" value="basic" />
+                  <input class="form-control" type="text" name="proxtext" placeholder="search words">
+                </div><!-- /form-group -->
+
+                <button type="submit" class="btn btn-default">
+                  <span class="glyphicon glyphicon-search" aria-hidden="true"><span class="search_text">Search</span></span>
+                </button>
+              </form>
+              {% endblock navbar_search %}
+
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+      </nav>
+
         {% endblock navbar %}
 
       {% endblock header %}
@@ -131,9 +186,16 @@
     <!-- ===========
     FOOTER
     ============= -->
+
     {% block footer %}
-    {% include 'includes/base_footer.html' %}
+      <div id="footer">
+        <div class="container">
+          <p>All your footer things like logos and such go here.</p>
+          <p>Site created using <a href="https://github.com/open-oni/open-oni">open-oni</a> software, built off the Library of Congress's <a href="https://github.com/LibraryofCongress/chronam">chronam</a>.</p>
+        </div><!-- /container -->
+    </div><!-- /footer -->
     {% endblock footer %}
+    
     <!-- ===========
     Bottom loading javascripts
     ============= -->

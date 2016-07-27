@@ -16,10 +16,21 @@
 <!-- Page Title -->
 
 {% block head_page_title %}
-  {% if page_title %}{{page_title}} {% endif %}{% if site_title %}{{site_title}} « {% endif %}
+  {% if page_title %}{{page_title}} «  {% endif %}{% if site_title %}{{site_title}} {% endif %}
 {% endblock head_page_title %}
 
 <!-- Other Options -->
+
+{% block footer %}
+
+<div id="footer">
+        <div class="container">
+          <p>{{site_title}}</p>
+          <p>Site created using <a href="https://github.com/open-oni/open-oni">open-oni</a> software, built off the Library of Congress's <a href="https://github.com/LibraryofCongress/chronam">chronam</a>.</p>
+        </div><!-- /container -->
+    </div><!-- /footer -->
+
+{% endblock footer %}
 
 <!-- 
 
