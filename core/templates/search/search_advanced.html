@@ -81,21 +81,11 @@
                 {{ form.lccn }}
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <label for="id_ethnicity">{{ form.ethnicity.label }}</label>
-                {{ form.ethnicity }}
-            </div>
-            <div class="col-md-4">
-                <label for="id_labor">{{ form.labor.label }}</label>
-                {{ form.labor }}
-            </div>
-            <div class="col-md-4">
-                <label for="id_material_type">{{ form.material_type.label }}</label>
-                {{ form.material_type }}
-            </div>
-            
-        </div>
+        {% comment %}
+            Ethnicity, labor press, and material type not
+            included as they are not in solr index
+        {% endcomment %}
+        
         <div class="row">
             <input type="hidden" name="rows" id="rows" value="20" />
             <input type="hidden" name="searchType" value="advanced" />

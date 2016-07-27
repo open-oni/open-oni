@@ -180,18 +180,15 @@ class SearchPagesForm(SearchPagesFormBase):
     sequence = fields.CharField(label="Page Number")
     titles = fields.MultipleChoiceField(choices=[])
     # filters
-    ethnicity = fields.ChoiceField(choices=[], label="Ethnicity Press")
     frequency = fields.ChoiceField(choices=FREQUENCY_CHOICES, initial="", label="Frequency")
-    labor = fields.ChoiceField(choices=[], label="Labor Press")
     language = fields.ChoiceField(label="Language")
-    material_type = fields.ChoiceField(choices=[], label="Material Type")
 
     form_control_items = [
         city, county, state, 
         date1, date2, date_day, date_month,
         andtext, ortext, phrasetext, proxtext, proxdistance,
         lccn, sequence, titles,
-        language, frequency, ethnicity, labor, material_type
+        language, frequency
     ]
     for item in form_control_items:
         item.widget.attrs["class"] = "form-control"
@@ -231,19 +228,6 @@ class SearchPagesForm(SearchPagesFormBase):
         state.extend((p["state"], p["state"]) for p in states)
         self.fields["state"].choices = state
         self.fields["state"].label = "State"
-
-        ethnicity = [("", "Select"), ]
-        ethnicity.extend((e.name, e.name) for e in models.Ethnicity.objects.all())
-        self.fields["ethnicity"].choices = ethnicity
-
-        labor = [("", "Select"), ]
-        labor.extend((l.name, l.name) for l in models.LaborPress.objects.all())
-        self.fields["labor"].choices = labor
-
-        material = [("", "Select")]
-        material.extend((m.name, m.name) for m in models.MaterialType.objects.all())
-        self.fields["material_type"].choices = material
-
 
 
 class SearchTitlesForm(forms.Form):
