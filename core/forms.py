@@ -168,10 +168,10 @@ class SearchPagesForm(SearchPagesFormBase):
     date_day = fields.ChoiceField(choices=DAY_CHOICES)
     date_month = fields.ChoiceField(choices=MONTH_CHOICES)
     # text
-    andtext = fields.CharField()
-    ortext = fields.CharField()
-    phrasetext = fields.CharField()
-    proxtext = fields.CharField()
+    andtext = fields.CharField(label="All of the words")
+    ortext = fields.CharField(label="Any of the words")
+    phrasetext = fields.CharField(label="With the phrase")
+    proxtext = fields.CharField(label="Words near each other")
     proxdistance = fields.ChoiceField(choices=PROX_CHOICES)
     # misc
     lccn = fields.CharField(label="LCCN")
