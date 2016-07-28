@@ -198,13 +198,6 @@ class SearchPagesForm(SearchPagesFormBase):
 
         self.fields["titles"].widget.attrs.update({'size': '8'})
         self.fields["titles"].choices = self.titles
-        self.fields["state"].widget.attrs.update({'id': 'id_states'})
-        self.fields["date1"].widget.attrs.update({"id": "id_date_from", "max_length": 10})
-        self.fields["date1"].initial = ""
-        self.fields["date2"].widget.attrs.update({"id": "id_date_to", "max_length": 10})
-        self.fields["date2"].initial = ""
-        self.fields["sequence"].widget.attrs.update({"id": "id_char_sequence"})
-        self.fields["proxtext"].widget.attrs["id"] = "id_proxtext_adv"
         lang_choices = [("", "All"), ]
         lang_choices.extend((l, models.Language.objects.get(code=l).name) for l in settings.SOLR_LANGUAGES)
         self.fields["language"].choices = lang_choices
