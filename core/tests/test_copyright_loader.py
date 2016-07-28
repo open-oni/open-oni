@@ -1,8 +1,10 @@
+import os
 from django.test import TestCase
-from openoni.core.models import Copyright
-from openoni.core.load_copyright import loadCopyright
+import core
+from core.models import Copyright
+from core.load_copyright import loadCopyright
 
-class LoadCopyrightTest(TestCase):
+class TestLoadCopyright(TestCase):
 
     def setUp(self):
         # wipe the slate clean
@@ -15,5 +17,5 @@ class LoadCopyrightTest(TestCase):
 
 
     def testLoadCopyrights(self):
-        copy1 = Copyright.objects.get("http://creativecommons.org/publicdomain/mark/1.0/")
-        self.assertEqual(t.label, 'Public Domain Mark 1.0')
+        copy1 = Copyright.objects.get(uri="http://creativecommons.org/publicdomain/mark/1.0/")
+        self.assertEqual(copy1.label, 'Public Domain Mark 1.0')
