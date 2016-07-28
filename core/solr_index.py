@@ -501,7 +501,7 @@ def query_join(values, field, and_clause=False):
     # quote values
     values = ['"%s"' % v for v in values]
 
-    # add + to the beginnging of each value if we are doing an AND clause
+    # add + to the beginning of each value if we are doing an AND clause
     if and_clause:
         values = ["+%s" % v for v in values]
 
