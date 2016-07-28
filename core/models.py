@@ -1333,12 +1333,12 @@ def coordinates_path(url_parts):
     return os.path.join(full_path, "coordinates.json.gz")
 
 class Copyright(models.Model):
-    uri = models.CharField(max_length=100, primary_key=True)
+    uri = models.CharField(max_length=100)
     label = models.CharField(max_length=200)
 
 class LccnDateCopyright(models.Model):
     lccn = models.CharField(max_length=25)
     start_date = models.DateField()
     end_date = models.DateField()
-    uri = models.ForeignKey('Copyright', related_name='lccn_date_copyright')
+    copyright = models.ForeignKey('Copyright', related_name='lccn_date_copyright')
 
