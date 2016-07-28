@@ -8,15 +8,15 @@ from django.core.management.base import CommandError
 from core.load_copyright_map import loadCopyrightMap
 from core.management.commands import configure_logging
 
-configure_logging("load_copyright_map_logging.config", "load_coyright_map.log")
+configure_logging("load_copyright_map_logging.config", "load_copyright_map.log")
 
 LOGGER = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = "Load copyrights maps"
+    help = "Add records to lccn-date-copyright maps table from input file."
     def add_arguments(self, parser):
-        parser.add_argument('filepath')
+        parser.add_argument('filepath', help="Path to input file")
 
     def handle(self, *args, **options):
        
