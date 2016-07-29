@@ -49,6 +49,13 @@ RESULT_SORT = (
 )
 
 
+def _distinct_values(model, field, initial_label=None):
+    # generates list of unique values in a table for use with ChoiceField
+    values = model.objects.values(field).distinct().order_by(field)
+    options = [("", initial_label)] if initial_label else []
+    options.extend((v[field], v[field]) for v in values)
+    return options
+
 def _titles_states():
     """
     returns a tuple of two elements (list of titles, list of states)
@@ -159,9 +166,9 @@ class SearchResultsForm(forms.Form):
 
 class SearchPagesForm(SearchPagesFormBase):
     # locations
-    city = fields.ChoiceField(choices=[], initial="")
-    county = fields.ChoiceField(choices=[], initial="")
-    state = fields.ChoiceField()
+    city = fields.ChoiceField(label="City")
+    county = fields.ChoiceField(label="County")
+    state = fields.ChoiceField(label="State")
     # date
     date1 = fields.CharField()
     date2 = fields.CharField()
@@ -178,7 +185,7 @@ class SearchPagesForm(SearchPagesFormBase):
     sequence = fields.CharField(label="Page Number")
     titles = fields.MultipleChoiceField(choices=[])
     # filters
-    frequency = fields.ChoiceField(choices=FREQUENCY_CHOICES, initial="", label="Frequency")
+    frequency = fields.ChoiceField(label="Frequency")
     language = fields.ChoiceField(label="Language")
 
     form_control_items = [
@@ -202,23 +209,14 @@ class SearchPagesForm(SearchPagesFormBase):
         lang_choices.extend((l, models.Language.objects.get(code=l).name) for l in settings.SOLR_LANGUAGES)
         self.fields["language"].choices = lang_choices
 
-        cities = models.Place.objects.values('city').distinct()
-        city = [("", "City")]
-        city.extend((p["city"], p["city"]) for p in cities)
-        self.fields["city"].choices = city
-        self.fields["city"].label = "City"
+        # locations
 
-        counties = models.Place.objects.values('county').distinct()
-        county = [("", "County")]
-        county.extend((p["county"], p["county"]) for p in counties)
-        self.fields["county"].choices = county
-        self.fields["county"].label = "County"
+        self.fields["city"].choices = _distinct_values(models.Place, "city", "City")
+        self.fields["county"].choices = _distinct_values(models.Place, "county", "County")
+        self.fields["state"].choices = _distinct_values(models.Place, "state", "State")
 
-        states = models.Place.objects.values('state').distinct()
-        state = [("", "State")]
-        state.extend((p["state"], p["state"]) for p in states)
-        self.fields["state"].choices = state
-        self.fields["state"].label = "State"
+        # filters
+        self.fields["frequency"].choices = _distinct_values(models.Title, "frequency", "Select")
 
 
 class SearchTitlesForm(forms.Form):
@@ -257,19 +255,19 @@ class SearchTitlesForm(forms.Form):
         self.fields["year2"].initial = choices[-1][0]
 
         # location
-        cities = models.Place.objects.values('city').distinct()
+        cities = models.Place.objects.values('city').distinct().order_by("city")
         city = [("", "Select")]
         city.extend((p["city"], p["city"]) for p in cities)
         self.fields["city"].choices = city
         self.fields["city"].label = "City"
 
-        counties = models.Place.objects.values('county').distinct()
+        counties = models.Place.objects.values('county').distinct().order_by("county")
         county = [("", "Select")]
         county.extend((p["county"], p["county"]) for p in counties)
         self.fields["county"].choices = county
         self.fields["county"].label = "County"
 
-        states = models.Place.objects.values('state').distinct()
+        states = models.Place.objects.values('state').distinct().order_by("state")
         state = [("", "Select")]
         state.extend((p["state"], p["state"]) for p in states)
         self.fields["state"].choices = state
