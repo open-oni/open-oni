@@ -15,29 +15,23 @@ def loadCopyright(inputfilename):
     except IOError as e:
         _logger.exception(e)
         sys.exit(1)
+    try:
+        with transaction.atomic():
+            for line in f:
+                arr = line.split("\t")
+                if len(arr) == 2:
+                    val(arr[0])
 
-    for line in f:
-        arr = line.split("\t")
-        if len(arr) == 2:
-            try:
-                val(arr[0])
-            except ValidationError as e:
-                _logger.exception(e)
-                sys.exit(1)
-            record = Copyright()
-            record.uri = arr[0]
-            record.label =arr[1].strip()
-            try:
-                with transaction.atomic():
+                    record = Copyright()
+                    record.uri = arr[0]
+                    record.label =arr[1].strip()
                     record.save()
+                elif line and line.strip():
+                    raise ValueError ("Bad line.")
 
-            except Exception as e:
-                _logger.exception(e)
-                sys.exit(1)
-
-        elif line and line.strip():
-            _logger.error("There is an error in the input: " + line)
-            sys.exit(1)
+    except Exception as e:
+        _logger.exception(e)
+        sys.exit(1)
 
     f.close()
 

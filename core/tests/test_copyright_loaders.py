@@ -2,7 +2,6 @@ import os
 from django.test import TestCase
 import core
 import datetime
-import pdb
 from core.models import Copyright
 from core.models import LccnDateCopyright
 from core.load_copyright import loadCopyright
