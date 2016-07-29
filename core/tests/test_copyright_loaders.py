@@ -26,20 +26,26 @@ class TestCopyrightLoaders(TestCase):
             'test-data', 'baddata1')
         f1 = open(baddata1, 'w')
         f1.write("http:/malformed.org/\tBad example\n")
-        loadCopyright(baddata1)
-
+        try:
+            loadCopyright(baddata1)
+        except Exception:
+            pass
         baddata2 = os.path.join(os.path.dirname(core.__file__),
             'test-data', 'baddata2')
         f2 = open(baddata2, 'w')
         f2.write("sn11112222\t1/2/2002\t12/30/2006\thttp://creativecommons.org/licenses/by-nc-nd/4.0/")
-        loadCopyright(baddata2)
-
+        try:
+            loadCopyright(baddata2)
+        except Exception:
+            pass
         baddata3 = os.path.join(os.path.dirname(core.__file__),
             'test-data', 'baddata3')
         f3 = open(baddata3, 'w')
         f3.write("sn33334444\t1976-01-01\t2002-01-01\thttp://www.europeana.eu/rights/rr-f/")
-        loadCopyright(baddata3)
-
+        try:
+            loadCopyright(baddata3)
+        except Exception:
+            pass
         os.remove(baddata1)
         os.remove(baddata2)
         os.remove(baddata3)
