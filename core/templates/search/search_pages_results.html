@@ -31,18 +31,6 @@
         <img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/>
       </a>
     {% endif %}
-    {% if request.GET.city %}
-      &nbsp; for cities {{ request.GET.city }}
-      <a href="{{BASE_URL}}{{request.path}}?{% remove_param  'city' %}">
-        <img src="/media/images/btn_remove.png" title="clear city filter" alt="remove city filter"/>
-      </a>
-    {% endif %}
-    {% if request.GET.frequency %}
-      &nbsp; for frequency {{ request.GET.frequency }}
-      <a href="{{BASE_URL}}{{request.path}}?{% remove_param  'frequency' %}">
-        <img src="/media/images/btn_remove.png" title="clear frequency filter" alt="remove frequency filter"/>
-      </a>
-    {% endif %}
 </h4>
 
 <div class="row search_results_option_set">
@@ -119,6 +107,54 @@
 </div><!-- /row -->
 
 <form class="form-inline search_results_form" action="" method="GET">
+  <div class="row searhc_results_option_set">
+    <div class="col-md-3">
+      <label for="state">
+      <select class="form-control" name="state">
+        <option value="">state</option>
+        {% for state, count in page.facets.state %}
+          <option value="{{state}}" {% ifequal state request.GET.state %} selected=selected {% endifequal %}>{{state}} ({{count}})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="county">
+      <select class="form-control" name="county">
+        <option value="">county</option>
+        {% for county, count in page.facets.county %}
+          <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="city">
+      <select class="form-control" name="city">
+        <option value="">city</option>
+        {% for city, count in page.facets.city %}
+          <option value="{{city}}" {% ifequal city request.GET.city %} selected=selected {% endifequal %}>{{city}} ({{count}})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="frequency">
+      <select class="form-control" name="frequency">
+        <option value="">frequency</option>
+        {% for frequency, count in page.facets.frequency %}
+          <option value="{{frequency}}" {% ifequal frequency request.GET.frequency %} selected=selected {% endifequal %}>{{frequency}} ({{count}})</option>
+        {% endfor %}
+      </select>
+    </div>
+    {% comment %}
+    <!-- Year requires some work on the backend because solr returns
+        YYYY-YYYY which needs to be sent as 01-01-1988 (date1) and similar
+        date2 fields -->
+    {% endcomment %}
+    {% comment %}
+    <!-- The language requires a translation between human readable and solr codes ("German" vs "ger") -->
+    {% endcomment %}
+  </div>
+
+  <!-- search preferences -->
   <div class="row search_results_option_set">
     <div class="col-md-3">
       <input name="sequence" value="1" type="checkbox" {{ seq_check }}/>
@@ -137,43 +173,6 @@
     </div>
   </div>
 
-  <!-- commented out in order to focus on smaller set of functionality in given time period -->
-  <!-- <div class="row search_results_option_set">
-    <div class="col-md-12">
-        <label class="norm" for="filter_select">Filter results by: </label>
-          <select class="sel" name="filter_results" id="filter_select_year">
-              <option value="" disabled selected> year </option>
-              {% for year, count in page.facets.year %}
-                  <option value={{year}}>{{year}} ({{count}})</option>
-              {% endfor %}
-          </select>
-          <select class="sel" name="rpp_select" id="filter_select_language">
-              <option value="" disabled selected> language </option>
-              {% for language, count in page.facets.language %}
-                  {# This is a bit of a hack, but since we only have two languages
-                     just put in code for cze and eng to avoid sending page_titles the full solr name#}
-                  {% if language == 'English' %}
-                    <option value="eng">English ({{count}})</option>
-                  {% elif language == 'Czech' %}
-                    <option value="cze">Czech ({{count}})</option>
-                  {% endif %}
-                  {# <option value={{language}}>{{language}} ({{count}})</option> #}
-              {% endfor %}
-          </select>
-          <select class="sel" name="rpp_select" id="filter_select_city">
-              <option value="" disabled selected> city </option>
-              {% for city, count in page.facets.city %}
-                  <option value="{{city}}">{{city}} ({{count}})</option>
-              {% endfor %}
-          </select>
-          <select class="sel" name="rrp_select" id="filter_select_frequency">
-              <option value="" disabled selected> frequency </option>
-              {% for freq, count in page.facets.frequency %}
-                  <option value="{{freq}}">{{freq}} ({{count}})</option>
-              {% endfor %}
-          </select>
-    </div>
-  </div> --><!-- /row -->
   <input type="hidden" name="ortext" value="{{query.ortext}}" />
   <input type="hidden" name="andtext" value="{{query.andtext}}" />
   <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
@@ -183,7 +182,6 @@
   <input type="hidden" name="date2" value="{{query.date2}}" />
   <input type="hidden" name="year" value="{{query.year}}" />
   <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
-  <input type="hidden" name="state" value="{{query.state}}" />
   <input type="hidden" name="titles" value="{{query.titles}}" />
   <input type="hidden" name="language" value="{{query.language}}" />
   
