@@ -3,6 +3,7 @@ import os.path
 import re
 import json
 import time
+import datetime
 import hashlib
 import logging
 import tarfile
@@ -626,6 +627,20 @@ class Issue(models.Model):
         if serialize:
             return json.dumps(j, indent=2)
         return j
+
+    @property
+    def copyright_link(self):
+        public_domain_date = datetime.date(1923,1,1)
+        public_domain_uri = "http://creativecommons.org/publicdomain/mark/1.0/"
+        try:
+            if self.date_issued < public_domain_date:
+                copyright = Copyright.objects.filter(uri=public_domain_uri)
+                return copyright[0]
+            maps = LccnDateCopyright.objects.filter(lccn = self.title.lccn).filter(start_date__lt=self.date_issued).filter(end_date__gt=self.date_issued)
+            if maps.exists():
+                return maps[0].copyright
+        except:
+            return
 
     class Meta:
         ordering = ('date_issued',)
@@ -1315,3 +1330,14 @@ def coordinates_path(url_parts):
     if not os.path.exists(full_path):
         os.makedirs(full_path)
     return os.path.join(full_path, "coordinates.json.gz")
+
+class Copyright(models.Model):
+    uri = models.CharField(max_length=100)
+    label = models.CharField(max_length=200)
+
+class LccnDateCopyright(models.Model):
+    lccn = models.CharField(max_length=25)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    copyright = models.ForeignKey('Copyright', related_name='lccn_date_copyright')
+
