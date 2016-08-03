@@ -160,8 +160,11 @@ class SolrPaginator(Paginator):
         solr_facets = solr_response.facet_counts
         # sort states by number of hits per state (desc)
         facets = {
+            'city': _sort_facets_asc(solr_facets, 'city'),
+            'county': _sort_facets_asc(solr_facets, 'county'),
+            'frequency': _sort_facets_asc(solr_facets, 'frequency'),
+            'language': _sort_facets_asc(solr_facets, 'language'),
             'state': _sort_facets_asc(solr_facets, 'state'),
-            'county': _sort_facets_asc(solr_facets, 'county')
         }
         # sort by year (desc)
         facets['year'] = sorted(solr_facets['facet_ranges']['year']['counts'].items(),
@@ -390,14 +393,13 @@ def page_search(d):
     """
     q = ['+type:page']
 
-    if d.get('lccn', None):
-        q.append(query_join(d.getlist('lccn'), 'lccn'))
+    simple_fields = ['city', 'county', 'frequency', 'lccn',
+                     'state', 'titles'
+                    ]
 
-    if d.get('state', None):
-        q.append(query_join(d.getlist('state'), 'state'))
-
-    if d.get('city', None):
-        q.append(query_join(d.getlist('city'), 'city'))
+    for field in simple_fields:
+        if d.get(field, None):
+            q.append(query_join(d.getlist(field), field))
 
     date_filter_type = d.get('dateFilterType', None)
     date_boundaries = _fulltext_range()
@@ -478,7 +480,13 @@ def page_search(d):
     if d.get('issue_date', None):
         q.append('+month:%d +day:%d' % (int(d['date_month']), int(d['date_day'])))
 
-    facet_params = {'facet': 'true','facet_field': ['state', 'county'],
+    facet_params = {'facet': 'true','facet_field': [
+                    'city',
+                    'county',
+                    'frequency',
+                    'language',
+                    'state', 
+                    ],
                     'facet_range':'year',
                     'f_year_facet_range_start': date1,
                     'f_year_facet_range_end': date2,

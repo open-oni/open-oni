@@ -49,6 +49,13 @@ RESULT_SORT = (
 )
 
 
+def _distinct_values(model, field, initial_label=None):
+    # generates list of unique values in a table for use with ChoiceField
+    values = model.objects.values(field).distinct().order_by(field)
+    options = [("", initial_label)] if initial_label else []
+    options.extend((v[field], v[field]) for v in values)
+    return options
+
 def _titles_states():
     """
     returns a tuple of two elements (list of titles, list of states)
@@ -123,7 +130,6 @@ class SearchPagesFormBase(forms.Form):
     date1 = fields.ChoiceField(choices=[])
     date2 = fields.ChoiceField(choices=[])
     proxtext = fields.CharField()
-    sequence = fields.BooleanField()
     issue_date = fields.BooleanField()
 
     def __init__(self, *args, **kwargs):
@@ -142,7 +148,6 @@ class SearchPagesFormBase(forms.Form):
         self.fields["date1"].initial = fulltextStartYear
         self.fields["date2"].choices = self.years
         self.fields["date2"].initial = fulltextEndYear
-        self.fields["sequence"].widget.attrs['value'] = 1
 
 
 class SearchResultsForm(forms.Form):
@@ -160,24 +165,35 @@ class SearchResultsForm(forms.Form):
 
 
 class SearchPagesForm(SearchPagesFormBase):
-    date_month = fields.ChoiceField(choices=MONTH_CHOICES)
-    date_day = fields.ChoiceField(choices=DAY_CHOICES)
-    lccn = fields.MultipleChoiceField(choices=[])
-    state = fields.MultipleChoiceField(choices=[])
+    # locations
+    city = fields.ChoiceField(label="City")
+    county = fields.ChoiceField(label="County")
+    state = fields.ChoiceField(label="State")
+    # date
     date1 = fields.CharField()
     date2 = fields.CharField()
-    sequence = fields.CharField()
-    ortext = fields.CharField()
-    andtext = fields.CharField()
-    phrasetext = fields.CharField()
-    proxtext = fields.CharField()
+    date_day = fields.ChoiceField(choices=DAY_CHOICES)
+    date_month = fields.ChoiceField(choices=MONTH_CHOICES)
+    # text
+    andtext = fields.CharField(label="All of the words")
+    ortext = fields.CharField(label="Any of the words")
+    phrasetext = fields.CharField(label="With the phrase")
+    proxtext = fields.CharField(label="Words near each other")
     proxdistance = fields.ChoiceField(choices=PROX_CHOICES)
-    language = fields.ChoiceField()
+    # misc
+    lccn = fields.CharField(label="LCCN")
+    sequence = fields.CharField(label="Page Number")
+    titles = fields.MultipleChoiceField(choices=[])
+    # filters
+    frequency = fields.ChoiceField(label="Frequency")
+    language = fields.ChoiceField(label="Language")
 
     form_control_items = [
-        date_month, date_day, lccn, state, date1, date2,
-        sequence, ortext, andtext, phrasetext, proxtext, 
-        proxdistance, language
+        city, county, state, 
+        date1, date2, date_day, date_month,
+        andtext, ortext, phrasetext, proxtext, proxdistance,
+        lccn, sequence, titles,
+        language, frequency
     ]
     for item in form_control_items:
         item.widget.attrs["class"] = "form-control"
@@ -187,18 +203,20 @@ class SearchPagesForm(SearchPagesFormBase):
 
         self.date = self.data.get('date1', '')
 
-        self.fields["lccn"].widget.attrs.update({'id': 'id_lccns', 'size': '8'})
-        self.fields["lccn"].choices = self.titles
-        self.fields["state"].widget.attrs.update({'id': 'id_states', 'size': '8'})
-        self.fields["date1"].widget.attrs.update({"id": "id_date_from", "max_length": 10})
-        self.fields["date1"].initial = ""
-        self.fields["date2"].widget.attrs.update({"id": "id_date_to", "max_length": 10})
-        self.fields["date2"].initial = ""
-        self.fields["sequence"].widget.attrs.update({"id": "id_char_sequence", "size": "3"})
-        self.fields["proxtext"].widget.attrs["id"] = "id_proxtext_adv"
+        self.fields["titles"].widget.attrs.update({'size': '8'})
+        self.fields["titles"].choices = self.titles
         lang_choices = [("", "All"), ]
         lang_choices.extend((l, models.Language.objects.get(code=l).name) for l in settings.SOLR_LANGUAGES)
         self.fields["language"].choices = lang_choices
+
+        # locations
+
+        self.fields["city"].choices = _distinct_values(models.Place, "city", "City")
+        self.fields["county"].choices = _distinct_values(models.Place, "county", "County")
+        self.fields["state"].choices = _distinct_values(models.Place, "state", "State")
+
+        # filters
+        self.fields["frequency"].choices = _distinct_values(models.Title, "frequency", "Select")
 
 
 class SearchTitlesForm(forms.Form):
@@ -237,19 +255,19 @@ class SearchTitlesForm(forms.Form):
         self.fields["year2"].initial = choices[-1][0]
 
         # location
-        cities = models.Place.objects.values('city').distinct()
+        cities = models.Place.objects.values('city').distinct().order_by("city")
         city = [("", "Select")]
         city.extend((p["city"], p["city"]) for p in cities)
         self.fields["city"].choices = city
         self.fields["city"].label = "City"
 
-        counties = models.Place.objects.values('county').distinct()
+        counties = models.Place.objects.values('county').distinct().order_by("county")
         county = [("", "Select")]
         county.extend((p["county"], p["county"]) for p in counties)
         self.fields["county"].choices = county
         self.fields["county"].label = "County"
 
-        states = models.Place.objects.values('state').distinct()
+        states = models.Place.objects.values('state').distinct().order_by("state")
         state = [("", "Select")]
         state.extend((p["state"], p["state"]) for p in states)
         self.fields["state"].choices = state

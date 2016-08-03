@@ -106,8 +106,8 @@ def search_pages_results(request, view_type='gallery'):
     english_search = paginator.englishify()
 
     # get some stuff from the query string for use in the form
-    lccns = query.getlist('lccn')
-    states = query.getlist('state')
+    titles = query.getlist('titles')
+    state = query.getlist('state')
 
     form = forms.SearchResultsForm({"rows": rows, "sort": sort})
     if view_type == "list":
@@ -122,7 +122,7 @@ def search_pages_results(request, view_type='gallery'):
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def search_advanced(request):
-    pages_form = forms.SearchPagesForm()
+    form = forms.SearchPagesForm()
     crumbs = list(settings.BASE_CRUMBS)
     template = "search/search_advanced.html"
     page_title = 'Advanced Search'
@@ -137,7 +137,6 @@ def search_titles(request):
     browse_val.extend([str(i) for i in range(10)])
     titles_form = forms.SearchTitlesForm()
     title_count = models.Title.objects.all().count()
-    title_test = models.Place.objects.values('city').distinct()
 
     # general advanced search
     crumbs = list(settings.BASE_CRUMBS)

@@ -3,81 +3,129 @@
 {% load static from staticfiles %}
 {% load humanize %}
 
+{% block head_page_css %}
+  {{ block.super }}
+  <link href="{% static 'css/search.css' %}" rel="stylesheet" media="screen">
+{% endblock head_page_css %}
+
 {% block subcontent %}
 
 <div class="page_search">
     <form action="{% url 'openoni_search_pages_results' %}" method="get" name="fulltext2" id="fulltext2">
-        <fieldset>
-            <legend>Limit Search</legend>
-            <div class="row">
-                <!-- state -->
-                <div class="col-md-3"> <label for="id_states">Select States:</label>
-                {{ pages_form.state }} </div>
-                <!-- newspaper -->
-                <div class="col-md-3"> <label for="id_lccns">Or Select Newspapers:</label>
-                {{ pages_form.lccn }} </div>
+        <h3>Search Terms</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="id_proxtext">{{ form.proxtext.label }}</label>
             </div>
-            <div class="row">
-                <!-- page -->
-                <div class="col-md-3">
-                    <label for="id_sequence">Specific page</label>
-                    {{ pages_form.sequence }}
-                </div>
-                <div class="col-md-3"
-                    <label for="id_language">Language</label>
-                    {{ pages_form.language }}
-                </div>
+            <div class="col-md-9">
+                {{ form.proxtext }}
             </div>
-        </fieldset>
-        <fieldset>
-            <legend>Select Date Range</legend>
-            <!-- date -->
-            <!-- send a hidden field specifying that this is a date range -->
-            <input type="hidden" name="dateFilterType" alt="dateFilterType" value="yearRange"/>
-            <p class="help-block">Newspaper pages are available for newspapers published between <strong>{{pages_form.fulltextStartYear}}-{{pages_form.fulltextEndYear}}</strong></p>
-            <div class="row">
-                <div class="col-md-2">
-                    <label for="id_date_from">from</label>
-                    <input id="id_date_from" name="date1" class="span2 form-control" type="text" data-date-format="mm/dd/yyyy" data-date="01-01-{{pages_form.fulltextStartYear}}" value="01/01/{{pages_form.fulltextStartYear}}">
-                </div>
-                <div class="col-md-2">
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="id_ortext">{{ form.ortext.label }}</label>
+            </div>
+            <div class="col-md-9">
+                {{ form.ortext }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="id_andtext">{{ form.andtext.label }}</label>
+            </div>
+            <div class="col-md-9">
+                {{ form.andtext }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="id_phrasetext">{{ form.phrasetext.label }}</label>
+            </div>
+            <div class="col-md-9">
+                {{ form.phrasetext }}
+            </div>
+        </div>
+        {% comment %} 
+            TODO put phrase searching hints here
+            <h4>Show Search Examples</h4>
+            <p>
+                Phrase searching: Add " " around phrase
+                Exclude a word: -word
+            </p>
+        {% endcomment %}
+
+        <h3>Limit By:</h3>
+        <!-- Locations and Dates -->
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.city }}
+                {{ form.county }}
+
+                {% block search_state_field %}
+                    {{ form.state }}
+                {% endblock search_state_field %}
+
+            </div>
+            <div class="col-md-6">
+                <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
+                <input type="hidden" name="dateFilterType" alt="dateFilterType" value="yearRange"/>
+                <div class="form-inline">
+                    <input id="id_date_from" name="date1" class="span2 form-control" 
+                        type="text" data-date-format="mm/dd/yyyy" 
+                        data-date="01-01-{{form.fulltextStartYear}}" 
+                        value="01/01/{{form.fulltextStartYear}}">
+
                     <label for="id_date_to">to</label>
-                    <input id="id_date_to" name="date2" class="span2 form-control" type="text" data-date-format="mm/dd/yyyy" data-date="12-31-{{pages_form.fulltextEndYear}}" value="12/31/{{pages_form.fulltextEndYear}}">
+
+                    <input id="id_date_to" name="date2" class="span2 form-control" 
+                        type="text" data-date-format="mm/dd/yyyy" 
+                        data-date="12-31-{{form.fulltextEndYear}}" 
+                        value="12/31/{{form.fulltextEndYear}}">
                 </div>
             </div>
-        </fieldset>
-        <fieldset>
-            <legend>Enter Search</legend>
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="id_ortext">...with <strong>any</strong> of the words:</label>
-                    {{ pages_form.ortext }}
-                </div>
-                <div class="col-md-3">
-                    <label for="id_andtext">...with <strong>all</strong> of the words:</label>
-                    {{ pages_form.andtext }}
-                </div>
-                <div class="col-md-3">    
-                    <label for="id_phrasetext">...with the <strong>phrase</strong>:</label>
-                    {{ pages_form.phrasetext }}
-                </div>
-            </div>    
-            <label for="id_proxtext_adv">...with the words:</label>
-            <div class="form-inline">
-                {{ pages_form.proxtext }}
-                <label for="id_proxdistance">within</label>
-                {{ pages_form.proxdistance}}
-                <span>words of each other</span>
+        </div>
+        <!-- Newspapers / LCCNs -->
+        <h3>Search only the following newspapers:</h3>
+        <div class="row">
+            <p>Hold cmd to select more than one</p>
+            <div class="col-md-12">
+                {{ form.titles }}
             </div>
-        </fieldset>
-        <fieldset>
+        </div>
+
+        <!-- TODO make the below expandable / collapsible? -->
+        <h3>Additional Filters</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="id_language">{{ form.language.label }}</label>
+                {{ form.language }}
+            </div>
+            <div class="col-md-4">
+                <label for="id_frequency">{{ form.frequency.label }}</label>
+                {{ form.frequency }}
+            </div>
+            <div class="col-md-2">
+                <label for="id_sequence">{{ form.sequence.label }}</label>
+                {{ form.sequence }}
+            </div>
+            <div class="col-md-2">
+                <label for="id_lccn">{{ form.lccn.label }}</label>
+                {{ form.lccn }}
+            </div>
+        </div>
+        {% comment %}
+            Ethnicity, labor press, and material type not
+            included as they are not in solr index
+        {% endcomment %}
+        
+        <div class="row">
             <input type="hidden" name="rows" id="rows" value="20" />
             <input type="hidden" name="searchType" value="advanced" />
             <div class="form-actions">
                 <button id="adv_reset" type="reset" value="clear" class="btn">Clear</button>
                 <button type="submit" value="Submit" class="btn btn-primary">Search</button>
             </div>
-        </fieldset>
+        </div>
     </form>
 </div><!-- end id:tab_advanced_search -->
 

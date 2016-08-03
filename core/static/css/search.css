@@ -11,3 +11,7 @@ and search results
 .pagination {
     margin:0;
 }
+
+.form-actions {
+    padding:20px 0;
+}
