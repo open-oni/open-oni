@@ -132,12 +132,15 @@ fi
 RAIS_STATUS=$(docker inspect --type=container --format="{{ .State.Running }}" openoni-dev-rais 2> /dev/null)
 if [ -z "$RAIS_STATUS" ]; then
   echo "Starting RAIS ..."
+  # The very small tile cache will help make sure the app is speedy when
+  # testing the same few pages over and over, while avoiding burning a lot of
+  # RAM during development
   docker run -d \
     --name openoni-dev-rais \
     -e RAIS_IIIFURL="$APP_URL/images/iiif" \
-    -e IIIFURL="$APP_URL/images/iiif" \
+    -e RAIS_TILECACHELEN=250 \
     -v $(pwd)/docker/data/batches:/var/local/images:z \
-    uolibraries/rais:2.6
+    uolibraries/rais:2.7.0
 
 else
   container_start "openoni-dev-rais" $RAIS_STATUS
