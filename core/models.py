@@ -684,7 +684,6 @@ class Page(models.Model):
                 "motivation": "sc:painting",
                 "@id": iiif_info_for_page(self),
                 "@type": "oa:Annotation",
-		#"on": settings.BASE_URL + self.url,
 		"on": iiif_info_for_page(self),
                 "rendering": [
                     {"@id": settings.BASE_URL + self.pdf_url, "format": "application/pdf"},
@@ -697,7 +696,7 @@ class Page(models.Model):
             }],
             "label": str(self.sequence),
             "@id": iiif_info_for_page(self),
-            "@type": "sc:Canvas",
+            "@type": "sc:Canvas"
         }
 
         if serialize:
