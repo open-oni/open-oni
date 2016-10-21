@@ -29,4 +29,4 @@ def image_server_for_page(server_type, page):
     return "%s/%s" % (server, urlquote(page.relative_image_path, safe=""))
 
 def iiif_info_for_page(page):
-    return "%s/info.json" % (image_server_for_page(TILE, page))
+    return "%s" % (image_server_for_page(TILE, page))
