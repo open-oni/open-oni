@@ -4,12 +4,14 @@
 
 This theme is included as part of Open ONI to demonstrate how a theme functions. You can use it out of the box, but if you wish to make changes to it you should make a copy of the theme and add the following to `/settings_local.py`:
 
-```INSTALLED_APPS = (
+```
+INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    'openoni.themes.YOUR_THEME_NAME_HERE',
-    'openoni.core',
-)```
+    'themes.YOUR_THEME_NAME_HERE',
+    'core',
+)
+```
 
 The INSTALLED_APPS directive will overwrite the directive in `/settings_base.py`.
 

@@ -618,7 +618,9 @@ class Issue(models.Model):
 
         if include_pages:
             j["sequences"] = [{
-                "@id": "normal",
+                # commenting id as it is optional by iiif spec
+		#  ideally, add correct URI
+		#"@id": "normal",
                 "@type": "sc:Sequence",
                 "label": "issue order",
                 "canvases": [p.json(host, False) for p in self.pages.all()]
@@ -682,6 +684,7 @@ class Page(models.Model):
                 "motivation": "sc:painting",
                 "@id": iiif_info_for_page(self),
                 "@type": "oa:Annotation",
+		"on": iiif_info_for_page(self),
                 "rendering": [
                     {"@id": settings.BASE_URL + self.pdf_url, "format": "application/pdf"},
                     {"@id": settings.BASE_URL + self.jp2_url, "format": "image/jp2"},

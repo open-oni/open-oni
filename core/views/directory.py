@@ -19,7 +19,7 @@ from core import solr_index
 from core.rdf import titles_to_graph
 from core.utils.url import unpack_url_path
 
-
+@cors
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def newspapers(request, state=None, format='html'):
     if state and state != "all_states":
