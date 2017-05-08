@@ -15,18 +15,41 @@ sed -i "s/!SECRET_KEY!/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 80)/g" 
 
 # Refresh the environmental config for DB and Solr hosts in case of IP changes
 cp /etc/openoni.ini.orig /etc/openoni.ini
-sed -i "s/!DB_HOST!/$DB_PORT_3306_TCP_ADDR/g" /etc/openoni.ini
-sed -i "s/!SOLR_HOST!/$SOLR_PORT_8983_TCP_ADDR/g" /etc/openoni.ini
+sed -i "s/!DB_HOST!/mysql/g" /etc/openoni.ini
+sed -i "s/!SOLR_HOST!/solr/g" /etc/openoni.ini
 sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
 
 # Hack apache to do the RAIS proxying
 cp /etc/apache2/sites-available/openoni-orig.conf /etc/apache2/sites-available/openoni.conf
-sed -i "s/!RAIS_HOST!/$RAIS_PORT_12415_TCP_ADDR/g" /etc/apache2/sites-available/openoni.conf
+sed -i "s/!RAIS_HOST!/rais/g" /etc/apache2/sites-available/openoni.conf
 a2ensite openoni
 service apache2 reload
 
 cd /opt/openoni
 source ENV/bin/activate
+
+DB_READY=0
+MAX_TRIES=50
+TRIES=0
+while [ $DB_READY == 0 ]
+  do
+   if
+     ! mysql -uroot -hmysql -p123456 \
+       -e 'ALTER DATABASE openoni charset=utf8'
+   then
+     sleep 5
+     let TRIES++
+     echo "Looks like we're still waiting for MySQL ... 5 more seconds ... retry $TRIES of $MAX_TRIES"
+     if [ "$TRIES" = "$MAX_TRIES" ]
+     then
+      echo "Looks like we couldn't get MySQL running. Could you check settings and try again?"
+      echo "ERROR: The database was not setup properly."
+      exit 2
+     fi
+   else
+     DB_READY=1
+   fi
+done
 
 echo "-------" >&2
 echo "Migrating database" >&2

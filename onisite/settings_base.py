@@ -50,6 +50,7 @@ ROOT_URLCONF = 'onisite.urls'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'mysql',
         'NAME': 'openoni',
         'USER': 'openoni',
         'PASSWORD': 'openoni',
@@ -185,6 +186,7 @@ STORAGE_URL = '/data/'
 # below into settings_local.py and uncomment it:
 # MARC_RETRIEVAL_URLFORMAT = "https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml"
 MARC_RETRIEVAL_URLFORMAT = "http://chroniclingamerica.loc.gov/lccn/%s/marc.xml"
+#MARC_RETRIEVAL_URLFORMAT = "http://localhost/media/marc/%s/marc.xml"
 
 # Various storage subdirectories
 BATCH_STORAGE = os.path.join(STORAGE, "batches")

@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=openoni
+      - MYSQL_USER=openoni
+      - MYSQL_PASSWORD=openoni
+    volumes:
+      - /var/lib/mysql
+      - ./../conf/mysql/:/etc/mysql/conf.d:Z
+  solr:
+    image: makuk66/docker-solr:4.10.4
+    volumes:
+      - ./solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z
+      - ./solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z
+  rais:
+    image: uolibraries/rais:2.8.0
+    environment:
+      - RAIS_IIIFURL=$APP_URL/images/iiif
+      - RAIS_TILECACHELEN=250
+    volumes:
+      - ./data/batches:/var/local/images:z
+  openoni:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./../:/opt/openoni:Z
+      - ./data:/opt/openoni/data:z
+    ports:
+      - "80:80"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+      - solr
+      - rais
