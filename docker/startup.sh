@@ -15,7 +15,8 @@ sed -i "s/!SECRET_KEY!/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 80)/g" 
 
 # Refresh the environmental config for DB and Solr hosts in case of IP changes
 cp /etc/openoni.ini.orig /etc/openoni.ini
-sed -i "s/!DB_HOST!/mysql/g" /etc/openoni.ini
+
+sed -i "s/!DB_HOST!/rdbms/g" /etc/openoni.ini
 sed -i "s/!SOLR_HOST!/solr/g" /etc/openoni.ini
 sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
 
@@ -29,20 +30,20 @@ cd /opt/openoni
 source ENV/bin/activate
 
 DB_READY=0
-MAX_TRIES=50
+MAX_TRIES=15
 TRIES=0
 while [ $DB_READY == 0 ]
   do
    if
-     ! mysql -uroot -hmysql -p123456 \
+     ! mysql -uroot -hrdbms -p123456 \
        -e 'ALTER DATABASE openoni charset=utf8'
    then
      sleep 5
      let TRIES++
-     echo "Looks like we're still waiting for MySQL ... 5 more seconds ... retry $TRIES of $MAX_TRIES"
+     echo "Looks like we're still waiting for RDBMS ... 5 more seconds ... retry $TRIES of $MAX_TRIES"
      if [ "$TRIES" = "$MAX_TRIES" ]
      then
-      echo "Looks like we couldn't get MySQL running. Could you check settings and try again?"
+      echo "Looks like we couldn't get RDBMS running. Could you check settings and try again?"
       echo "ERROR: The database was not setup properly."
       exit 2
      fi
