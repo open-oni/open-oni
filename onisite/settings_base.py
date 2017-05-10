@@ -50,7 +50,7 @@ ROOT_URLCONF = 'onisite.urls'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'mysql',
+        'HOST': 'rdbms',
         'NAME': 'openoni',
         'USER': 'openoni',
         'PASSWORD': 'openoni',
