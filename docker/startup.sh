@@ -1,18 +1,17 @@
 #!/bin/bash
-urlfile="/opt/openoni/onisite/urls.py"
-if [ ! -f $urlfile ]; then
-  echo
-  echo
-  echo "Cannot start ONI: you must create onisite/urls.py, e.g.:"
-  echo
-  echo "    cp onisite/urls_example.py onisite/urls.py"
-  echo "    docker-compose up"
-  echo
-  echo "(You may wish to edit your local URL rules, but the defaults will work for a simple setup)"
-  echo
-  exit 1
+
+# Make sure settings_local.py exists so the app doesn't crash
+if [ ! -f onisite/settings_local.py ]; then
+  touch onisite/settings_local.py
+fi
+# Make sure we have a default urls.py
+if [ ! -f onisite/urls.py ]; then
+  cp onisite/urls_example.py onisite/urls.py
 fi
 
+# Die on missing APP_URL; this one could default to localhost, except that the
+# RAIS container won't have gotten it set, making it incapable of reporting the
+# IIIF URLs to images
 if [[ ${APP_URL:-} == "" ]]; then
   echo
   echo
