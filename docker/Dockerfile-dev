@@ -30,19 +30,11 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 VOLUME /opt/openoni
 WORKDIR /opt/openoni
 
-ADD pip-install.sh /
-ADD load_batch.sh /
-ADD startup.sh /
-ADD test.sh /
-ADD manage /usr/local/bin/manage
-ADD django-admin /usr/local/bin/django-admin
-ADD openoni.ini /etc/openoni.ini.orig
-
-RUN chmod u+x /*.sh
-RUN chmod u+x /usr/local/bin/*
+ADD entrypoint.sh /
+RUN chmod u+x /entrypoint.sh
 
 RUN echo "/usr/local/bin/manage delete_cache" > /etc/cron.daily/delete_cache
 RUN chmod u+x /etc/cron.daily/delete_cache
 
 EXPOSE 80
-CMD ["/startup.sh"]
+ENTRYPOINT /entrypoint.sh
