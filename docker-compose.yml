@@ -41,6 +41,8 @@ services:
       - rdbms
       - solr
       - rais
+    environment:
+      - APP_URL
 volumes:
   data-rdbms: {}
   data-solr: {}
