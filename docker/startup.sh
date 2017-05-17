@@ -45,7 +45,6 @@ sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
 cp /etc/apache2/sites-available/openoni-orig.conf /etc/apache2/sites-available/openoni.conf
 sed -i "s/!RAIS_HOST!/rais/g" /etc/apache2/sites-available/openoni.conf
 a2ensite openoni
-service apache2 reload
 
 cd /opt/openoni
 source ENV/bin/activate
