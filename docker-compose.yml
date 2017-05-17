@@ -10,15 +10,15 @@ services:
       - MYSQL_PASSWORD=openoni
     volumes:
       - /var/lib/mysql
-      - ./../conf/mysql/:/etc/mysql/conf.d:Z
+      - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-rdbms:/var/lib/mysql
     ports:
       - "3306:3306"
   solr:
     image: makuk66/docker-solr:4.10.4
     volumes:
-      - ./solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z
-      - ./solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z
+      - ./docker/solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z
+      - ./docker/solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z
       - data-solr:/opt/solr
   rais:
     image: uolibraries/rais:2.8.0
@@ -29,11 +29,11 @@ services:
       - ./data/batches:/var/local/images:z
   openoni:
     build:
-      context: .
+      context: ./docker
       dockerfile: Dockerfile-dev
     volumes:
-      - ./../:/opt/openoni:Z
-      - ./data:/opt/openoni/data:z
+      - ./:/opt/openoni:Z
+      - ./docker/data:/opt/openoni/data:z
     ports:
       - "80:80"
     depends_on:
