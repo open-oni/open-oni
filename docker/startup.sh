@@ -72,6 +72,10 @@ while [ $DB_READY == 0 ]
    fi
 done
 
+echo "setting up a test database ..."
+mysql -uroot -hrdbms -p123456 \
+  -e 'USE mysql; GRANT ALL on test_openoni.* TO "openoni"@"%" IDENTIFIED BY "openoni";'
+
 echo "-------" >&2
 echo "Migrating database" >&2
 /opt/openoni/manage.py migrate
