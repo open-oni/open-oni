@@ -38,11 +38,8 @@ fi
 # same after it's first set.
 sed -i "s/!SECRET_KEY!/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 80)/g" /etc/openoni.ini.orig
 
-# Refresh the environmental config for DB and Solr hosts in case of IP changes
+# Refresh the environmental config for APP_URL in case it needs to change
 cp /etc/openoni.ini.orig /etc/openoni.ini
-
-sed -i "s/!DB_HOST!/rdbms/g" /etc/openoni.ini
-sed -i "s/!SOLR_HOST!/solr/g" /etc/openoni.ini
 sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
 
 # Hack apache to do the RAIS proxying
