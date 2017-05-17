@@ -1,4 +1,29 @@
 #!/bin/bash
+urlfile="/opt/openoni/onisite/urls.py"
+if [ ! -f $urlfile ]; then
+  echo
+  echo
+  echo "Cannot start ONI: you must create onisite/urls.py, e.g.:"
+  echo
+  echo "    cp onisite/urls_example.py onisite/urls.py"
+  echo "    docker-compose up"
+  echo
+  echo "(You may wish to edit your local URL rules, but the defaults will work for a simple setup)"
+  echo
+  exit 1
+fi
+
+if [[ ${APP_URL:-} == "" ]]; then
+  echo
+  echo
+  echo "Cannot start ONI: you must set \$APP_URL in your environment.  e.g.:"
+  echo
+  echo "    export APP_URL=http://oregonnews.uoregon.edu"
+  echo "    docker-compose up"
+  echo
+  echo
+  exit 1
+fi
 
 export APACHE_RUN_USER=www-data
 export APACHE_RUN_GROUP=www-data
@@ -65,6 +90,6 @@ echo "Running collectstatic" >&2
 #   See: https://github.com/docker-library/php/pull/59
 rm -f /var/run/apache2/apache2.pid
 
+echo "ONI setup successful; starting Apache"
 source /etc/apache2/envvars
 exec apache2 -D FOREGROUND
-
