@@ -25,7 +25,7 @@ services:
       - RAIS_IIIFURL=$APP_URL/images/iiif
       - RAIS_TILECACHELEN=250
     volumes:
-      - ./data/batches:/var/local/images:z
+      - ./docker/data/batches:/var/local/images:z
   web:
     build:
       context: ./docker
