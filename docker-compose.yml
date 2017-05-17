@@ -26,7 +26,7 @@ services:
       - RAIS_TILECACHELEN=250
     volumes:
       - ./data/batches:/var/local/images:z
-  openoni:
+  web:
     build:
       context: ./docker
       dockerfile: Dockerfile-dev
