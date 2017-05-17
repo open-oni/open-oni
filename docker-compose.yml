@@ -9,7 +9,6 @@ services:
       - MYSQL_USER=openoni
       - MYSQL_PASSWORD=openoni
     volumes:
-      - /var/lib/mysql
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-rdbms:/var/lib/mysql
     ports:
