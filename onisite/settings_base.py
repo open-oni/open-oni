@@ -120,11 +120,11 @@ CACHES = {
     }
 }
 
-# Hosts/domain names that are valid for this site.  This MUST be overridden in
-# settings_local.py if you aren't in DEBUG mode.
+# Hosts/domain names that are valid for this site.  This should be overridden
+# in settings_local.py, especially for production!
 #
 # TODO: Allow this to be overridden by the INI file as well
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 ####################################################################
 # 3RD-PARTY LIB SETTINGS
