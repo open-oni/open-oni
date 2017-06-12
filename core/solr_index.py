@@ -394,24 +394,12 @@ def page_search(d):
     q = ['+type:page']
 
     simple_fields = ['city', 'county', 'frequency', 
-                     'state'
+                     'state', 'lccn'
                     ]
 
     for field in simple_fields:
         if d.get(field, None):
             q.append(query_join(d.getlist(field), field))
-
-    # if d.get('lccn', None):
-    #     q.append(query_join(d.getlist('lccn'), 'lccn'))
-
-    # if d.get('lccn1', None):
-    #     q.append(query_join(d.getlist('lccn1'), 'lccn'))
-    lccn_bld = []
-    if d.get('lccn', None):
-        lccn_bld.append(d.getlist('lccn'))
-    if d.get('lccn1', None):
-        lccn_bld.append(d.getlist('lccn1'))
-    q.append(query_join(list(lccn_bld),'lccn'))
 
     date_filter_type = d.get('dateFilterType', None)
     date_boundaries = _fulltext_range()

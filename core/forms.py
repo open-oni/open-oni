@@ -181,7 +181,7 @@ class SearchPagesForm(SearchPagesFormBase):
     proxtext = fields.CharField(label="Words near each other")
     proxdistance = fields.ChoiceField(choices=PROX_CHOICES)
     # misc
-    lccn1 = fields.CharField(label="LCCN")
+    #lccn1 = fields.CharField(label="LCCN")
     sequence = fields.CharField(label="Page Number")
     lccn = fields.MultipleChoiceField(choices=[])
     # filters
@@ -192,7 +192,7 @@ class SearchPagesForm(SearchPagesFormBase):
         city, county, state, 
         date1, date2, date_day, date_month,
         andtext, ortext, phrasetext, proxtext, proxdistance,
-        lccn1, sequence, lccn,
+        lccn, sequence,# lccn1,
         language, frequency
     ]
     for item in form_control_items:
@@ -231,12 +231,12 @@ class SearchTitlesForm(forms.Form):
     ethnicity = fields.ChoiceField(choices=[], initial="", label="Ethnicity Press:")
     labor = fields.ChoiceField(choices=[], initial="", label="Labor Press:")
     material_type = fields.ChoiceField(choices=[], initial="", label="Material Type:")
-    lccn1 = fields.CharField(max_length=255, label="LCCN:")
+    #lccn1 = fields.CharField(max_length=255, label="LCCN:")
 
     form_control_items = [
         state, county, city, terms,
         frequency, language, ethnicity, labor,
-        material_type, lccn1
+        material_type #, lccn1
     ]
     for item in form_control_items:
         item.widget.attrs["class"] = "form-control"
