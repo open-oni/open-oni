@@ -181,9 +181,8 @@ class SearchPagesForm(SearchPagesFormBase):
     proxtext = fields.CharField(label="Words near each other")
     proxdistance = fields.ChoiceField(choices=PROX_CHOICES)
     # misc
-    lccn = fields.CharField(label="LCCN")
     sequence = fields.CharField(label="Page Number")
-    titles = fields.MultipleChoiceField(choices=[])
+    lccn = fields.MultipleChoiceField(choices=[])
     # filters
     frequency = fields.ChoiceField(label="Frequency")
     language = fields.ChoiceField(label="Language")
@@ -192,7 +191,7 @@ class SearchPagesForm(SearchPagesFormBase):
         city, county, state, 
         date1, date2, date_day, date_month,
         andtext, ortext, phrasetext, proxtext, proxdistance,
-        lccn, sequence, titles,
+        lccn, sequence,
         language, frequency
     ]
     for item in form_control_items:
@@ -203,8 +202,8 @@ class SearchPagesForm(SearchPagesFormBase):
 
         self.date = self.data.get('date1', '')
 
-        self.fields["titles"].widget.attrs.update({'size': '8'})
-        self.fields["titles"].choices = self.titles
+        self.fields["lccn"].widget.attrs.update({'size': '8'})
+        self.fields["lccn"].choices = self.titles
         lang_choices = [("", "All"), ]
         lang_choices.extend((l, models.Language.objects.get(code=l).name) for l in settings.SOLR_LANGUAGES)
         self.fields["language"].choices = lang_choices
@@ -231,12 +230,11 @@ class SearchTitlesForm(forms.Form):
     ethnicity = fields.ChoiceField(choices=[], initial="", label="Ethnicity Press:")
     labor = fields.ChoiceField(choices=[], initial="", label="Labor Press:")
     material_type = fields.ChoiceField(choices=[], initial="", label="Material Type:")
-    lccn = fields.CharField(max_length=255, label="LCCN:")
 
     form_control_items = [
         state, county, city, terms,
         frequency, language, ethnicity, labor,
-        material_type, lccn
+        material_type
     ]
     for item in form_control_items:
         item.widget.attrs["class"] = "form-control"

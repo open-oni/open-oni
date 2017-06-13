@@ -393,8 +393,8 @@ def page_search(d):
     """
     q = ['+type:page']
 
-    simple_fields = ['city', 'county', 'frequency', 'lccn',
-                     'state', 'titles'
+    simple_fields = ['city', 'county', 'frequency', 
+                     'state', 'lccn'
                     ]
 
     for field in simple_fields:
