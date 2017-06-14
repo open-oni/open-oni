@@ -43,6 +43,7 @@ services:
       - rais
     environment:
       - APP_URL
+      - HTTPPORT
 volumes:
   data-rdbms: {}
   data-solr: {}
