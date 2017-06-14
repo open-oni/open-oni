@@ -34,7 +34,7 @@ services:
       - ./:/opt/openoni:Z
       - ./docker/data:/opt/openoni/data:z
     ports:
-      - "80:80"
+      - "$HTTPPORT:80"
     depends_on:
       - rdbms
     links:
