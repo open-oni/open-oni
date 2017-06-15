@@ -27,14 +27,14 @@
     <table id="newspapers" class="table table-striped table-hover browse_collect tablesorter" cellspacing="0" summary="">
         <thead>
         <tr>
-            <th class="headerSortDown left_no_border">State</th>
-            <th>Location</th>
-            <th>Newspaper</th>
-            <th>Browse Issues</th>
-            <th>No. of Issues</th>
-            <th>Earliest Issue</th>
-            <th>Latest Issue</th>
-            <th>More Info</th>
+            <th scope="col" class="headerSortDown left_no_border">State</th>
+            <th scope="col">Location</th>
+            <th scope="col">Newspaper</th>
+            <th scope="col">Browse Issues</th>
+            <th scope="col">No. of Issues</th>
+            <th scope="col">Earliest Issue</th>
+            <th scope="col">Latest Issue</th>
+            <th scope="col">More Info</th>
         </tr>
         </thead>
         <tbody>
@@ -48,7 +48,7 @@
                     {{ place.get_city_county }}<br/>
                 {% endfor %}
                 </td>
-                <td><a href="{% url 'openoni_title' lccn %}"><strong>{{title.display_name}}</strong></a><br />{{title.place_of_publication}}, {{title.start_year}}-{{title.end_year}}</td>
+                <td scope="row"><a href="{% url 'openoni_title' lccn %}"><strong>{{title.display_name}}</strong></a><br />{{title.place_of_publication}}, {{title.start_year}}-{{title.end_year}}</td>
                 <td><a href="{% url 'openoni_issues_title' lccn %}" shape="rect"><img src="{% static 'images/calendar_icon.gif' %}" alt="calendar"/></a></td>
                 <td>{{title.issues.count}}</td>
                 <td><a href="{% url 'openoni_issue_pages' lccn title.first 1 %}">{{title.first|date:'Y-m-d'}}</a></td>
