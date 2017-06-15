@@ -12,7 +12,7 @@ services:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-rdbms:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "$RDBMSPORT:3306"
   solr:
     image: makuk66/docker-solr:4.10.4
     volumes:
@@ -22,7 +22,7 @@ services:
   rais:
     image: uolibraries/rais:2.8.0
     environment:
-      - RAIS_IIIFURL=$APP_URL/images/iiif
+      - RAIS_IIIFURL=$APP_URL:$HTTPPORT/images/iiif
       - RAIS_TILECACHELEN=250
     volumes:
       - ./docker/data/batches:/var/local/images:z
@@ -34,7 +34,7 @@ services:
       - ./:/opt/openoni:Z
       - ./docker/data:/opt/openoni/data:z
     ports:
-      - "80:80"
+      - "$HTTPPORT:80"
     depends_on:
       - rdbms
     links:
@@ -43,6 +43,7 @@ services:
       - rais
     environment:
       - APP_URL
+      - HTTPPORT
 volumes:
   data-rdbms: {}
   data-solr: {}

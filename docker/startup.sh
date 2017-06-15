@@ -39,6 +39,12 @@ sed -i "s/!SECRET_KEY!/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 80)/g" 
 
 # Refresh the environmental config for APP_URL in case it needs to change
 cp /etc/openoni.ini.orig /etc/openoni.ini
+
+# Add in the port if necessary
+if [[ $HTTPPORT != "" && $HTTPPORT != 80 ]]; then
+  sed -i "s|!APP_URL!|!APP_URL!:$HTTPPORT|g" /etc/openoni.ini
+fi
+
 sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
 
 # Hack apache to do the RAIS proxying
