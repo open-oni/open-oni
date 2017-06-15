@@ -22,7 +22,7 @@ services:
   rais:
     image: uolibraries/rais:2.8.0
     environment:
-      - RAIS_IIIFURL=$APP_URL/images/iiif
+      - RAIS_IIIFURL=$APP_URL:$HTTPPORT/images/iiif
       - RAIS_TILECACHELEN=250
     volumes:
       - ./docker/data/batches:/var/local/images:z
