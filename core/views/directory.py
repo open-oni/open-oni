@@ -21,22 +21,22 @@ from core.utils.url import unpack_url_path
 
 @cors
 @cache_page(settings.DEFAULT_TTL_SECONDS)
-def newspapers(request, state=None, format='html'):
-    if state and state != "all_states":
-        state = unpack_url_path(state)
-        if state is None:
+def newspapers(request, city=None, format='html'):
+    if city and city != "all_cities":
+        city = unpack_url_path(city)
+        if city is None:
             raise Http404
         else:
-            state = state.title()
+            city = city.title()
     else:
-        state = request.GET.get("state", None)
+        city = request.GET.get("city", None)
 
     language = request.GET.get('language', None)
     if language:
         language_display = models.Language.objects.get(code__contains=language).name
     ethnicity = request.GET.get('ethnicity', None)
 
-    if not state and not language and not ethnicity:
+    if not city and not language and not ethnicity:
         page_title = 'All Digitized Newspapers'
     else:
         page_title = 'Results: Digitized Newspapers'
@@ -45,8 +45,8 @@ def newspapers(request, state=None, format='html'):
     titles = titles.annotate(first=Min('issues__date_issued'))
     titles = titles.annotate(last=Max('issues__date_issued'))
 
-    if state:
-        titles = titles.filter(places__state__iexact=state)
+    if city:
+        titles = titles.filter(places__city__iexact=city)
 
     if language:
         titles = titles.filter(languages__code__contains=language)
@@ -61,16 +61,16 @@ def newspapers(request, state=None, format='html'):
         except models.Ethnicity.DoesNotExist:
             pass
 
-    _newspapers_by_state = {}
+    _newspapers_by_city = {}
     for title in titles:
-        if state:
-            _newspapers_by_state.setdefault(state, set()).add(title)
+        if city:
+            _newspapers_by_city.setdefault(city, set()).add(title)
         else:
             for place in title.places.all():
-                if place.state:
-                    _newspapers_by_state.setdefault(place.state, set()).add(title)
+                if place.city:
+                    _newspapers_by_city.setdefault(place.city, set()).add(title)
 
-    newspapers_by_state = [(s, sorted(t, key=lambda title: title.name_normal)) for s, t in sorted(_newspapers_by_state.iteritems())]
+    newspapers_by_city = [(s, sorted(t, key=lambda title: title.name_normal)) for s, t in sorted(_newspapers_by_city.iteritems())]
     crumbs = list(settings.BASE_CRUMBS)
 
     if format == "html":
@@ -84,19 +84,19 @@ def newspapers(request, state=None, format='html'):
                                   context_instance=RequestContext(request),
                                   content_type="text/plain")
     elif format == "csv":
-        csv_header_labels = ('Persistent Link', 'State', 'Title', 'LCCN', 'OCLC',
+        csv_header_labels = ('Persistent Link', 'City', 'Title', 'LCCN', 'OCLC',
                              'ISSN', 'No. of Issues', 'First Issue Date',
                              'Last Issue Date', 'More Info')
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="openoni_newspapers.csv"'
         writer = csv.writer(response)
         writer.writerow(csv_header_labels)
-        for state, titles in newspapers_by_state:
+        for city, titles in newspapers_by_city:
             for title in titles:
                 writer.writerow(('%s%s' % (settings.BASE_URL,
                                                   reverse('openoni_issues_title',
                                                            kwargs={'lccn': title.lccn}),),
-                                 state, title, title.lccn or '', title.oclc or '',
+                                 city, title, title.lccn or '', title.oclc or '',
                                  title.issn or '', title.issues.count(), title.first,
                                  title.last,
                                  '%s%s' % (settings.BASE_URL, reverse('openoni_title_essays',
@@ -114,7 +114,7 @@ def newspapers(request, state=None, format='html'):
             "collections": [],
         }
 
-        for state, titles in newspapers_by_state:
+        for city, titles in newspapers_by_city:
             for title in titles:
                 results["collections"].append({
                     "@id": settings.BASE_URL + title.json_url,

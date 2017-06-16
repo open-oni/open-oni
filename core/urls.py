@@ -156,9 +156,9 @@ urlpatterns = [
     url(r'^newspapers.(?P<format>json)$', directory.newspapers,
         name='openoni_newspapers_format'),
 
-    url(r'^newspapers/(?P<state>[^/;]+)/$', directory.newspapers,
-        name='openoni_newspapers_state'),
-    url(r'^newspapers/(?P<state>[^/;]+)\.(?P<format>json)$', directory.newspapers,
+    url(r'^newspapers/(?P<city>[^/;]+)/$', directory.newspapers,
+        name='openoni_newspapers_city'),
+    url(r'^newspapers/(?P<city>[^/;]+)\.(?P<format>json)$', directory.newspapers,
         name='openoni_newspapers_json'),
 
     url('search/pages/opensearch.xml', search.search_pages_opensearch,
