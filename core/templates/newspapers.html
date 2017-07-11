@@ -18,9 +18,6 @@
     <div class="results_nav">
         <p class="term">
             {{ titles.count|intcomma }} newspaper{% if titles.count > 1 %}s{% endif %}
-            {% if city %}from <strong>{{ city }}</strong>{% endif %}
-            {% if ethnicity %}filtered on <strong>{{ ethnicity }}</strong>{% endif %} 
-            {% if language_display %}in <strong>{{ language_display }}</strong>{% endif %}
             {% if titles.count == 1 %}is{% else %}are{% endif %} available for viewing on this site. 
         </p>
     </div>
@@ -38,8 +35,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for city, titles in newspapers_by_city %}
-        {% for title in titles %}
+        {% for title in sorted_titles %}
             <tr>
                 <th class="first left_no_border" scope="row">
                     <a href="{% url 'openoni_title' title.lccn %}">{{title.display_name}}</a>
@@ -56,7 +52,6 @@
                 <td><a href="{% url 'openoni_issue_pages' title.lccn title.last 1 %}">{{title.last|date:'Y-m-d'}}</a></td>
                 <td class="last">{% if title.has_essays %}<a href="{% url 'openoni_title' title.lccn %}">Yes</a>{% endif %}</td>
             </tr>
-        {% endfor %}
         {% endfor %}
         </tbody>
     </table>
@@ -106,15 +101,20 @@
     $(document).ready(function() { 
         $("#newspapers").tablesorter({ 
             headers: { 
-                {% if city %}0: { sorter: false},{% endif %}
-                1: { sorter: 'titles' },
-                2: { sorter: false }, 
-                6: { sorter: false } 
+                // When sorting by titles, use the title formatter so we skip "the", "a", and "an"
+                0: { sorter: 'titles' },
+
+                // Don't offer sorting on the "browse issues" link
+                3: { sorter: false },
+
+                // Don't offer sorting on the "More Info" link
+                7: { sorter: false },
             }, 
             widgets: ['zebra'],
-            // for all newspapers, sort on city. If city, then sort on title.
-            sortList: [{% if not city %}[0,0]{% else %}[1,0]{% endif %}]
-        }); 
+
+            // Default to sorting by title
+            sortList: [[0,0]]
+        });
     });
 
 </script>

@@ -1,4 +1,0 @@
-Persistent Link | State | Title | LCCN | OCLC | ISSN | No. of Issues | First Issue Date | Last Issue Date | More Info
-{% for state, titles in newspapers_by_state %}
-{% for title in titles %}{{BASE_URL}}{% url 'openoni_issues_title' title.lccn %} | {{state}} | {{title}} | {{title.lccn|default:""}} | {{title.oclc|default:""}} | {{title.issn|default:""}} | {{title.issues.count}} | {{title.first}} | {{title.last}} | {% if title.has_essays %}{{BASE_URL}}{% url 'openoni_title_essays' title.lccn %}{% endif %}
-{% endfor %}{% endfor %}
