@@ -149,17 +149,8 @@ urlpatterns = [
     url(r'^newspapers/$', directory.newspapers, name='openoni_newspapers'),
     url(r'^newspapers/feed/$', directory.newspapers_atom, name='openoni_newspapers_atom'),
 
-    url(r'^newspapers.(?P<format>csv)$', directory.newspapers,
-        name='openoni_newspapers_format'),
-    url(r'^newspapers.(?P<format>txt)$', directory.newspapers,
-        name='openoni_newspapers_format'),
     url(r'^newspapers.(?P<format>json)$', directory.newspapers,
         name='openoni_newspapers_format'),
-
-    url(r'^newspapers/(?P<state>[^/;]+)/$', directory.newspapers,
-        name='openoni_newspapers_state'),
-    url(r'^newspapers/(?P<state>[^/;]+)\.(?P<format>json)$', directory.newspapers,
-        name='openoni_newspapers_json'),
 
     url('search/pages/opensearch.xml', search.search_pages_opensearch,
         name='openoni_search_pages_opensearch'),
