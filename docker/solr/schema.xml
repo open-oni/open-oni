@@ -187,5 +187,4 @@
   <copyField source="ocr_*" dest="ocr" />
 
   <uniqueKey>id</uniqueKey>
-  <solrQueryParser defaultOperator="OR"/>
 </schema>
