@@ -1110,11 +1110,6 @@
     <field name="year" type="tint" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="sequence" type="tint" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="page" type="string" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="ocr_eng" type="text_eng" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="ocr_fre" type="text_fre" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="ocr_spa" type="text_spa" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="ocr_ita" type="text_ita" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="ocr_ger" type="text_ger" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="ocr" type="text" indexed="true" stored="true" required="false" multiValued="true" />
     <field name="batch" type="string" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="edition_label" type="text" indexed="true" stored="true" required="false" multiValued="false" />
@@ -1123,8 +1118,16 @@
     <field name="country" type="string" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="text" type="text_general" indexed="true" stored="false" required="false" multiValued="false" />
 
+    <!-- all the languages (we currently support) of OCR, mapped to the various
+         built-in language-specific field types -->
+    <field name="ocr_eng" type="text_en" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_fre" type="text_fr" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_spa" type="text_es" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_ita" type="text_it" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_ger" type="text_de" indexed="true" stored="true" required="false" multiValued="false" />
+    <copyField source="ocr_*" dest="ocr" />
+
     <copyField source="subject" dest="subject_facet" />
     <copyField source="place_of_publication" dest="place_of_publication_facet" />
     <copyField source="title" dest="title_facet" />
-    <copyField source="ocr_*" dest="ocr" />
 </schema>
