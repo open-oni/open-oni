@@ -33,5 +33,6 @@ fi
 # configs are no good for us :(
 rm -f $coredir/conf/managed-schema
 cp /tmp/solr/schema.xml $coredir/conf/schema.xml
+cp /tmp/solr/solrconfig.xml $coredir/conf/solrconfig.xml
 
 exec solr -f
