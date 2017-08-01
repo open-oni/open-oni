@@ -1170,6 +1170,76 @@
 
     -->
 
+  <!-- Add unknown fields to the schema
+
+       An example field type guessing update processor that will
+       attempt to parse string-typed field values as Booleans, Longs,
+       Doubles, or Dates, and then add schema fields with the guessed
+       field types.
+
+       This requires that the schema is both managed and mutable, by
+       declaring schemaFactory as ManagedIndexSchemaFactory, with
+       mutable specified as true.
+
+       See http://wiki.apache.org/solr/GuessingFieldTypes
+    -->
+  <updateRequestProcessorChain name="add-unknown-fields-to-the-schema">
+    <!-- UUIDUpdateProcessorFactory will generate an id if none is present in the incoming document -->
+    <processor class="solr.UUIDUpdateProcessorFactory" />
+    <processor class="solr.RemoveBlankFieldUpdateProcessorFactory"/>
+    <processor class="solr.FieldNameMutatingUpdateProcessorFactory">
+      <str name="pattern">[^\w-\.]</str>
+      <str name="replacement">_</str>
+    </processor>
+    <processor class="solr.ParseBooleanFieldUpdateProcessorFactory"/>
+    <processor class="solr.ParseLongFieldUpdateProcessorFactory"/>
+    <processor class="solr.ParseDoubleFieldUpdateProcessorFactory"/>
+    <processor class="solr.ParseDateFieldUpdateProcessorFactory">
+      <arr name="format">
+        <str>yyyy-MM-dd'T'HH:mm:ss.SSSZ</str>
+        <str>yyyy-MM-dd'T'HH:mm:ss,SSSZ</str>
+        <str>yyyy-MM-dd'T'HH:mm:ss.SSS</str>
+        <str>yyyy-MM-dd'T'HH:mm:ss,SSS</str>
+        <str>yyyy-MM-dd'T'HH:mm:ssZ</str>
+        <str>yyyy-MM-dd'T'HH:mm:ss</str>
+        <str>yyyy-MM-dd'T'HH:mmZ</str>
+        <str>yyyy-MM-dd'T'HH:mm</str>
+        <str>yyyy-MM-dd HH:mm:ss.SSSZ</str>
+        <str>yyyy-MM-dd HH:mm:ss,SSSZ</str>
+        <str>yyyy-MM-dd HH:mm:ss.SSS</str>
+        <str>yyyy-MM-dd HH:mm:ss,SSS</str>
+        <str>yyyy-MM-dd HH:mm:ssZ</str>
+        <str>yyyy-MM-dd HH:mm:ss</str>
+        <str>yyyy-MM-dd HH:mmZ</str>
+        <str>yyyy-MM-dd HH:mm</str>
+        <str>yyyy-MM-dd</str>
+      </arr>
+    </processor>
+    <processor class="solr.AddSchemaFieldsUpdateProcessorFactory">
+      <str name="defaultFieldType">strings</str>
+      <lst name="typeMapping">
+        <str name="valueClass">java.lang.Boolean</str>
+        <str name="fieldType">booleans</str>
+      </lst>
+      <lst name="typeMapping">
+        <str name="valueClass">java.util.Date</str>
+        <str name="fieldType">tdates</str>
+      </lst>
+      <lst name="typeMapping">
+        <str name="valueClass">java.lang.Long</str>
+        <str name="valueClass">java.lang.Integer</str>
+        <str name="fieldType">tlongs</str>
+      </lst>
+      <lst name="typeMapping">
+        <str name="valueClass">java.lang.Number</str>
+        <str name="fieldType">tdoubles</str>
+      </lst>
+    </processor>
+    <processor class="solr.LogUpdateProcessorFactory"/>
+    <processor class="solr.DistributedUpdateProcessorFactory"/>
+    <processor class="solr.RunUpdateProcessorFactory"/>
+  </updateRequestProcessorChain>
+
   <!-- Deduplication
 
        An example dedup update processor that creates the "id" field
