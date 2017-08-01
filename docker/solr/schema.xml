@@ -1061,6 +1061,24 @@
      </similarity>
     -->
 
+    <!-- ONI-specific field types -->
+    <fieldType name="text" class="solr.TextField">
+      <analyzer>
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ASCIIFoldingFilterFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt,lang/stopwords_fr.txt,lang/stopwords_es.txt,lang/stopwords_it.txt,lang/stopwords_de.txt"/>
+        <filter class="solr.WordDelimiterFilterFactory"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+      </analyzer>
+    </fieldType>
+    <fieldType name="text_lower" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+      <analyzer>
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
     <!-- ONI-specific field definitions -->
     <field name="type" type="string" indexed="true" stored="true" required="true" multiValued="false" />
     <field name="lccn" type="string" indexed="true" stored="true" required="true" multiValued="false" />
@@ -1103,7 +1121,7 @@
     <field name="section_label" type="text" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="url" type="text" indexed="true" stored="true" required="false" multiValued="true" />
     <field name="country" type="string" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="text" type="text_lower" indexed="true" stored="false" required="false" multiValued="false" />
+    <field name="text" type="text_general" indexed="true" stored="false" required="false" multiValued="false" />
 
     <copyField source="subject" dest="subject_facet" />
     <copyField source="place_of_publication" dest="place_of_publication_facet" />
