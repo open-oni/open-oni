@@ -56,8 +56,8 @@ urlpatterns = [
     # example: /issues/
     url(r'^issues/$', browse.issues, name="openoni_issues"),
 
-    # example: /issues/1900/
-    url(r'^issues/(?P<year>\d{4})/$', browse.issues, name="openoni_issues_for_year"),
+    # example: /issues/1900
+    url(r'^issues/(?P<year>\d{4})$', browse.issues, name="openoni_issues_for_year"),
 
     # example: /lccn/sn85066387/issues/
     url(r'^lccn/(?P<lccn>\w+)/issues/$', browse.issues_title, name="openoni_issues_title"),
