@@ -14,11 +14,15 @@ services:
     ports:
       - "$RDBMSPORT:3306"
   solr:
-    image: makuk66/docker-solr:4.10.4
+    image: solr:6.6
     volumes:
-      - ./docker/solr/schema.xml:/opt/solr/example/solr/collection1/conf/schema.xml:Z
-      - ./docker/solr/solrconfig.xml:/opt/solr/example/solr/collection1/conf/solrconfig.xml:Z
+      - ./docker/solr/:/tmp/solr:Z
       - data-solr:/opt/solr
+    entrypoint:
+      - docker-entrypoint.sh
+      - /tmp/solr/precreate
+    ports:
+      - "$SOLRPORT:8983"
   rais:
     image: uolibraries/rais:2.8.0
     environment:
