@@ -12,7 +12,7 @@ def medium_image_url(page):
     return resize_url(page, 550)
 
 def resize_url(page, size):
-    return  "%s/full/%d,/0/default.jpg" % (image_server_for_page(RESIZE, page), settings.THUMBNAIL_WIDTH)
+    return  "%s/full/%d,/0/default.jpg" % (image_server_for_page(RESIZE, page), size)
 
 def specific_tile_url(page, w, h, x1, y1, x2, y2):
 
