@@ -16,6 +16,10 @@ def medium_image_url(page):
     return image_urls.medium_image_url(page)
 
 @register.simple_tag
+def custom_image_url(page, width):
+    return image_urls.resize_url(page, width)
+
+@register.simple_tag
 def specific_tile_url(page, w, h, x1, y1, x2, y2):
     return image_urls.specific_tile_url(page, w, h, x1, y1, x2, y2)
 
