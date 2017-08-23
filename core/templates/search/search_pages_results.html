@@ -109,8 +109,8 @@
 <form class="form-inline search_results_form" action="" method="GET">
   <div class="row searhc_results_option_set">
     <div class="col-md-3">
-      <label for="county">
-      <select class="form-control" name="county">
+      <label for="county">County</label>
+      <select class="form-control" id="county" name="county">
         <option value="">All</option>
         {% for county, count in page.facets.county %}
           <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
@@ -118,8 +118,8 @@
       </select>
     </div>
     <div class="col-md-3">
-      <label for="city">
-      <select class="form-control" name="city">
+      <label for="city">City</label>
+      <select class="form-control" id="city" name="city">
         <option value="">All</option>
         {% for city, count in page.facets.city %}
           <option value="{{city}}" {% ifequal city request.GET.city %} selected=selected {% endifequal %}>{{city}} ({{count}})</option>
@@ -127,8 +127,8 @@
       </select>
     </div>
     <div class="col-md-3">
-      <label for="frequency">
-      <select class="form-control" name="frequency">
+      <label for="frequency">Frequency</label>
+      <select class="form-control" id="frequency" name="frequency">
         <option value="">All</option>
         {% for frequency, count in page.facets.frequency %}
           <option value="{{frequency}}" {% ifequal frequency request.GET.frequency %} selected=selected {% endifequal %}>{{frequency}} ({{count}})</option>
@@ -149,15 +149,15 @@
   <!-- search preferences -->
   <div class="row search_results_option_set">
     <div class="col-md-3">
-      <input name="sequence" value="1" type="checkbox" {{ seq_check }}/>
+      <input name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
       <label class="norm" for="sequence">Front pages only</label>
     </div>
     <div class="col-md-3">
-      {{ form.rows.label }}
+      <label for="id_rows">{{ form.rows.label }}</label>
       {{ form.rows }}
     </div>
     <div class="col-md-3">
-      {{ form.sort.label }}
+      <label for="id_sort">{{ form.sort.label }}</label>
       {{ form.sort }}
     </div>
     <div class="col-md-3">
