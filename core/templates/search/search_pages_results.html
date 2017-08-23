@@ -111,7 +111,7 @@
     <div class="col-md-3">
       <label for="county">
       <select class="form-control" name="county">
-        <option value="">county</option>
+        <option value="">All</option>
         {% for county, count in page.facets.county %}
           <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
         {% endfor %}
@@ -120,7 +120,7 @@
     <div class="col-md-3">
       <label for="city">
       <select class="form-control" name="city">
-        <option value="">city</option>
+        <option value="">All</option>
         {% for city, count in page.facets.city %}
           <option value="{{city}}" {% ifequal city request.GET.city %} selected=selected {% endifequal %}>{{city}} ({{count}})</option>
         {% endfor %}
@@ -129,7 +129,7 @@
     <div class="col-md-3">
       <label for="frequency">
       <select class="form-control" name="frequency">
-        <option value="">frequency</option>
+        <option value="">All</option>
         {% for frequency, count in page.facets.frequency %}
           <option value="{{frequency}}" {% ifequal frequency request.GET.frequency %} selected=selected {% endifequal %}>{{frequency}} ({{count}})</option>
         {% endfor %}
