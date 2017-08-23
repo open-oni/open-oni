@@ -12,47 +12,49 @@
 
 <div class="page_search">
     <form action="{% url 'openoni_search_pages_results' %}" method="get" name="fulltext2" id="fulltext2">
-        <h3>Search Terms</h2>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="id_proxtext">{{ form.proxtext.label }}</label>
+        <fieldset>
+            <legend><h3>Search Terms</h2></legend>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="id_proxtext">{{ form.proxtext.label }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ form.proxtext }}
+                </div>
             </div>
-            <div class="col-md-9">
-                {{ form.proxtext }}
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="id_ortext">{{ form.ortext.label }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ form.ortext }}
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="id_ortext">{{ form.ortext.label }}</label>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="id_andtext">{{ form.andtext.label }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ form.andtext }}
+                </div>
             </div>
-            <div class="col-md-9">
-                {{ form.ortext }}
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="id_phrasetext">{{ form.phrasetext.label }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ form.phrasetext }}
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="id_andtext">{{ form.andtext.label }}</label>
-            </div>
-            <div class="col-md-9">
-                {{ form.andtext }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="id_phrasetext">{{ form.phrasetext.label }}</label>
-            </div>
-            <div class="col-md-9">
-                {{ form.phrasetext }}
-            </div>
-        </div>
-        {% comment %} 
-            TODO put phrase searching hints here
-            <h4>Show Search Examples</h4>
-            <p>
-                Phrase searching: Add " " around phrase
-                Exclude a word: -word
-            </p>
-        {% endcomment %}
+            {% comment %}
+                TODO put phrase searching hints here
+                <h4>Show Search Examples</h4>
+                <p>
+                    Phrase searching: Add " " around phrase
+                    Exclude a word: -word
+                </p>
+            {% endcomment %}
+        </fieldset>
 
         <h3>Limit By:</h3>
         <!-- Locations and Dates -->
