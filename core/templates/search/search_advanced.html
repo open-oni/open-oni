@@ -111,8 +111,11 @@
         <!-- Newspapers / LCCNs -->
         <h3>Search only the following newspapers:</h3>
         <div class="row">
-            <p>Hold cmd to select more than one</p>
-            <div class="col-md-12">
+            <div class="help-block">Hold cmd / control to select more than one</div>
+            <div class="col-md-2">
+                <label for="id_lccn">Newspaper(s)</label>
+            </div>
+            <div class="col-md-10">
                 {{ form.lccn }}
             </div>
         </div>
