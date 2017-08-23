@@ -31,7 +31,6 @@
             <th scope="col">No. of Issues</th>
             <th scope="col">Earliest Issue</th>
             <th scope="col">Latest Issue</th>
-            <th scope="col">More Info</th>
         </tr>
         </thead>
         <tbody>
@@ -49,8 +48,7 @@
                 <td><a href="{% url 'openoni_issues_title' title.lccn %}" shape="rect"><img src="{% static 'images/calendar_icon.gif' %}" alt="calendar"/></a></td>
                 <td>{{title.issues.count}}</td>
                 <td><a href="{% url 'openoni_issue_pages' title.lccn title.first 1 %}">{{title.first|date:'Y-m-d'}}</a></td>
-                <td><a href="{% url 'openoni_issue_pages' title.lccn title.last 1 %}">{{title.last|date:'Y-m-d'}}</a></td>
-                <td class="last">{% if title.has_essays %}<a href="{% url 'openoni_title' title.lccn %}">Yes</a>{% endif %}</td>
+                <td class="last"><a href="{% url 'openoni_issue_pages' title.lccn title.last 1 %}">{{title.last|date:'Y-m-d'}}</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -106,9 +104,6 @@
 
                 // Don't offer sorting on the "browse issues" link
                 3: { sorter: false },
-
-                // Don't offer sorting on the "More Info" link
-                7: { sorter: false },
             }, 
             widgets: ['zebra'],
 
