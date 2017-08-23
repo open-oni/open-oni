@@ -61,11 +61,27 @@
             <!-- Locations and Dates -->
             <div class="row">
                 <div class="col-md-6">
-                    {{ form.city }}
-                    {{ form.county }}
+                    <div class="col-md-2">
+                        <label for="id_city">{{ form.city.label }}</label>
+                    </div>
+                    <div class="col-md-10">
+                        {{ form.city }}
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="id_county">{{ form.county.label }}</label>
+                    </div>
+                    <div class="col-md-10">
+                        {{ form.county }}
+                    </div>
 
                     {% block search_state_field %}
+                    <div class="col-md-2">
+                        <label for="id_state">{{ form.state.label }}</label>
+                    </div>
+                    <div class="col-md-10">
                         {{ form.state }}
+                    </div>
                     {% endblock search_state_field %}
 
                 </div>
