@@ -109,15 +109,6 @@
 <form class="form-inline search_results_form" action="" method="GET">
   <div class="row searhc_results_option_set">
     <div class="col-md-3">
-      <label for="state">
-      <select class="form-control" name="state">
-        <option value="">state</option>
-        {% for state, count in page.facets.state %}
-          <option value="{{state}}" {% ifequal state request.GET.state %} selected=selected {% endifequal %}>{{state}} ({{count}})</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="col-md-3">
       <label for="county">
       <select class="form-control" name="county">
         <option value="">county</option>
@@ -144,6 +135,7 @@
         {% endfor %}
       </select>
     </div>
+    <div class="col-md-3"></div>
     {% comment %}
     <!-- Year requires some work on the backend because solr returns
         YYYY-YYYY which needs to be sent as 01-01-1988 (date1) and similar

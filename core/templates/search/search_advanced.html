@@ -74,16 +74,6 @@
                     <div class="col-md-10">
                         {{ form.county }}
                     </div>
-
-                    {% block search_state_field %}
-                    <div class="col-md-2">
-                        <label for="id_state">{{ form.state.label }}</label>
-                    </div>
-                    <div class="col-md-10">
-                        {{ form.state }}
-                    </div>
-                    {% endblock search_state_field %}
-
                 </div>
                 <div class="col-md-6">
                     <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
