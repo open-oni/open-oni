@@ -56,36 +56,39 @@
             {% endcomment %}
         </fieldset>
 
-        <h3>Limit By:</h3>
-        <!-- Locations and Dates -->
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.city }}
-                {{ form.county }}
+        <fieldset>
+            <legend><h3>Limit By:</h3></legend>
+            <!-- Locations and Dates -->
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form.city }}
+                    {{ form.county }}
 
-                {% block search_state_field %}
-                    {{ form.state }}
-                {% endblock search_state_field %}
+                    {% block search_state_field %}
+                        {{ form.state }}
+                    {% endblock search_state_field %}
 
-            </div>
-            <div class="col-md-6">
-                <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
-                <input type="hidden" name="dateFilterType" alt="dateFilterType" value="yearRange"/>
-                <div class="form-inline">
-                    <input id="id_date_from" name="date1" class="span2 form-control" 
-                        type="text" data-date-format="mm/dd/yyyy" 
-                        data-date="01-01-{{form.fulltextStartYear}}" 
-                        value="01/01/{{form.fulltextStartYear}}">
+                </div>
+                <div class="col-md-6">
+                    <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
+                    <input type="hidden" name="dateFilterType" alt="dateFilterType" value="yearRange"/>
+                    <div class="form-inline">
+                        <input id="id_date_from" name="date1" class="span2 form-control"
+                            type="text" data-date-format="mm/dd/yyyy"
+                            data-date="01-01-{{form.fulltextStartYear}}"
+                            value="01/01/{{form.fulltextStartYear}}">
 
-                    <label for="id_date_to">to</label>
+                        <label for="id_date_to">to</label>
 
-                    <input id="id_date_to" name="date2" class="span2 form-control" 
-                        type="text" data-date-format="mm/dd/yyyy" 
-                        data-date="12-31-{{form.fulltextEndYear}}" 
-                        value="12/31/{{form.fulltextEndYear}}">
+                        <input id="id_date_to" name="date2" class="span2 form-control"
+                            type="text" data-date-format="mm/dd/yyyy"
+                            data-date="12-31-{{form.fulltextEndYear}}"
+                            value="12/31/{{form.fulltextEndYear}}">
+                    </div>
                 </div>
             </div>
-        </div>
+        </fieldset>
+
         <!-- Newspapers / LCCNs -->
         <h3>Search only the following newspapers:</h3>
         <div class="row">
