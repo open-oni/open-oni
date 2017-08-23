@@ -12,83 +12,110 @@
 
 <div class="page_search">
     <form action="{% url 'openoni_search_pages_results' %}" method="get" name="fulltext2" id="fulltext2">
-        <h3>Search Terms</h2>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="id_proxtext">{{ form.proxtext.label }}</label>
-            </div>
-            <div class="col-md-9">
-                {{ form.proxtext }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="id_ortext">{{ form.ortext.label }}</label>
-            </div>
-            <div class="col-md-9">
-                {{ form.ortext }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="id_andtext">{{ form.andtext.label }}</label>
-            </div>
-            <div class="col-md-9">
-                {{ form.andtext }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <label for="id_phrasetext">{{ form.phrasetext.label }}</label>
-            </div>
-            <div class="col-md-9">
-                {{ form.phrasetext }}
-            </div>
-        </div>
-        {% comment %} 
-            TODO put phrase searching hints here
-            <h4>Show Search Examples</h4>
-            <p>
-                Phrase searching: Add " " around phrase
-                Exclude a word: -word
-            </p>
-        {% endcomment %}
-
-        <h3>Limit By:</h3>
-        <!-- Locations and Dates -->
-        <div class="row">
-            <div class="col-md-6">
-                {{ form.city }}
-                {{ form.county }}
-
-                {% block search_state_field %}
-                    {{ form.state }}
-                {% endblock search_state_field %}
-
-            </div>
-            <div class="col-md-6">
-                <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
-                <input type="hidden" name="dateFilterType" alt="dateFilterType" value="yearRange"/>
-                <div class="form-inline">
-                    <input id="id_date_from" name="date1" class="span2 form-control" 
-                        type="text" data-date-format="mm/dd/yyyy" 
-                        data-date="01-01-{{form.fulltextStartYear}}" 
-                        value="01/01/{{form.fulltextStartYear}}">
-
-                    <label for="id_date_to">to</label>
-
-                    <input id="id_date_to" name="date2" class="span2 form-control" 
-                        type="text" data-date-format="mm/dd/yyyy" 
-                        data-date="12-31-{{form.fulltextEndYear}}" 
-                        value="12/31/{{form.fulltextEndYear}}">
+        <fieldset>
+            <legend><h3>Search Terms</h2></legend>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="id_proxtext">{{ form.proxtext.label }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ form.proxtext }}
                 </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="id_ortext">{{ form.ortext.label }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ form.ortext }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="id_andtext">{{ form.andtext.label }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ form.andtext }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="id_phrasetext">{{ form.phrasetext.label }}</label>
+                </div>
+                <div class="col-md-9">
+                    {{ form.phrasetext }}
+                </div>
+            </div>
+            {% comment %}
+                TODO put phrase searching hints here
+                <h4>Show Search Examples</h4>
+                <p>
+                    Phrase searching: Add " " around phrase
+                    Exclude a word: -word
+                </p>
+            {% endcomment %}
+        </fieldset>
+
+        <fieldset>
+            <legend><h3>Limit By:</h3></legend>
+            <!-- Locations and Dates -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-2">
+                        <label for="id_city">{{ form.city.label }}</label>
+                    </div>
+                    <div class="col-md-10">
+                        {{ form.city }}
+                    </div>
+
+                    <div class="col-md-2">
+                        <label for="id_county">{{ form.county.label }}</label>
+                    </div>
+                    <div class="col-md-10">
+                        {{ form.county }}
+                    </div>
+
+                    {% block search_state_field %}
+                    <div class="col-md-2">
+                        <label for="id_state">{{ form.state.label }}</label>
+                    </div>
+                    <div class="col-md-10">
+                        {{ form.state }}
+                    </div>
+                    {% endblock search_state_field %}
+
+                </div>
+                <div class="col-md-6">
+                    <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
+                    <input type="hidden" name="dateFilterType" alt="dateFilterType" value="yearRange"/>
+                    <div class="form-inline">
+                        <label for="id_date_from">Start date</label>
+                        <input id="id_date_from" name="date1" type="text"
+                            value="01/01/{{form.fulltextStartYear}}"
+                            aria-describedby="date-format"
+                            pattern="[01][0-9]/[0123][0-9]/[0-9]{4}"
+                            />
+
+                        <label for="id_date_to">End date</label>
+                        <input id="id_date_to" name="date2" type="text"
+                            value="12/31/{{form.fulltextEndYear}}"
+                            aria-describedby="date-format"
+                            pattern="[01][0-9]/[0123][0-9]/[0-9]{4}"
+                            />
+                    </div>
+                    <div class="help-block" id="date-format">Dates must be formatted as MM/DD/YYYY; e.g., 12/31/1900</div>
+                </div>
+            </div>
+        </fieldset>
+
         <!-- Newspapers / LCCNs -->
         <h3>Search only the following newspapers:</h3>
         <div class="row">
-            <p>Hold cmd to select more than one</p>
-            <div class="col-md-12">
+            <div class="help-block">Hold cmd / control to select more than one</div>
+            <div class="col-md-2">
+                <label for="id_lccn">Newspaper(s)</label>
+            </div>
+            <div class="col-md-10">
                 {{ form.lccn }}
             </div>
         </div>

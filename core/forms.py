@@ -210,12 +210,12 @@ class SearchPagesForm(SearchPagesFormBase):
 
         # locations
 
-        self.fields["city"].choices = _distinct_values(models.Place, "city", "City")
-        self.fields["county"].choices = _distinct_values(models.Place, "county", "County")
-        self.fields["state"].choices = _distinct_values(models.Place, "state", "State")
+        self.fields["city"].choices = _distinct_values(models.Place, "city", "All")
+        self.fields["county"].choices = _distinct_values(models.Place, "county", "All")
+        self.fields["state"].choices = _distinct_values(models.Place, "state", "All")
 
         # filters
-        self.fields["frequency"].choices = _distinct_values(models.Title, "frequency", "Select")
+        self.fields["frequency"].choices = _distinct_values(models.Title, "frequency", "All")
 
 
 class SearchTitlesForm(forms.Form):
