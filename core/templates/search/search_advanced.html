@@ -89,18 +89,21 @@
                     <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
                     <input type="hidden" name="dateFilterType" alt="dateFilterType" value="yearRange"/>
                     <div class="form-inline">
-                        <input id="id_date_from" name="date1" class="span2 form-control"
-                            type="text" data-date-format="mm/dd/yyyy"
-                            data-date="01-01-{{form.fulltextStartYear}}"
-                            value="01/01/{{form.fulltextStartYear}}">
+                        <label for="id_date_from">Start date</label>
+                        <input id="id_date_from" name="date1" type="text"
+                            value="01/01/{{form.fulltextStartYear}}"
+                            aria-describedby="date-format"
+                            pattern="[01][0-9]/[0123][0-9]/[0-9]{4}"
+                            />
 
-                        <label for="id_date_to">to</label>
-
-                        <input id="id_date_to" name="date2" class="span2 form-control"
-                            type="text" data-date-format="mm/dd/yyyy"
-                            data-date="12-31-{{form.fulltextEndYear}}"
-                            value="12/31/{{form.fulltextEndYear}}">
+                        <label for="id_date_to">End date</label>
+                        <input id="id_date_to" name="date2" type="text"
+                            value="12/31/{{form.fulltextEndYear}}"
+                            aria-describedby="date-format"
+                            pattern="[01][0-9]/[0123][0-9]/[0-9]{4}"
+                            />
                     </div>
+                    <div class="help-block" id="date-format">Dates must be formatted as MM/DD/YYYY; e.g., 12/31/1900</div>
                 </div>
             </div>
         </fieldset>

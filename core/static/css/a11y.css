@@ -1,0 +1,5 @@
+/* Accessibility hacks to change things like bootstrap's default contrast */
+
+.help-block {
+    color: #333;
+}
