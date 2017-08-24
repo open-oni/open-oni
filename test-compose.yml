@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+  rdbms:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=openoni
+      - MYSQL_USER=openoni
+      - MYSQL_PASSWORD=openoni
+    volumes:
+      - ./conf/mysql/:/etc/mysql/conf.d:Z
+  solr:
+    image: solr:6.6
+    volumes:
+      - ./docker/solr/:/tmp/solr:Z
+    entrypoint:
+      - docker-entrypoint.sh
+      - /tmp/solr/precreate
+  test:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./:/opt/openoni:Z
+    depends_on:
+      - rdbms
+    links:
+      - rdbms
+      - solr
+    environment:
+      - ONLY_RUN_TESTS=1
+      - APP_URL
+      - HTTPPORT
