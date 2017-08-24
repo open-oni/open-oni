@@ -41,6 +41,15 @@ Install
 
 Production install instructions are still a work in progress.
 
+Testing
+-------
+
+    docker-compose -f test-compose.yml -p onitest up test
+
+This will spew a lot of output and you'll have to scroll back a ways to get at
+test failure information.  But it runs a test container setup that ensures your
+development data cannot possibly be modified.
+
 License
 -------
 
