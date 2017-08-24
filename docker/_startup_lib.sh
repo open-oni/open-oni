@@ -16,23 +16,6 @@ verify_config() {
   fi
 }
 
-verify_vars() {
-  # Die on missing APP_URL; this one could default to localhost, except that the
-  # RAIS container won't have gotten it set, making it incapable of reporting the
-  # IIIF URLs to images
-  if [[ ${APP_URL:-} == "" ]]; then
-    echo
-    echo
-    echo "Cannot start ONI: you must set \$APP_URL in your environment.  e.g.:"
-    echo
-    echo "    export APP_URL=http://oregonnews.uoregon.edu"
-    echo "    docker-compose up"
-    echo
-    echo
-    exit 1
-  fi
-}
-
 replace_ini_data() {
   # Generate a random secret key if that hasn't already happened.  This stays the
   # same after it's first set.
