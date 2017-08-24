@@ -126,7 +126,7 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
       <label for="frequency">Frequency</label>
       <select class="form-control" id="frequency" name="frequency">
         <option value="">All</option>
@@ -135,7 +135,6 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-3"></div>
     {% comment %}
     <!-- Year requires some work on the backend because solr returns
         YYYY-YYYY which needs to be sent as 01-01-1988 (date1) and similar
