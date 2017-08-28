@@ -48,6 +48,7 @@ services:
     environment:
       - APP_URL
       - HTTPPORT
+      - APACHE_LOG_LEVEL
 volumes:
   data-rdbms: {}
   data-solr: {}
