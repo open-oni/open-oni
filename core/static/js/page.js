@@ -101,20 +101,12 @@
             var scale = 1 / all_coordinates["width"];
             
             $.each(words.split(" "), function(index, word) {
-                if (word!="") {
-                    var boxes = [];
-
-                    var coordinates = all_coordinates["coords"][word];
-                    if(coordinates !== undefined){
-                        $.each(coordinates, function(index, value) {
-                            addOverlay(viewer,
-                                       value[0]*scale,
-                                       value[1]*scale,
-                                       value[2]*scale,
-                                       value[3]*scale);
-                        });
-                    }
-                }
+                var boxes = [];
+                var coordinates = all_coordinates["coords"][word];
+                for (k in coordinates) {
+                    var v = coordinates[k];
+                    addOverlay(viewer, v[0]*scale, v[1]*scale, v[2]*scale, v[3]*scale);
+                };
             });
         });
     }
