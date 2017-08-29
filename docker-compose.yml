@@ -2,7 +2,7 @@ version: '2'
 
 services:
   rdbms:
-    image: mysql:latest
+    image: mariadb:5.5
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=openoni
