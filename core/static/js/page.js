@@ -100,7 +100,7 @@
         $.getJSON(coordinates_url, function(all_coordinates) {
             var scale = 1 / all_coordinates["width"];
             
-            $.each(words.split(" "), function(index, word) {
+            $.each(words.split(/\s+/), function(index, word) {
                 var boxes = [];
                 var coordinates = all_coordinates["coords"][word];
                 for (k in coordinates) {
