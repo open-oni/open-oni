@@ -24,7 +24,7 @@ services:
     ports:
       - "$SOLRPORT:8983"
   rais:
-    image: uolibraries/rais:2.8.0
+    image: uolibraries/rais:2.8.1
     environment:
       - RAIS_IIIFURL=$APP_URL:$HTTPPORT/images/iiif
       - RAIS_TILECACHELEN=250
