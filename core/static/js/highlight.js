@@ -17,7 +17,7 @@
 
                 var vScale = 100 / all_coordinates["height"];
                 var hScale = 100 / all_coordinates["width"];
-                $.each(words.split(" "), function(index, word) {
+                $.each(words.split(/\s+/), function(index, word) {
                     var boxes = [];
                     var coordinates = all_coordinates["coords"][word];
                     for (k in coordinates) {
@@ -36,12 +36,16 @@
     }
 
     function init() {
-        $("img.highlight_words").load(function(i) {
-            add_highlights($(this));
-        });
         $("img.highlight_words").each(function(i) {
+            // If the image is already loaded, add highlights now
             if (this.complete) {
                 add_highlights($(this));
+            }
+            // Otherwise, add highlights when it's ready
+            else {
+                $(this).on("load", function() {
+                    add_highlights($(this));
+                });
             }
         });
     };

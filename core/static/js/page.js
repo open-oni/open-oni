@@ -16,7 +16,7 @@
         var collection = {};
         var paramString = window.location.hash.substr(1);
         paramString.split("&").forEach(function(param) {
-            var keyVal = param.replace("+", " ").split("=");
+            var keyVal = param.replace(/\+/g, " ").split("=");
             collection[keyVal[0]] = keyVal[1]
         });
         return collection;
@@ -100,21 +100,13 @@
         $.getJSON(coordinates_url, function(all_coordinates) {
             var scale = 1 / all_coordinates["width"];
             
-            $.each(words.split(" "), function(index, word) {
-                if (word!="") {
-                    var boxes = [];
-
-                    var coordinates = all_coordinates["coords"][word];
-                    if(coordinates !== undefined){
-                        $.each(coordinates, function(index, value) {
-                            addOverlay(viewer,
-                                       value[0]*scale,
-                                       value[1]*scale,
-                                       value[2]*scale,
-                                       value[3]*scale);
-                        });
-                    }
-                }
+            $.each(words.split(/\s+/), function(index, word) {
+                var boxes = [];
+                var coordinates = all_coordinates["coords"][word];
+                for (k in coordinates) {
+                    var v = coordinates[k];
+                    addOverlay(viewer, v[0]*scale, v[1]*scale, v[2]*scale, v[3]*scale);
+                };
             });
         });
     }
