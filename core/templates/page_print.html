@@ -3,9 +3,7 @@
 
 {% extends "__l_print.html" %}
 {% load image_urls %}
-{% block content %}
-
-<h4>{{ page_title }}</h4>
+{% block subcontent %}
 
 <p>Image provided by {{issue.batch.awardee.name}}<br/>
 Persistent link: <a href="{{url}}">{{BASE_URL}}{{url}}</a></p>
@@ -16,4 +14,4 @@ Persistent link: <a href="{{url}}">{{BASE_URL}}{{url}}</a></p>
 
 
 
-{% endblock %}
+{% endblock subcontent %}
