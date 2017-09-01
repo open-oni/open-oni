@@ -62,6 +62,7 @@ setup_database() {
 
   echo "-------" >&2
   echo "Migrating database" >&2
+  source ENV/bin/activate
   /opt/openoni/manage.py migrate
 }
 
