@@ -35,15 +35,15 @@
         {% url 'openoni_page' title.lccn page.issue.date_issued page.issue.edition page.sequence as url %}
             <div class="col-md-3">
                 <div class="highlite">
-                    <a href="{{url}}">
                     {% if page.relative_image_path %}
-                    <img src="{% thumb_image_url page %}" alt="Thumbnail for {{page.number}}"/>
+                      <a href="{{url}}">
+                        <img src="{% thumb_image_url page %}" alt="Thumbnail for {{page.number}}"/>
+                      </a>
                     {% else %}
-                        <div style="height: auto; margin-bottom: 3em;">
-                        No Image. {{page.noteAboutReproduction.text}}<br/>
-                        </div>
+                      <div style="height: auto; margin-bottom: 3em;">
+                        No Image. {{page.noteAboutReproduction.text}}
+                      </div>
                     {% endif %}
-                    </a>
                     <br/>
                     <a href="{{url}}" shape="rect">{% if page.issue %}{{page.issue|label}}, {% endif %}{% if page %}{{ page|label }}{% endif %}</a>
                 </div>
