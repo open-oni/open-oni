@@ -79,6 +79,7 @@
         format: function(s) { 
             // format your data for normalization
             s = $.trim(s)  //Make sure there are no leading spaces
+            s = s.toLowerCase();
             if (s.indexOf('The ') === 0)
                 { 
                 s = s.replace("The ", ''); 
