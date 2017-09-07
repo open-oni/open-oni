@@ -741,6 +741,10 @@ class Page(models.Model):
             filename = self.tiff_filename
         else:
             filename = self.jp2_filename
+
+        if filename is None:
+            return None
+
         batch = self.issue.batch
         return os.path.join(batch.name, "data", filename)
 
