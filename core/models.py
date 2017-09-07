@@ -644,6 +644,13 @@ class Issue(models.Model):
         except:
             return
 
+    @property
+    def noteAboutReproduction(self):
+        try:
+            return self.notes.filter(type="noteAboutReproduction")[0]
+        except IndexError:
+            return ""
+
     class Meta:
         ordering = ('date_issued',)
 
@@ -741,6 +748,10 @@ class Page(models.Model):
             filename = self.tiff_filename
         else:
             filename = self.jp2_filename
+
+        if filename is None:
+            return None
+
         batch = self.issue.batch
         return os.path.join(batch.name, "data", filename)
 
