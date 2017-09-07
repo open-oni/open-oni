@@ -644,6 +644,13 @@ class Issue(models.Model):
         except:
             return
 
+    @property
+    def noteAboutReproduction(self):
+        try:
+            return self.notes.filter(type="noteAboutReproduction")[0]
+        except IndexError:
+            return ""
+
     class Meta:
         ordering = ('date_issued',)
 

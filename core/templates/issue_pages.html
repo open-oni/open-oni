@@ -41,7 +41,13 @@
                       </a>
                     {% else %}
                       <div style="height: auto; margin-bottom: 3em;">
-                        No Image. {{page.noteAboutReproduction.text}}
+                        No Image.
+                        {% if page.noteAboutReproduction %}
+                          {{page.noteAboutReproduction.text}}.
+                        {% elif page.issue and page.issue.noteAboutReproduction %}
+                          Issue Notes:
+                          {{page.issue.noteAboutReproduction.text}}.
+                        {% endif %}
                       </div>
                     {% endif %}
                     <br/>
