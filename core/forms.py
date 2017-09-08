@@ -204,8 +204,9 @@ class SearchPagesForm(SearchPagesFormBase):
 
         self.fields["lccn"].widget.attrs.update({'size': '8'})
         self.fields["lccn"].choices = self.titles
+        lang_codes = [code for code,key in _distinct_values(models.Title, "languages")]
         lang_choices = [("", "All"), ]
-        lang_choices.extend((l, models.Language.objects.get(code=l).name) for l in settings.SOLR_LANGUAGES)
+        lang_choices.extend((l, models.Language.objects.get(code=l).name) for l in lang_codes)
         self.fields["language"].choices = lang_choices
 
         # locations
