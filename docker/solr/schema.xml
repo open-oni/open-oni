@@ -1120,11 +1120,35 @@
 
     <!-- all the languages (we currently support) of OCR, mapped to the various
          built-in language-specific field types -->
-    <field name="ocr_eng" type="text_en" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="ocr_fre" type="text_fr" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="ocr_spa" type="text_es" indexed="true" stored="true" required="false" multiValued="false" />
-    <field name="ocr_ita" type="text_it" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_ara" type="text_ar" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_bul" type="text_bg" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_cze" type="text_cz" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_dan" type="text_da" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="ocr_ger" type="text_de" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_gre" type="text_el" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_eng" type="text_en" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_spa" type="text_es" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_baq" type="text_eu" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_per" type="text_fa" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_fin" type="text_fi" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_fre" type="text_fr" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_gle" type="text_ga" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_hin" type="text_hi" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_hun" type="text_hu" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_arm" type="text_hy" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_ind" type="text_id" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_ita" type="text_it" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_jpn" type="text_ja" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_lav" type="text_lv" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_dut" type="text_nl" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_nor" type="text_no" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_por" type="text_pt" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_rum" type="text_ro" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_rus" type="text_ru" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_swe" type="text_sv" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_tha" type="text_th" indexed="true" stored="true" required="false" multiValued="false" />
+    <field name="ocr_tur" type="text_tr" indexed="true" stored="true" required="false" multiValued="false" />
+
     <copyField source="ocr_*" dest="ocr" />
 
     <copyField source="subject" dest="subject_facet" />
