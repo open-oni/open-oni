@@ -174,7 +174,36 @@ TOO_BUSY_LOAD_AVERAGE = 64
 SOLR = "http://localhost:8983/solr"
 
 # Languages solr uses
-SOLR_LANGUAGES = ("eng", "fre", "spa", "ger", "ita",)
+SOLR_LANGUAGES = (
+    "ara",
+    "bul",
+    "cze",
+    "dan",
+    "ger",
+    "gre",
+    "eng",
+    "spa",
+    "baq",
+    "per",
+    "fin",
+    "fre",
+    "gle",
+    "hin",
+    "hun",
+    "arm",
+    "ind",
+    "ita",
+    "jpn",
+    "lav",
+    "dut",
+    "nor",
+    "por",
+    "rum",
+    "rus",
+    "swe",
+    "tha",
+    "tur",
+)
 
 # Absolute path on disk to the data directory
 STORAGE = '/opt/openoni/data/'
