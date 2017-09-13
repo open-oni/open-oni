@@ -50,6 +50,10 @@ This will spew a lot of output and you'll have to scroll back a ways to get at
 test failure information.  But it runs a test container setup that ensures your
 development data cannot possibly be modified.
 
+Slack
+-----
+We have a development slack at open-oni.slack.com. Please email kdalziel [at] unl.edu for an invite. 
+
 License
 -------
 
