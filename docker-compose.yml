@@ -2,7 +2,7 @@ version: '2'
 
 services:
   rdbms:
-    image: mysql:latest
+    image: mariadb:5.5
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=openoni
@@ -10,7 +10,7 @@ services:
       - MYSQL_PASSWORD=openoni
     volumes:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
-      - data-rdbms:/var/lib/mysql
+      - data-mariadb:/var/lib/mysql
     ports:
       - "$RDBMSPORT:3306"
   solr:
@@ -24,7 +24,7 @@ services:
     ports:
       - "$SOLRPORT:8983"
   rais:
-    image: uolibraries/rais:2.8.0
+    image: uolibraries/rais:2.8.1
     environment:
       - RAIS_IIIFURL=$APP_URL:$HTTPPORT/images/iiif
       - RAIS_TILECACHELEN=250
@@ -50,5 +50,5 @@ services:
       - HTTPPORT
       - APACHE_LOG_LEVEL
 volumes:
-  data-rdbms: {}
+  data-mariadb: {}
   data-solr: {}
