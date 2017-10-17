@@ -58,10 +58,15 @@
     </div>
 
     <div class="col-md-5">
-        <div class="btn-group">
-            <a class="btn btn-default" href="{% url 'openoni_page' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page.sequence %}">First Issue</a>
-            <a class="btn btn-default" href="{% url 'openoni_page' title.lccn title.last_issue.date_issued title.last_issue.edition title.last_issue.first_page.sequence %}">Last Issue</a>
-        </div>
+        <ul class="nav nav-pills">
+            <li role="presentation">
+                <a href="{% url 'openoni_page' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page.sequence %}">View First Issue</a>
+            </li>
+
+            <li role="presentation">
+                <a href="{% url 'openoni_page' title.lccn title.last_issue.date_issued title.last_issue.edition title.last_issue.first_page.sequence %}">View Last Issue</a>
+            </li>
+        </ul>
     </div>
 </div>
 
