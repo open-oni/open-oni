@@ -41,10 +41,19 @@
 <div class="row">
     <div class="col-md-7">
         <ul class="nav nav-pills">
-            <li role="presentation"><a id="page_nav_title" href="{% url 'openoni_title' title.lccn %}">About {{title.display_name}}</a></li>
-            {% if title.has_issues %}<li role="presentation"><a id="page_nav_issues" href="{% url 'openoni_issues_title' title.lccn %}">Browse Issues by Date</a></li>{% endif %}
-            <li role="presentation"><a id="page_nav_issues" href="{% url 'openoni_issues_first_pages' title.lccn %}">View Front Pages</a></li>
-            
+            <li role="presentation">
+                <a id="page_nav_title" href="{% url 'openoni_title' title.lccn %}">About {{title.display_name}}</a>
+            </li>
+
+            {% if title.has_issues %}
+            <li role="presentation">
+                <a id="page_nav_issues" href="{% url 'openoni_issues_title' title.lccn %}">Browse Issues by Date</a>
+            </li>
+            {% endif %}
+
+            <li role="presentation">
+                <a id="page_nav_issues" href="{% url 'openoni_issues_first_pages' title.lccn %}">View Front Pages</a>
+            </li>
         </ul>
     </div>
 
