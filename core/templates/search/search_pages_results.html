@@ -74,21 +74,36 @@
     <form action="" method="GET" class="jumptopage">
       <label for="jumptopage">Jump to page:</label> 
       <input class="std" type="text" id="jumptopage" name="page" value="" size="5" />
+
+      {#### Filter preservation ####}
+
+      {# search text #}
+      <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
       <input type="hidden" name="ortext" value="{{query.ortext}}" />
       <input type="hidden" name="andtext" value="{{query.andtext}}" />
       <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
-      <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
-      <input type="hidden" name="proxValue" value="{{query.proxValue}}" />
+
+      {# location #}
+      <input type="hidden" name="city" value="{{query.city}}" />
+      <input type="hidden" name="county" value="{{query.county}}" />
+
+      {# date range #}
+      <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
       <input type="hidden" name="date1" value="{{query.date1}}" />
       <input type="hidden" name="date2" value="{{query.date2}}" />
-      <input type="hidden" name="year" value="{{query.year}}" />
-      <input type="hidden" name="sort" value="{{query.sort}}" />
-      <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
-      <input type="hidden" name="state" value="{{query.state}}" />
-      <input type="hidden" name="titles" value="{{query.titles}}" />
-      <input type="hidden" name="rows" value="{{query.rows}}" />
-      <input type="hidden" name="sequence" value="{{query.sequence}}" />
+
+      {# All the chosen LCCNs #}
+      {% for lccn in query.lccn %}
+        <input type="hidden" name="lccn" value="{{lccn}}" />
+      {% endfor %}
+
+      {# miscellaneous filters #}
       <input type="hidden" name="language" value="{{query.language}}" />
+      <input type="hidden" name="frequency" value="{{query.frequency}}" />
+      <input type="hidden" name="sequence" value="{{query.sequence}}" />
+      <input type="hidden" name="sort" value="{{query.sort}}" />
+      <input type="hidden" name="rows" value="{{query.rows}}" />
+
       <input type="submit" class="submit" value="GO" /> 
     </form>
   </div>
@@ -164,18 +179,27 @@
     </div>
   </div>
 
+  {#### Filter preservation ####}
+
+  {# search text #}
+  <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
   <input type="hidden" name="ortext" value="{{query.ortext}}" />
   <input type="hidden" name="andtext" value="{{query.andtext}}" />
   <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
-  <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
-  <input type="hidden" name="proxValue" value="{{query.proxValue}}" />
+
+  {# date range #}
+  <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
   <input type="hidden" name="date1" value="{{query.date1}}" />
   <input type="hidden" name="date2" value="{{query.date2}}" />
-  <input type="hidden" name="year" value="{{query.year}}" />
-  <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
-  <input type="hidden" name="titles" value="{{query.titles}}" />
+
+  {# All the chosen LCCNs #}
+  {% for lccn in query.lccn %}
+    <input type="hidden" name="lccn" value="{{lccn}}" />
+  {% endfor %}
+
+  {# miscellaneous filters #}
   <input type="hidden" name="language" value="{{query.language}}" />
-  
+
 </form>
 
 <!-- ======================
