@@ -41,20 +41,48 @@
 <div class="row">
     <div class="col-md-7">
         <ul class="nav nav-pills">
-            <li role="presentation"><a id="page_nav_title" href="{% url 'openoni_title' title.lccn %}">About {{title.display_name}}</a></li>
-            {% if title.has_issues %}<li role="presentation"><a id="page_nav_issues" href="{% url 'openoni_issues_title' title.lccn %}">Browse Issues by Date</a></li>{% endif %}
-            <li role="presentation"><a id="page_nav_issues" href="{% url 'openoni_issues_first_pages' title.lccn %}">View Front Pages</a></li>
-            
+            <li role="presentation">
+                <a id="page_nav_title" href="{% url 'openoni_title' title.lccn %}">About {{title.display_name}}</a>
+            </li>
+
+            {% if title.has_issues %}
+            <li role="presentation">
+                <a id="page_nav_issues" href="{% url 'openoni_issues_title' title.lccn %}">Browse Issues by Date</a>
+            </li>
+            {% endif %}
+
+            <li role="presentation">
+                <a id="page_nav_issues" href="{% url 'openoni_issues_first_pages' title.lccn %}">View Front Pages</a>
+            </li>
         </ul>
     </div>
+
+    {% if title.has_issues %}
     <div class="col-md-5">
-<div class="btn-group" role="group" aria-label="title options">
-           <a class="btn btn-default" href="{% url 'openoni_page' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page.sequence %}" role="button">First Issue</a>
-           <a class="btn btn-default" href="{% url 'openoni_page' title.lccn title.last_issue.date_issued title.last_issue.edition title.last_issue.first_page.sequence %}" role="button">Last Issue</a>
-           
-        </div>
+        <ul class="nav nav-pills">
+            {% with iss=title.first_issue img=title.first_issue.first_page_with_image %}
+            {% if img.jp2_filename and img.sequence %}
+            <li role="presentation">
+                <a href="{% url 'openoni_page' title.lccn iss.date_issued iss.edition img.sequence %}">
+                    View First Issue
+                </a>
+            </li>
+            {% endif %}
+            {% endwith %}
+
+            {% with iss=title.last_issue img=title.last_issue.first_page_with_image %}
+            {% if img.jp2_filename and img.sequence %}
+            <li role="presentation">
+                <a href="{% url 'openoni_page' title.lccn iss.date_issued iss.edition img.sequence %}">
+                    View Last Issue
+                </a>
+            </li>
+            {% endif %}
+            {% endwith %}
+        </ul>
     </div>
-    </div>
+    {% endif %}
+</div>
 
 </div> 
 {% endblock page_nav %}
