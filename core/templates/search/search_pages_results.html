@@ -163,14 +163,6 @@
         {% endfor %}
       </select>
     </div>
-    {% comment %}
-    <!-- Year requires some work on the backend because solr returns
-        YYYY-YYYY which needs to be sent as 01-01-1988 (date1) and similar
-        date2 fields -->
-    {% endcomment %}
-    {% comment %}
-    <!-- The language requires a translation between human readable and solr codes ("German" vs "ger") -->
-    {% endcomment %}
   </div>
 
   <!-- search preferences -->
@@ -223,7 +215,7 @@ Thumbnails
 {% block search_results_box %}
 <div class="content search_results">
   <h3>Newspaper Pages</h3>
-  <span class="results">Results {{ start }}-{{ end }}<!-- of {{ paginator.count }} removed because it's repeated in another template--></span>
+  <span class="results">Results {{ start }}-{{ end }}
 
 <br/><br/>
 
