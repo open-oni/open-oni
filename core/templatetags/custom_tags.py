@@ -4,10 +4,7 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def remove_param(context, *args):
-    """
-    Given a request.GET or .POST object, shallow clone,
-     and remove list of fields from the new object
-    """
+    """Remove keys from the GET object and return a new URL"""
     request = context["request"]
     params = request.GET.copy()
     for arg in args:
@@ -17,8 +14,7 @@ def remove_param(context, *args):
 
 @register.simple_tag(takes_context=True)
 def remove_param_value(context, key, value):
-    """Given a request.GET or .POST object, shallow clone,
-    and remove a single key/value pair"""
+    """Remove a key/value pair from the GET request and return a new URL"""
     request = context["request"]
     params = request.GET.copy()
     if key in params:
