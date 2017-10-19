@@ -1,8 +1,6 @@
 from django import template
-from urllib import urlencode
 
 register = template.Library()
-
 
 @register.simple_tag(takes_context=True)
 def remove_param(context, *args):
@@ -15,7 +13,7 @@ def remove_param(context, *args):
     for arg in args:
         if arg in params:
             del params[arg]
-    return urlencode(params)
+    return params.urlencode()
 
 @register.simple_tag(takes_context=True)
 def remove_param_value(context, key, value):
