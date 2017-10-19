@@ -111,6 +111,7 @@ def search_pages_results(request, view_type='gallery'):
     else:
         template = "search/search_pages_results.html"
     page_list = []
+    titles = query.getlist("lccn")
     for count in range(len(page.object_list)):
         page_list.append((count + start, page.object_list[count]))
     return render_to_response(template, dictionary=locals(),
