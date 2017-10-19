@@ -12,7 +12,8 @@
 {% block subcontent %}
 
 <!-- Search results description -->
-<h4 class="term">{{ paginator.count }} results 
+<h3>Filters</h3>
+<h4 class="term">{{ paginator.count }} results
     {% if english_search %}containing{% endif %} 
     {% for part in english_search %}
       <strong>&ldquo;{{ part }}&rdquo;</strong>
@@ -221,6 +222,7 @@ Thumbnails
 
 {% block search_results_box %}
 <div class="content search_results">
+  <h3>Newspaper Pages</h3>
   <span class="results">Results {{ start }}-{{ end }}<!-- of {{ paginator.count }} removed because it's repeated in another template--></span>
 
 <br/><br/>
