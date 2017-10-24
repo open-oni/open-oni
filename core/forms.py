@@ -181,7 +181,6 @@ class SearchPagesForm(SearchPagesFormBase):
     proxtext = fields.CharField(label="Words near each other")
     proxdistance = fields.ChoiceField(choices=PROX_CHOICES)
     # misc
-    sequence = fields.CharField(label="Page Number")
     lccn = fields.MultipleChoiceField(choices=[])
     # filters
     frequency = fields.ChoiceField(label="Frequency")
@@ -191,7 +190,7 @@ class SearchPagesForm(SearchPagesFormBase):
         city, county, state, 
         date1, date2, date_day, date_month,
         andtext, ortext, phrasetext, proxtext, proxdistance,
-        lccn, sequence,
+        lccn,
         language, frequency
     ]
     for item in form_control_items:

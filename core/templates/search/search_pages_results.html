@@ -12,7 +12,8 @@
 {% block subcontent %}
 
 <!-- Search results description -->
-<h4 class="term">{{ paginator.count }} results 
+<h3>Filters</h3>
+<h4 class="term">{{ paginator.count }} results
     {% if english_search %}containing{% endif %} 
     {% for part in english_search %}
       <strong>&ldquo;{{ part }}&rdquo;</strong>
@@ -30,6 +31,18 @@
       <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'language' %}">
         <img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/>
       </a>
+    {% endif %}
+
+    {% if titles %}
+        for titles
+        {% for lccn in titles %}
+            {{lccn}}<a href="{{BASE_URL}}{{request.path}}?{% remove_param_value 'lccn' lccn %}">
+                <img src="/media/images/btn_remove.png"
+                    title="clear title filter {{lccn}}"
+                    alt="clear title filter {{lccn}}" />
+            </a>
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
     {% endif %}
 </h4>
 
@@ -74,21 +87,36 @@
     <form action="" method="GET" class="jumptopage">
       <label for="jumptopage">Jump to page:</label> 
       <input class="std" type="text" id="jumptopage" name="page" value="" size="5" />
+
+      {#### Filter preservation ####}
+
+      {# search text #}
+      <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
       <input type="hidden" name="ortext" value="{{query.ortext}}" />
       <input type="hidden" name="andtext" value="{{query.andtext}}" />
       <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
-      <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
-      <input type="hidden" name="proxValue" value="{{query.proxValue}}" />
+
+      {# location #}
+      <input type="hidden" name="city" value="{{query.city}}" />
+      <input type="hidden" name="county" value="{{query.county}}" />
+
+      {# date range #}
+      <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
       <input type="hidden" name="date1" value="{{query.date1}}" />
       <input type="hidden" name="date2" value="{{query.date2}}" />
-      <input type="hidden" name="year" value="{{query.year}}" />
-      <input type="hidden" name="sort" value="{{query.sort}}" />
-      <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
-      <input type="hidden" name="state" value="{{query.state}}" />
-      <input type="hidden" name="titles" value="{{query.titles}}" />
-      <input type="hidden" name="rows" value="{{query.rows}}" />
-      <input type="hidden" name="sequence" value="{{query.sequence}}" />
+
+      {# All the chosen LCCNs #}
+      {% for lccn in titles %}
+        <input type="hidden" name="lccn" value="{{lccn}}" />
+      {% endfor %}
+
+      {# miscellaneous filters #}
       <input type="hidden" name="language" value="{{query.language}}" />
+      <input type="hidden" name="frequency" value="{{query.frequency}}" />
+      <input type="hidden" name="sequence" value="{{query.sequence}}" />
+      <input type="hidden" name="sort" value="{{query.sort}}" />
+      <input type="hidden" name="rows" value="{{query.rows}}" />
+
       <input type="submit" class="submit" value="GO" /> 
     </form>
   </div>
@@ -135,14 +163,6 @@
         {% endfor %}
       </select>
     </div>
-    {% comment %}
-    <!-- Year requires some work on the backend because solr returns
-        YYYY-YYYY which needs to be sent as 01-01-1988 (date1) and similar
-        date2 fields -->
-    {% endcomment %}
-    {% comment %}
-    <!-- The language requires a translation between human readable and solr codes ("German" vs "ger") -->
-    {% endcomment %}
   </div>
 
   <!-- search preferences -->
@@ -164,18 +184,27 @@
     </div>
   </div>
 
+  {#### Filter preservation ####}
+
+  {# search text #}
+  <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
   <input type="hidden" name="ortext" value="{{query.ortext}}" />
   <input type="hidden" name="andtext" value="{{query.andtext}}" />
   <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
-  <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
-  <input type="hidden" name="proxValue" value="{{query.proxValue}}" />
+
+  {# date range #}
+  <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
   <input type="hidden" name="date1" value="{{query.date1}}" />
   <input type="hidden" name="date2" value="{{query.date2}}" />
-  <input type="hidden" name="year" value="{{query.year}}" />
-  <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
-  <input type="hidden" name="titles" value="{{query.titles}}" />
+
+  {# All the chosen LCCNs #}
+  {% for lccn in titles %}
+    <input type="hidden" name="lccn" value="{{lccn}}" />
+  {% endfor %}
+
+  {# miscellaneous filters #}
   <input type="hidden" name="language" value="{{query.language}}" />
-  
+
 </form>
 
 <!-- ======================
@@ -185,7 +214,7 @@ Thumbnails
 
 {% block search_results_box %}
 <div class="content search_results">
-  <span class="results">Results {{ start }}-{{ end }}<!-- of {{ paginator.count }} removed because it's repeated in another template--></span>
+  <h3 class="results">Results {{ start }}-{{ end }}</h3>
 
 <br/><br/>
 
