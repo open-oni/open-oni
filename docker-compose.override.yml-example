@@ -1,0 +1,5 @@
+version: '2'
+services:
+  rdbms:
+    volumes:
+      - ./docker/mysql/:/etc/mysql/conf.d:Z
