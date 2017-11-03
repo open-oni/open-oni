@@ -13,15 +13,29 @@
 <div class="page_search">
     <form action="{% url 'openoni_search_pages_results' %}" method="get" name="fulltext2" id="fulltext2">
         <fieldset>
-            <legend><h3>Search Terms</h2></legend>
+            <legend><h3>Proximity Search</h3></legend>
+            <p class="hint">
+                Enter a list of words to search for, and the distance, in
+                words, they may be from each other in order to match.
+            </p>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="id_proxtext">{{ form.proxtext.label }}</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-5">
                     {{ form.proxtext }}
                 </div>
+                <div class="col-md-2">
+                    <label for="id_proxdistance">{{ form.proxdistance.label }}</label>
+                </div>
+                <div class="col-md-3">
+                    {{ form.proxdistance }}
+                </div>
             </div>
+        </fieldset>
+
+        <fieldset>
+            <legend><h3>Search Terms</h2></legend>
             <div class="row">
                 <div class="col-md-3">
                     <label for="id_ortext">{{ form.ortext.label }}</label>
