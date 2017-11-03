@@ -21,3 +21,6 @@ themes/*
 onisite/plugins/*
 !onisite/plugins/__init__.py
 !onisite/plugins/README.md
+
+# Ignore Docker overrides
+/docker-compose.override.yml

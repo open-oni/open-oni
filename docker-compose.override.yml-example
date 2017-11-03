@@ -1,0 +1,9 @@
+# In this example, we are overriding the docker mysql config to use the more
+# dev-friendly setup (lower RAM usage, for instance).  Copy this to
+# `docker-compose.override.yml` and tweak it however you need for your dev
+# environment.
+version: '2'
+services:
+  rdbms:
+    volumes:
+      - ./docker/mysql/:/etc/mysql/conf.d:Z
