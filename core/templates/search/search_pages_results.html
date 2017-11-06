@@ -55,7 +55,7 @@
     <nav aria-label="Pages">
       <ul class="pagination pagination-sm">
 {% if page.has_previous %}
-        <li><a href="{{previous_url}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+        <li><a href="{{previous_url}}" aria-label="Previous Page"><span aria-hidden="true">&laquo;</span></a></li>
 {% else %}
         <li class="disabled"><span aria-hidden="true">&laquo;</span></li>
 {% endif %}
@@ -69,13 +69,13 @@
     {% else %}
         <li>
     {% endifequal %}
-          <a href="?{{q}}&amp;page={{page_number}}&amp;sort={{sort}}">{{page_number}}</a>
+          <a href="?{{q}}&amp;page={{page_number}}&amp;sort={{sort}}" aria-label="Page {{page_number}}">{{page_number}}</a>
         </li>
   {% endifequal %}
 {% endfor %}
 
 {% if page.has_next %}
-        <li><a href="{{next_url}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+        <li><a href="{{next_url}}" aria-label="Next Page"><span aria-hidden="true">&raquo;</span></a></li>
 {% else %}
         <li class="disabled"><span aria-hidden="true">&raquo;</span></li>
 {% endif %}
