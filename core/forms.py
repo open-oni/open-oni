@@ -31,10 +31,10 @@ FREQUENCY_CHOICES = (
 )
 
 PROX_CHOICES = (
-    ("5", "5"),
-    ("10", "10"),
-    ("50", "50"),
-    ("100", "100"),
+    ("5", "5 words"),
+    ("10", "10 words"),
+    ("50", "50 words"),
+    ("100", "100 words"),
 )
 
 RESULT_ROWS = (
@@ -178,8 +178,8 @@ class SearchPagesForm(SearchPagesFormBase):
     andtext = fields.CharField(label="All of the words")
     ortext = fields.CharField(label="Any of the words")
     phrasetext = fields.CharField(label="With the phrase")
-    proxtext = fields.CharField(label="Words near each other")
-    proxdistance = fields.ChoiceField(choices=PROX_CHOICES)
+    proxtext = fields.CharField(label="Words")
+    proxdistance = fields.ChoiceField(choices=PROX_CHOICES, label="Distance")
     # misc
     lccn = fields.MultipleChoiceField(choices=[])
     # filters
