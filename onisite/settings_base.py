@@ -214,7 +214,7 @@ STORAGE_URL = '/data/'
 # If LC is down, we've mirrored a *lot* of MARC records - just copy the line
 # below into settings_local.py and uncomment it:
 # MARC_RETRIEVAL_URLFORMAT = "https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml"
-MARC_RETRIEVAL_URLFORMAT = "http://chroniclingamerica.loc.gov/lccn/%s/marc.xml"
+MARC_RETRIEVAL_URLFORMAT = "https://chroniclingamerica.loc.gov/lccn/%s/marc.xml"
 #MARC_RETRIEVAL_URLFORMAT = "http://localhost/media/marc/%s/marc.xml"
 
 # Various storage subdirectories
