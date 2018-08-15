@@ -3,19 +3,20 @@ from django.core.cache import cache
 
 from core import models
 from core import solr_index
-from core.forms import _fulltext_range, CityForm
+from core.forms import CityForm
+from core.utils.utils import fulltext_range
 
 
 def extra_request_info(request):
     """
     Add some extra useful stuff into the RequestContext.
     """
-    fulltext_range = _fulltext_range()
+    date_boundaries = fulltext_range()
     return {
         'BASE_URL': settings.BASE_URL,
         'city_form': CityForm(),
-        'fulltext_enddate': fulltext_range[1],
-        'fulltext_startdate': fulltext_range[0],
+        'fulltext_enddate': date_boundaries[1],
+        'fulltext_startdate': date_boundaries[0],
         'omniture_url': settings.OMNITURE_SCRIPT if "OMNITURE_SCRIPT" in dir(settings) else None,
         'project_name': settings.PROJECT_NAME if "PROJECT_NAME" in dir(settings) else None,
         'sharetool_url': settings.SHARETOOL_URL if "SHARETOOL_URL" in dir(settings) else None,

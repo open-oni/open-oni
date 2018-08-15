@@ -19,12 +19,25 @@
       <strong>&ldquo;{{ part }}&rdquo;</strong>
       {% if not forloop.last %}<em>and</em>{% endif %}
     {% endfor %}
-    {% if request.GET.date1 and request.GET.date2 %}
-      &nbsp; for date range {{ request.GET.date1 }} -
-      {{ request.GET.date2 }}
-      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}">
+
+    {# date filter text #}
+    {% if request.GET.yearRange %}
+      &nbsp; for year range {{ request.GET.yearRange }}
+      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'yearRange' %}">
         <img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/>
       </a>
+    {% else %}
+      {% if request.GET.date1 %}
+        &nbsp; for start date {{ request.GET.date1 }}
+      {% endif %}
+      {% if request.GET.date2 %}
+        through end date {{ request.GET.date2 }}
+      {% endif %}
+      {% if request.GET.date1 or request.GET.date2 %}
+        <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}">
+          <img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/>
+        </a>
+      {% endif %}
     {% endif %}
     {% if request.GET.language %}
       &nbsp; for languages {{ request.GET.language }}
@@ -83,6 +96,7 @@
     </nav>
   <!-- /pagination -->
   </div>
+
   <div class="col-md-3">
   <!-- Jump to page -->
     <form action="" method="GET" class="jumptopage">
@@ -102,10 +116,14 @@
       <input type="hidden" name="city" value="{{query.city}}" />
       <input type="hidden" name="county" value="{{query.county}}" />
 
-      {# date range #}
-      <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
-      <input type="hidden" name="date1" value="{{query.date1}}" />
-      <input type="hidden" name="date2" value="{{query.date2}}" />
+      {# date range and years #}
+      {# if there is a yearRange, it supercedes the date ranges #}
+      {% if request.GET.yearRange %}
+        <input type="hidden" name="yearRange" value="{{query.yearRange}}" />
+      {% else %}
+        <input type="hidden" name="date1" value="{{query.date1}}" />
+        <input type="hidden" name="date2" value="{{query.date2}}" />
+      {% endif %}
 
       {# All the chosen LCCNs #}
       {% for lccn in titles %}
@@ -137,7 +155,7 @@
 </div><!-- /row -->
 
 <form class="form-inline search_results_form" action="" method="GET">
-  <div class="row searhc_results_option_set">
+  <div class="row search_results_option_set">
     <div class="col-md-3">
       <label for="county">County</label>
       <select class="form-control" id="county" name="county">
@@ -156,7 +174,16 @@
         {% endfor %}
       </select>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3">
+      <label for="yearRange">Year</label>
+      <select class="form-control" id="yearRange" name="yearRange">
+        <option value="">All</option>
+        {% for years, count in page.facets.year %}
+          <option value="{{years}}" {% ifequal years request.GET.yearRange %} selected=selected {% endifequal %}>{{years}} ({{count}})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
       <label for="frequency">Frequency</label>
       <select class="form-control" id="frequency" name="frequency">
         <option value="">All</option>
@@ -195,8 +222,7 @@
   <input type="hidden" name="andtext" value="{{query.andtext}}" />
   <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
 
-  {# date range #}
-  <input type="hidden" name="dateFilterType" value="{{query.dateFilterType}}" />
+  {# date range and years #}
   <input type="hidden" name="date1" value="{{query.date1}}" />
   <input type="hidden" name="date2" value="{{query.date2}}" />
 

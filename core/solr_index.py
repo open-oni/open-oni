@@ -12,7 +12,7 @@ from django.http import QueryDict
 from django.conf import settings
 
 from core import models
-from core.forms import _fulltext_range
+from core.utils.utils import fulltext_range
 from core.utils import utils
 from core.title_loader import _normal_lccn
 
@@ -401,29 +401,6 @@ def page_search(d):
         if d.get(field, None):
             q.append(query_join(d.getlist(field), field))
 
-    date_filter_type = d.get('dateFilterType', None)
-    date_boundaries = _fulltext_range()
-    date1 = d.get('date1', None)
-    date2 = d.get('date2', None)
-   
-    if not date1:
-        date1 = date_boundaries[0]
-    if not date2:
-        date2 = date_boundaries[1]
-    if date_filter_type == 'year':
-        date1 = int(date1)
-        date2 = int(date2)
-        q.append('+year:[%(year)s TO %(year)s]' % d)
-    elif date_filter_type in ('range', 'yearRange'):
-        d1 = _solrize_date(str(date1))
-        d2 = _solrize_date(str(date2), is_start=False)
-        if d1 and d2:
-            date1, date2 = map(lambda d: int(str(d)[:4]), (d1, d2))
-            q.append('+date:[%i TO %i]' % (d1, d2))
-    # choose a facet range gap such that the number of date ranges returned
-    # is <= 10. These would be used to populate a select dropdown on search 
-    # results page.
-    gap = max(1, int(math.ceil((date2 - date1)/10)))
     ocrs = ['ocr_%s' % l for l in settings.SOLR_LANGUAGES]
 
     lang = d.get('language', None)
@@ -480,6 +457,39 @@ def page_search(d):
     if d.get('issue_date', None):
         q.append('+month:%d +day:%d' % (int(d['date_month']), int(d['date_day'])))
 
+    # yearRange supercedes date1 and date2
+
+    year1, year2 = None, None
+
+    yearRange = d.get('yearRange', None)
+    if yearRange:
+        split = yearRange.split("-")
+        if len(split) == 2:
+            year1 = int(split[0])
+            year2 = int(split[1])
+        else:
+            year1 = int(split[0])
+            year2 = int(split[0])
+        q.append('+year:[%d TO %d]' % (year1, year2))
+    else:
+        date_boundaries = fulltext_range()
+        date1 = d.get('date1', None)
+        date2 = d.get('date2', None)
+        # do NOT apply year min / max to solr query
+        # do apply it to facets since they require a specific begin / end year
+        d1 = _solrize_date(str(date1)) if date1 else "*"
+        d2 = _solrize_date(str(date2), is_start=False) if date2 else "*"
+
+        q.append('+date:[%s TO %s]' % (d1, d2))
+        year1 = date_boundaries[0] if d1 == "*" else int(str(d1)[:4])
+        year2 = date_boundaries[1] if d2 == "*" else int(str(d2)[:4])
+
+    # choose a facet range gap such that the number of date ranges returned
+    # is <= 10. These would be used to populate a select dropdown on search
+    # results page.
+    gap = max(1, int(math.ceil((year2 - year1)/10)))
+
+    # increment year range end by 1 to be inclusive
     facet_params = {'facet': 'true','facet_field': [
                     'city',
                     'county',
@@ -488,9 +498,11 @@ def page_search(d):
                     'state', 
                     ],
                     'facet_range':'year',
-                    'f_year_facet_range_start': date1,
-                    'f_year_facet_range_end': date2,
-                    'f_year_facet_range_gap': gap, 'facet_mincount': 1}
+                    'f_year_facet_range_start': year1,
+                    'f_year_facet_range_end': year2+1,
+                    'f_year_facet_range_gap': gap,
+                    'facet_mincount': 1
+                    }
     return ' '.join(q), facet_params
 
 def query_join(values, field, and_clause=False):

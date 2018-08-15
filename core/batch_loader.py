@@ -24,6 +24,7 @@ from django.conf import settings
 from django.core import management
 
 from core import models
+from core.utils.utils import set_fulltext_range
 from core.models import Batch, Issue, Title, Awardee, Page, OCR
 from core.models import LoadBatchEvent
 from core.ocr_extractor import ocr_extractor
@@ -192,6 +193,8 @@ class BatchLoader(object):
             batch.released = datetime.now()
             batch.save()
 
+        # updates the min and max years of all titles
+        set_fulltext_range()
         return batch
 
     def _get_batch(self, batch_name, batch_source=None, create=False):
@@ -490,6 +493,8 @@ class BatchLoader(object):
             if os.path.islink(link_name):
                 _logger.info("Removing symlink %s", link_name)
                 os.remove(link_name)
+            # updates the min and max years of all titles
+            set_fulltext_range()
         except Exception, e:
             msg = "purge failed: %s" % e
             _logger.error(msg)
