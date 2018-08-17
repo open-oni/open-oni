@@ -58,10 +58,11 @@ def _distinct_values(model, field, initial_label=None):
 
 def _distinct_title_languages():
     values = models.Title.objects.filter(has_issues=True).values("languages").distinct().order_by("languages")
-    options = []
+    options = [("", "All")]
     for value in values:
-        lang = value["languages"]
-        options.append((lang, models.Language.objects.get(code=lang).name))
+        lang_code = value["languages"]
+        lang = models.Language.objects.get(code=lang_code).name
+        options.append((lang, lang))
     return options
 
 def _titles_states():
@@ -189,9 +190,7 @@ class SearchPagesForm(SearchPagesFormBase):
 
         self.fields["lccn"].widget.attrs.update({'size': '8'})
         self.fields["lccn"].choices = self.titles
-        lang_choices = [("", "All"), ]
-        lang_choices.extend(_distinct_title_languages())
-        self.fields["language"].choices = lang_choices
+        self.fields["language"].choices = _distinct_title_languages()
 
         # locations
 

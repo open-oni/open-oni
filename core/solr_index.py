@@ -403,10 +403,11 @@ def page_search(d):
 
     ocrs = ['ocr_%s' % l for l in settings.SOLR_LANGUAGES]
 
-    lang = d.get('language', None)
-    lang_full = models.Language.objects.get(code=str(lang)) if lang else None
-    if lang_full:
-        q.append('+language:%s' % lang_full)
+    lang_req = d.get('language', None)
+    language = models.Language.objects.get(name=lang_req) if lang_req else None
+    lang = language.code if language else None
+    if language:
+        q.append('+language:%s' % language.name)
     ocr_lang = 'ocr_' + lang if lang else 'ocr'
     if d.get('ortext', None):
         q.append('+((' + query_join(_solr_escape(d['ortext']).split(' '), "ocr"))
