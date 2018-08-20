@@ -186,6 +186,9 @@
           <label for="yearRange">Year</label>
           <select class="form-control" id="yearRange" name="yearRange">
             <option value="">All</option>
+            {% if request.GET.yearRange %}
+              <option value="{{request.GET.yearRange}}" selected=selected>{{request.GET.yearRange}}</option>
+            {% endif %}
             {% for years, count in page.facets.year %}
               <option value="{{years}}" {% ifequal years request.GET.yearRange %} selected=selected {% endifequal %}>{{years}} ({{count}})</option>
             {% endfor %}
@@ -246,9 +249,9 @@
       {# miscellaneous filters #}
       <input type="hidden" name="language" value="{{query.language}}" />
     {% endblock search_page_results_filter_form_hidden_filters %}
-
   </form>
 {% endblock search_page_results_filter_form %}
+
 <!-- ======================
 Thumbnails
 ======================== -->
