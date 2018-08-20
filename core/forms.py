@@ -7,9 +7,9 @@ from django.core.cache import cache
 from django.db.models import Min, Max
 
 from core import models
+from core.utils.utils import fulltext_range
 
-MIN_YEAR = 1860
-MAX_YEAR = 1922
+# min and max year set in utils.py
 DAY_CHOICES = [(i, i) for i in range(1,32)]
 MONTH_CHOICES = ((1, u'Jan',), (2, u'Feb',), (3, u'Mar',),
                  (4, u'Apr',), (5, u'May',), (6, u'Jun',),
@@ -95,28 +95,6 @@ def _titles_states():
     return (titles, states)
 
 
-def _fulltext_range():
-    fulltext_range = cache.get('fulltext_range')
-    if not fulltext_range:
-        # get the maximum and minimum years that we have content for
-        issue_dates = models.Issue.objects.all().aggregate(min_date=Min('date_issued'),
-                                                           max_date=Max('date_issued'))
-
-        # when there is no content these may not be set
-        if issue_dates['min_date']:
-            min_year = issue_dates['min_date'].year
-        else:
-            min_year = MIN_YEAR
-        if issue_dates['max_date']:
-            max_year = issue_dates['max_date'].year
-        else:
-            max_year = MAX_YEAR
-
-        fulltext_range = (min_year, max_year)
-        cache.set('fulltext_range', fulltext_range)
-    return fulltext_range
-
-
 class CityForm(forms.Form):
     city = fields.ChoiceField(choices=[])
     city.widget.attrs["class"] = "form-control"
@@ -145,7 +123,7 @@ class SearchPagesFormBase(forms.Form):
 
         self.titles, self.states = _titles_states()
 
-        fulltextStartYear, fulltextEndYear = _fulltext_range()
+        fulltextStartYear, fulltextEndYear = fulltext_range()
 
         self.years = [(year, year) for year in range(fulltextStartYear, fulltextEndYear + 1)]
         self.fulltextStartYear = fulltextStartYear

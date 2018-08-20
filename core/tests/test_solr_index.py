@@ -61,7 +61,7 @@ class SolrIndexTests(TestCase):
     # page_search
 
     def test_page_search_lccn(self):
-        self.assertEqual(si.page_search(Q('lccn=sn83030214'))[0], 
+        self.assertEqual(si.page_search(Q('lccn=sn83030214'))[0],
             '+type:page +lccn:("sn83030214")')
         self.assertEqual(si.page_search(Q('lccn=sn83030214&lccn=sn83030215'))[0],
             '+type:page +lccn:("sn83030214" "sn83030215")')
@@ -73,12 +73,12 @@ class SolrIndexTests(TestCase):
             '+type:page +state:("California" "New Jersey")')
 
     def test_page_search_year(self):
-        self.assertEqual(si.page_search(Q('dateFilterType=year&year=1900'))[0], 
+        self.assertEqual(si.page_search(Q('yearRange=1900'))[0],
             '+type:page +year:[1900 TO 1900]')
 
     def test_page_search_date_range(self):
         self.assertEqual(
-            si.page_search(Q('dateFilterType=range&date1=10/25/1901&date2=10/31/1901'))[0],
+            si.page_search(Q('date1=10/25/1901&date2=10/31/1901'))[0],
             '+type:page +date:[19011025 TO 19011031]')
         # TODO if you test with only one date, this will completely skip at line 418
         # so would be good to add logic to solr_index.py which would stub in a beginning / end

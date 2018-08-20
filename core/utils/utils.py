@@ -4,13 +4,19 @@ import os
 import wsgiref.util
 
 from django.conf import settings
-from django.shortcuts import get_object_or_404
-from django.core import urlresolvers
 from django.http import HttpResponse, Http404
-from django.utils.http import http_date
+from django.db.models import Min, Max
+from django.shortcuts import get_object_or_404
 from django.utils import datetime_safe
+from django.utils.http import http_date
 
 from core import models
+from django.core import urlresolvers
+from django.core.cache import cache
+
+
+MIN_YEAR = 1400
+MAX_YEAR = datetime.datetime.now().year
 
 
 def _rdf_base(request):
@@ -288,6 +294,32 @@ def create_crumbs(title, issue=None, date=None, edition=None, page=None):
                                                   'sequence': page.sequence})})
 
     return crumbs
+
+
+def fulltext_range():
+    fulltext_range = cache.get('fulltext_range')
+    if not fulltext_range:
+        fulltext_range = set_fulltext_range()
+    return fulltext_range
+
+def set_fulltext_range():
+    # get the maximum and minimum years that we have content for
+    issue_dates = models.Issue.objects.all().aggregate(min_date=Min('date_issued'),
+                                                       max_date=Max('date_issued'))
+
+    # when there is no content these may not be set
+    if issue_dates['min_date']:
+        min_year = issue_dates['min_date'].year
+    else:
+        min_year = MIN_YEAR
+    if issue_dates['max_date']:
+        max_year = issue_dates['max_date'].year
+    else:
+        max_year = MAX_YEAR
+
+    fulltext_range = (min_year, max_year)
+    cache.set('fulltext_range', fulltext_range)
+    return fulltext_range
 
 
 def validate_bib_dir():

@@ -21,7 +21,7 @@
   <div class="col-md-8">
     {% if page %}
       <h3>
-        <a href='{% url 'openoni_search_pages_results' %}?dateFilterType=range&date1={{date|date:"m/d/Y" }}&date2={{date|date:"m/d/Y"}}/'>{{ heading }}</a>
+        <a href='{% url 'openoni_search_pages_results' %}?date1={{date|date:"m/d/Y" }}&date2={{date|date:"m/d/Y"}}/'>{{ heading }}</a>
       </h3>
       <p>{{ date|date:"F j, Y" }}</p>
       <div class="featured_content" id="featured_content">
