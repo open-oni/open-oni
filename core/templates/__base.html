@@ -91,7 +91,7 @@
       Navbar
       ============= -->
         {% block navbar %}
-        <nav class="navbar navbar-inverse header_navbar">
+        <nav class="navbar {% block navbar_classes %}navbar-inverse header_navbar{% endblock navbar_classes %}">
           <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
