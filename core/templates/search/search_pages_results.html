@@ -41,7 +41,7 @@
       {% endif %}
     {% endif %}
     {% if request.GET.language %}
-      &nbsp; for languages {{ request.GET.language }}
+      &nbsp; for language {{ request.GET.language }}
       <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'language' %}">
         <img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/>
       </a>
@@ -164,7 +164,7 @@
   <form class="form-inline search_results_form" action="" method="GET">
     {% block search_page_results_filter_form_row1 %}
       <div class="row search_results_option_set">
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="county">County</label>
           <select class="form-control" id="county" name="county">
             <option value="">All</option>
@@ -182,7 +182,7 @@
             {% endfor %}
           </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="yearRange">Year</label>
           <select class="form-control" id="yearRange" name="yearRange">
             <option value="">All</option>
@@ -200,6 +200,15 @@
             <option value="">All</option>
             {% for frequency, count in page.facets.frequency %}
               <option value="{{frequency}}" {% ifequal frequency request.GET.frequency %} selected=selected {% endifequal %}>{{frequency}} ({{count}})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="language">Language</label>
+          <select class="form-control" id="language" name="language">
+            <option value="">All</option>
+            {% for language, count in page.facets.language %}
+              <option value="{{language}}" {% ifequal language request.GET.language %} selected=selected {% endifequal %}>{{language}} ({{count}})</option>
             {% endfor %}
           </select>
         </div>
@@ -245,9 +254,6 @@
       {% for lccn in titles %}
         <input type="hidden" name="lccn" value="{{lccn}}" />
       {% endfor %}
-
-      {# miscellaneous filters #}
-      <input type="hidden" name="language" value="{{query.language}}" />
     {% endblock search_page_results_filter_form_hidden_filters %}
   </form>
 {% endblock search_page_results_filter_form %}
