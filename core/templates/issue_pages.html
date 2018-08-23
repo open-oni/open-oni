@@ -81,6 +81,9 @@
 {% include "includes/issue_pages_ctrl.html" %}
 {% endif %}
 
+{% block batch_link %}
+    <p class="issue_batch_link"><a href="{{ issue.batch.url }}">View Batch Information</a></p>
+{% endblock batch_link %}
 
 {% endblock newspaper_content %}
 
