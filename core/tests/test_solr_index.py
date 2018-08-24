@@ -127,8 +127,7 @@ class SolrIndexTests(TestCase):
         self.assertEqual(si.page_search(Q('proxtext=apples%20oranges'))[0], u'+type:page +((ocr:("apples oranges"~5)^10000 ) OR %s )' %q)
 
     def test_page_search_language(self):
-        self.assertEqual(si.page_search(Q('proxtext=apples%20oranges&language=eng'))[0], '+type:page +language:English +((ocr:("apples oranges"~5)^10000 AND ocr_eng:"apples oranges"~5 ) OR ocr_eng:"apples oranges"~5 )')
-
+        self.assertEqual(si.page_search(Q('proxtext=apples%20oranges&language=English'))[0], '+type:page +language:English +((ocr:("apples oranges"~5)^10000 AND ocr_eng:"apples oranges"~5 ) OR ocr_eng:"apples oranges"~5 )')
 
     # query_join (page)
     
