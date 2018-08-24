@@ -76,13 +76,34 @@ class SolrIndexTests(TestCase):
         self.assertEqual(si.page_search(Q('yearRange=1900'))[0],
             '+type:page +year:[1900 TO 1900]')
 
+    def test_page_search_year_range(self):
+        self.assertEqual(si.page_search(Q('yearRange=1900-1915'))[0],
+            '+type:page +year:[1900 TO 1915]')
+
     def test_page_search_date_range(self):
         self.assertEqual(
             si.page_search(Q('date1=10/25/1901&date2=10/31/1901'))[0],
             '+type:page +date:[19011025 TO 19011031]')
-        # TODO if you test with only one date, this will completely skip at line 418
-        # so would be good to add logic to solr_index.py which would stub in a beginning / end
-        # date for the range rather than relying on UI to provide unfilled date ranges
+
+    def test_page_search_date1_only(self):
+        self.assertEqual(
+            si.page_search(Q('date1=05/30/1988&date2='))[0],
+            '+type:page +date:[19880530 TO *]')
+
+    def test_page_search_date2_only(self):
+        self.assertEqual(
+            si.page_search(Q('date2=01/07/1880'))[0],
+            '+type:page +date:[* TO 18800107]')
+
+    def test_page_search_year_range_and_dates(self):
+        self.assertEqual(
+            si.page_search(Q('date1=01/01/1900&date2=12/31/1910&yearRange=1902-1904'))[0],
+            '+type:page +year:[1902 TO 1904]')
+
+    def test_page_search_no_date(self):
+        self.assertEqual(
+            si.page_search(Q('date1&date2'))[0],
+            '+type:page')
 
     # TODO not sure that the or / and / prox / text texts are searching languages correctly
     # see coverage report for page_search function

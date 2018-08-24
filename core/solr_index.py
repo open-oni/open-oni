@@ -476,14 +476,20 @@ def page_search(d):
         date_boundaries = fulltext_range()
         date1 = d.get('date1', None)
         date2 = d.get('date2', None)
-        # do NOT apply year min / max to solr query
-        # do apply it to facets since they require a specific begin / end year
-        d1 = _solrize_date(str(date1)) if date1 else "*"
-        d2 = _solrize_date(str(date2), is_start=False) if date2 else "*"
+        if date1 or date2:
+            # do NOT apply year min / max to solr query
+            # do apply it to facets since they require a specific begin / end year
+            d1 = _solrize_date(str(date1)) if date1 else "*"
+            d2 = _solrize_date(str(date2), is_start=False) if date2 else "*"
 
-        q.append('+date:[%s TO %s]' % (d1, d2))
-        year1 = date_boundaries[0] if d1 == "*" else int(str(d1)[:4])
-        year2 = date_boundaries[1] if d2 == "*" else int(str(d2)[:4])
+            q.append('+date:[%s TO %s]' % (d1, d2))
+            year1 = date_boundaries[0] if d1 == "*" else int(str(d1)[:4])
+            year2 = date_boundaries[1] if d2 == "*" else int(str(d2)[:4])
+        else:
+            # do not pass any query parameters to solr if no date requested
+            # but do set the year range for faceting purposes
+            year1 = date_boundaries[0]
+            year2 = date_boundaries[1]
 
     # choose a facet range gap such that the number of date ranges returned
     # is <= 10. These would be used to populate a select dropdown on search
