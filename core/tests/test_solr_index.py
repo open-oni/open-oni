@@ -129,6 +129,20 @@ class SolrIndexTests(TestCase):
     def test_page_search_language(self):
         self.assertEqual(si.page_search(Q('proxtext=apples%20oranges&language=English'))[0], '+type:page +language:English +((ocr:("apples oranges"~5)^10000 AND ocr_eng:"apples oranges"~5 ) OR ocr_eng:"apples oranges"~5 )')
 
+    def test_page_search_default_facets(self):
+        self.assertEqual(si.page_search(Q(''))[1],
+            {'f_year_facet_range_gap': 61, 'f_year_facet_range_end': 2019, 'f_year_facet_range_start': 1400,
+             'facet': 'true', 'facet_mincount': 1, 'facet_range': 'year',
+             'facet_field': ['city', 'county', 'frequency', 'language', 'state']
+            })
+
+    def test_page_search_year_range_facets(self):
+        self.assertEqual(si.page_search(Q('yearRange=1900-1940'))[1],
+            {'f_year_facet_range_end': 1941, 'f_year_facet_range_gap': 4, 'f_year_facet_range_start': 1900,
+             'facet': 'true', 'facet_field': ['city', 'county', 'frequency', 'language', 'state'],
+             'facet_mincount': 1, 'facet_range': 'year'
+            })
+
     # query_join (page)
     
     def test_query_join(self):
