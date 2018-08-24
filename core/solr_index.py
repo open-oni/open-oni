@@ -462,9 +462,9 @@ def page_search(d):
 
     year1, year2 = None, None
 
-    yearRange = d.get('yearRange', None)
-    if yearRange:
-        split = yearRange.split("-")
+    year_range = d.get('yearRange', None)
+    if year_range:
+        split = year_range.split("-")
         if len(split) == 2:
             year1 = int(split[0])
             year2 = int(split[1])
