@@ -143,7 +143,6 @@ class TitleLoaderTests(TestCase):
         self.assertEqual(solr['place_of_publication'], u'Albany, N.Y.')
         self.assertEqual(solr['publisher'], u'The Living Issue Co.')
         self.assertEqual(solr['start_year'], 1873)
-        self.assertEqual(solr['essay'], [])
         self.assertEqual(solr['title'], u'The living issue.')
         self.assertEqual(solr['lccn'], u'sn83030846')
         self.assertEqual(solr['end_year'], 1887)

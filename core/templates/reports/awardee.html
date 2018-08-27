@@ -30,19 +30,4 @@ from the NDNP Awardee, {{ awardee }}. Summary information about <a href="{% url 
 
 <br />
 
-{% if awardee.essays.all.count > 0 %}
-<h2>Essays</h2>
-
-<table class="data table table-striped table-hover" width="100%">
-    <th width="75%">Essay Title</th>
-    <th>Created</th>
-    {% for essay in awardee.essays.all %}
-    <tr class="{% cycle 'lightGray' 'white' %}">
-        <td><a href="{% url 'openoni_essay' essay.id %}">{{ essay.title }}</td>
-        <td>{{ essay.created|date }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif %}
-
 {% endblock %}

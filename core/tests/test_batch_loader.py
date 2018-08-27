@@ -102,7 +102,6 @@ class BatchLoaderTest(TestCase):
         self.assertEqual(solr_doc['note'], [
             u"I'll take Manhattan",
             u'The Big Apple'])
-        self.assertTrue(not solr_doc.has_key('essay'))
         self.assertEqual(solr_doc['ocr_eng'], 'LCCNsn83030214Page1')
 
         # purge the batch and make sure it's gone from the db

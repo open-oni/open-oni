@@ -404,19 +404,6 @@ def titles_in_state(request, state, page_number=1, order='name_normal'):
                               context_instance=RequestContext(request))
 
 
-# TODO: this redirect can go away some suitable time after 08/2010
-# it predates having explicit essay ids
-@cache_page(settings.DEFAULT_TTL_SECONDS)
-def title_essays(request, lccn):
-    title = get_object_or_404(models.Title, lccn=lccn)
-    # if there's only one essay might as well redirect to it
-    if len(title.essays.all()) >= 1:
-        url = title.essays.all()[0].url
-        return HttpResponsePermanentRedirect(url)
-    else:
-        return HttpResponseNotFound()
-
-
 def _create_year_form(issues, year, all_issues):
     if issues.count() > 0:
         if year is None:

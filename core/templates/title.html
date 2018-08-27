@@ -24,11 +24,6 @@
             <dt>Title: </dt>
             <dd>
                 {{title.display_name}} : ({{title.place_of_publication}}) {{title.start_year}}-{{title.end_year}}
-                {% if title.essay %}
-                <br/>
-                
-                <a href="{% url 'openoni_essay' title.essay.id %}">More About this Newspaper</a>
-                {% endif %}
             </dd>
             
             {% if title.alt_titles.all %}

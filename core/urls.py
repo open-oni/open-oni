@@ -94,18 +94,6 @@ urlpatterns = [
     url(r'^lccn/(?P<lccn>\w+)/holdings/$', browse.title_holdings,
         name="openoni_title_holdings"),
 
-    # example: /essays/
-    url(r'^essays/$', reports.essays, name='openoni_essays'),
-
-    # example: /essays/1/
-    url(r'^essays/(?P<essay_id>\d+)/$', reports.essay, name='openoni_essay'),
-
-    # TOD0: remove this some suitable time after 08/2010 since it
-    # permanently redirects to new essay id based URL
-    # example: /lccn/sn85066387/essay
-    url(r'^lccn/(?P<lccn>\w+)/essays/$', browse.title_essays,
-        name="openoni_title_essays"),
-
     # example: /lccn/sn85066387/1907-03-17/ed-1
     url(r'^lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/$',
         browse.issue_pages, name="openoni_issue_pages"),

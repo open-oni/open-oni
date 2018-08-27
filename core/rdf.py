@@ -33,8 +33,6 @@ def title_to_graph(t, g=None, include_issues=True):
             g.add((uri, DCTERMS['language'], URIRef(language.lingvoj)))
     if t.publisher and t.publisher != 's.n.':
         g.add((uri, DC['publisher'], Literal(t.publisher)))
-    for essay in t.essays.all():
-        g.add((uri, DCTERMS['description'], URIRef(essay.url)))
     if include_issues:
         for issue in t.issues.all():
             g.add((uri, ORE['aggregates'], abstract_uri(issue)))
@@ -169,9 +167,6 @@ def awardee_to_graph(a):
     for batch in a.batches.all():
         g.add((abstract_uri(batch), DCTERMS['creator'], uri))
     g.add((uri, RDFS.isDefinedBy, rdf_uri(a)))
-    for essay in a.essays.all():
-        g.add((URIRef(essay.url), DCTERMS['creator'], uri))
-        g.add((URIRef(essay.url), RDF['type'], NDNP['Essay']))
     if a.org_code == 'dlc':
         # important for resource maps that reference loc as dc:creator
         g.add((uri, FOAF['mbox'], Literal('help@loc.gov')))

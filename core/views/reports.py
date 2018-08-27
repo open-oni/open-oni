@@ -366,7 +366,6 @@ def status(request):
     batch_count = models.Batch.objects.all().count()
     title_count = models.Title.objects.all().count()
     holding_count = models.Holding.objects.all().count()
-    essay_count = models.Essay.objects.all().count()
     pages_indexed = solr_index.page_count()
     titles_indexed = solr_index.title_count()
     return render_to_response('reports/status.html', dictionary=locals(),
@@ -485,23 +484,6 @@ def reel(request, reel_number):
                       'titles': reel.titles(),
                       'title_range': _title_range(reel), })
     return render_to_response('reports/reel.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
-
-
-@cache_page(settings.API_TTL_SECONDS)
-def essays(request):
-    page_title = "Newspaper Essays"
-    essays = models.Essay.objects.all().order_by('title')
-    return render_to_response('reports/essays.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
-
-
-@cache_page(settings.API_TTL_SECONDS)
-def essay(request, essay_id):
-    essay = get_object_or_404(models.Essay, id=essay_id)
-    title = essay.first_title()
-    page_title = essay.title
-    return render_to_response('reports/essay.html', dictionary=locals(),
                               context_instance=RequestContext(request))
 
 

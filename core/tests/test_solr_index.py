@@ -171,7 +171,7 @@ class SolrIndexTests(TestCase):
     def test_title_search(self):
         self.assertEqual(
             si.title_search(Q('terms=bloody'))[0], 
-            '+type:title +(title:"bloody" OR essay:"bloody" OR note:"bloody" OR edition:"bloody" OR place_of_publication:"bloody" OR url:"bloody" OR publisher:"bloody")')
+            '+type:title +(title:"bloody" OR note:"bloody" OR edition:"bloody" OR place_of_publication:"bloody" OR url:"bloody" OR publisher:"bloody")')
         self.assertEqual(len(si.title_search(Q('state=New+York'))), 2)
 
     def test_ethnicity_query(self):
