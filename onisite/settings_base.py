@@ -135,6 +135,9 @@ ALLOWED_HOSTS = ["*"]
 # OPEN-ONI SETTINGS
 ####################################################################
 
+# templates/ subdirectory where essays are located in both core and theme apps
+ESSAY_TEMPLATES = "essays"
+
 # Should be turned on in production.  TODO: this should probably drive the
 # DEBUG setting, at least forcing it to be off when IS_PRODUCTION is true.  We
 # should also make this overrideable in the INI file.
