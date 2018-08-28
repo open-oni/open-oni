@@ -2,9 +2,18 @@
 
 Essays are included automatically on a newspaper's title page if there is a file in this directory (or the settings.ESSAY_TEMPLATES directory) matching the title LCCN.  For example, the webpage 'lccn/sn99021999' would provide you information about the Omaha Daily Bee and include an essay in `themes/nebraska/templates/essays/sn99021999.html`.
 
-**It is recommended to include essays in a "theme" application rather than adding them in this directory!**
+**It is recommended to include essays in a "theme" application rather than adding them in the core/templates directory!**
 
 If you are overriding the behavior in `title.html`, you are encouraged to include the `template_exists` filter to prevent errors when including a template file which does not exist.
+
+To let your database know that a particular LCCN has a matching essay, run the following:
+
+```
+manage.py set_essay_status
+
+# using docker
+docker-compose exec web manage set_essay_status
+```
 
 Example essay:
 
