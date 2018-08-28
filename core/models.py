@@ -224,6 +224,7 @@ class Title(models.Model):
     has_issues = models.BooleanField(default=False, db_index=True)
     uri = models.URLField(null=True, max_length=500, help_text="856$u")
     sitemap_indexed = models.DateTimeField(auto_now_add=False, null=True)
+    essay = models.BooleanField(default=False)
 
     @property
     @permalink
@@ -250,16 +251,6 @@ class Title(models.Model):
     def first_issue(self):
         try:
             return self.issues.order_by("date_issued")[0]
-        except IndexError:
-            return None
-
-    def has_essays(self):
-        return self.essays.count() > 0
-
-    @property
-    def first_essay(self):
-        try:
-            return self.essays.all()[0]
         except IndexError:
             return None
 
@@ -311,7 +302,6 @@ class Title(models.Model):
             'place': [p.name for p in self.places.all()],
             'holding_type': self.holding_types,
             'url': [u.value for u in self.urls.all()],
-            'essay': [e.html for e in self.essays.all()],
         }
 
         return doc
@@ -810,7 +800,6 @@ class Page(models.Model):
         # start with basic title data
         doc = self.issue.title.solr_doc
         # no real need to repeat this stuff in pages
-        del doc['essay']
         del doc['url']
         del doc['holding_type']
         doc.update({
@@ -1010,28 +999,6 @@ class IssueNote(models.Model):
 
     class Meta:
         ordering = ('text',)
-
-
-class Essay(models.Model):
-    title = models.TextField()
-    created = models.DateTimeField()
-    modified = models.DateTimeField()
-    creator = models.ForeignKey('Awardee', related_name='essays')
-    essay_editor_url = models.TextField()
-    html = models.TextField()
-    loaded = models.DateTimeField(auto_now_add=True)
-    titles = models.ManyToManyField('Title', related_name='essays')
-
-    def first_title(self):
-        return self.titles.all()[0]
-
-    @property
-    @permalink
-    def url(self):
-        return ('openoni_essay', (), {'essay_id': self.id})
-
-    class Meta:
-        ordering = ['title']
 
 
 class Holding(models.Model):

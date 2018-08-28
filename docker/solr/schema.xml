@@ -1102,7 +1102,6 @@
     <field name="start_year" type="tint" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="end_year" type="tint" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="note" type="text" indexed="true" stored="true" required="false" multiValued="true" />
-    <field name="essay" type="text" indexed="true" stored="true" required="false" multiValued="true" />
     <field name="holding_type" type="string" indexed="true" stored="true" required="false" multiValued="true" />
     <field name="date" type="tint" indexed="true" stored="true" required="false" multiValued="false" />
     <field name="month" type="tint" indexed="true" stored="true" required="false" multiValued="false" />
