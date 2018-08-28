@@ -219,7 +219,6 @@ MARC_RETRIEVAL_URLFORMAT = "https://chroniclingamerica.loc.gov/lccn/%s/marc.xml"
 
 # Various storage subdirectories
 BATCH_STORAGE = os.path.join(STORAGE, "batches")
-BIB_STORAGE = os.path.join(STORAGE, "bib")
 OCR_DUMP_STORAGE = os.path.join(STORAGE, "ocr")
 COORD_STORAGE = os.path.join(STORAGE, "word_coordinates")
 TEMP_TEST_DATA = os.path.join(STORAGE, "temp_test_data")

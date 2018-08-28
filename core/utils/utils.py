@@ -321,12 +321,3 @@ def set_fulltext_range():
     cache.set('fulltext_range', fulltext_range)
     return fulltext_range
 
-
-def validate_bib_dir():
-    bib_isdir = os.path.isdir(settings.BIB_STORAGE)
-    bib_hasattr = hasattr(settings, "BIB_STORAGE")
-    bib_in_settings = bool(bib_hasattr and bib_isdir)
-    if bib_in_settings:
-        return settings.BIB_STORAGE
-    else:
-        return None
