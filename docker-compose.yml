@@ -35,7 +35,7 @@ services:
       context: ./docker
       dockerfile: Dockerfile-dev
     volumes:
-      - ./:/opt/openoni:Z
+      - ./:/opt/openoni:z
       - ./docker/data:/opt/openoni/data:z
     ports:
       - "$HTTPPORT:80"
