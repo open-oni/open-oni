@@ -263,7 +263,7 @@ TEMPLATES = [
 # should also make this overrideable in the INI file.
 IS_PRODUCTION = False
 
-LOG_LOCATION = "/opt/openoni/log/"
+LOG_LOCATION = '/opt/openoni/log/'
 
 # Public URLs to the image server endpoints
 #
@@ -272,8 +272,8 @@ LOG_LOCATION = "/opt/openoni/log/"
 # thumbnail caching separated from resize caching, etc.  Thumbnails are a much
 # smaller subset of possible images and therefore benefit a great deal from
 # being cached and/or pregenerated.
-RESIZE_SERVER = "http://example.com/images/iiif"
-TILE_SERVER = "http://example.com/images/iiif"
+RESIZE_SERVER = 'http://example.com/images/iiif'
+TILE_SERVER = 'http://example.com/images/iiif'
 
 # How big should thumbnails be?
 THUMBNAIL_WIDTH = 240
@@ -288,44 +288,45 @@ FEED_TTL_SECONDS = _ONEWEEK
 # JP2s if you don't have Aware, but significantly more memory-intense.
 USE_TIFF = False
 
-# Set this to a server load value at which you want Open ONI to stop handling
-# web requests.  If you aren't sure, just leave this alone.
+# Number of processes in system run queue averaged over last minute beyond which
+# OpenONI will return a 'Server Too Busy' response; If unsure, leave at default
+# Requires core.middleware.TooBusyMiddleware in MIDDLEWARE_CLASSES
 TOO_BUSY_LOAD_AVERAGE = 64
 
 # URL to the Solr server.  This should be overridden in settings_local.py or
 # else /etc/openoni.ini.
-SOLR = "http://localhost:8983/solr"
+SOLR = 'http://localhost:8983/solr'
 
 # Languages solr uses
 SOLR_LANGUAGES = (
-    "ara",
-    "bul",
-    "cze",
-    "dan",
-    "ger",
-    "gre",
-    "eng",
-    "spa",
-    "baq",
-    "per",
-    "fin",
-    "fre",
-    "gle",
-    "hin",
-    "hun",
-    "arm",
-    "ind",
-    "ita",
-    "jpn",
-    "lav",
-    "dut",
-    "nor",
-    "por",
-    "rum",
-    "rus",
-    "swe",
-    "tha",
-    "tur",
+    'ara',
+    'bul',
+    'cze',
+    'dan',
+    'ger',
+    'gre',
+    'eng',
+    'spa',
+    'baq',
+    'per',
+    'fin',
+    'fre',
+    'gle',
+    'hin',
+    'hun',
+    'arm',
+    'ind',
+    'ita',
+    'jpn',
+    'lav',
+    'dut',
+    'nor',
+    'por',
+    'rum',
+    'rus',
+    'swe',
+    'tha',
+    'tur',
 )
 
 # Absolute path on disk to the data directory
@@ -336,15 +337,15 @@ STORAGE_URL = '/data/'
 
 # If LC is down, we've mirrored a *lot* of MARC records - just copy the line
 # below into settings_local.py and uncomment it:
-# MARC_RETRIEVAL_URLFORMAT = "https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml"
-MARC_RETRIEVAL_URLFORMAT = "https://chroniclingamerica.loc.gov/lccn/%s/marc.xml"
-#MARC_RETRIEVAL_URLFORMAT = "http://localhost/media/marc/%s/marc.xml"
+# MARC_RETRIEVAL_URLFORMAT = 'https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml'
+MARC_RETRIEVAL_URLFORMAT = 'https://chroniclingamerica.loc.gov/lccn/%s/marc.xml'
+#MARC_RETRIEVAL_URLFORMAT = 'http://localhost/media/marc/%s/marc.xml'
 
 # Various storage subdirectories
-BATCH_STORAGE = os.path.join(STORAGE, "batches")
-OCR_DUMP_STORAGE = os.path.join(STORAGE, "ocr")
-COORD_STORAGE = os.path.join(STORAGE, "word_coordinates")
-TEMP_TEST_DATA = os.path.join(STORAGE, "temp_test_data")
+BATCH_STORAGE = os.path.join(STORAGE, 'batches')
+OCR_DUMP_STORAGE = os.path.join(STORAGE, 'ocr')
+COORD_STORAGE = os.path.join(STORAGE, 'word_coordinates')
+TEMP_TEST_DATA = os.path.join(STORAGE, 'temp_test_data')
 
 # List of breadcrumbs that will be shown on all pages
 BASE_CRUMBS = [{'label':'Home', 'href': '/'}]
@@ -360,8 +361,8 @@ BASE_URL = 'http://localhost'
 # SITE_TITLE that will be used for display purposes throughout app
 # PROJECT_NAME may be the same as SITE_TITLE but can be used
 # for longer descriptions that will only show up occasionally
-# Example "Open ONI" for most headers, "Open Online Newspapers Initiative"
+# Example 'Open ONI' for most headers, 'Open Online Newspapers Initiative'
 # for introduction / about / further information / etc
 # Both should be overridden in settings_local.py
-SITE_TITLE = "Open ONI"
-PROJECT_NAME = "Open Online Newspapers Initiative"
+SITE_TITLE = 'Open ONI'
+PROJECT_NAME = 'Open Online Newspapers Initiative'
