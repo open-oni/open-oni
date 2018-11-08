@@ -184,6 +184,7 @@ INSTALLED_APPS = (
 # Suggested order: https://docs.djangoproject.com/en/1.9/ref/middleware/#middleware-ordering
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
+    'core.middleware.DisableClientSideCachingMiddleware',              # OpenONI
     'core.middleware.TooBusyMiddleware',                               # OpenONI
     'django.middleware.http.ConditionalGetMiddleware',                 # OpenONI
     'django.contrib.sessions.middleware.SessionMiddleware',
