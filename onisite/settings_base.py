@@ -205,9 +205,6 @@ SITE_ID = 1
 # Production
 #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
-# URL prepended to static file paths; Must include trailing slash
-STATIC_URL = '/media/'
-
 # Directory path to static files
 STATIC_ROOT = os.path.join(BASE_DIR, '.static-media')
 
