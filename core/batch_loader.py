@@ -273,7 +273,7 @@ class BatchLoader(object):
             text = mods_note.xpath('string(.)')
             note = models.IssueNote(type=type, label=label, text=text)
             notes.append(note)
-        issue.notes = notes
+        issue.notes.set(notes, bulk=False)
         issue.save()
 
         # attach pages: lots of logging because it's expensive
@@ -349,7 +349,7 @@ class BatchLoader(object):
             text = mods_note.xpath('string(.)').strip()
             note = models.PageNote(type=type, label=label, text=text)
             notes.append(note)
-        page.notes = notes
+        page.notes.set(notes, bulk=False)
 
 
         # there's a level indirection between the METS structmap and the

@@ -6,8 +6,8 @@ onisite/urls.py
 data/batches
 data/ocr
 data/word_coordinates
-.static-media/
 .coverage
+static/compiled
 static/cov
 
 # :P
