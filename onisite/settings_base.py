@@ -206,7 +206,7 @@ SITE_ID = 1
 #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
 # Directory path to static files
-STATIC_ROOT = os.path.join(BASE_DIR, '.static-media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'compiled')
 
 # Template configuration (1.8+)
 TEMPLATES = [
