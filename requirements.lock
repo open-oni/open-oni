@@ -1,7 +1,7 @@
 certifi==2018.10.15
 chardet==3.0.4
 coverage==4.5.1
-Django==1.9.13
+Django==1.10.8
 feedparser==5.2.1
 future==0.17.1
 idna==2.7
@@ -14,7 +14,7 @@ pymarc==3.1.10
 pyparsing==2.3.0
 python-mimeparse==1.6.0
 rdflib==4.2.2
-requests==2.20.0
+requests==2.20.1
 rfc3339==6.0
 setuptools==40.5.0
 simplejson==3.16.0
