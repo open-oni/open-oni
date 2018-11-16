@@ -16,18 +16,19 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    option_list = BaseCommand.option_list + (
-        make_option('--skip-process-ocr', 
-                    action='store_false', 
-                    dest='process_ocr', default=True,
-                    help='Do not generate ocr, and index'),
-        make_option('--skip-coordinates', 
-                    action='store_false', 
-                    dest='process_coordinates', default=True,
-                    help='Do not out word coordinates'),
-    )
     help = "Load a batch"
-    args = '<batch name>'
+
+    def add_arguments(self, parser):
+        # Positional arguments
+        parser.add_argument('batch_name')
+
+        # Options
+        parser.add_argument('--skip-coordinates', action='store_true',
+                            default=False, dest='process_coordinates',
+                            help='Do not write out word coordinates')
+        parser.add_argument('--skip-process-ocr', action='store_true',
+                            default=False, dest='process_ocr',
+                            help='Do not generate ocr, and index')
 
     def handle(self, batch_name, *args, **options):
         if len(args)!=0:

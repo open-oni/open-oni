@@ -15,19 +15,20 @@ configure_logging('load_titles_logging.config', 'load_titles.log')
 _logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
-    help = "Load a marcxml file of title records"
-    args = '<location of marcxml>'
-    option_list = BaseCommand.option_list + (
-        make_option('--skip-index',
-        action='store_true',
-        dest='skip_index',
-        default=False,
-        help="\
+    help = "Load a MARC XML file of title records"
+
+    def add_arguments(self, parser):
+        # Positional arguments
+        parser.add_argument('marc_xml_source', help='Path to MARC XML')
+
+        # Options
+        parser.add_argument(
+            '--skip-index', action='store_true', default=False,
+            dest='skip_index', help="\
                 Skip the index process. Use this if you call this from \
                 another process such as 'openoni_sync'. If you call this \
                 directly, you don't want to use this flag. \
-            "),
-    )
+            ")
 
     def __init__(self):
         super(Command, self).__init__()
