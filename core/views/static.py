@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core import urlresolvers
 from core.models import Batch, Title, Issue, Page
 from core.decorator import cache_page
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -14,8 +14,7 @@ def about(request):
          'href': urlresolvers.reverse('openoni_about'),
          'active': True},
     ])
-    return render_to_response('about.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'about.html', locals())
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def about_api(request):
@@ -40,8 +39,7 @@ def about_api(request):
       issue = title.issues.all()[0]
       page = issue.pages.all()[0]
 
-    return render_to_response('about_api.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'about_api.html', locals())
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def help(request):
@@ -52,5 +50,4 @@ def help(request):
          'href': urlresolvers.reverse('openoni_help'),
          'active': True},
     ])
-    return render_to_response('help.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'help.html', locals())

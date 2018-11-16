@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.db.models import Max, Min, Q
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 from django.utils.encoding import smart_str
 
@@ -31,9 +31,7 @@ def newspapers(request, city=None, format='html'):
     crumbs = list(settings.BASE_CRUMBS)
 
     if format == "html":
-        return render_to_response("newspapers.html",
-                                  dictionary=locals(),
-                                  context_instance=RequestContext(request))
+        return render(request, 'newspapers.html', locals())
     elif format == "json":
         host = request.get_host()
 
@@ -77,9 +75,8 @@ def newspapers_atom(request):
         feed_updated = datetime.datetime.now()
 
     host = request.get_host()
-    return render_to_response("newspapers.xml", dictionary=locals(),
-                              content_type="application/atom+xml",
-                              context_instance=RequestContext(request))
+    return render(request, 'newspapers.xml', locals(),
+                  content_type='application/atom+xml')
 
 
 @cors
@@ -172,10 +169,8 @@ def search_titles_results(request):
     if format == 'atom':
         feed_url = settings.BASE_URL + request.get_full_path()
         updated = rfc3339(datetime.datetime.now())
-        return render_to_response('search/search_titles_results.xml',
-                                  dictionary=locals(),
-                                  context_instance=RequestContext(request),
-                                  content_type='application/atom+xml')
+        return render(request, 'search/search_titles_results.xml', locals(),
+                      content_type='application/atom+xml')
 
     elif format == 'json':
         results = {
@@ -206,9 +201,7 @@ def search_titles_results(request):
     collapse_search_tab = True
 
     form = forms.SearchResultsForm({"rows": rows, "sort": sort})
-    return render_to_response('search/search_titles_results.html',
-                              dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'search/search_titles_results.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
