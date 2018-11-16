@@ -93,7 +93,7 @@ class SolrPaginator(Paginator):
 
     def _get_count(self):
         "Returns the total number of objects, across all pages."
-        if self._count is None:
+        if not hasattr(self, '_count'):
             solr = SolrConnection(settings.SOLR) # TODO: maybe keep connection around?
             solr_response = solr.query(self._q, fields=['id'])
             self._count = int(solr_response.results.numFound)
