@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         # Positional arguments
-        parser.add_argument('batch_name')
+        parser.add_argument('batch_path', help='Path to batch files')
 
         # Options
         parser.add_argument('--skip-coordinates', action='store_true',
@@ -30,14 +30,17 @@ class Command(BaseCommand):
                             default=False, dest='process_ocr',
                             help='Do not generate ocr, and index')
 
-    def handle(self, batch_name, *args, **options):
+    def handle(self, batch_path, *args, **options):
         if len(args)!=0:
-            raise CommandError('Usage is load_batch %s' % self.args)
+            raise CommandError('Usage: load_batch %s' % self.args)
+
+        if not os.path.exists(batch_path):
+            raise CommandError('Batch path does not exist: {}'.format(batch_path))
 
         loader = BatchLoader(process_ocr=options['process_ocr'],
                              process_coordinates=options['process_coordinates'])
         try:
-            batch = loader.load_batch(batch_name)
+            batch = loader.load_batch(batch_path)
         except BatchLoaderException, e:
             LOGGER.exception(e)
-            raise CommandError("unable to load batch. check the load_batch log for clues")
+            raise CommandError("Batch load failed. See logs/load_batch_#.log")
