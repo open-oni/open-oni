@@ -24,10 +24,10 @@ class Command(BaseCommand):
 
         # Options
         parser.add_argument('--skip-coordinates', action='store_true',
-                            default=False, dest='process_coordinates',
+                            default=True, dest='process_coordinates',
                             help='Do not write out word coordinates')
         parser.add_argument('--skip-process-ocr', action='store_true',
-                            default=False, dest='process_ocr',
+                            default=True, dest='process_ocr',
                             help='Do not generate ocr, and index')
 
     def handle(self, batch_path, *args, **options):
