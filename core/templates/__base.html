@@ -1,4 +1,5 @@
   <!DOCTYPE html>
+{% load sass_tags %}
 {% load static from staticfiles %}
 {% load humanize %}
 
@@ -30,7 +31,7 @@
 
       <!-- Local CSS -->
       <link href="{% static 'css/highlights.css' %}" rel="stylesheet" media="screen">
-      <link href="{% static 'css/tablesort.css' %}" rel="stylesheet" media="screen">
+      <link href="{% sass_src 'css/tablesort.scss' %}" rel="stylesheet" />
       <link href="{% static 'css/a11y.css' %}" rel="stylesheet" media="screen">
       <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
     {% endblock head_page_css %}

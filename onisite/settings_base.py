@@ -177,6 +177,7 @@ INSTALLED_APPS = (
 
     # OpenONI
     'django.contrib.humanize',  # Added to make data more human-readable
+    'sass_processor',
     'themes.default',
     'core',
 )

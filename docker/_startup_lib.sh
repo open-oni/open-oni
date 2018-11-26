@@ -83,6 +83,8 @@ prep_webserver() {
   echo "-------" >&2
   echo "Running collectstatic" >&2
   /opt/openoni/manage.py collectstatic --noinput
+  # Sass processor needs write access to STATIC_ROOT
+  chown -R www-data:www-data /opt/openoni/static/compiled
 
   # Remove any pre-existing PID file which prevents Apache from starting thus
   # causing the container to close immediately after.
