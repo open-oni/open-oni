@@ -287,7 +287,7 @@ USE_TIFF = False
 
 # Number of processes in system run queue averaged over last minute beyond which
 # OpenONI will return a 'Server Too Busy' response; If unsure, leave at default
-# Requires core.middleware.TooBusyMiddleware in MIDDLEWARE_CLASSES
+# Requires core.middleware.TooBusyMiddleware in MIDDLEWARE
 TOO_BUSY_LOAD_AVERAGE = 64
 
 # URL to the Solr server.  This should be overridden in settings_local.py or
