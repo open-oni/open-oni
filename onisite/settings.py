@@ -3,9 +3,17 @@ from settings_base import *
 from settings_local import *
 
 def override_core(conf):
+  global ALLOWED_HOSTS
+  if conf.has_option("core", "ALLOWED_HOSTS"):
+    ALLOWED_HOSTS = conf.get("core", "ALLOWED_HOSTS")
+
   global BASE_URL
   if conf.has_option("core", "BASE_URL"):
     BASE_URL = conf.get("core", "BASE_URL")
+
+  global IS_PRODUCTION
+  if conf.has_option("core", "IS_PRODUCTION"):
+    IS_PRODUCTION = conf.get("core", "IS_PRODUCTION")
 
 def override_db(conf):
   global DATABASES
