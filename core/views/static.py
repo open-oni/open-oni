@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core import urlresolvers
+from django.http import HttpResponse
 from core.models import Batch, Title, Issue, Page
 from core.decorator import cache_page
 from django.shortcuts import render
@@ -40,6 +41,9 @@ def about_api(request):
       page = issue.pages.all()[0]
 
     return render(request, 'about_api.html', locals())
+
+def empty(request, *args, **kwargs):
+    return HttpResponse(status=204)
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def help(request):
