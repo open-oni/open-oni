@@ -70,8 +70,8 @@ prep_webserver() {
   mkdir -p /var/tmp/django_cache && chown -R www-data:www-data /var/tmp/django_cache
   mkdir -p /opt/openoni/log
 
-  # Hack apache to do the RAIS proxying
-  cp /etc/apache2/sites-available/openoni-orig.conf /etc/apache2/sites-available/openoni.conf
+  # Update Apache config
+  cp /opt/openoni/docker/apache/openoni.conf /etc/apache2/sites-available/openoni.conf
   sed -i "s/!RAIS_HOST!/rais/g" /etc/apache2/sites-available/openoni.conf
   sed -i "s/!LOGLEVEL!/$APACHE_LOG_LEVEL/g" /etc/apache2/sites-available/openoni.conf
   a2ensite openoni
