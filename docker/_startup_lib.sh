@@ -24,11 +24,12 @@ replace_ini_data() {
   # Refresh the environmental config for APP_URL in case it needs to change
   cp /etc/openoni.ini.orig /etc/openoni.ini
 
-  # Add in the port if necessary
+  # Add in HTTPPORT from .env file if necessary
   if [[ $HTTPPORT != "" && $HTTPPORT != 80 ]]; then
     sed -i "s|!APP_URL!|!APP_URL!:$HTTPPORT|g" /etc/openoni.ini
   fi
 
+  # Set BASE_URL and public IIIF URL from APP_URL in .env file
   sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
 }
 
@@ -72,8 +73,14 @@ prep_webserver() {
 
   # Update Apache config
   cp /opt/openoni/docker/apache/openoni.conf /etc/apache2/sites-available/openoni.conf
-  sed -i "s/!RAIS_HOST!/rais/g" /etc/apache2/sites-available/openoni.conf
+
+  # Set RAIS proxying from RAIS_HOST in .env file
+  sed -i "s/!RAIS_HOST!/$RAIS_HOST/g" /etc/apache2/sites-available/openoni.conf
+
+  # Set Apache log level from APACHE_LOG_LEVEL in .env file
   sed -i "s/!LOGLEVEL!/$APACHE_LOG_LEVEL/g" /etc/apache2/sites-available/openoni.conf
+
+  # Enable updated Apache config
   a2ensite openoni
 
   # Get static files ready for Apache to serve
