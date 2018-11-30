@@ -46,9 +46,9 @@ services:
       - solr
       - rais
     environment:
+      - APACHE_LOG_LEVEL
       - APP_URL
       - HTTPPORT
-      - APACHE_LOG_LEVEL
       - RAIS_HOST
 volumes:
   data-mariadb: {}
