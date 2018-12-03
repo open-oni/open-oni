@@ -49,7 +49,6 @@ services:
       - APACHE_LOG_LEVEL
       - APP_URL
       - HTTPPORT
-      - RAIS_HOST
 volumes:
   data-mariadb: {}
   data-solr: {}

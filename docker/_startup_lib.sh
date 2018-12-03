@@ -74,9 +74,6 @@ prep_webserver() {
   # Update Apache config
   cp /opt/openoni/docker/apache/openoni.conf /etc/apache2/sites-available/openoni.conf
 
-  # Set RAIS proxying from RAIS_HOST in .env file
-  sed -i "s/!RAIS_HOST!/$RAIS_HOST/g" /etc/apache2/sites-available/openoni.conf
-
   # Set Apache log level from APACHE_LOG_LEVEL in .env file
   sed -i "s/!LOGLEVEL!/$APACHE_LOG_LEVEL/g" /etc/apache2/sites-available/openoni.conf
 
