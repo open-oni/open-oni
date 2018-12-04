@@ -304,11 +304,11 @@ def title(request, lccn):
         if num_notes >= 1:
             explanation = rep_notes[0].text
 
-    # adding essay info on this page if it exists
-    first_essay = title.first_essay
     first_issue = title.first_issue
     if first_issue:
         issue_date = first_issue.date_issued
+
+    essay_template = os.path.join(settings.ESSAY_TEMPLATES, title.lccn+".html")
 
     crumbs = create_crumbs(title)
     response = render(request, 'title.html', locals())

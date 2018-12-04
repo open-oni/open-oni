@@ -119,6 +119,10 @@ INSTALLED_APPS = (
 # URL path to the data directory
 #STORAGE_URL = '/data/'
 
+# Relative path from core and theme apps to subdirectory where essay templates are stored
+# example: "essays" would find files in themes/default/templates/essays
+# ESSAY_TEMPLATES = "essays"
+
 # Number of processes in system run queue averaged over last minute beyond which
 # OpenONI will return a 'Server Too Busy' response; If unsure, leave at default
 # Requires core.middleware.TooBusyMiddleware in MIDDLEWARE
