@@ -45,6 +45,10 @@ MIDDLEWARE = (
 # NOTE: as of now this can NOT include any path elements!
 BASE_URL = 'http://localhost'
 
+# Relative path from core and theme apps to subdirectory where essay templates are stored
+# example: "essays" would find files in themes/default/templates/essays
+ESSAY_TEMPLATES = "essays"
+
 IS_PRODUCTION = False
 
 LOG_LOCATION = '/opt/openoni/log/'
@@ -75,10 +79,6 @@ TEMP_TEST_DATA = os.path.join(STORAGE, 'temp_test_data')
 
 # URL path to the data directory
 STORAGE_URL = '/data/'
-
-# Relative path from core and theme apps to subdirectory where essay templates are stored
-# example: "essays" would find files in themes/default/templates/essays
-ESSAY_TEMPLATES = "essays"
 
 # Number of processes in system run queue averaged over last minute beyond which
 # OpenONI will return a 'Server Too Busy' response; If unsure, leave at default
