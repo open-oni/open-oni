@@ -308,6 +308,8 @@ def title(request, lccn):
     if first_issue:
         issue_date = first_issue.date_issued
 
+    # add essay info on this page from either the database or from a template
+    first_essay = title.first_essay
     essay_template = os.path.join(settings.ESSAY_TEMPLATES, title.lccn+".html")
 
     crumbs = create_crumbs(title)

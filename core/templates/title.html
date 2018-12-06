@@ -233,7 +233,13 @@
         <div class="about_issue_more">
             {% block essay %}
                 <div class="title_essay">
-                    {% if essay_template|template_exists %}
+                    {# if there is an essay in the database, display, otherwise check for a template #}
+                    {% if first_essay %}
+                        {# older essays in db include title as separate field #}
+                        <h4>{{first_essay.title}}</h4>
+                        <p>{{first_essay.html|safe}}</p>
+                        <p><em>Provided by: <a href="{% url 'openoni_awardee' first_essay.creator.org_code %}">{{ first_essay.creator }}</a></em></p>
+                    {% elif essay_template|template_exists %}
                         {% include essay_template %}
                     {% endif %}
                 </div>
