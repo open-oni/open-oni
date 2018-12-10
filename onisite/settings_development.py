@@ -45,6 +45,10 @@ MIDDLEWARE = (
 # NOTE: as of now this can NOT include any path elements!
 BASE_URL = 'http://localhost'
 
+# Relative path from core and theme apps to subdirectory where essay templates are stored
+# example: "essays" would find files in themes/default/templates/essays
+ESSAY_TEMPLATES = "essays"
+
 IS_PRODUCTION = False
 
 LOG_LOCATION = '/opt/openoni/log/'

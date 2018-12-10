@@ -91,6 +91,10 @@ INSTALLED_APPS = (
 # NOTE: as of now this can NOT include any path elements!
 #BASE_URL = 'http://YOUR_HOSTNAME'
 
+# Relative path from core and theme apps to subdirectory where essay templates are stored
+# example: "essays" would find files in themes/default/templates/essays
+# ESSAY_TEMPLATES = "essays"
+
 #LOG_LOCATION = '/opt/openoni/log/'
 
 # Enable HSTS by setting SECURE_HSTS_SECONDS > 0
