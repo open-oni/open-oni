@@ -112,7 +112,14 @@ class BatchLoader(object):
         if dirname:
             batch_source = None
             link_name = os.path.join(settings.BATCH_STORAGE, batch_name)
-            if batch_path != link_name and not os.path.islink(link_name):
+
+            # Create symlink if paths don't match, symlink not already there,
+            # and batch_path wasn't input with a BATCH_STORAGE symlink path
+            if (batch_path != link_name and not os.path.islink(link_name)
+                and not (os.path.islink(settings.BATCH_STORAGE)
+                    and batch_path.startswith(os.path.realpath(settings.BATCH_STORAGE))
+                    )
+                ):
                 _logger.info("creating symlink %s -> %s", batch_path, link_name)
                 os.symlink(batch_path, link_name)
         else:
