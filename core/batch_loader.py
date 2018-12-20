@@ -104,7 +104,7 @@ class BatchLoader(object):
         """
         self.pages_processed = 0
 
-        logging.info("loading batch at %s", batch_path)
+        _logger.info("loading batch at %s", batch_path)
         dirname, batch_name = os.path.split(batch_path.rstrip("/"))
         if dirname:
             batch_source = None
@@ -256,7 +256,7 @@ class BatchLoader(object):
             title = Title.objects.get(lccn=lccn)
         except Exception, e:
             url = settings.MARC_RETRIEVAL_URLFORMAT % lccn
-            logging.info("attempting to load marc record from %s", url)
+            _logger.info("attempting to load marc record from %s", url)
             management.call_command('load_titles', url)
             title = Title.objects.get(lccn=lccn)
 
@@ -447,7 +447,7 @@ class BatchLoader(object):
         f.close()
 
     def process_coordinates(self, batch_path):
-        logging.info("process word coordinates for batch at %s", batch_path)
+        _logger.info("process word coordinates for batch at %s", batch_path)
         dirname, batch_name = os.path.split(batch_path.rstrip("/"))
         if dirname:
             batch_source = None
