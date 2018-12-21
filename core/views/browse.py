@@ -247,7 +247,6 @@ def page(request, lccn, date, edition, sequence, words=None):
     host = request.get_host()
 
     template = "page.html"
-    related_pages = solr_index.similar_pages(page)
     response = render(request, template, locals())
     return response
 
