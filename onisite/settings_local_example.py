@@ -123,6 +123,9 @@ INSTALLED_APPS = (
 # URL path to the data directory
 #STORAGE_URL = '/data/'
 
+# Displays newspaper titles with medium ("volume", "microform") when available
+#TITLE_DISPLAY_MEDIUM = False
+
 # Number of processes in system run queue averaged over last minute beyond which
 # OpenONI will return a 'Server Too Busy' response; If unsure, leave at default
 # Requires core.middleware.TooBusyMiddleware in MIDDLEWARE
