@@ -52,12 +52,16 @@
     background-color:#fff;
 }
 
+#imageViewer_nav #item-ctrl {
+  margin: 0.375em;
+}
+
 #item-ctrl {
     position: relative;
 }
 
 .other_controls {
-    margin-left:160px;
+    margin-left: 0.5em;
     display: inline-block;
     border-left:solid 1px #aaa;
     
