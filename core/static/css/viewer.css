@@ -53,7 +53,8 @@
 }
 
 #imageViewer_nav #item-ctrl {
-  margin: 0.375em;
+  height: 2em;
+  margin: 0.25em;
 }
 
 #item-ctrl {
@@ -61,10 +62,9 @@
 }
 
 .other_controls {
-    margin-left: 0.5em;
+    border-left: solid 1px #aaa;
     display: inline-block;
-    border-left:solid 1px #aaa;
-    
+    margin-left: 0.5em;
 }
 
 .imageViewer_pagejump {
@@ -73,10 +73,11 @@
 }
 
 #imageViewer_nav .control {
-    border-right:solid 1px #aaa;
-    padding:7px 12px;
+    border-right: solid 1px #aaa;
     display: inline-block;
-
+    height: 2.75em;
+    padding: 7px 12px;
+    vertical-align: text-top;
 }
 
 #imageViewer_nav .control_pages {
