@@ -4,6 +4,10 @@ from core.utils import image_urls
 register = template.Library()
 
 @register.simple_tag
+def custom_size_image_url(page, size):
+  return image_urls.resize_url(page, size)
+
+@register.simple_tag
 def tiny_image_url(page):
     return image_urls.resize_url(page, 120)
 
