@@ -11,16 +11,19 @@
 
 {% block subcontent %}
 
-{% block search_page_filter_desc %}
-  <!-- Search results description -->
-  <h3>Filters</h3>
-  <h4 class="term">{{ paginator.count }} results
-    {% if english_search %}containing{% endif %} 
+{% block result_count %}
+    {{ paginator.count }} result{% if paginator.count > 1 %}s{% endif %}
+    {% if english_search %}containing{% endif %}
     {% for part in english_search %}
       <strong>&ldquo;{{ part }}&rdquo;</strong>
       {% if not forloop.last %}<em>and</em>{% endif %}
     {% endfor %}
+{% endblock result_count %}
 
+{% block search_page_filter_desc %}
+  <!-- Search results description -->
+  <h3>Filters</h3>
+  <h4 class="term">
     {# date filter text #}
     {% if request.GET.yearRange %}
       &nbsp; for year range {{ request.GET.yearRange }}
