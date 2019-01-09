@@ -76,8 +76,8 @@
     border-right: solid 1px #aaa;
     display: inline-block;
     height: 2.5em;
+    line-height: 2em;
     padding: 7px 12px;
-    vertical-align: text-top;
 }
 
 #imageViewer_nav .control_pages {
