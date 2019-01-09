@@ -56,7 +56,7 @@
 
   {% block page_top_material %}
     <p class="image_credit">Image provided by: {{image_credit}}</p>
-    <p class="page_about">About <a href="{% url 'openoni_title' title.lccn %}">{{page_head_subheading}}</a> | <a href="../">View This Issue</a></p>
+    <p class="page_about">About <a href="{% url 'openoni_title' title.lccn %}">{{page_head_subheading}}</a> | <a href="../">View Entire Issue ({{page.issue.date_issued}})</a></p>
   {% endblock page_top_material %}
 
   <div id="item-wrapper"> 
@@ -97,10 +97,8 @@
           </span><!-- /control -->
           {% if page.jp2_filename %}
             <span class="control">
-              <a href="#">
-                <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
-                <a href="{% url 'openoni_page_ocr' title.lccn issue.date_issued issue.edition page.sequence %}">Text</a>
-              </a>
+              <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
+              <a href="{% url 'openoni_page_ocr' title.lccn issue.date_issued issue.edition page.sequence %}">Text</a>
             </span><!-- /control -->
             <span class="control">
               <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
