@@ -220,10 +220,6 @@
       <!-- search preferences -->
       <div class="row search_results_option_set">
         <div class="col-md-3">
-          <input name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
-          <label class="norm" for="sequence">Front pages only</label>
-        </div>
-        <div class="col-md-3">
           <label for="id_rows">{{ form.rows.label }}</label>
           {{ form.rows }}
         </div>
@@ -231,8 +227,12 @@
           <label for="id_sort">{{ form.sort.label }}</label>
           {{ form.sort }}
         </div>
-        <div class="col-md-3">
-          <button type="submit" class="btn btn-default">Refine Search</button>
+        <div class="col-md-3 buffer-top">
+          <input name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
+          <label class="norm" for="sequence">Front pages only</label>
+        </div>
+        <div class="col-md-3 buffer-top">
+          <button type="submit" class="btn btn-default pull-right">Refine Search</button>
         </div>
       </div>
     {% endblock search_page_results_filter_form_row2 %}

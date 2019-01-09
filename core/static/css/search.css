@@ -8,6 +8,13 @@ and search results
     list-style-type: none;
 }
 
+.buffer-bottom {
+  margin-bottom: 1em;
+}
+.buffer-top {
+  margin-top: 1em;
+}
+
 .pagination {
     margin:0;
 }
