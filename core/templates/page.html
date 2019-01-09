@@ -49,101 +49,103 @@
 
 {% block content %}
 
-<!-- If you override the "content" block, you *must* include this!! -->
-<div id="skip_menu"></div>
+  <!-- If you override the "content" block, you *must* include this!! -->
+  <div id="skip_menu"></div>
 
-<h2>{{ page_head_heading }}</h2>
+  <h2>{{ page_head_heading }}</h2>
 
-  <p class="image_credit">Image provided by: {{image_credit}}</p>
-  <p class="page_about">About <a href="{% url 'openoni_title' title.lccn %}">{{page_head_subheading}}</a> | <a href="../">View This Issue</a></p>
+  {% block page_top_material %}
+    <p class="image_credit">Image provided by: {{image_credit}}</p>
+    <p class="page_about">About <a href="{% url 'openoni_title' title.lccn %}">{{page_head_subheading}}</a> | <a href="../">View Entire Issue ({{page.issue.date_issued}})</a></p>
+  {% endblock page_top_material %}
 
   <div id="item-wrapper"> 
 
-    <div id="imageViewer_nav">
-      <span id="item-ctrl" class="toolbar">
-      <!-- This is where the open seadragon controls are inserted via javascript -->
-      </span>
-      <span class="other_controls">
-        <span class="control">
-        {% if page.previous %}
-          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-          <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.previous.sequence %}">prev</a>
-        {% endif %}
-        Page: 
-        <select name="pageNum" id="pageNum" class="input-small">
-          {% for p in issue.pages.all %}
-            <option value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}" {% ifequal p.sequence page.sequence %}selected="selected"{% endifequal %}>{{p.sequence}}</option>
-          {% endfor %}
-        </select>
-        of {{issue.pages.all|length}}
-      {% if page.next %}
-        <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.next.sequence %}">next</a>
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    {% block page_image_toolbar %}
+      <div id="imageViewer_nav">
+        <span id="item-ctrl" class="toolbar">
+          <!-- This is where the open seadragon controls are inserted via javascript -->
+        </span>
+        <span class="other_controls">
+          <span class="control">
+            {% if page.previous %}
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.previous.sequence %}">prev</a>
+            {% endif %}
+            Page:
+            <select name="pageNum" id="pageNum" class="input-small">
+              {% for p in issue.pages.all %}
+                <option value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}" {% ifequal p.sequence page.sequence %}selected="selected"{% endifequal %}>{{p.sequence}}</option>
+              {% endfor %}
+            </select>
+            of {{issue.pages.all|length}}
+            {% if page.next %}
+              <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.next.sequence %}">next</a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            {% endif %}
+          </span><!-- /control -->
+          <span class="control">
+            {% if previous_issue_first_page %}
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <a href="{% url 'openoni_page' title.lccn previous_issue_first_page.issue.date_issued previous_issue_first_page.issue.edition previous_issue_first_page.sequence %}">prev</a>
+            {% endif %}
+            Issue
+            {% if next_issue_first_page %}
+              <a href="{% url 'openoni_page' title.lccn next_issue_first_page.issue.date_issued next_issue_first_page.issue.edition next_issue_first_page.sequence %}">next</a>
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            {% endif %}
+          </span><!-- /control -->
+          {% if page.jp2_filename %}
+            <span class="control">
+              <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
+              <a href="{% url 'openoni_page_ocr' title.lccn issue.date_issued issue.edition page.sequence %}">Text</a>
+            </span><!-- /control -->
+            <span class="control">
+              <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+              <a href="{% url 'openoni_page_pdf' title.lccn issue.date_issued issue.edition page.sequence %}">PDF</a>
+            </span><!-- /control -->
+            <span class="control">
+              <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+              <a href="{% url 'openoni_page_jp2' title.lccn issue.date_issued issue.edition page.sequence %}" download="{{ title.lccn }}-{{ issue.date_issued|date:"Ymd" }}.jp2">JP2 ({{ image_size }})</a>
+            </span><!-- /control -->
+            <span class="control">
+              <span class="glyphicon glyphicon-scissors" aria-hidden="true"></span>
+              <a id="clip" href="#" target="print">Clip/Print Image</a>
+            </span><!-- /control -->
+          {% endif %}
+        </span><!-- /other_controls -->
+      </div><!-- /imageViewer_nav -->
+    {% endblock page_image_toolbar %}
+
+    {% block page_image_viewer %}
+      {% if page.jp2_filename %}
+
+        <div id="viewer_container_container">
+          <div id="dummy"></div>
+          <div id="viewer_container" class="openseadragon">
+            <div id="item-ctrl" class="toolbar"></div>
+          </div>
+        </div><!-- /viewer_container_container -->
+
+      {% else %}
+
+        <div class="missing">
+          <h3>Missing Page: {{explanation}}</h3>
+        </div><!-- /missing -->
+
       {% endif %}
-    </span><!-- /control -->
-    <span class="control">
-      {% if previous_issue_first_page %}
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <a href="{% url 'openoni_page' title.lccn previous_issue_first_page.issue.date_issued previous_issue_first_page.issue.edition previous_issue_first_page.sequence %}">prev</a>
-      {% endif %}
-      Issue
-      {% if next_issue_first_page %}
-        <a href="{% url 'openoni_page' title.lccn next_issue_first_page.issue.date_issued next_issue_first_page.issue.edition next_issue_first_page.sequence %}">next</a>
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-      {% endif %}
-    </span><!-- /control -->
-<!-- <span class="control">
-<strong><a href="{% url 'openoni_issue_pages' title.lccn issue.date_issued issue.edition %}">All Issues</a></strong>
-</span> -->
-{% if page.jp2_filename %}
-    <span class="control">
-      <a href="#">
-        <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
-        <a href="{% url 'openoni_page_ocr' title.lccn issue.date_issued issue.edition page.sequence %}">Text</a>
-      </a>
-    </span><!-- /control -->
-    <span class="control">
-      <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-      <a href="{% url 'openoni_page_pdf' title.lccn issue.date_issued issue.edition page.sequence %}">PDF</a>
-    </span><!-- /control -->
-    <span class="control">
-      <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-      <a href="{% url 'openoni_page_jp2' title.lccn issue.date_issued issue.edition page.sequence %}" download="{{ title.lccn }}-{{ issue.date_issued|date:"Ymd" }}.jp2">JP2 ({{ image_size }})</a>
-    </span><!-- /control -->
-    <span class="control">
-      <span class="glyphicon glyphicon-scissors" aria-hidden="true"></span>
-      <a id="clip" href="#" target="print">Clip/Print Image</a>
-    </span><!-- /control -->
+    {% endblock page_image_viewer %}
+
+    </div><!-- /item_wrapper -->
+
+  {% block page_bottom_material %}
+    {% if issue.copyright_link %}
+      <div class="item-foot">Copyright Statement:&nbsp;
+        <a href="{{issue.copyright_link.uri}}">{{issue.copyright_link.label}}</a>
+      </div>
     {% endif %}
-  </span><!-- /other_controls -->
-</div><!-- /imageViewer_nav -->
+  {% endblock page_bottom_material %}
 
-
-{% if page.jp2_filename %}
-
-<div id="viewer_container_container">
-	<div id="dummy"></div>
-	<div id="viewer_container" class="openseadragon">
-	  <div id="item-ctrl" class="toolbar"></div>
-	</div>
-</div><!-- /viewer_container_container -->
-
-{% else %}
-
-<div class="missing">
-  <h3>Missing Page: {{explanation}}</h3>
-</div><!-- /missing -->
-
-{% endif %}
-
-</div><!-- /item_wrapper -->
-
-      {% if issue.copyright_link %}
-        <div class="item-foot">Copyright Statement:&nbsp;
-          <a href="{{issue.copyright_link.uri}}">{{issue.copyright_link.label}}</a>
-        </div>
-      {% endif %}
-      
 {% endblock content %}
 
 
