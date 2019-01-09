@@ -61,6 +61,108 @@
   </h4>
 {% endblock search_page_filter_desc %}
 
+{% block search_page_results_filter_form %}
+  <form class="search_results_form" action="" method="GET">
+    {% block search_page_results_filter_form_row1 %}
+      <div class="row search_results_option_set">
+        <div class="col-md-2">
+          <label for="county">County</label>
+          <select class="form-control" id="county" name="county">
+            <option value="">All</option>
+            {% for county, count in page.facets.county %}
+              <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="city">City</label>
+          <select class="form-control" id="city" name="city">
+            <option value="">All</option>
+            {% for city, count in page.facets.city %}
+              <option value="{{city}}" {% ifequal city request.GET.city %} selected=selected {% endifequal %}>{{city}} ({{count}})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="yearRange">Year</label>
+          <select class="form-control" id="yearRange" name="yearRange">
+            <option value="">All</option>
+            {% if request.GET.yearRange %}
+              <option value="{{request.GET.yearRange}}" selected=selected>{{request.GET.yearRange}}</option>
+            {% endif %}
+            {% for years, count in page.facets.year %}
+              <option value="{{years}}" {% ifequal years request.GET.yearRange %} selected=selected {% endifequal %}>{{years}} ({{count}})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="frequency">Frequency</label>
+          <select class="form-control" id="frequency" name="frequency">
+            <option value="">All</option>
+            {% for frequency, count in page.facets.frequency %}
+              <option value="{{frequency}}" {% ifequal frequency request.GET.frequency %} selected=selected {% endifequal %}>{{frequency}} ({{count}})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="language">Language</label>
+          <select class="form-control" id="language" name="language">
+            <option value="">All</option>
+            {% for language, count in page.facets.language %}
+              <option value="{{language}}" {% ifequal language request.GET.language %} selected=selected {% endifequal %}>{{language}} ({{count}})</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    {% endblock search_page_results_filter_form_row1 %}
+
+    {% block search_page_results_filter_form_row2 %}
+      <!-- search preferences -->
+      <div class="row search_results_option_set">
+        <div class="col-md-3">
+          <label for="id_rows">{{ form.rows.label }}</label>
+          {{ form.rows }}
+        </div>
+        <div class="col-md-3">
+          <label for="id_sort">{{ form.sort.label }}</label>
+          {{ form.sort }}
+        </div>
+        <div class="col-md-3 buffer-top">
+          <input name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
+          <label class="norm" for="sequence">Front pages only</label>
+        </div>
+        <div class="col-md-3 buffer-top">
+          <button type="submit" class="btn btn-default pull-right">Refine Search</button>
+        </div>
+      </div>
+    {% endblock search_page_results_filter_form_row2 %}
+
+    {% block search_page_results_filter_form_hidden_filters %}
+      {#### Filter preservation ####}
+
+      {# search text #}
+      <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
+      <input type="hidden" name="proxdistance" value="{{query.proxdistance}}" />
+      <input type="hidden" name="ortext" value="{{query.ortext}}" />
+      <input type="hidden" name="andtext" value="{{query.andtext}}" />
+      <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
+
+      {# date range and years #}
+      <input type="hidden" name="date1" value="{{query.date1}}" />
+      <input type="hidden" name="date2" value="{{query.date2}}" />
+
+      {# All the chosen LCCNs #}
+      {% for lccn in titles %}
+        <input type="hidden" name="lccn" value="{{lccn}}" />
+      {% endfor %}
+    {% endblock search_page_results_filter_form_hidden_filters %}
+  </form>
+{% endblock search_page_results_filter_form %}
+
+{% block result_numeration %}
+  <h3 class="results">Results {{ start }}-{{ end }}</h3>
+{% endblock result_numeration %}
+
 {% block search_page_option_set %}
   {# Sorry for this, but I'm trying to space this so it's clear where the django #}
   {# template logic flows while still making it clear which HTML tags wrap #}
@@ -161,104 +263,6 @@
   </div><!-- /row -->
 {% endblock search_page_option_set %}
 
-{% block search_page_results_filter_form %}
-  <form class="search_results_form" action="" method="GET">
-    {% block search_page_results_filter_form_row1 %}
-      <div class="row search_results_option_set">
-        <div class="col-md-2">
-          <label for="county">County</label>
-          <select class="form-control" id="county" name="county">
-            <option value="">All</option>
-            {% for county, count in page.facets.county %}
-              <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="col-md-3">
-          <label for="city">City</label>
-          <select class="form-control" id="city" name="city">
-            <option value="">All</option>
-            {% for city, count in page.facets.city %}
-              <option value="{{city}}" {% ifequal city request.GET.city %} selected=selected {% endifequal %}>{{city}} ({{count}})</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="col-md-2">
-          <label for="yearRange">Year</label>
-          <select class="form-control" id="yearRange" name="yearRange">
-            <option value="">All</option>
-            {% if request.GET.yearRange %}
-              <option value="{{request.GET.yearRange}}" selected=selected>{{request.GET.yearRange}}</option>
-            {% endif %}
-            {% for years, count in page.facets.year %}
-              <option value="{{years}}" {% ifequal years request.GET.yearRange %} selected=selected {% endifequal %}>{{years}} ({{count}})</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="col-md-3">
-          <label for="frequency">Frequency</label>
-          <select class="form-control" id="frequency" name="frequency">
-            <option value="">All</option>
-            {% for frequency, count in page.facets.frequency %}
-              <option value="{{frequency}}" {% ifequal frequency request.GET.frequency %} selected=selected {% endifequal %}>{{frequency}} ({{count}})</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="col-md-2">
-          <label for="language">Language</label>
-          <select class="form-control" id="language" name="language">
-            <option value="">All</option>
-            {% for language, count in page.facets.language %}
-              <option value="{{language}}" {% ifequal language request.GET.language %} selected=selected {% endifequal %}>{{language}} ({{count}})</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-    {% endblock search_page_results_filter_form_row1 %}
-
-    {% block search_page_results_filter_form_row2 %}
-      <!-- search preferences -->
-      <div class="row search_results_option_set">
-        <div class="col-md-3">
-          <label for="id_rows">{{ form.rows.label }}</label>
-          {{ form.rows }}
-        </div>
-        <div class="col-md-3">
-          <label for="id_sort">{{ form.sort.label }}</label>
-          {{ form.sort }}
-        </div>
-        <div class="col-md-3 buffer-top">
-          <input name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
-          <label class="norm" for="sequence">Front pages only</label>
-        </div>
-        <div class="col-md-3 buffer-top">
-          <button type="submit" class="btn btn-default pull-right">Refine Search</button>
-        </div>
-      </div>
-    {% endblock search_page_results_filter_form_row2 %}
-
-    {% block search_page_results_filter_form_hidden_filters %}
-      {#### Filter preservation ####}
-
-      {# search text #}
-      <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
-      <input type="hidden" name="proxdistance" value="{{query.proxdistance}}" />
-      <input type="hidden" name="ortext" value="{{query.ortext}}" />
-      <input type="hidden" name="andtext" value="{{query.andtext}}" />
-      <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
-
-      {# date range and years #}
-      <input type="hidden" name="date1" value="{{query.date1}}" />
-      <input type="hidden" name="date2" value="{{query.date2}}" />
-
-      {# All the chosen LCCNs #}
-      {% for lccn in titles %}
-        <input type="hidden" name="lccn" value="{{lccn}}" />
-      {% endfor %}
-    {% endblock search_page_results_filter_form_hidden_filters %}
-  </form>
-{% endblock search_page_results_filter_form %}
-
 <!-- ======================
 Thumbnails
 ======================== -->
@@ -266,7 +270,6 @@ Thumbnails
 
 {% block search_results_box %}
 <div class="content search_results">
-  <h3 class="results">Results {{ start }}-{{ end }}</h3>
 
 <div class="row">
 {% for object in page.object_list %}
