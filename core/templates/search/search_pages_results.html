@@ -173,119 +173,116 @@
   </h3>
 {% endblock result_numeration %}
 
-{% block search_page_option_set %}
-  {# Sorry for this, but I'm trying to space this so it's clear where the django #}
-  {# template logic flows while still making it clear which HTML tags wrap #}
-  {# what....  Pagination should probably be a helper method of some kind. #}
-  <div class="row search_results_option_set">
-    <div class="col-md-5">
-      {# Gallery or List view #}
-      <div class="pull-left">
-        {% ifequal view_type 'list' %}
-          <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-          <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
-        {% else %}
-          <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-          <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+{% if paginator.count != 0 %}
+  {% block search_page_option_set %}
+    {# Sorry for this, but I'm trying to space this so it's clear where the django #}
+    {# template logic flows while still making it clear which HTML tags wrap #}
+    {# what....  Pagination should probably be a helper method of some kind. #}
+    <div class="row search_results_option_set">
+      <div class="col-md-5">
+        {# Gallery or List view #}
+        <div class="pull-left">
+          {% ifequal view_type 'list' %}
+            <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+            <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+          {% else %}
+            <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+            <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
 
-        {% endifequal %}
+          {% endifequal %}
+        </div>
+        {# /Gallery or List view #}
+
+        {# Jump to page #}
+        {% if page.has_previous or page.has_next %}
+          <form action="" method="GET" class="pull-right">
+            <label for="jumptopage">Jump to page:</label>
+            <input class="std" type="text" id="jumptopage" name="page" value="" size="2" />
+
+            {% block search_page_pagination_hidden_filters %}
+              {#### Filter preservation ####}
+
+              {# search text #}
+              <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
+              <input type="hidden" name="proxdistance" value="{{query.proxdistance}}" />
+              <input type="hidden" name="ortext" value="{{query.ortext}}" />
+              <input type="hidden" name="andtext" value="{{query.andtext}}" />
+              <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
+
+              {# location #}
+              <input type="hidden" name="city" value="{{query.city}}" />
+              <input type="hidden" name="county" value="{{query.county}}" />
+
+              {# date range and years #}
+              {# if there is a yearRange, it supercedes the date ranges #}
+              {% if request.GET.yearRange %}
+                <input type="hidden" name="yearRange" value="{{query.yearRange}}" />
+              {% else %}
+                <input type="hidden" name="date1" value="{{query.date1}}" />
+                <input type="hidden" name="date2" value="{{query.date2}}" />
+              {% endif %}
+
+              {# All the chosen LCCNs #}
+              {% for lccn in titles %}
+                <input type="hidden" name="lccn" value="{{lccn}}" />
+              {% endfor %}
+
+              {# miscellaneous filters #}
+              <input type="hidden" name="language" value="{{query.language}}" />
+              <input type="hidden" name="frequency" value="{{query.frequency}}" />
+              <input type="hidden" name="sequence" value="{{query.sequence}}" />
+              <input type="hidden" name="sort" value="{{query.sort}}" />
+              <input type="hidden" name="rows" value="{{query.rows}}" />
+            {% endblock search_page_pagination_hidden_filters %}
+
+            <input type="submit" class="submit" value="GO" />
+          </form>
+        {% endif %}
+        {# /Jump to page #}
       </div>
-      {# /Gallery or List view #}
 
-      {# Jump to page #}
-      {% if page.has_previous or page.has_next %}
-        <form action="" method="GET" class="pull-right">
-          <label for="jumptopage">Jump to page:</label>
-          <input class="std" type="text" id="jumptopage" name="page" value="" size="2" />
+      <div class="col-md-7">
+        {% include 'search/results_pagination.html' %}
+      </div>
+    </div><!-- /row -->
+  {% endblock search_page_option_set %}
 
-          {% block search_page_pagination_hidden_filters %}
-            {#### Filter preservation ####}
+  {% block search_results_box %}
+  <div class="content search_results">
 
-            {# search text #}
-            <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
-            <input type="hidden" name="proxdistance" value="{{query.proxdistance}}" />
-            <input type="hidden" name="ortext" value="{{query.ortext}}" />
-            <input type="hidden" name="andtext" value="{{query.andtext}}" />
-            <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
+  <div class="row">
+  {% for object in page.object_list %}
+    {% if forloop.counter0|divisibleby:4 and not forloop.first %}
+  </div><div class="row">
+    {% endif %}
 
-            {# location #}
-            <input type="hidden" name="city" value="{{query.city}}" />
-            <input type="hidden" name="county" value="{{query.county}}" />
+      <div class="col-md-3">
+        <a href="{{ object.highlight_url }}" class="thumbnail">
+          <img src="{% thumb_image_url object %}" alt=""
+                  class="highlight_words"
+                  data-script_name="{{script_name}}"
+                  data-id="{{object.url}}"
+                  data-words="{{object.words|join:' '}}">
+          {% with object.issue.title as title %}
+            <p>
+              {{title.display_name}} ({{title.place_of_publication}})<br />
+              {{object.issue|label}}, {{object|label}}
+            </p>
+          {% endwith %}
+        </a>
+      </div>
+  {% endfor %}
+  </div><!-- /row -->
 
-            {# date range and years #}
-            {# if there is a yearRange, it supercedes the date ranges #}
-            {% if request.GET.yearRange %}
-              <input type="hidden" name="yearRange" value="{{query.yearRange}}" />
-            {% else %}
-              <input type="hidden" name="date1" value="{{query.date1}}" />
-              <input type="hidden" name="date2" value="{{query.date2}}" />
-            {% endif %}
+  </div>
+  {% endblock search_results_box %}
 
-            {# All the chosen LCCNs #}
-            {% for lccn in titles %}
-              <input type="hidden" name="lccn" value="{{lccn}}" />
-            {% endfor %}
-
-            {# miscellaneous filters #}
-            <input type="hidden" name="language" value="{{query.language}}" />
-            <input type="hidden" name="frequency" value="{{query.frequency}}" />
-            <input type="hidden" name="sequence" value="{{query.sequence}}" />
-            <input type="hidden" name="sort" value="{{query.sort}}" />
-            <input type="hidden" name="rows" value="{{query.rows}}" />
-          {% endblock search_page_pagination_hidden_filters %}
-
-          <input type="submit" class="submit" value="GO" />
-        </form>
-      {% endif %}
-      {# /Jump to page #}
-    </div>
-
+  <div class="row">
+    <div class="col-md-5"></div>
     <div class="col-md-7">
       {% include 'search/results_pagination.html' %}
     </div>
-  </div><!-- /row -->
-{% endblock search_page_option_set %}
-
-<!-- ======================
-Thumbnails
-======================== -->
-
-
-{% block search_results_box %}
-<div class="content search_results">
-
-<div class="row">
-{% for object in page.object_list %}
-  {% if forloop.counter0|divisibleby:4 and not forloop.first %}
-</div><div class="row">
-  {% endif %}
-
-    <div class="col-md-3">
-      <a href="{{ object.highlight_url }}" class="thumbnail">
-        <img src="{% thumb_image_url object %}" alt=""
-                class="highlight_words"
-                data-script_name="{{script_name}}"
-                data-id="{{object.url}}"
-                data-words="{{object.words|join:' '}}">
-        {% with object.issue.title as title %}
-          <p>
-            {{title.display_name}} ({{title.place_of_publication}})<br />
-            {{object.issue|label}}, {{object|label}}
-          </p>
-        {% endwith %}
-      </a>
-    </div>
-{% endfor %}
-</div><!-- /row -->
-
-</div>
-{% endblock search_results_box %}
-
-<div class="row">
-  <div class="col-md-5"></div>
-  <div class="col-md-7">
-    {% include 'search/results_pagination.html' %}
   </div>
-</div>
+{% endif %}
 
 {% endblock subcontent %}
