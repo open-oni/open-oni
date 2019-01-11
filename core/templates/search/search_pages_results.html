@@ -164,8 +164,12 @@
 
 {% block result_numeration %}
   <h3 class="results">
-    Result{% if paginator.count != 1 %}s{% endif %}
-    {{ start }}{% if paginator.count > 1 %}-{{ end }}{% endif %}
+    {% if paginator.count == 0 %}
+      No Matches Found
+    {% else %}
+      Result{% if paginator.count != 1 %}s{% endif %}
+      {{ start }}{% if paginator.count > 1 %}-{{ end }}{% endif %}
+    {% endif %}
   </h3>
 {% endblock result_numeration %}
 
