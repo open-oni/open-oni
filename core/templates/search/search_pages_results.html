@@ -171,13 +171,22 @@
   {# template logic flows while still making it clear which HTML tags wrap #}
   {# what....  Pagination should probably be a helper method of some kind. #}
   <div class="row search_results_option_set">
-    <div class="col-md-7">
-      {% include 'search/results_pagination.html' %}
-    </div>
-
     <div class="col-md-5">
-    <!-- Jump to page -->
-      <form action="" method="GET" class="pull-left">
+      {# Gallery or List view #}
+      <div class="pull-left">
+        {% ifequal view_type 'list' %}
+          <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+          <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+        {% else %}
+          <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+          <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+
+        {% endifequal %}
+      </div>
+      {# /Gallery or List view #}
+
+      {# Jump to page #}
+      <form action="" method="GET" class="pull-right">
         <label for="jumptopage">Jump to page:</label>
         <input class="std" type="text" id="jumptopage" name="page" value="" size="2" />
 
@@ -219,19 +228,11 @@
 
         <input type="submit" class="submit" value="GO" />
       </form>
+      {# /Jump to page #}
+    </div>
 
-      <!-- Gallery or List view -->
-      <div class="pull-right">
-        {% ifequal view_type 'list' %}
-          <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-          <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
-        {% else %}
-          <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-          <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
-
-        {% endifequal %}
-      </div>
-      <!-- /Gallery or List view -->
+    <div class="col-md-7">
+      {% include 'search/results_pagination.html' %}
     </div>
   </div><!-- /row -->
 {% endblock search_page_option_set %}
@@ -272,6 +273,7 @@ Thumbnails
 {% endblock search_results_box %}
 
 <div class="row">
+  <div class="col-md-5"></div>
   <div class="col-md-7">
     {% include 'search/results_pagination.html' %}
   </div>
