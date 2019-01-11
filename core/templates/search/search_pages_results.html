@@ -12,7 +12,7 @@
 {% block subcontent %}
 
 {% block result_count %}
-    {{ paginator.count }} result{% if paginator.count > 1 %}s{% endif %}
+    {{ paginator.count }} result{% if paginator.count != 1 %}s{% endif %}
     {% if english_search %}containing{% endif %}
     {% for part in english_search %}
       <strong>&ldquo;{{ part }}&rdquo;</strong>
@@ -163,7 +163,10 @@
 {% endblock search_page_results_filter_form %}
 
 {% block result_numeration %}
-  <h3 class="results">Results {{ start }}-{{ end }}</h3>
+  <h3 class="results">
+    Result{% if paginator.count != 1 %}s{% endif %}
+    {{ start }}{% if paginator.count > 1 %}-{{ end }}{% endif %}
+  </h3>
 {% endblock result_numeration %}
 
 {% block search_page_option_set %}
