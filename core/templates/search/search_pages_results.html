@@ -21,47 +21,42 @@
 {% endblock result_count %}
 
 {% block search_page_filter_desc %}
-  <!-- Search results description -->
   <h3>Filters</h3>
-  <h4 class="term">
-    {# date filter text #}
-    {% if request.GET.yearRange %}
-      &nbsp; for year range {{ request.GET.yearRange }}
-      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'yearRange' %}">
-        <img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/>
-      </a>
-    {% else %}
-      {% if request.GET.date1 %}
-        &nbsp; for start date {{ request.GET.date1 }}
+  <ul class="list-inline">
+    {# Date filter from Advanced Search #}
+    {% if request.GET.date1 or request.GET.date2 %}
+      {% if not request.GET.yearRange %}
+        <li>
+          <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}"
+            class="btn btn-default" aria-label="Clear Date Filter"
+            title="Clear Date Filter">
+            Date:
+            {% if request.GET.date1 %}
+              {{ request.GET.date1 }}
+              {% if request.GET.date2 %} - {% endif %}
+            {% endif %}
+            {% if request.GET.date2 %}
+              {{ request.GET.date2 }}
+            {% endif %}
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </a>
+        </li>
       {% endif %}
-      {% if request.GET.date2 %}
-        through end date {{ request.GET.date2 }}
-      {% endif %}
-      {% if request.GET.date1 or request.GET.date2 %}
-        <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}">
-          <img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/>
-        </a>
-      {% endif %}
-    {% endif %}
-    {% if request.GET.language %}
-      &nbsp; for language {{ request.GET.language }}
-      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'language' %}">
-        <img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/>
-      </a>
     {% endif %}
 
     {% if titles %}
-        for titles
-        {% for lccn in titles %}
-            {{lccn}}<a href="{{BASE_URL}}{{request.path}}?{% remove_param_value 'lccn' lccn %}">
-                <img src="/media/images/btn_remove.png"
-                    title="clear title filter {{lccn}}"
-                    alt="clear title filter {{lccn}}" />
-            </a>
-            {% if not forloop.last %}, {% endif %}
-        {% endfor %}
+      {% for title in titles %}
+        <li>
+          <a href="{{BASE_URL}}{{request.path}}?{% remove_param_value 'lccn' title.lccn %}"
+            class="btn btn-default" aria-label="Clear '{{ title.name }}' Filter"
+            title="Clear '{{ title.name }}' Filter">
+            <span>{{ title.abbrev }}</span>
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </a>
+        </li>
+      {% endfor %}
     {% endif %}
-  </h4>
+  </ul>
 {% endblock search_page_filter_desc %}
 
 {% block search_page_results_filter_form %}
@@ -155,8 +150,8 @@
       <input type="hidden" name="date2" value="{{query.date2}}" />
 
       {# All the chosen LCCNs #}
-      {% for lccn in titles %}
-        <input type="hidden" name="lccn" value="{{lccn}}" />
+      {% for title in titles %}
+        <input type="hidden" name="lccn" value="{{ title.lccn }}" />
       {% endfor %}
     {% endblock search_page_results_filter_form_hidden_filters %}
   </form>
@@ -223,8 +218,8 @@
               {% endif %}
 
               {# All the chosen LCCNs #}
-              {% for lccn in titles %}
-                <input type="hidden" name="lccn" value="{{lccn}}" />
+              {% for title in titles %}
+                <input type="hidden" name="lccn" value="{{ title.lccn }}" />
               {% endfor %}
 
               {# miscellaneous filters #}
