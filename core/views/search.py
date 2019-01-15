@@ -109,7 +109,15 @@ def search_pages_results(request, view_type='gallery'):
     else:
         template = "search/search_pages_results.html"
     page_list = []
-    titles = query.getlist("lccn")
+    lccns = query.getlist("lccn")
+    titles = []
+    for lccn in lccns:
+        name = str(models.Title.objects.get(lccn=lccn))
+        titles.append({
+            'abbrev': name[:24] +'...' if len(name) > 24 else name,
+            'lccn': lccn,
+            'name': name,
+        })
     for count in range(len(page.object_list)):
         page_list.append((count + start, page.object_list[count]))
     return render(request, template, locals())
