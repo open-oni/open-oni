@@ -54,7 +54,6 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'core.context_processors.extra_request_info',
-                'core.context_processors.newspaper_info',
             ],
         },
     },

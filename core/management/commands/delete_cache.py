@@ -20,9 +20,6 @@ class Command(BaseCommand):
             raise CommandError('Usage is `manage.py delete_cache`')
 
         try:
-            logger.info("Deleting newspaper_info cache...")
-            cache.delete('newspaper_info')
-
             logger.info("Deleting titles_states cache...")
             cache.delete('titles_states')
         except Exception, e:
