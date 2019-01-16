@@ -31,40 +31,50 @@
     {% if page.object_list %}
     <div class="search_results">
         <div class="row"> 
-        {% for page in page.object_list %}
-        {% url 'openoni_page' title.lccn page.issue.date_issued page.issue.edition page.sequence as url %}
+        {% for page_info in page.object_list %}
             <div class="col-md-3">
                 <div class="highlite">
-                    {% if page.relative_image_path %}
+                    {% if page_info.page.relative_image_path %}
+                    {% url 'openoni_page' title.lccn page_info.issue.date_issued page_info.issue.edition page_info.page.sequence as url %}
                       <a href="{{url}}">
-                        <img src="{% thumb_image_url page %}" alt="Thumbnail for {{page.number}}"/>
+                        <img src="{% thumb_image_url page_info.page %}" alt="Thumbnail for {{page_info.page.number}}"/>
+                      </a>
+                      <br/>
+                      <a href="{{url}}" shape="rect">
+                        {% if page_info.issue %}
+                            {{page_info.issue|label}},
+                        {% endif %}
+                        {% if page_info.page %}
+                            {{ page_info.page|label }}
+                        {% endif %}
                       </a>
                     {% else %}
-                      <div style="height: auto; margin-bottom: 3em;">
+                      <div class="page_image_missing">
                         No Image.
-                        {% if page.noteAboutReproduction %}
-                          {{page.noteAboutReproduction.text}}.
-                        {% elif page.issue and page.issue.noteAboutReproduction %}
+                        {% if page_info.page.noteAboutReproduction %}
+                          {{page_info.page.noteAboutReproduction.text}}.
+                        {% elif page_info.issue and page_info.issue.noteAboutReproduction %}
                           Issue Notes:
-                          {{page.issue.noteAboutReproduction.text}}.
+                          {{page_info.issue.noteAboutReproduction.text}}.
                         {% endif %}
+                        {% url 'openoni_issue_pages' title.lccn page_info.issue.date_issued 1 as url %}
+                        <p><a href="{{url}}">View Issue</a></p>
                       </div>
                     {% endif %}
-                    <br/>
-                    <a href="{{url}}" shape="rect">{% if page.issue %}{{page.issue|label}}, {% endif %}{% if page %}{{ page|label }}{% endif %}</a>
                 </div>
             </div>
             {% if forloop.counter|divisibleby:"4" %}
-            </div>
+            {% comment %} close row div and open another {% endcomment %}
+        </div>
         <div class="row">
             {% endif %}
-            
-            {% endfor %}
+
+        {% endfor %}
         </div>
     </div>
     {% else %}
     <div class="missing">
-        <h2>This issue has no available digitized pages{% if display_label %}: {{ display_label }}{% endif %}{% if explanation %}; {{explanation}}{% endif %}.</h2>
+        <h2>This issue or title has no available digitized pages{% if display_label %}: {{ display_label }}{% endif %}{% if explanation %}; {{explanation}}{% endif %}.</h2>
     </div>
     {% endif %}
     <br/>

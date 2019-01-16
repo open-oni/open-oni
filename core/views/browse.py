@@ -129,7 +129,12 @@ def issue_pages(request, lccn, date, edition, page_number=1):
                                     edition=edition).order_by("-created")[0]
     except IndexError, e:
         raise Http404
-    paginator = Paginator(issue.pages.all(), 20)
+    issue_pages = []
+    for page in issue.pages.all():
+        # include both issue and page because of how metadata
+        # is being pulled in the template
+        issue_pages.append({"issue": issue, "page": page})
+    paginator = Paginator(issue_pages, 20)
     try:
         page = paginator.page(page_number)
     except InvalidPage:
@@ -314,7 +319,6 @@ def title(request, lccn):
     crumbs = create_crumbs(title)
     response = render(request, 'title.html', locals())
     return response
-
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def titles_in_city(request, state, county, city,
@@ -527,7 +531,9 @@ def issues_first_pages(request, lccn, page_number=1):
 
     first_pages = []
     for issue in issues:
-        first_pages.append(issue.first_page)
+        # include both issue and page because in some cases
+        # an issue exists which has no associated pages
+        first_pages.append({"issue": issue, "page": issue.first_page})
 
     paginator = Paginator(first_pages, 20)
     try:
