@@ -92,7 +92,9 @@
 {% endif %}
 
 {% block batch_link %}
+  {% if not first_pages %}
     <p class="issue_batch_link"><a href="{{ issue.batch.url }}">View Batch Information</a></p>
+  {% endif %}
 {% endblock batch_link %}
 
 {% endblock newspaper_content %}
