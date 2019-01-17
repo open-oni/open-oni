@@ -42,6 +42,7 @@ INSTALLED_APPS = (
 # Uncomment to enable SQL query output in Django logging
 #LOGGING = {
 #    'version': 1,
+#    'disable_existing_loggers': False,
 #    'filters': {
 #        'require_debug_true': {
 #            '()': 'django.utils.log.RequireDebugTrue',
