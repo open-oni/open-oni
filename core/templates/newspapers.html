@@ -18,8 +18,7 @@
     {% block newspapers_table_intro %}
     <div class="results_nav">
         <p class="term">
-            {{ titles.count|intcomma }} newspaper{% if titles.count > 1 %}s{% endif %}
-            {% if titles.count == 1 %}is{% else %}are{% endif %} available for viewing on this site. 
+            {{ titles.count|intcomma }} newspaper{{ titles.count|pluralize }} with {{ page_count|intcomma }} page{{ page_count|pluralize }} available for viewing on this site.
         </p>
     </div>
     {% endblock newspapers_table_intro %}
