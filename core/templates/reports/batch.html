@@ -18,8 +18,8 @@
     <tr class="lightGray">
         <td>Awardee:</td>
         <td>
-            <a href="{% url 'openoni_awardee' batch.awardee.org_code %}">
-                {{ batch.awardee.name }}
+            <a href="{% url 'openoni_awardee' awardee.org_code %}">
+                {{ awardee.name }}
             </a>
         </td>
     </tr>
@@ -29,7 +29,7 @@
     </tr>
     <tr class="lightGray">
         <td>Number of Issues:</td>
-        <td>{{ batch.issues.all.count }}</td>
+        <td>{{ issues|length }}</td>
     </tr>
     <tr class="white">
         <td>Number of Pages:</td>
@@ -62,11 +62,12 @@
     <th>Issue Date</th>
     <th>Number of Pages</th>
 </tr>
-{% for issue in issue_stats %}
+
+{% for issue in issues %}
 <tr class="{% cycle 'lightGray' 'white' %}">
-    <td><a href="{% url 'openoni_title' issue.1 %}">{{ issue.0 }}</a></td>
-    <td><a href="{% url 'openoni_issue_pages' issue.1 issue.2 1 %}">{{issue.2 }}</a></td>
-    <td>{{ issue.3 }}</td>
+    <td><a href="{% url 'openoni_title' issue.lccn %}">{{ issue.title }}</a></td>
+    <td><a href="{% url 'openoni_issue_pages' issue.lccn issue.date_issued 1 %}">{{issue.date_issued }}</a></td>
+    <td>{{ issue.page_count }}</td>
     </tr>
     {% endfor %}
 </table>

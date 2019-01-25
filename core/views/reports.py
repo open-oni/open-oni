@@ -82,38 +82,25 @@ def batches_csv(request):
 @cache_page(settings.API_TTL_SECONDS)
 def batch(request, batch_name):
     batch = get_object_or_404(models.Batch, name=batch_name)
+
+    awardee = batch.awardee
+
+    issues = []
+    for issue in batch.issues.all().select_related("title"):
+        page_count = 0 if not issue.pages else issue.pages.count
+        issues.append({'lccn': issue.title.lccn,
+                       'title': issue.title.name,
+                       'date_issued': issue.date_issued,
+                       'page_count': page_count })
+
     reels = []
     for reel in batch.reels.all():
+        page_count = 0 if not reel.pages else reel.pages.count
         reels.append({'number': reel.number,
                       'titles': reel.titles(),
                       'title_range': _title_range(reel),
-                      'page_count': reel.pages.all().count(), })
+                      'page_count': reel.pages.count })
     page_title = 'Batch: %s' % batch.name
-
-    # maybe when we can prefetch_related when django v1.4 is available
-    # https://docs.djangoproject.com/en/dev/ref/models/querysets/#prefetch-related
-    # this can be done more elegantly with the django ORM
-    # for now it's ugly raw-sql and ugly indexed values in the template
-    sql = """
-          SELECT core_title.name,
-              core_title.lccn,
-              DATE_FORMAT(core_issue.date_issued, '%%Y-%%m-%%d') AS issued,
-              COUNT(core_page.id) AS page_count,
-              core_title.name_normal
-          FROM core_batch, core_issue, core_title, core_page
-          WHERE core_batch.name = %s
-            AND core_issue.batch_id = core_batch.name
-            AND core_issue.title_id = core_title.lccn
-            AND core_page.issue_id = core_issue.id
-          GROUP BY core_title.name,
-              core_title.name_normal,
-              core_title.lccn,
-              issued
-          ORDER BY core_title.name_normal, issued ASC
-          """
-    cursor = connection.cursor()
-    cursor.execute(sql, [batch.name])
-    issue_stats = cursor.fetchall()
 
     return render(request, 'reports/batch.html', locals())
 
