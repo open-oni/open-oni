@@ -1,8 +1,5 @@
 from django.conf import settings
-from django.core.cache import cache
 
-from core import models
-from core import solr_index
 from core.forms import CityForm
 from core.utils.utils import fulltext_range
 
