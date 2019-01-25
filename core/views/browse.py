@@ -133,7 +133,7 @@ def issue_pages(request, lccn, date, edition, page_number=1):
     for page in issue.pages.all():
         # include both issue and page because of how metadata
         # is being pulled in the template
-        issue_pages.append({"issue": issue, "page": page})
+        issue_pages.append({'issue': issue, 'page': page})
     paginator = Paginator(issue_pages, 20)
     try:
         page = paginator.page(page_number)
@@ -533,7 +533,7 @@ def issues_first_pages(request, lccn, page_number=1):
     for issue in issues:
         # include both issue and page because in some cases
         # an issue exists which has no associated pages
-        first_pages.append({"issue": issue, "page": issue.first_page})
+        first_pages.append({'issue': issue, 'page': issue.first_page})
 
     paginator = Paginator(first_pages, 20)
     try:
