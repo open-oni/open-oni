@@ -38,9 +38,9 @@
         <tbody>
         {% for title in sorted_titles %}
             <tr>
-                <th class="first left_no_border" scope="row">
+                <td class="first left_no_border" scope="row">
                     <a href="{% url 'openoni_title' title.lccn %}">{{title.display_name}}</a>
-                </th>
+                </td>
                 <td>
                     {% for place in title.places.all %}
                         {{ place.get_city_county }}<br/>
