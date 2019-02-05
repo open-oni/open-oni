@@ -479,8 +479,8 @@ def page_search(d):
         if date1 or date2:
             # do NOT apply year min / max to solr query
             # do apply it to facets since they require a specific begin / end year
-            d1 = _solrize_date(str(date1)) if date1 else "*"
-            d2 = _solrize_date(str(date2), is_start=False) if date2 else "*"
+            d1 = _solrize_date(str(date1))
+            d2 = _solrize_date(str(date2))
 
             q.append('+date:[%s TO %s]' % (d1, d2))
             year1 = date_boundaries[0] if d1 == "*" else int(str(d1)[:4])
@@ -677,45 +677,22 @@ def _expand_ethnicity(e):
     q = ' OR '.join(parts)
     return "(" + q + ")"
 
-def _solrize_date(d, is_start=True):
+def _solrize_date(date):
     """
-    Takes a string like 01/01/1900 or 01/1900 or 1900 and returns an
+    Takes a date string like 2018/01/01 and returns an
     integer suitable for querying the date field in a solr document.
-    The is_start is relevant for determining what date to round to
-    when given a partial date like 01/1900 or 1900.
     """
-    d = d.strip()
+    solr_date = "*"
+    if date:
+        date = date.strip()
 
-    # 01/01/1900 -> 19000101 ; 1/1/1900 -> 19000101
-    match = re.match(r'(\d\d?)/(\d\d?)/(\d{4})', d)
-    if match:
-        m, d, y = match.groups()
-    else:
-        # 01/1900 -> 19000101 | 19000131
-        match = re.match(r'(\d\d?)/(\d{4})', d)
+        # 1900-01-01 -> 19000101
+        match = re.match(r'(\d{4})-(\d{2})-(\d{2})', date)
         if match:
-            m, y = match.groups()
-            if is_start:
-                d = '01'
-            else:
-                d = '31'
-        else:
-            # 1900 -> 19000101 | 19001231
-            match = re.match('(\d{4})', d)
-            if match:
-                y = match.group(1)
-                if is_start:
-                    m, d = '01', '01'
-                else:
-                    m, d = '12', '31'
-            else:
-                return None
-
-    if y and m and d:
-        return int(y) * 10000 + int(m) * 100 + int(d)
-    else:
-        return None
-
+            y, m, d = match.groups()
+            if y and m and d:
+                solr_date = y+m+d
+    return solr_date
 
 def similar_pages(page):
     solr = SolrConnection(settings.SOLR)

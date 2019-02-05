@@ -93,20 +93,14 @@
                     <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
                     <div class="form-inline">
                         <label for="id_date_from">Start date</label>
-                        <input id="id_date_from" name="date1" type="text"
-                            placeholder="01/01/{{form.fulltextStartYear}}"
-                            aria-describedby="date-format"
-                            pattern="[01][0-9]/[0123][0-9]/[0-9]{4}"
-                            />
-
+                        <input id="id_date_from" name="date1" type="date"
+                            min="{{form.fulltextStartYear}}-01-01"
+                            max="{{form.fulltextEndYear}}-12-31">
                         <label for="id_date_to">End date</label>
-                        <input id="id_date_to" name="date2" type="text"
-                            placeholder="12/31/{{form.fulltextEndYear}}"
-                            aria-describedby="date-format"
-                            pattern="[01][0-9]/[0123][0-9]/[0-9]{4}"
-                            />
+                        <input id="id_date_to" name="date2" type="date"
+                            min="{{form.fulltextStartYear}}-01-01"
+                            max="{{form.fulltextEndYear}}-12-31">
                     </div>
-                    <div class="help-block" id="date-format">Dates must be formatted as MM/DD/YYYY; e.g., 12/31/1900</div>
                 </div>
             </div>
         </fieldset>

@@ -82,22 +82,22 @@ class SolrIndexTests(TestCase):
 
     def test_page_search_date_range(self):
         self.assertEqual(
-            si.page_search(Q('date1=10/25/1901&date2=10/31/1901'))[0],
+            si.page_search(Q('date1=1901-10-25&date2=1901-10-31'))[0],
             '+type:page +date:[19011025 TO 19011031]')
 
     def test_page_search_date1_only(self):
         self.assertEqual(
-            si.page_search(Q('date1=05/30/1988&date2='))[0],
+            si.page_search(Q('date1=1988-05-30&date2='))[0],
             '+type:page +date:[19880530 TO *]')
 
     def test_page_search_date2_only(self):
         self.assertEqual(
-            si.page_search(Q('date2=01/07/1880'))[0],
+            si.page_search(Q('date2=1880-01-07'))[0],
             '+type:page +date:[* TO 18800107]')
 
     def test_page_search_year_range_and_dates(self):
         self.assertEqual(
-            si.page_search(Q('date1=01/01/1900&date2=12/31/1910&yearRange=1902-1904'))[0],
+            si.page_search(Q('date1=1900-01-01&date2=1910-12-31&yearRange=1902-1904'))[0],
             '+type:page +year:[1902 TO 1904]')
 
     def test_page_search_no_date(self):
@@ -141,12 +141,11 @@ class SolrIndexTests(TestCase):
     # _solrize_date
 
     def test_solrize_date(self):
-        self.assertEqual(si._solrize_date('03/01/1900'), 19000301)
-        self.assertEqual(si._solrize_date('01/1900'), 19000101)
-        self.assertEqual(si._solrize_date('01/1900', is_start=False), 19000131)
-        self.assertEqual(si._solrize_date('1900'), 19000101)
-        self.assertEqual(si._solrize_date('1900', is_start=False), 19001231)
-        self.assertEqual(si._solrize_date('1/01/1900'), 19000101)
+        self.assertEqual(si._solrize_date('1900-03-01'), "19000301")
+        self.assertEqual(si._solrize_date('1900'), "*")
+        self.assertEqual(si._solrize_date('1900-01'), "*")
+        self.assertEqual(si._solrize_date('1900'), "*")
+        self.assertEqual(si._solrize_date('1900'), "*")
 
 
     # _solr_escape (page)
