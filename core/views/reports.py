@@ -30,7 +30,7 @@ def reports(request):
 @cache_page(settings.API_TTL_SECONDS)
 def batches(request, page_number=1):
     page_title = 'Batches'
-    batches = models.Batch.viewable_batches()
+    batches = models.Batch.viewable_batches().order_by('-created')
     paginator = Paginator(batches, 25)
     page = paginator.page(page_number)
     page_range_short = list(_page_range_short(paginator, page))
