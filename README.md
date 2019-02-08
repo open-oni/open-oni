@@ -44,7 +44,7 @@ Install
 
 **Please note**: for development, look at the [docker setup](docker/README.md).
 
-Production install instructions are still a work in progress.
+Production install instructions are still a work in progress. We reccomend installing from the latest [release](https://github.com/open-oni/open-oni/releases) to evaluate the software. If you are interested in contributing code, please use the dev branch. Please see [the contribute page on the wiki](https://github.com/open-oni/open-oni/wiki/Contribute) for details. 
 
 Testing
 -------
