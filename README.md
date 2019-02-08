@@ -34,6 +34,11 @@ The NDNP data is in the Public Domain and is itself [available]
 The hope is that the openoni software can be useful for others who want to
 work with and/or publish the content.
 
+Releases
+--------
+
+Open-ONI releases can be found on our [releases](https://github.com/open-oni/open-oni/releases) page. Open-ONI is alpha software and documentation is incomplete at this time.
+
 Install
 -------
 
