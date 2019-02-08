@@ -34,12 +34,17 @@ The NDNP data is in the Public Domain and is itself [available]
 The hope is that the openoni software can be useful for others who want to
 work with and/or publish the content.
 
+Releases
+--------
+
+Open-ONI releases can be found on our [releases](https://github.com/open-oni/open-oni/releases) page. Open-ONI is alpha software and documentation is incomplete at this time.
+
 Install
 -------
 
 **Please note**: for development, look at the [docker setup](docker/README.md).
 
-Production install instructions are still a work in progress.
+Production install instructions are still a work in progress. We reccomend installing from the latest [release](https://github.com/open-oni/open-oni/releases) to evaluate the software. If you are interested in contributing code, please use the dev branch. Please see [the contribute page on the wiki](https://github.com/open-oni/open-oni/wiki/Contribute) for details. 
 
 Testing
 -------
