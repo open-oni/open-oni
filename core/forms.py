@@ -104,6 +104,7 @@ class CityForm(forms.Form):
         super(CityForm, self).__init__(*args, **kwargs)
         cities = (models.Place
                   .objects
+                  .filter(titles__has_issues=1)
                   .order_by('city')
                   .values('city')
                   .distinct())
