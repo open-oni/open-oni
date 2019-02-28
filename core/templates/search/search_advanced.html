@@ -95,11 +95,13 @@
                         <label for="id_date_from">Start date</label>
                         <input id="id_date_from" name="date1" type="date"
                             min="{{form.fulltextStartYear}}-01-01"
-                            max="{{form.fulltextEndYear}}-12-31">
+                            max="{{form.fulltextEndYear}}-12-31"
+                            value="{{form.fulltextStartYear}}-01-01">
                         <label for="id_date_to">End date</label>
                         <input id="id_date_to" name="date2" type="date"
                             min="{{form.fulltextStartYear}}-01-01"
-                            max="{{form.fulltextEndYear}}-12-31">
+                            max="{{form.fulltextEndYear}}-12-31"
+                            value="{{form.fulltextEndYear}}-12-31">
                     </div>
                 </div>
             </div>

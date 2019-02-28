@@ -479,8 +479,8 @@ def page_search(d):
         if date1 or date2:
             # do NOT apply year min / max to solr query
             # do apply it to facets since they require a specific begin / end year
-            d1 = _solrize_date(str(date1))
-            d2 = _solrize_date(str(date2))
+            d1 = _solrize_date(str(date1), 'start')
+            d2 = _solrize_date(str(date2), 'end')
 
             q.append('+date:[%s TO %s]' % (d1, d2))
             year1 = date_boundaries[0] if d1 == "*" else int(str(d1)[:4])
@@ -677,7 +677,7 @@ def _expand_ethnicity(e):
     q = ' OR '.join(parts)
     return "(" + q + ")"
 
-def _solrize_date(date):
+def _solrize_date(date, date_type):
     """
     Takes a date string like 2018/01/01 and returns an
     integer suitable for querying the date field in a solr document.
@@ -685,6 +685,12 @@ def _solrize_date(date):
     solr_date = "*"
     if date:
         date = date.strip()
+
+        start_year, end_year = fulltext_range()
+        if date_type == 'start' and date == str(start_year) +'-01-01':
+            return '*'
+        elif date_type == 'end' and date == str(end_year) +'-12-31':
+            return '*'
 
         # 1900-01-01 -> 19000101
         match = re.match(r'(\d{4})-(\d{2})-(\d{2})', date)
