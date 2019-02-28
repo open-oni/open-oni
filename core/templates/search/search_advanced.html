@@ -89,20 +89,23 @@
                         {{ form.county }}
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
-                    <div class="form-inline">
-                        <label for="id_date_from">Start date</label>
-                        <input id="id_date_from" name="date1" type="date"
-                            min="{{form.fulltextStartYear}}-01-01"
-                            max="{{form.fulltextEndYear}}-12-31"
-                            value="{{form.fulltextStartYear}}-01-01">
-                        <label for="id_date_to">End date</label>
-                        <input id="id_date_to" name="date2" type="date"
-                            min="{{form.fulltextStartYear}}-01-01"
-                            max="{{form.fulltextEndYear}}-12-31"
-                            value="{{form.fulltextEndYear}}-12-31">
-                    </div>
+                <div class="col-md-3 date_form">
+                    <label for="date_from">
+                        Start Date (From {{ form.fulltextStartYear }})
+                    </label><br>
+                    <input id="date_from" name="date1" type="date"
+                        min="{{form.fulltextStartYear}}-01-01"
+                        max="{{form.fulltextEndYear}}-12-31"
+                        value="{{form.fulltextStartYear}}-01-01">
+                </div>
+                <div class="col-md-3 date_form">
+                    <label for="date_to">
+                        End Date (To {{ form.fulltextEndYear }})
+                    </label><br>
+                    <input id="date_to" name="date2" type="date"
+                        min="{{form.fulltextStartYear}}-01-01"
+                        max="{{form.fulltextEndYear}}-12-31"
+                        value="{{form.fulltextEndYear}}-12-31">
                 </div>
             </div>
         </fieldset>
