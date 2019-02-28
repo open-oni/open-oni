@@ -75,8 +75,8 @@ def _titles_states():
     """
     titles_states = cache.get("titles_states")
     if not titles_states:
-        titles = [("", "All newspapers"), ]
-        states = [("", "All states")]
+        titles = []
+        states = []
         # create a temp Set _states to hold states before compiling full list
         _states = set()
         for title in models.Title.objects.filter(has_issues=True).select_related():
