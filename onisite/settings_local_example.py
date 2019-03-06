@@ -75,6 +75,19 @@ INSTALLED_APPS = (
   ################################################################
   # DJANGO SETTINGS
   ################################################################
+# ADMINS receive 5xx error emails; MANAGERS receive 404 error emails
+#ADMINS = [
+#    ('YOUR_admin1', 'YOUR_admin1@example.com'),
+#    ('YOUR_adminX', 'YOUR_adminX@example.com')
+#]
+#MANAGERS = [
+#    ('YOUR_mngr1', 'YOUR_mngr13@example.com'),
+#    ('YOUR_mngrX', 'YOUR_mngrX4@example.com')
+#]
+#IGNORABLE_404_URLS = [
+#    re.compile(r'YOUR_known_404_URL_regex_to_prevent_emails'),
+#]
+
 #ALLOWED_HOSTS = ['YOUR_HOSTNAME']
 
 #DATABASES = {
@@ -86,6 +99,7 @@ INSTALLED_APPS = (
 #        'PASSWORD': 'YOUR_DB_PASSWORD',
 #    }
 #}
+#CONN_MAX_AGE = 30
 
 # List of configuration classes / app packages in order of priority (i.e., the
 # first item in the list has final say when collisions occur)
@@ -108,6 +122,17 @@ INSTALLED_APPS = (
 #    'core',
 #)
 
+# HTTPS Settings
+#CSRF_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
+# Enable HSTS by setting SECURE_HSTS_SECONDS > 0
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#SECURE_HSTS_PRELOAD = True
+# Test with a low value (e.g. 300)
+# before setting a high value (e.g. 15552000) for long-term use
+#SECURE_HSTS_SECONDS = 0
+
+
   ################################################################
   # OPENONI SETTINGS
   ################################################################
@@ -120,13 +145,6 @@ INSTALLED_APPS = (
 # ESSAY_TEMPLATES = "essays"
 
 #LOG_LOCATION = '/opt/openoni/log/'
-
-# Enable HSTS by setting SECURE_HSTS_SECONDS > 0
-#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-#SECURE_HSTS_PRELOAD = True
-# Test with a low value (e.g. 300)
-# before setting a high value (e.g. 15552000) for long-term use
-#SECURE_HSTS_SECONDS = 0
 
 # SITE_TITLE that will be used for display purposes throughout app
 # PROJECT_NAME may be the same as SITE_TITLE but can be used
