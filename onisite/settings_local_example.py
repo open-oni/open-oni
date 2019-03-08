@@ -88,12 +88,12 @@ INSTALLED_APPS = (
 #    re.compile(r'YOUR_known_404_URL_regex_to_prevent_emails'),
 #]
 
-#ALLOWED_HOSTS = ['YOUR_HOSTNAME']
+#ALLOWED_HOSTS = ['YOUR_WEB_HOST']
 
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
-#        'HOST': 'rdbms',
+#        'HOST': 'YOUR_DB_HOST',
 #        'NAME': 'openoni',
 #        'USER': 'openoni',
 #        'PASSWORD': 'YOUR_DB_PASSWORD',
@@ -122,6 +122,8 @@ INSTALLED_APPS = (
 #    'core',
 #)
 
+#SECRET_KEY = 'YOUR_SECRET_KEY'
+
 # HTTPS Settings
 #CSRF_COOKIE_SECURE = True
 #SESSION_COOKIE_SECURE = True
@@ -138,13 +140,13 @@ INSTALLED_APPS = (
   ################################################################
 # BASE_URL is the URL at which this site is hosted
 # NOTE: as of now this can NOT include any path elements!
-#BASE_URL = 'http://YOUR_HOSTNAME'
+#BASE_URL = 'http://YOUR_WEB_HOST'
 
 # Relative path from core and theme apps to subdirectory where essay templates are stored
 # example: "essays" would find files in themes/default/templates/essays
 # ESSAY_TEMPLATES = "essays"
 
-#LOG_LOCATION = '/opt/openoni/log/'
+#LOG_LOCATION = 'YOUR_LOG_PATH'
 
 # SITE_TITLE that will be used for display purposes throughout app
 # PROJECT_NAME may be the same as SITE_TITLE but can be used
@@ -155,7 +157,7 @@ INSTALLED_APPS = (
 #PROJECT_NAME = 'YOUR_LONG_PROJECT_NAME'
 
 # Absolute path on disk to the data directory
-#STORAGE = '/opt/openoni/data/'
+#STORAGE = 'YOUR_DATA_PATH'
     # Various storage subdirectories
 #BATCH_STORAGE = os.path.join(STORAGE, 'batches')
 #COORD_STORAGE = os.path.join(STORAGE, 'word_coordinates')
@@ -182,13 +184,13 @@ INSTALLED_APPS = (
 # static thumbnails, thumbnail caching separated from resize caching, etc.
 # Thumbnails are a much smaller subset of possible images and therefore benefit
 # a great deal from being cached and/or pregenerated.
-#RESIZE_SERVER = 'http://YOUR_HOSTNAME/images/iiif'
-#TILE_SERVER = 'http://YOUR_HOSTNAME/images/iiif'
+#RESIZE_SERVER = 'http://YOUR_WEB_HOST/images/resize'
+#TILE_SERVER = 'http://YOUR_WEB_HOST/images/iiif'
 
 
   ################################################################
   # SOLR SETTINGS
   ################################################################
 # URL to the Solr server
-#SOLR = 'http://YOUR_HOSTNAME:8983/solr'
+#SOLR = 'http://YOUR_SOLR_HOST:8983/solr'
 
