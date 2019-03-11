@@ -31,12 +31,12 @@
             class="btn btn-default" aria-label="Clear Date Filter"
             title="Clear Date Filter">
             Date:
-            {% if request.GET.date1 %}
-              {{ request.GET.date1 }}
-              {% if request.GET.date2 %} - {% endif %}
-            {% endif %}
-            {% if request.GET.date2 %}
-              {{ request.GET.date2 }}
+            {% if request.GET.date1 and request.GET.date2 %}
+              {{ request.GET.date1 }} - {{ request.GET.date2 }}
+            {% elif request.GET.date1 %}
+              From {{ request.GET.date1 }}
+            {% elif request.GET.date2 %}
+              Until {{ request.GET.date2 }}
             {% endif %}
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </a>
