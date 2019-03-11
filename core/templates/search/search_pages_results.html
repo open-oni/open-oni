@@ -25,7 +25,7 @@
   <ul class="list-inline">
     {# Date filter from Advanced Search #}
     {% if request.GET.date1 or request.GET.date2 %}
-      {% if not request.GET.yearRange %}
+      {% if not request.GET.yearRange and not searching_all_dates %}
         <li>
           <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}"
             class="btn btn-default" aria-label="Clear Date Filter"

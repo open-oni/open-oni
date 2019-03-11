@@ -15,8 +15,7 @@ from core import models
 from core import solr_index
 from core import forms
 from core.decorator import opensearch_clean, cache_page, cors
-from core.utils.utils import _page_range_short
-
+from core.utils.utils import _page_range_short, fulltext_range
 
 def search_pages_paginator(request):
     # front page only
@@ -120,6 +119,14 @@ def search_pages_results(request, view_type='gallery'):
         })
     for count in range(len(page.object_list)):
         page_list.append((count + start, page.object_list[count]))
+
+    start_year, end_year = fulltext_range()
+    searching_all_dates = False
+    if request.GET.get('date1') and request.GET.get('date2'):
+        if request.GET.get('date1') == str(start_year) +'-01-01':
+            if request.GET.get('date2') == str(end_year) +'-12-31':
+                searching_all_dates = True
+
     return render(request, template, locals())
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
