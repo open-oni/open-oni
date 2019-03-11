@@ -141,11 +141,21 @@ class SolrIndexTests(TestCase):
     # _solrize_date
 
     def test_solrize_date(self):
+        # Valid value, <input type="date"> format: ####-##-##
         self.assertEqual(si._solrize_date('1900-03-01'), "19000301")
-        self.assertEqual(si._solrize_date('1900'), "*")
+
+        # Ignore dates matching earliest and latest known dates
+        self.assertEqual(si._solrize_date('1400-01-01', 'start'), "*")
+        self.assertEqual(si._solrize_date('2019-12-31', 'end'), "*")
+
+        # Incomplete or invalid dates are ignored
+        self.assertEqual(si._solrize_date('1900/03/01'), "*")
+        self.assertEqual(si._solrize_date('1900/01'), "*")
         self.assertEqual(si._solrize_date('1900-01'), "*")
         self.assertEqual(si._solrize_date('1900'), "*")
-        self.assertEqual(si._solrize_date('1900'), "*")
+        self.assertEqual(si._solrize_date('01-03-1900'), "*")
+        self.assertEqual(si._solrize_date('01-1900'), "*")
+        self.assertEqual(si._solrize_date('spam'), "*")
 
 
     # _solr_escape (page)

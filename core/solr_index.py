@@ -677,7 +677,7 @@ def _expand_ethnicity(e):
     q = ' OR '.join(parts)
     return "(" + q + ")"
 
-def _solrize_date(date, date_type):
+def _solrize_date(date, date_type=''):
     """
     Takes a date string like 2018/01/01 and returns an
     integer suitable for querying the date field in a solr document.
