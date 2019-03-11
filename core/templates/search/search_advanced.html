@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-md-3 date_form">
                     <label for="date_from">
-                        Start Date (From {{ form.fulltextStartYear }})
+                        Start Date (Earliest: {{ form.fulltextStartYear }})
                     </label><br>
                     <input id="date_from" name="date1" type="date"
                         min="{{form.fulltextStartYear}}-01-01"
@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-md-3 date_form">
                     <label for="date_to">
-                        End Date (To {{ form.fulltextEndYear }})
+                        End Date (Latest: {{ form.fulltextEndYear }})
                     </label><br>
                     <input id="date_to" name="date2" type="date"
                         min="{{form.fulltextStartYear}}-01-01"
