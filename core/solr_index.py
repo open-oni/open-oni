@@ -100,7 +100,15 @@ class SolrPaginator(Paginator):
         return self._count
     count = property(_get_count)
 
-    def highlight_url(self, url, words, page, index):
+    def highlight_url(self, url, words):
+        q = QueryDict(None, True)
+        if words:
+            q["words"] = " ".join(words)
+            return url + "#" + q.urlencode()
+        else:
+            return url
+
+    def pagination_url(self, url, words, page, index):
         q = self.query.copy()
         q["words"] = " ".join(words)
         q["page"] = page
@@ -114,7 +122,7 @@ class SolrPaginator(Paginator):
             p_index = previous_overall_index % self.per_page
             o = self.page(p_page).object_list[p_index]
             q = self.query.copy()
-            return self.highlight_url(o.url, o.words, p_page, p_index)
+            return self.pagination_url(o.url, o.words, p_page, p_index)
         else:
             return None
     previous_result = property(_get_previous)
@@ -125,7 +133,7 @@ class SolrPaginator(Paginator):
             n_page = next_overall_index / self.per_page + 1
             n_index = next_overall_index % self.per_page
             o = self.page(n_page).object_list[n_index]
-            return self.highlight_url(o.url, o.words, n_page, n_index)
+            return self.pagination_url(o.url, o.words, n_page, n_index)
         else:
             return None
     next_result = property(_get_next)
@@ -185,9 +193,7 @@ class SolrPaginator(Paginator):
                     words.update(find_words(s))
             page.words = sorted(words, key=lambda v: v.lower())
 
-            page.highlight_url = self.highlight_url(page.url,
-                                                    page.words,
-                                                    number, len(pages))
+            page.highlight_url = self.highlight_url(page.url, page.words)
             pages.append(page)
 
         solr_page = Page(pages, number, self)
