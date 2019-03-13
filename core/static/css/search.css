@@ -15,6 +15,10 @@ and search results
   margin-top: 1em;
 }
 
+.date_form input {
+  width: 100%;
+}
+
 .pagination {
     margin:0;
 }
