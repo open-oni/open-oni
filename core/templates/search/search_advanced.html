@@ -111,9 +111,13 @@
         </fieldset>
 
         <!-- Newspapers / LCCNs -->
-        <h3>Search only the following newspapers:</h3>
+        <h3>Search selected newspapers:</h3>
         <div class="row">
-            <div class="help-block">Hold cmd / control to select more than one</div>
+            <div class="help-block">
+                Hold Cmd/Ctrl key while clicking
+                to select and de-select multiple papers;
+                Search all papers if none selected
+            </div>
             <div class="col-md-2">
                 <label for="id_lccn">Newspaper(s)</label>
             </div>
@@ -133,7 +137,7 @@
                 <label for="id_frequency">{{ form.frequency.label }}</label>
                 {{ form.frequency }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 buffer-top">
                 <input name="sequence" id="sequence" value="1" type="checkbox" />
                 <label class="norm" for="sequence">Front pages only</label>
             </div>
