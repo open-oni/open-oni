@@ -144,7 +144,7 @@ INSTALLED_APPS = (
 
 # Relative path from core and theme apps to subdirectory where essay templates are stored
 # example: "essays" would find files in themes/default/templates/essays
-# ESSAY_TEMPLATES = "essays"
+#ESSAY_TEMPLATES = "essays"
 
 #LOG_LOCATION = 'YOUR_LOG_PATH'
 
@@ -157,6 +157,7 @@ INSTALLED_APPS = (
 #PROJECT_NAME = 'YOUR_LONG_PROJECT_NAME'
 
 # Absolute path on disk to the data directory
+# If STORAGE is set here, subdirectories must be as well
 #STORAGE = 'YOUR_DATA_PATH'
     # Various storage subdirectories
 #BATCH_STORAGE = os.path.join(STORAGE, 'batches')
