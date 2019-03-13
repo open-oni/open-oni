@@ -75,17 +75,31 @@ INSTALLED_APPS = (
   ################################################################
   # DJANGO SETTINGS
   ################################################################
-#ALLOWED_HOSTS = ['YOUR_HOSTNAME']
+# ADMINS receive 5xx error emails; MANAGERS receive 404 error emails
+#ADMINS = [
+#    ('YOUR_admin1', 'YOUR_admin1@example.com'),
+#    ('YOUR_adminX', 'YOUR_adminX@example.com')
+#]
+#MANAGERS = [
+#    ('YOUR_mngr1', 'YOUR_mngr13@example.com'),
+#    ('YOUR_mngrX', 'YOUR_mngrX4@example.com')
+#]
+#IGNORABLE_404_URLS = [
+#    re.compile(r'YOUR_known_404_URL_regex_to_prevent_emails'),
+#]
+
+#ALLOWED_HOSTS = ['YOUR_WEB_HOST']
 
 #DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
-#        'HOST': 'rdbms',
+#        'HOST': 'YOUR_DB_HOST',
 #        'NAME': 'openoni',
 #        'USER': 'openoni',
 #        'PASSWORD': 'YOUR_DB_PASSWORD',
 #    }
 #}
+#CONN_MAX_AGE = 30
 
 # List of configuration classes / app packages in order of priority (i.e., the
 # first item in the list has final say when collisions occur)
@@ -108,25 +122,31 @@ INSTALLED_APPS = (
 #    'core',
 #)
 
-  ################################################################
-  # OPENONI SETTINGS
-  ################################################################
-# BASE_URL is the URL at which this site is hosted
-# NOTE: as of now this can NOT include any path elements!
-#BASE_URL = 'http://YOUR_HOSTNAME'
+#SECRET_KEY = 'YOUR_SECRET_KEY'
 
-# Relative path from core and theme apps to subdirectory where essay templates are stored
-# example: "essays" would find files in themes/default/templates/essays
-# ESSAY_TEMPLATES = "essays"
-
-#LOG_LOCATION = '/opt/openoni/log/'
-
+# HTTPS Settings
+#CSRF_COOKIE_SECURE = True
+#SESSION_COOKIE_SECURE = True
 # Enable HSTS by setting SECURE_HSTS_SECONDS > 0
 #SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 #SECURE_HSTS_PRELOAD = True
 # Test with a low value (e.g. 300)
 # before setting a high value (e.g. 15552000) for long-term use
 #SECURE_HSTS_SECONDS = 0
+
+
+  ################################################################
+  # OPENONI SETTINGS
+  ################################################################
+# BASE_URL is the URL at which this site is hosted
+# NOTE: as of now this can NOT include any path elements!
+#BASE_URL = 'http://YOUR_WEB_HOST'
+
+# Relative path from core and theme apps to subdirectory where essay templates are stored
+# example: "essays" would find files in themes/default/templates/essays
+#ESSAY_TEMPLATES = "essays"
+
+#LOG_LOCATION = 'YOUR_LOG_PATH'
 
 # SITE_TITLE that will be used for display purposes throughout app
 # PROJECT_NAME may be the same as SITE_TITLE but can be used
@@ -137,7 +157,8 @@ INSTALLED_APPS = (
 #PROJECT_NAME = 'YOUR_LONG_PROJECT_NAME'
 
 # Absolute path on disk to the data directory
-#STORAGE = '/opt/openoni/data/'
+# If STORAGE is set here, subdirectories must be as well
+#STORAGE = 'YOUR_DATA_PATH'
     # Various storage subdirectories
 #BATCH_STORAGE = os.path.join(STORAGE, 'batches')
 #COORD_STORAGE = os.path.join(STORAGE, 'word_coordinates')
@@ -164,13 +185,13 @@ INSTALLED_APPS = (
 # static thumbnails, thumbnail caching separated from resize caching, etc.
 # Thumbnails are a much smaller subset of possible images and therefore benefit
 # a great deal from being cached and/or pregenerated.
-#RESIZE_SERVER = 'http://YOUR_HOSTNAME/images/iiif'
-#TILE_SERVER = 'http://YOUR_HOSTNAME/images/iiif'
+#RESIZE_SERVER = 'http://YOUR_WEB_HOST/images/resize'
+#TILE_SERVER = 'http://YOUR_WEB_HOST/images/iiif'
 
 
   ################################################################
   # SOLR SETTINGS
   ################################################################
 # URL to the Solr server
-#SOLR = 'http://YOUR_HOSTNAME:8983/solr'
+#SOLR = 'http://YOUR_SOLR_HOST:8983/solr'
 

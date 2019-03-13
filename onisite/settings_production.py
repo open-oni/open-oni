@@ -5,7 +5,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/var/tmp/django_cache',
-        'TIMEOUT': _ONEWEEK * 8
+        'TIMEOUT': 60 * 60 * 24 * 7 * 8
     }
 }
 
@@ -18,6 +18,7 @@ MIDDLEWARE = (
     'django.middleware.http.ConditionalGetMiddleware',                 # OpenONI
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',             # OpenONI
     'django.middleware.csrf.CsrfViewMiddleware',
 #    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
