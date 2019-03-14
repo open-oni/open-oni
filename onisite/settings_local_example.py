@@ -133,6 +133,7 @@ INSTALLED_APPS = (
 # Test with a low value (e.g. 300)
 # before setting a high value (e.g. 15552000) for long-term use
 #SECURE_HSTS_SECONDS = 0
+#SECURE_SSL_REDIRECT = True
 
 
   ################################################################
