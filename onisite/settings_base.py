@@ -13,9 +13,11 @@ _ONEWEEK = _ONEDAY * 7
 ################################################################
 # DJANGO CUSTOMIZATIONS
 ################################################################
-# Enable browser XSS protection, MIME-type sniff prevention headers
+# Enable browser XSS protection, MIME-type sniff prevention headers,
+# and disable framing / embedding
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 # Site id differentiates DB data if multiple sites use the same database
 SITE_ID = 1
