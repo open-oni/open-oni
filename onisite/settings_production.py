@@ -25,8 +25,9 @@ MIDDLEWARE = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-# Use cache with storing static files; e.g., CSS, images, etc.
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+# Fingerprint compiled static files with MD5 hash of contents
+# Store hashes in STATIC_ROOT directory as staticfiles.json
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 
 ################################################################
