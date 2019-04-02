@@ -11,6 +11,30 @@ import os
 # MARC files may be updated periodically with getlc.go Go script
 #MARC_RETRIEVAL_URLFORMAT = 'http://YOUR_HOSTNAME/static/marc/%s/marc.xml'
 
+# Django logging outputs in Apache logs by default
+# Log to file when Apache logs don't provide info or tracebacks
+# Ensure file is writeable by Apache user
+# With SELinux set writeable context: chcon -t httpd_sys_rw_content_t file_path
+# Start with INFO level; change to DEBUG if insufficient
+#LOGGING = {
+#    'version': 1,
+#    'disable_existing_loggers': False,
+#    'handlers': {
+#        'file': {
+#            'level': 'INFO',
+#            'class': 'logging.FileHandler',
+#            'filename': 'YOUR_LOG_PATH/debug.log',
+#        },
+#    },
+#    'loggers': {
+#        'django': {
+#            'handlers': ['file'],
+#            'level': 'INFO',
+#            'propagate': True,
+#        },
+#    },
+#}
+
 
 
 ################################################################
@@ -147,6 +171,7 @@ INSTALLED_APPS = (
 # example: "essays" would find files in themes/default/templates/essays
 #ESSAY_TEMPLATES = "essays"
 
+# Batch and title management log directory path
 #LOG_LOCATION = 'YOUR_LOG_PATH'
 
 # SITE_TITLE that will be used for display purposes throughout app
