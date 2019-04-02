@@ -153,7 +153,7 @@
 {{ block.super }}
 
     <div id="page_data"
-	 data-static_url="{% static '' %}images/"
+	 data-static_url="{{ static_url }}images/"
    data-iiif_id="{% iiif_info page %}/info.json"
 	 data-width="{{page.jp2_width}}"
 	 data-height="{{page.jp2_length}}"

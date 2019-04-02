@@ -250,6 +250,7 @@ def page(request, lccn, date, edition, sequence, words=None):
 
     image_credit = issue.batch.awardee.name
     host = request.get_host()
+    static_url = settings.STATIC_URL
 
     template = "page.html"
     response = render(request, template, locals())
