@@ -3,6 +3,11 @@ import os
 ################################################################
 # ENVIRONMENT INDEPENDENT SETTINGS
 ################################################################
+# From address on general emails sent by Django
+# If sending email from same server as Django, end with @YOUR_WEB_HOST
+#DEFAULT_FROM_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@YOUR_EMAIL_HOST'
+#EMAIL_SUBJECT_PREFIX = '[YOUR_PROJECT_NAME_ABBREVIATION]'
+
 # Use only if LoC is down and MARC requests fail
 # We've mirrored a *lot* of MARC records on GitHub
 # MARC_RETRIEVAL_URLFORMAT = 'https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml'
@@ -99,19 +104,6 @@ INSTALLED_APPS = (
   ################################################################
   # DJANGO SETTINGS
   ################################################################
-# ADMINS receive 5xx error emails; MANAGERS receive 404 error emails
-#ADMINS = [
-#    ('YOUR_admin1', 'YOUR_admin1@example.com'),
-#    ('YOUR_adminX', 'YOUR_adminX@example.com')
-#]
-#MANAGERS = [
-#    ('YOUR_mngr1', 'YOUR_mngr13@example.com'),
-#    ('YOUR_mngrX', 'YOUR_mngrX4@example.com')
-#]
-#IGNORABLE_404_URLS = [
-#    re.compile(r'YOUR_known_404_URL_regex_to_prevent_emails'),
-#]
-
 #ALLOWED_HOSTS = ['YOUR_WEB_HOST']
 
 #DATABASES = {
@@ -124,6 +116,29 @@ INSTALLED_APPS = (
 #    }
 #}
 #CONN_MAX_AGE = 30
+
+# EMAIL_HOST settings only necessary if another server or service sends emails
+# Defaults to 'localhost', sending from the same server running Django
+# Additional settings for further email host configuration:
+# https://docs.djangoproject.com/en/1.11/ref/settings/#email-host
+#EMAIL_HOST = 'YOUR_EMAIL_HOST'
+#EMAIL_HOST_PASSWORD = 'YOUR_EMAIL_HOST_PASSWORD'
+#EMAIL_HOST_USER = 'YOUR_EMAIL_HOST_USER'
+    # ADMINS receive 5xx error emails; MANAGERS receive 404 error emails
+# From address on error emails sent to ADMINS and MANAGERS
+# If sending email from same server as Django, end with @YOUR_WEB_HOST
+#SERVER_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@YOUR_EMAIL_HOST'
+#ADMINS = [
+#    ('YOUR_admin1', 'YOUR_admin1@example.com'),
+#    ('YOUR_adminX', 'YOUR_adminX@example.com')
+#]
+#MANAGERS = [
+#    ('YOUR_mngr1', 'YOUR_mngr13@example.com'),
+#    ('YOUR_mngrX', 'YOUR_mngrX4@example.com')
+#]
+#IGNORABLE_404_URLS = [
+#    re.compile(r'YOUR_known_404_URL_regex_to_prevent_emails'),
+#]
 
 # List of configuration classes / app packages in order of priority (i.e., the
 # first item in the list has final say when collisions occur)
