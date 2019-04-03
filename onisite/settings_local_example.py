@@ -8,14 +8,6 @@ import os
 #DEFAULT_FROM_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@YOUR_EMAIL_HOST'
 #EMAIL_SUBJECT_PREFIX = '[YOUR_PROJECT_NAME_ABBREVIATION]'
 
-# Use only if LoC is down and MARC requests fail
-# We've mirrored a *lot* of MARC records on GitHub
-# MARC_RETRIEVAL_URLFORMAT = 'https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml'
-# To serve locally, clone open-oni/marc-mirror repository
-# to static/compiled/marc and use below
-# MARC files may be updated periodically with getlc.go Go script
-#MARC_RETRIEVAL_URLFORMAT = 'http://YOUR_HOSTNAME/static/marc/%s/marc.xml'
-
 # Django logging outputs in Apache logs by default
 # Log to file when Apache logs don't provide info or tracebacks
 # Ensure file is writeable by Apache user
@@ -39,6 +31,14 @@ import os
 #        },
 #    },
 #}
+
+# Use only if LoC is down and MARC requests fail
+# We've mirrored a *lot* of MARC records on GitHub
+# MARC_RETRIEVAL_URLFORMAT = 'https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml'
+# To serve locally, clone open-oni/marc-mirror repository
+# to static/compiled/marc and use below
+# MARC files may be updated periodically with getlc.go Go script
+#MARC_RETRIEVAL_URLFORMAT = 'http://YOUR_WEB_HOST/static/marc/%s/marc.xml'
 
 
 
