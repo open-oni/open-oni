@@ -23,6 +23,9 @@ DATABASES = {
 
 DEBUG = True
 
+# Output emails to console for development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Suggested order: https://docs.djangoproject.com/en/1.10/ref/middleware/#middleware-ordering
 MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
