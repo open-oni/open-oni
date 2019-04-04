@@ -6,7 +6,7 @@ import os
 # From address on general emails sent by Django
 # If sending email from same server as Django, end with @YOUR_WEB_HOST
 #DEFAULT_FROM_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@YOUR_EMAIL_HOST'
-#EMAIL_SUBJECT_PREFIX = '[YOUR_PROJECT_NAME_ABBREVIATION]'
+#EMAIL_SUBJECT_PREFIX = '[YOUR_PROJECT_NAME_ABBREVIATION] '
 
 # Django logging outputs in Apache logs by default
 # Log to file when Apache logs don't provide info or tracebacks
