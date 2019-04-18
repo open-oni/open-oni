@@ -3,7 +3,7 @@
 
 See the list of [[sites using Open ONI]] to view websites powered by Open ONI.
 
-Read the [[About Open ONI]] page for more information about the projects origins.
+Read the [[About Open ONI]] page for more information about the project's origins.
 
 ## Support
 Open ONI is currently not ready for general production use outside the institutions who have been able to provide time for developer participation and have deployed it individually. Documentation and changes to facilitate more standardized deployment are under active development, but maintainers can only provide a minimal amount of assistance while working on Open ONI part-time. Developers cannot be expected to provide extensive one-on-one support.
@@ -15,10 +15,10 @@ We ask that bugs and feature requests be submitted to [Open ONI on GitHub](https
 ## Install
 Production install instructions are still a work in progress. To evaluate the software, we recommend installing from the latest [release](https://github.com/open-oni/open-oni/releases), rather than checking out the latest changes on the `master` branch.
 
-If you are interested in development, please read our [Contribute](https:/; Links to wiki/github.com/open-oni/open-oni/wiki/Contribute) page for more details.
+If you are interested in development, please read our [Contribute](https://github.com/open-oni/open-oni/wiki/Contribute) page for more details.
 
 ## Documentation
-Documentation is in progress in the [wiki](https://github.com/open-oni/open-oni/wiki).## Contact Us
+Documentation is in progress in the [wiki](https://github.com/open-oni/open-oni/wiki).
 
 - [Open ONI Slack](http://bit.ly/openoni-slack-signup)
 - [Chronam Mailing List](http://listserv.loc.gov/archives/chronam-users.html)
