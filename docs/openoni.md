@@ -237,6 +237,7 @@ Run these commands as a regular user rather than root
 ./manage.py load_batch /opt/openoni/data/batches/(batch_name)/
 
 # Run a script with nohup in the background to ingest multiple batches quietly
+# nohup prevents scripts from exiting if one closes the terminal shell
 nohup (command) >> nohup.out
 ```
 
