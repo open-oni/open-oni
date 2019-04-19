@@ -30,10 +30,16 @@ To evaluate the software, we recommend installing from the latest
 [release](https://github.com/open-oni/open-oni/releases), rather than checking
 out the latest changes on the `master` branch.
 
+If you're interested in more recent changes, check out the `dev` branch but be
+warned that we don't expect it will always be in a working state at this point.
+
 ## Documentation
 Documentation is available in the [Open ONI
-wiki](https://github.com/open-oni/open-oni/wiki). Production install
-instructions are still a work in progress.
+wiki](https://github.com/open-oni/open-oni/wiki).
+
+[Production install
+instructions](https://github.com/open-oni/open-oni/tree/dev/docs) are in
+progress on the `dev` branch.
 
 ## Support
 Open ONI is currently not ready for general production use outside the
