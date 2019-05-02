@@ -24,3 +24,11 @@ def remove_param_value(context, key, value):
             params.setlist(key, args)
 
     return params.urlencode()
+
+@register.inclusion_tag('search/search_pages_results_pagination.html', takes_context=True)
+def search_pages_results_pagination(context):
+    return context
+
+@register.inclusion_tag('search/search_pages_results_page_jump.html', takes_context=True)
+def search_pages_results_page_jump(context):
+    return context

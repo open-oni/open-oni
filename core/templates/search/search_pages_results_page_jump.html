@@ -1,0 +1,45 @@
+<div class="col-md-3">
+<!-- Jump to page -->
+  <form action="" method="GET" class="jumptopage">
+    <label for="jumptopage">Jump to page:</label>
+    <input class="std" type="text" id="jumptopage" name="page" value="" size="5" />
+
+    {% block search_page_pagination_hidden_filters %}
+      {#### Filter preservation ####}
+
+      {# search text #}
+      <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
+      <input type="hidden" name="proxdistance" value="{{query.proxdistance}}" />
+      <input type="hidden" name="ortext" value="{{query.ortext}}" />
+      <input type="hidden" name="andtext" value="{{query.andtext}}" />
+      <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
+
+      {# location #}
+      <input type="hidden" name="city" value="{{query.city}}" />
+      <input type="hidden" name="county" value="{{query.county}}" />
+
+      {# date range and years #}
+      {# if there is a yearRange, it supercedes the date ranges #}
+      {% if request.GET.yearRange %}
+        <input type="hidden" name="yearRange" value="{{query.yearRange}}" />
+      {% else %}
+        <input type="hidden" name="date1" value="{{query.date1}}" />
+        <input type="hidden" name="date2" value="{{query.date2}}" />
+      {% endif %}
+
+      {# All the chosen LCCNs #}
+      {% for lccn in titles %}
+        <input type="hidden" name="lccn" value="{{lccn}}" />
+      {% endfor %}
+
+      {# miscellaneous filters #}
+      <input type="hidden" name="language" value="{{query.language}}" />
+      <input type="hidden" name="frequency" value="{{query.frequency}}" />
+      <input type="hidden" name="sequence" value="{{query.sequence}}" />
+      <input type="hidden" name="sort" value="{{query.sort}}" />
+      <input type="hidden" name="rows" value="{{query.rows}}" />
+    {% endblock search_page_pagination_hidden_filters %}
+
+    <input type="submit" class="submit" value="GO" />
+  </form>
+</div>
