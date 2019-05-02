@@ -16,10 +16,24 @@
 
 <div class="search_results_body">
     <div class="results_nav">
-        <p class="term">
-            {{ titles.count|intcomma }} newspaper{% if titles.count > 1 %}s{% endif %}
-            {% if titles.count == 1 %}is{% else %}are{% endif %} available for viewing on this site. 
-        </p>
+        <div class="row">
+            <div class="col-md-6 form-inline">
+                <label for="filterTitles">Search Titles: </label>
+                <span id="filterTitlesHelp" class="help-block">
+                    Type a partial title to show only those which match below
+                </span>
+                <input type="text" id="filterTitles" class="form-control"
+                    aria-describedby="filterTitlesHelp"
+                    placeholder="Start typing to search..." />
+                <button type="reset" id="resetTitles" class="btn btn-primary">
+                    Reset
+                </button>
+            </div>
+            <div class="col-md-6">
+                <p>Titles available: {{ titles.count|intcomma }}</p>
+                <p>Pages available: {{ page_count|intcomma }}</p>
+            </div>
+        </div>
     </div>
     <table id="newspapers" class="table table-striped table-hover browse_collect tablesorter" cellspacing="0" summary="">
         <thead>
@@ -101,8 +115,24 @@
             // Default to sorting by title
             sortList: [[0,0]]
         });
-    });
 
+        $("#filterTitles").keyup(function() {
+            var searchText = $(this).val().toLowerCase();
+            $.each($("#newspapers tbody th"), function() {
+                if($(this).text().toLowerCase().indexOf(searchText) === -1)
+                    $(this).parent().hide();
+                else
+                   $(this).parent().show();
+            });
+        });
+        $("#resetTitles").click(function() {
+            $("#filterTitles").val("");
+            $.each($("#newspapers tbody tr"), function() {
+                $(this).show();
+            });
+        });
+
+    });
 </script>
 
 {% endblock javascript %}
