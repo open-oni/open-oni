@@ -277,7 +277,382 @@
     "fields": {
       "name": "South Dakota State Historical Society – State Archives",
       "created": "2015-01-07 06:06:00"
-     
+    }
+  },
+  {
+    "pk": "ak",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Alaska State Library Historical Collections",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "az",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Arizona State Library, Archives and Public Records; Phoenix, AZ",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "arhi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Arkansas State Archives",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "mimtptc",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Central Michigan University, Clark Historical Library",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "ct",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Connecticut State Library, Hartford, CT",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "gu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Digital Library of Georgia, a project of GALILEO located at the University of Georgia Libraries",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "cohi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "History Colorado",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "idhi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Idaho State Historical Society",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "in",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Indiana State Library",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "khi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Kansas State Historical Society; Topeka, KS",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "dlc",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Library of Congress, Washington, DC",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "vi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Library of Virginia; Richmond, VA",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "lu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Louisiana State University; Baton Rouge, LA",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "me",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Maine State Library",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "mnhi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Minnesota Historical Society; Saint Paul, MN",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "msar",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Mississippi Department of Archives and History",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "mthi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Montana Historical Society; Helena, MT",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "ohi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Ohio Historical Society, Columbus, OH",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "okhi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Oklahoma Historical Society",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "pst",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Penn State University Libraries; University Park, PA",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "njr",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Rutgers University Libraries",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "sdhi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "South Dakota State Historical Society – State Archives",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "iahi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "State Historical Society of Iowa",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "mohi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "State Historical Society of Missouri; Columbia, MO",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "ndhi",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "State Historical Society of North Dakota",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "nn",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "The New York Public Library, Astor, Lenox and Tilden Foundation",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "curiv",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of California, Riverside; Riverside, CA",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "deu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Delaware Library, Newark, DE",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "fu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Florida",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "hihouml",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Hawaii at Manoa; Honolulu, HI",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "iune",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Illinois at Urbana-Champaign Library, Urbana, IL",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "kyu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Kentucky, Lexington, KY",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "mdu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Maryland, College Park, MD",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "nbu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Nebraska-Lincoln Libraries, Lincoln, NE",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "nvln",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Nevada Las Vegas University Libraries",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "nmu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of New Mexico",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "ncu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of North Carolina at Chapel Hill Library, Chapel Hill, NC",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "txdn",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of North Texas; Denton, TX",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "oru",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Oregon Libraries; Eugene, OR",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "prru",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Puerto Rico, Río Piedras Campus, Library System",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "scu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of South Carolina; Columbia, SC",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "tu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Tennessee",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "uuml",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Utah, Marriott Library",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "vtu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "University of Vermont",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "wa",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Washington State Library; Olympia, WA",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "wvu",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "West Virginia University",
+      "created": "2019-07-01 15:22:27"
+    }
+  },
+  {
+    "pk": "whi ",
+    "model": "core.Awardee",
+    "fields": {
+      "name": "Wisconsin Historical Society",
+      "created": "2019-07-01 15:22:27"
     }
   }
 ]
