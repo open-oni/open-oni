@@ -1,11 +1,11 @@
 # Open ONI
 **Open Online Newspaper Initiative (Open ONI)** is a community-maintained
-project forked from [chronam](https://github.com/LibraryOfCongress/chronam)⤴,
-the [Django](http://djangoproject.com/)⤴ application the Library of Congress
-used to make [Chronicling America](http://chroniclingamerica.loc.gov/)⤴.
+project forked from [chronam](https://github.com/LibraryOfCongress/chronam),
+the [Django](http://djangoproject.com/) application the Library of Congress
+used to make [Chronicling America](http://chroniclingamerica.loc.gov/).
 Chronicling America makes millions of pages of historic American newspapers that
 have been digitized by the [National Digital Newspaper Program
-(NDNP)](http://www.loc.gov/ndnp/)⤴ browsable and searchable on the web. With
+(NDNP)](http://www.loc.gov/ndnp/) browsable and searchable on the web. With
 Open ONI, we aim to enable individual state and library-based newspaper
 collections to provide the same capabilities and develop common features and
 improvements.
@@ -17,9 +17,9 @@ information about the project's origins.
 ## Open ONI-powered Sites
 Visit sites currently powered by Open ONI:
 
-- [Historic Oregon Newspapers](https://oregonnews.uoregon.edu/)⤴
-- [Pennsylvania Newspaper Archive](http://panewsarchive.psu.edu/)⤴
-- [Nebraska Newspapers](https://nebnewspapers.unl.edu/)⤴
+- [Historic Oregon Newspapers](https://oregonnews.uoregon.edu/)
+- [Pennsylvania Newspaper Archive](http://panewsarchive.psu.edu/)
+- [Nebraska Newspapers](https://nebnewspapers.unl.edu/)
 
 View [sites using Open
 ONI](https://github.com/open-oni/open-oni/wiki/Sites-Using-Open-ONI) for links
@@ -59,13 +59,13 @@ of what to expect Open ONI developers to provide.
 We ask that bugs and feature requests be submitted to [Open ONI on
 GitHub](https://github.com/open-oni/open-oni/issues). Please confine other
 questions and conversation about Open ONI development and use to [Open ONI's
-Slack](http://bit.ly/openoni-slack-signup)⤴. These guidelines are intended both
+Slack](http://bit.ly/openoni-slack-signup). These guidelines are intended both
 to keep conversation in the open where it may benefit all of the Open ONI
 community and to protect developers' already limited time.
 
 ## Contact Us
 We prefer to communicate on the [Open ONI
-Slack](http://bit.ly/openoni-slack-signup)⤴, but if you have trouble or prefer
+Slack](http://bit.ly/openoni-slack-signup), but if you have trouble or prefer
 not to use Slack, email Karin Dalziel (kdalziel2 [at] unl.edu).
 
 ## Contribute
