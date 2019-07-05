@@ -1,17 +1,12 @@
 # Open ONI
 **Open Online Newspaper Initiative (Open ONI)** is a community-maintained
-project forked from [chronam](https://github.com/LibraryOfCongress/chronam),
-the [Django](http://djangoproject.com/) application the Library of Congress
-used to make [Chronicling America](http://chroniclingamerica.loc.gov/).
-Chronicling America makes millions of pages of historic American newspapers that
-have been digitized by the [National Digital Newspaper Program
-(NDNP)](http://www.loc.gov/ndnp/) browsable and searchable on the web. With
-Open ONI, we aim to enable individual state and library-based newspaper
-collections to provide the same capabilities and develop common features and
-improvements.
+project to make historic American newspapers browsable and searchable on the
+web. We aim to enable individual state and library-based newspaper collections
+to more easily provide these core capabilities, as well as develop new common
+features and improvements.
 
-Read the [About Open
-ONI](https://github.com/open-oni/open-oni/wiki/About-Open-ONI) page for more
+Read ["About Open ONI" in our
+wiki](https://github.com/open-oni/open-oni/wiki/About-Open-ONI) for more
 information about the project's origins.
 
 ## Open ONI-powered Sites
@@ -21,8 +16,8 @@ Visit sites currently powered by Open ONI:
 - [Pennsylvania Newspaper Archive](http://panewsarchive.psu.edu/)
 - [Nebraska Newspapers](https://nebnewspapers.unl.edu/)
 
-View [sites using Open
-ONI](https://github.com/open-oni/open-oni/wiki/Sites-Using-Open-ONI) for links
+View ["Sites using Open ONI" in our
+wiki](https://github.com/open-oni/open-oni/wiki/Sites-Using-Open-ONI) for links
 to the sites' source code.
 
 ## Install
@@ -69,8 +64,8 @@ Slack](http://bit.ly/openoni-slack-signup), but if you have trouble or prefer
 not to use Slack, email Karin Dalziel (kdalziel2 [at] unl.edu).
 
 ## Contribute
-If you are interested in collaborating on the project, please read our
-[Contribute](https://github.com/open-oni/open-oni/wiki/Contribute) page for more
+If you are interested in collaborating on the project, please read ["Contribute"
+in our wiki](https://github.com/open-oni/open-oni/wiki/Contribute) for more
 details.
 
 ## License
