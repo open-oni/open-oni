@@ -1,4 +1,3 @@
-from datetime import date
 import shutil
 import os
 import tempfile
@@ -11,6 +10,7 @@ import core
 from core.batch_loader import BatchLoader
 from core.models import Title
 from core.models import Batch
+from core.utils import strftime_safe
 
 class BatchLoaderTest(TestCase):
     fixtures = ['test/countries.json', 'test/titles.json', 'test/languages.json']
@@ -57,7 +57,7 @@ class BatchLoaderTest(TestCase):
         self.assertEqual(issue.number, '1')
         self.assertEqual(issue.edition, 1)
         self.assertEqual(issue.title.lccn, 'sn83030214')
-        self.assertEqual(date.strftime(issue.date_issued, '%Y-%m-%d'), '1999-06-15')
+        self.assertEqual(strftime_safe(issue.date_issued, '%Y-%m-%d'), '1999-06-15')
         self.assertEqual(len(issue.pages.all()), 15)
 
         page = issue.pages.all()[0]

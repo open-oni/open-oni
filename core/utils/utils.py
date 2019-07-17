@@ -4,15 +4,16 @@ import os
 import wsgiref.util
 
 from django.conf import settings
+from django.core import urlresolvers
+from django.core.cache import cache
 from django.http import HttpResponse, Http404
 from django.db.models import Min, Max
 from django.shortcuts import get_object_or_404
-from django.utils import datetime_safe, timezone
+from django.utils import timezone
 from django.utils.http import http_date
 
 from core import models
-from django.core import urlresolvers
-from django.core.cache import cache
+from core.utils import strftime_safe
 
 
 MIN_YEAR = 1400
@@ -254,8 +255,7 @@ def label(instance):
                                    instance.start_year, instance.end_year)
     elif isinstance(instance, models.Issue):
         parts = []
-        dt = datetime_safe.new_datetime(instance.date_issued)
-        parts.append(dt.strftime('%B %d, %Y'))
+        parts.append(strftime_safe(instance.date_issued, '%B %d, %Y'))
         if instance.edition_label:
             parts.append(u"%s" % instance.edition_label)
         return u', '.join(parts)

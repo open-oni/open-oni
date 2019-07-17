@@ -20,7 +20,7 @@ from django.db.models import permalink, Q
 from django.conf import settings
 from django.utils.http import urlquote
 
-from core.utils import strftime
+from core.utils import strftime_safe
 from core.utils.image_urls import thumb_image_url, iiif_info_for_page
 
 from django.core import urlresolvers
@@ -345,7 +345,7 @@ class Title(models.Model):
             j["manifests"].append({
                 "@id": settings.BASE_URL + issue.json_url,
                 "@type": "sc:Manifest",
-                "label": strftime(issue.date_issued, "%Y-%m-%d")
+                "label": strftime_safe(issue.date_issued, '%Y-%m-%d')
             })
 
         if serialize:
@@ -891,9 +891,7 @@ class Page(models.Model):
 
     def __unicode__(self):
         parts = [u'%s' % self.issue.title]
-        # little hack to get django's datetime support for stftime
-        # when the year is < 1900
-        parts.append(strftime(self.issue.date_issued, '%B %d, %Y'))
+        parts.append(strftime_safe(self.issue.date_issued, '%B %d, %Y'))
         if self.issue.edition_label:
             parts.append(self.issue.edition_label)
         if self.section_label:

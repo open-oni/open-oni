@@ -10,13 +10,14 @@ from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage
 from django.db import connection
-from django.utils import datetime_safe, timezone
+from django.utils import timezone
 
 from core import models
 from core import solr_index
 from core.rdf import batch_to_graph, awardee_to_graph
 from core.utils.url import unpack_url_path
 from core.decorator import cache_page, rdf_view, cors
+from core.utils import strftime_safe
 from core.utils.utils import _page_range_short, _rdf_base, _get_tip
 
 
@@ -578,8 +579,8 @@ def _title_range(reel):
     agg = models.Issue.objects.filter(pages__reel=reel).distinct().aggregate(
         mn=Min('date_issued'), mx=Max('date_issued'))
     if agg['mn'] and agg['mx']:
-        mn = datetime_safe.new_datetime(agg['mn']).strftime('%b %d, %Y')
-        mx = datetime_safe.new_datetime(agg['mx']).strftime('%b %d, %Y')
+        mn = strftime_safe(agg['mn'], '%b %d, %Y')
+        mx = strftime_safe(agg['mx'], '%b %d, %Y')
         return "%s - %s" % (mn, mx)
     else:
         return ""
