@@ -1,12 +1,13 @@
 import logging
 import urlparse
 import urllib2
-import datetime
+from datetime import datetime
 from re import sub
 from time import time, strptime
 
 from pymarc import map_xml, record_to_xml
 from django.db import reset_queries
+from django.utils import timezone
 
 from core import models
 
@@ -76,9 +77,9 @@ class TitleLoader(object):
         try:
             s = _extract(record, '005')
             parts = s.split(".")
-            dt = datetime.datetime(*strptime(parts[0], '%Y%m%d%H%M%S')[0:6])
+            dt = datetime(*strptime(parts[0], '%Y%m%d%H%M%S')[0:6])
         except AttributeError:
-            dt = datetime.datetime.now()
+            dt = timezone.now()
 
         #dt.replace(microsecond=int(parts[1]))
 

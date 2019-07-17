@@ -1,5 +1,4 @@
 import csv
-import datetime
 import json
 from rfc3339 import rfc3339
 
@@ -9,6 +8,7 @@ from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.db.models import Max, Min, Q
 from django.shortcuts import render
 from django.template import RequestContext
+from django.utils import timezone
 from django.utils.encoding import smart_str
 
 from core.decorator import cache_page, opensearch_clean, rdf_view, cors
@@ -73,7 +73,7 @@ def newspapers_atom(request):
         else:
             feed_updated = last_issue.batch.created
     else:
-        feed_updated = datetime.datetime.now()
+        feed_updated = timezone.now()
 
     host = request.get_host()
     return render(request, 'newspapers.xml', locals(),
@@ -169,7 +169,7 @@ def search_titles_results(request):
 
     if format == 'atom':
         feed_url = settings.BASE_URL + request.get_full_path()
-        updated = rfc3339(datetime.datetime.now())
+        updated = rfc3339(timezone.now())
         return render(request, 'search/search_titles_results.xml', locals(),
                       content_type='application/atom+xml')
 

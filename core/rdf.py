@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 
 from rdflib import ConjunctiveGraph, Namespace, Literal, URIRef, RDF, RDFS
 from rfc3339 import rfc3339
@@ -212,7 +212,7 @@ def add_rem(g, uri_a, uri_r):
 
     # TODO: would be nice if created and modified were more real somehow
     # so oai-ore bots would know when resources needed to be harvested...
-    t = rfc3339(datetime.now())
+    t = rfc3339(timezone.now())
     g.add((uri_r, DCTERMS['created'], Literal(t, datatype=XSD.dateTime)))
     g.add((uri_r, DCTERMS['modified'], Literal(t, datatype=XSD.dateTime)))
 

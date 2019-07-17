@@ -1,4 +1,3 @@
-import datetime
 import re
 import json
 from rfc3339 import rfc3339
@@ -10,6 +9,7 @@ from django.core.paginator import InvalidPage
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.template import RequestContext
+from django.utils import timezone
 
 from core import models
 from core import solr_index
@@ -72,7 +72,7 @@ def search_pages_results(request, view_type='gallery'):
     format = request.GET.get('format', None)
     if format == 'atom':
         feed_url = settings.BASE_URL + request.get_full_path()
-        updated = rfc3339(datetime.datetime.now())
+        updated = rfc3339(timezone.now())
         return render(request, 'search/search_pages_results.xml', locals(),
                       content_type='application/atom+xml')
     elif format == 'json':

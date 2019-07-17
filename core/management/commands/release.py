@@ -17,6 +17,7 @@ import feedparser
 
 from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.utils import timezone
 
 from core.management.commands import configure_logging
 from core.rdf import rdf_uri
@@ -69,7 +70,7 @@ class Command(BaseCommand):
                 batch.save()
                 continue
             # well, none of the earlier options worked, current timestamp it is.
-            batch.released = datetime.now()
+            batch.released = timezone.now()
             batch.save()
 
 def preprocess_input_file(file_path):

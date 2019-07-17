@@ -22,6 +22,7 @@ from django.db import reset_queries
 from django.db.models import Q
 from django.conf import settings
 from django.core import management
+from django.utils import timezone
 
 from core import models
 from core.utils.utils import set_fulltext_range
@@ -200,7 +201,7 @@ class BatchLoader(object):
             raise BatchLoaderException(msg)
 
         if settings.IS_PRODUCTION:
-            batch.released = datetime.now()
+            batch.released = timezone.now()
             batch.save()
 
         # updates the min and max years of all titles

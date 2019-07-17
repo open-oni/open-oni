@@ -1,10 +1,10 @@
 import logging
 
-from datetime import datetime
 import os
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 from core import title_loader
 from core.solr_index import index_titles
@@ -38,11 +38,11 @@ class Command(BaseCommand):
         self.total_errors = 0
         self.total_missing_lccns = 0
         self.files_processed = 0
-        self.start_time = datetime.now()
-        self.xml_start = datetime.now()
+        self.start_time = timezone.now()
+        self.xml_start = timezone.now()
 
     def xml_file_handler(self, marc_xml, skip_index):
-        self.xml_start = datetime.now()
+        self.xml_start = timezone.now()
         results = title_loader.load(marc_xml)
 
         if not skip_index:
@@ -72,7 +72,7 @@ class Command(BaseCommand):
         _logger.info("MISSING LCCNS: %i" % self.total_missing_lccns)
         _logger.info("FILES PROCESSED: %i" % self.files_processed)
 
-        end = datetime.now()
+        end = timezone.now()
 
         # Document titles that are not being updated.
         ts = Title.objects.filter(version__lt=self.start_time)

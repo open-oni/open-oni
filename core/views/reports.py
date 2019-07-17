@@ -1,6 +1,5 @@
 import csv
 from rfc3339 import rfc3339
-import datetime
 import json
 
 from django.conf import settings
@@ -11,7 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage
 from django.db import connection
-from django.utils import datetime_safe
+from django.utils import datetime_safe, timezone
 
 from core import models
 from core import solr_index
@@ -42,7 +41,7 @@ def batches(request, page_number=1):
 def batches_atom(request, page_number=1):
     batches = models.Batch.viewable_batches()
     batches = batches.order_by('-released')
-    now = rfc3339(datetime.datetime.now())
+    now = rfc3339(timezone.now())
 
     paginator = Paginator(batches, 25)
     page = paginator.page(page_number)
@@ -479,7 +478,7 @@ def ocr_atom(request):
     if dumps.count() > 0:
         last_updated = dumps[0].created
     else:
-        last_updated = datetime.datetime.now()
+        last_updated = timezone.now()
     return render(request, 'reports/ocr.xml', locals(),
                   content_type='application/atom+xml')
 

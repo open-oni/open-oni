@@ -7,7 +7,7 @@ from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.db.models import Min, Max
 from django.shortcuts import get_object_or_404
-from django.utils import datetime_safe
+from django.utils import datetime_safe, timezone
 from django.utils.http import http_date
 
 from core import models
@@ -16,7 +16,7 @@ from django.core.cache import cache
 
 
 MIN_YEAR = 1400
-MAX_YEAR = datetime.datetime.now().year
+MAX_YEAR = timezone.now().year
 
 
 def _rdf_base(request):
