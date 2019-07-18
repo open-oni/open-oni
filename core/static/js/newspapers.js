@@ -37,11 +37,11 @@ $(document).ready(function() {
     // Filter text of each row in #newspapers table
     $("#filterTitles").keyup(function() {
         var searchText = $(this).val().toLowerCase();
-        $.each($("#newspapers tbody th"), function() {
+        $.each($("#newspapers tbody tr"), function() {
             if($(this).text().toLowerCase().indexOf(searchText) === -1)
-                $(this).parent().hide();
+                $(this).hide();
             else
-               $(this).parent().show();
+               $(this).show();
         });
     });
     $("#resetTitles").click(function() {
