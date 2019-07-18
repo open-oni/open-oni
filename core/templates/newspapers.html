@@ -42,10 +42,10 @@
     <table id="newspapers" class="table table-striped table-hover browse_collect tablesorter" cellspacing="0" summary="">
         <thead>
         <tr>
-            <th scope="col" class="left_no_border">Title</th>
+            <th scope="col" class="left_no_border sort-titles">Title</th>
             <th scope="col">Location</th>
             <th scope="col">Publication Info</th>
-            <th scope="col">Browse Issues</th>
+            <th scope="col" class="sort-off">Browse Issues</th>
             <th scope="col">No. of Issues</th>
             <th scope="col">Earliest Issue</th>
             <th scope="col">Latest Issue</th>
@@ -83,7 +83,7 @@
 
 
 {% block javascript %}{{ block.super }}
-<script type="text/javascript" src="{% static 'vendor/jquery/js/jquery.tablesorter.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendor/tablesorter/js/jquery.tablesorter.min.js' %}"></script>
 <script type="text/javascript">
     // Customization for tablesorter. Works in conjunction with jquery.tablsorter.min.js
 
@@ -109,11 +109,12 @@
     $(document).ready(function() { 
         $("#newspapers").tablesorter({ 
             headers: { 
-                // When sorting by titles, use the title formatter so we skip "the", "a", and "an"
-                0: { sorter: 'titles' },
+                // When sorting by titles, use the title formatter
+                // so we skip "the", "a", and "an"
+                '.sort-titles': { sorter: 'titles' },
 
-                // Don't offer sorting on the "browse issues" link
-                3: { sorter: false },
+                // Disable sorting, e.g. on the "browse issues" link
+                '.sort-off': { sorter: false },
             }, 
             widgets: ['zebra'],
 

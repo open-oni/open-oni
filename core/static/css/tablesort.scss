@@ -1,29 +1,32 @@
 .tablesorter {
-  border-collapse:collapse;
+  border-collapse: collapse;
 
   td, th {
     border-left: 1px solid #ccc;
   }
 
-  tr {
-    .header {
-      background-image: url(../images/bg.gif);
-      background-repeat: no-repeat;
-      background-position: left center;
-      cursor: pointer;
-      padding-left: 20px;
+  .tablesorter-header {
+    background-image: url(../images/bg.gif);
+    background-repeat: no-repeat;
+    background-position: left center;
+    cursor: pointer;
+    padding-left: 20px;
+
+    &.tablesorter-headerAsc {
+      background-image: url(../images/asc.gif);
     }
 
-    .headerSortDown {
+    &.tablesorter-headerDesc {
       background-image: url(../images/desc.gif);
     }
 
-    .headerSortUp {
-      background-image: url(../images/asc.gif);
+    &.sorter-false {
+      background-image: none;
+      cursor: default;
     }
   }
 
   .left_no_border {
-    border-left: None;
+    border-left: none;
   }
 }
