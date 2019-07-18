@@ -285,3 +285,9 @@
 {% endif %}
 
 {% endblock subcontent %}
+
+{% block javascript %}
+  {{ block.super }}
+      <!-- Highlight search text in thumbnails -->
+      <script src="{% static 'js/highlight.js' %}"></script>
+{% endblock javascript %}
