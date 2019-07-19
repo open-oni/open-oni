@@ -37,18 +37,18 @@
     {% endblock head_page_css %}
 
     <!-- ===========
-    JS FILES
+    JavaScript
     ============= -->
-
-    {% block head_page_top_js %}
-        <!-- additional scripts loaded at the bottom: Jquery, Jquery UI, Bootstrap -->
-
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-    {% endblock head_page_top_js %}
-
+    {% block javascript %}
+      <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+      <script>
+        $(function() {
+          $('ul.nav > li > a[href="' + document.location.pathname + '"]')
+            .parent().addClass('active');
+        });
+      </script>
+    {% endblock javascript %}
 
     <!-- ===========
     Metadata Etc.
@@ -198,27 +198,5 @@
         </div><!-- /container -->
       </div><!-- /footer -->
     {% endblock footer %}
-    
-    <!-- ===========
-    Bottom loading javascripts
-    ============= -->
-
-    {% block javascript %}
-      <!-- JQuery -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-      <!-- Bootstrap -->
-      <script type="text/javascript" async="" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-
-    {% endblock javascript %}
-
-    <script type="text/javascript">
-      (function($) {
-        function initPage() {
-          $('ul.nav > li > a[href="' + document.location.pathname + '"]').parent().addClass('active');
-          }
-        $(initPage);
-      })(jQuery)
-    </script>
   </body>
 </html>
