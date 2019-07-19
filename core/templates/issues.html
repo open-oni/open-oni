@@ -15,23 +15,25 @@
 {% endblock head_item_metadata %}
 
 {% block javascript %}
-{{ block.super }}
-<script type="text/javascript">
-jQuery(function($){
-    $("#id_year").change(function(){
-        window.location = '{% url 'openoni_issues' %}' + this.value;
-    });
-    $("td.multiple").find("ul").css("display", "none");
+  {{ block.super }}
+  <script>
+    $(function() {
+      $("#id_year").change(function() {
+        window.location = "{% url 'openoni_issues' %}" + this.value;
+      });
+      // Hide multiple entries initially
+      $("td.multiple").find("ul").css("display", "none");
 
-    $("td.multiple").hover(
-    function () {
-    $(this).find("ul").slideToggle();
-    },
-    function () {
-    $(this).find("ul").slideToggle();
+      // Reveal multiple entries with mouse hover or click/enter
+      $("td.multiple")
+        .hover(
+          function() { $(this).find("ul:hidden").slideToggle(); },
+          function() { $(this).find("ul:visible").slideToggle(); }
+        )
+        .click(function() { $(this).find("ul").slideToggle(); })
+      ;
     });
-});
-</script>
+  </script>
 {% endblock %}
 
 {% block subcontent %}

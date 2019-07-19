@@ -12,6 +12,23 @@
     <link href="{% static 'css/calendar.css' %}" rel="stylesheet" media="screen">
 {% endblock head_page_css %}
 
+{% block javascript %}
+  {{ block.super }}
+  <script>
+    $(function() {
+      $("form[name='page_number_form']").submit(function() {
+        var pageNumber = $("input[type=text]", this).val();
+        {% if first_pages %}
+          window.location.href = "{% url 'openoni_issues_first_pages' title.lccn %}" + pageNumber;
+        {% else %}
+          window.location.href = "{% url 'openoni_issue_pages' issue.title.lccn issue.date_issued issue.edition %}" + pageNumber;
+        {% endif %}
+        return false;
+      });
+    });
+  </script>
+{% endblock javascript %}
+
 {% block head_extra %}
     <link rel="alternate" href="{% url 'openoni_issue_pages_dot_json' title.lccn issue.date_issued issue.edition %}" />
 {% endblock head_extra %}
@@ -98,20 +115,3 @@
 {% endblock batch_link %}
 
 {% endblock newspaper_content %}
-
-{% block javascript %}
-{{ block.super }}
-<script type="text/javascript">
-jQuery(function($) {
-    $("form[name='page_number_form']").submit(function() {
-        var pageNumber = $("input[type=text]", this).val();
-        {% if first_pages %}
-        window.location.href = '{% url 'openoni_issues_first_pages' title.lccn %}' + pageNumber;
-        {% else %}
-        window.location.href = '{% url 'openoni_issue_pages' issue.title.lccn issue.date_issued issue.edition %}' + pageNumber;
-        {% endif %}
-        return false;
-    });
-});
-</script>
-{% endblock javascript %}

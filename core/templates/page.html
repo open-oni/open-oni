@@ -46,6 +46,21 @@
 
 {% endblock head_page_css %}
 
+{% block javascript %}
+  {{ block.super }}
+    <div id="page_data"
+      data-static_url="{{ static_url }}vendor/openseadragon/images/"
+      data-iiif_id="{% iiif_info page %}/info.json"
+      data-width="{{page.jp2_width}}"
+      data-height="{{page.jp2_length}}"
+      data-page_url="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.sequence %}"
+      data-coordinates_url="{% url 'openoni_page_coordinates' page.issue.title.lccn page.issue.date_issued page.issue.edition page.sequence %}"
+      data-navigation_url="{% url 'openoni_search_pages_navigation' %}?"
+    ></div>
+    <script src="{% static 'vendor/openseadragon/openseadragon.min.js' %}"
+    ></script>
+    <script src="{% static 'js/page.js' %}"></script>
+{% endblock %}
 
 {% block content %}
 
@@ -146,27 +161,10 @@
     {% endif %}
   {% endblock page_bottom_material %}
 
+  {# OpenSeadragon require JavaScript; Display OCR in this case instead #}
+  <noscript>
+    <h3>Newspaper Page Text</h3>
+    <pre>{{ page.ocr.text }}</pre>
+  </noscript>
+
 {% endblock content %}
-
-
-{% block javascript %}
-{{ block.super }}
-
-    <div id="page_data"
-	 data-static_url="{{ static_url }}vendor/openseadragon/images/"
-   data-iiif_id="{% iiif_info page %}/info.json"
-	 data-width="{{page.jp2_width}}"
-	 data-height="{{page.jp2_length}}"
-	 data-page_url="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.sequence %}"
-	 data-coordinates_url="{% url 'openoni_page_coordinates' page.issue.title.lccn page.issue.date_issued page.issue.edition page.sequence %}"
-	 data-navigation_url="{% url 'openoni_search_pages_navigation' %}?"
-	 ></div>
-
-    <script type="text/javascript" src="{% static 'vendor/openseadragon/openseadragon.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/page.js' %}"></script>
-
-    <noscript><!-- without javascript the pageviewer does not work; display OCR in this case instead. -->
-        <h3>Newspaper Page Text</h3>
-        <pre>{{ page.ocr.text }}</pre>
-    </noscript>
-{% endblock %}

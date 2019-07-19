@@ -9,6 +9,12 @@
   <link href="{% static 'css/search.css' %}" rel="stylesheet" media="screen">
 {% endblock head_page_css %}
 
+{% block javascript %}
+  {{ block.super }}
+  {# Highlight search text in thumbnails #}
+  <script src="{% static 'js/highlight.js' %}"></script>
+{% endblock javascript %}
+
 {% block subcontent %}
 
 {% block result_count %}
@@ -285,9 +291,3 @@
 {% endif %}
 
 {% endblock subcontent %}
-
-{% block javascript %}
-  {{ block.super }}
-      <!-- Highlight search text in thumbnails -->
-      <script src="{% static 'js/highlight.js' %}"></script>
-{% endblock javascript %}

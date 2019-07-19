@@ -6,6 +6,13 @@
 {% load static from staticfiles %}
 {% load humanize %}
 
+{% block javascript %}
+  {{ block.super }}
+  <script src="{% static 'vendor/tablesorter/js/jquery.tablesorter.min.js' %}"
+  ></script>
+  <script src="{% static 'js/newspapers.js' %}"></script>
+{% endblock javascript %}
+
 {% block head_extra %}
 <link rel="alternate" title="Newspapers Atom Feed" href="{% url 'openoni_newspapers_atom' %}" />
 <link rel="alternate" title="Newspapers JSON Feed" href="{% url 'openoni_newspapers_format' "json" %}" />
@@ -81,10 +88,3 @@
 {% endif %}
 {% endblock subcontent %}
 
-
-{% block javascript %}
-{{ block.super }}
-<script type="text/javascript"
-  src="{% static 'vendor/tablesorter/js/jquery.tablesorter.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/newspapers.js' %}"></script>
-{% endblock javascript %}
