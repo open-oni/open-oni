@@ -17,6 +17,15 @@ body {
     background-image: url("../images/seamless_paper_texture.png");
 }
 
+.skiplink {
+  position: absolute;
+  top: -2em;
+
+  &:focus {
+    top: 0;
+  }
+}
+
 .main_content {
     background-color:#f7f6f2;
     padding: 10px 0 60px 0

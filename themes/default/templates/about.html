@@ -1,15 +1,14 @@
-<!-- http://BASE_URI/about/ -->
+{# http://BASE_URI/about/ #}
 
 {% extends "__l_main.html" %}
 
 {% load static from staticfiles %}
 
 {% block box-tabs %}
-{% endblock %}
+{% endblock box-tabs %}
 
 {% block main_content %}
-
- <div id="std_box">
+<div id="std_box">
   <h3 id="default">Default theme example</h3>
   <p>This is some sample text for the default theme about page to demonstrate how a page can be overwritten.</p>
 
@@ -36,7 +35,7 @@
   <h3 id="related_resources">Related Resources</h3>
 
   <ul>
-  <li>Open ONI code and project resources - <a href="https://github.com/Open ONI">https://github.com/Open ONI</a></li>
+  <li>Open ONI code and project resources - <a href="https://github.com/Open ONI">https://github.com/open-oni/</a></li>
   <li>Chronicling America website for the National Digital Newspaper Program (NDNP) - <a href="http://chroniclingamerica.loc.gov">http://chroniclingamerica.loc.gov</a></li>
   <li>National Endowment for the Humanities - <a href="http://www.neh.gov/index.html">http://www.neh.gov/index.html</a></li>
   <li>Newspaper and Periodicals Reading Room (Serial and Government Publication Division), Library of Congress - <a href="http://www.loc.gov/rr/news/">http://www.loc.gov/rr/news/</a></li>
@@ -47,7 +46,6 @@
   </ul>
   <h3 id="rights_and_reproductions">Rights and Reproductions</h3>
   <p>Written permission of any copyright owners and/or other rights holders (such as publicity and/or privacy rights) is required for reproduction, distribution, or other use of any protected items beyond that allowed by fair use or other statutory exemptions. Responsibility for making an independent legal assessment of an item and securing any necessary permissions ultimately rests with the persons desiring to use the item.</p>
-  <p class="backtotop"><a href="#skip_menu">Top</a></p>
-</div><!-- end id:std_box -->
-
+  <p class="backtotop"><a href="#maincontent">Top</a></p>
+</div>{# end id:std_box #}
 {% endblock main_content %}
