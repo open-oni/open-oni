@@ -14,11 +14,11 @@ DEBUG = False
 # Suggested order: https://docs.djangoproject.com/en/1.10/ref/middleware/#middleware-ordering
 MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
-    'core.middleware.TooBusyMiddleware',                               # OpenONI
-    'django.middleware.http.ConditionalGetMiddleware',                 # OpenONI
+    'core.middleware.TooBusyMiddleware',                              # Open ONI
+    'django.middleware.http.ConditionalGetMiddleware',                # Open ONI
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.common.BrokenLinkEmailsMiddleware',             # OpenONI
+    'django.middleware.common.BrokenLinkEmailsMiddleware',            # Open ONI
     'django.middleware.csrf.CsrfViewMiddleware',
 #    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',

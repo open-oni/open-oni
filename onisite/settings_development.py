@@ -29,9 +29,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Suggested order: https://docs.djangoproject.com/en/1.10/ref/middleware/#middleware-ordering
 MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
-    'core.middleware.DisableClientSideCachingMiddleware',              # OpenONI
-    'core.middleware.TooBusyMiddleware',                               # OpenONI
-    'django.middleware.http.ConditionalGetMiddleware',                 # OpenONI
+    'core.middleware.DisableClientSideCachingMiddleware',             # Open ONI
+    'core.middleware.TooBusyMiddleware',                              # Open ONI
+    'django.middleware.http.ConditionalGetMiddleware',                # Open ONI
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,7 +87,7 @@ STORAGE_URL = '/data/'
 TITLE_DISPLAY_MEDIUM = False
 
 # Number of processes in system run queue averaged over last minute beyond which
-# OpenONI will return a 'Server Too Busy' response; If unsure, leave at default
+# Open ONI will return a 'Server Too Busy' response; If unsure, leave at default
 # Requires core.middleware.TooBusyMiddleware in MIDDLEWARE_CLASSES
 TOO_BUSY_LOAD_AVERAGE = 64
 

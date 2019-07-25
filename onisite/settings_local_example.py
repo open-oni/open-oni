@@ -61,7 +61,7 @@ INSTALLED_APPS = (
     # Plugins
     # See https://github.com/open-oni?q=plugin for available plugins
 
-    # OpenONI
+    # Open ONI
     'django.contrib.humanize',  # Added to make data more human-readable
     'sass_processor',
     'themes.default',
@@ -154,7 +154,7 @@ INSTALLED_APPS = (
 #    # Plugins
 #    # See https://github.com/open-oni?q=plugin for available plugins
 #
-#    # OpenONI
+#    # Open ONI
 #    'django.contrib.humanize',  # Added to make data more human-readable
 #    'themes.YOUR_THEME_NAME',
 #    'themes.default',
@@ -213,7 +213,7 @@ INSTALLED_APPS = (
 #TITLE_DISPLAY_MEDIUM = False
 
 # Number of processes in system run queue averaged over last minute beyond which
-# OpenONI will return a 'Server Too Busy' response; If unsure, leave at default
+# Open ONI will return a 'Server Too Busy' response; If unsure, leave at default
 # Requires core.middleware.TooBusyMiddleware in MIDDLEWARE
 #TOO_BUSY_LOAD_AVERAGE = 64
 

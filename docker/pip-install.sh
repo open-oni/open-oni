@@ -8,7 +8,7 @@ source ENV/bin/activate
 pip install -U pip
 pip install -U setuptools
 
-# Install / update OpenONI dependencies
+# Install / update Open ONI dependencies
 pip install -U -r requirements.pip
 
 # Miscellaneous
