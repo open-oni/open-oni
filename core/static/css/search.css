@@ -33,3 +33,8 @@ and search results
 .form-actions {
     padding:20px 0;
 }
+
+.search_results_ctrl,
+.search_results_option_set {
+  margin-bottom: 1em;
+}

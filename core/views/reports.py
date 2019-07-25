@@ -35,6 +35,12 @@ def batches(request, page_number=1):
     page = paginator.page(page_number)
     page_range_short = list(_page_range_short(paginator, page))
 
+    # set page number variables
+    if page.has_previous():
+        previous_page_number = int(page_number) - 1
+    if page.has_next():
+        next_page_number = int(page_number) + 1
+
     return render(request, 'reports/batches.html', locals())
 
 

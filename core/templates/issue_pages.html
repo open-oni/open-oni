@@ -1,14 +1,17 @@
-<!-- for pages like: http://BASE_URI/lccn/sn99021999/1887-03-09/ed-1/
-                     http://BASE_URI/lccn/sn99021999/issues/first_pages/-->
-
 {% extends "__l_newspaper.html" %}
+
+{% comment %}
+  http://BASE_URI/lccn/sn99021999/1887-03-09/ed-1/
+  http://BASE_URI/lccn/sn99021999/issues/first_pages/
+{% endcomment %}
+
 {% load static from staticfiles %}
 {% load custom_filters %}
 {% load image_urls %}
 
 {% block head_page_css %}
   {{ block.super }}
-  <link href="{% static 'css/calendar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/search.css' %}" rel="stylesheet">
 {% endblock head_page_css %}
 
 {% block javascript %}

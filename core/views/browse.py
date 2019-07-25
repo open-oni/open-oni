@@ -140,6 +140,13 @@ def issue_pages(request, lccn, date, edition, page_number=1):
     except InvalidPage:
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
+
+    # set page number variables
+    if page.has_previous():
+        previous_page_number = int(page_number) - 1
+    if page.has_next():
+        next_page_number = int(page_number) + 1
+
     if not page.object_list:
         notes = issue.notes.filter(type="noteAboutReproduction")
         num_notes = notes.count()
@@ -542,6 +549,12 @@ def issues_first_pages(request, lccn, page_number=1):
     except InvalidPage:
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
+
+    # set page number variables
+    if page.has_previous():
+        previous_page_number = int(page_number) - 1
+    if page.has_next():
+        next_page_number = int(page_number) + 1
 
     page_title = 'Browse Issues: %s' % label(title)
     page_head_heading = "Browse Issues: %s" % title.display_name

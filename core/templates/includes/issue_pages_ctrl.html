@@ -1,57 +1,89 @@
-<!-- called from ../issues_pages.html -->
+{# called from ../issues_pages.html #}
 
 {% load static from staticfiles %}
 
-<div class="search_results_ctrl">
+<div class="search_results_ctrl row">
+  <div class="col-md-3">
     <span class="nav">
+      {% if issue.previous %}
+        <a class="btn btn-default"
+          href="{% url 'openoni_issue_pages' issue.previous.title.lccn issue.previous.date_issued issue.previous.edition %}">
+          <strong>Previous Issue</strong>
+        </a>
+      {% else %}
+        <span class="btn btn-disabled">Previous Issue</span>
+      {% endif %}
+      |
+      {% if issue.next %}
+        <a class="btn btn-default"
+          href="{% url 'openoni_issue_pages' issue.next.title.lccn issue.next.date_issued issue.next.edition %}">
+          <strong>Next Issue</strong>
+        </a>
+      {% else %}
+        <span class="btn btn-disabled">Next Issue</span>
+      {% endif %}
+    </span>
+  </div> {# /col-md-3 #}
 
+  {% if paginator.num_pages > 1 %}
+    <div class="col-md-3">
+      <form action="" method="GET" class="jumptopage" name="page_number_form">
+        <label for="jumptopage">Jump to page:</label>
+          <input class="std" type="text" id="jumptopage" name="page" value=""
+            size="2">
+        <input type="submit" class="btn btn-primary" value="Go" />
+      </form>
+    </div> {# /col-md-3 #}
 
-{% if issue.previous %}
-<a href="{% url 'openoni_issue_pages' issue.previous.title.lccn issue.previous.date_issued issue.previous.edition %}"><strong>Previous Issue</strong></a>
-{% else %}
-<span class="off">Previous Issue</span>
-{% endif %}
-| 
-<!--Next issue-->
-{% if issue.next %}
-<a href="{% url 'openoni_issue_pages' issue.next.title.lccn issue.next.date_issued issue.next.edition %}"><strong>Next Issue</strong></a>
-{% else %}
-<span class="off">Next Issue</span>
-{% endif %}
+    <div class="col-md-6">
+      <nav aria-label="Pages" class="pull-right">
+        <ul class="pagination pagination-sm">
+          {% if page.has_previous %}
+            <li>
+              <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition previous_page_number %}"
+                aria-label="Previous Page">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <span aria-hidden="true">&laquo;</span>
+            </li>
+          {% endif %}
 
-<!-- | <a href="{% url 'openoni_issues_first_pages' title.lccn %}"><strong>Show all front pages</strong></a> -->
-</span>
-
-{% if paginator.num_pages > 1 %}
-<span class="pagination">
-    |
-    {% if page.has_previous %}
-    <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition page.previous_page_number %}" class="prev">
-        <img src="{% static 'images/pag_prev_on.gif' %}" alt="prev" width="13" height="13" />
-    </a>
-    {% endif %}
-    {% for page_number in page_range_short %}
-        {% if not forloop.first %}|{% endif %}
-        {% ifequal page_number "..." %}
-            ...
-        {% else %}
-            {% ifequal page_number page.number %}
-            <span class="off">{{page_number}}</span>
+          {% for page_number in page_range_short %}
+            {% ifequal page_number "..." %}
+              <li class="disabled">
+                <a>…</a>
+              </li>
             {% else %}
-            <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition page_number %}">{{page_number}}</a>
+              {% ifequal page_number page.number %}
+                <li class="active" aria-current="true">
+              {% else %}
+                <li>
+              {% endifequal %}
+                <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition page_number %}"
+                  aria-label="Page {{page_number}}">{{page_number}}</a>
+              </li>
             {% endifequal %}
-        {% endifequal %}
-    {% endfor %}
+          {% endfor %}
 
-    {% if page.has_next %}
-    <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition page.next_page_number %}" class="next">
-    <img src="{% static 'images/pag_next_on.gif' %}" alt="next" width="13" height="13" />
-    </a>
-    {% endif %}
-</span>
-<form action="" method="GET" class="jumptopage" name="page_number_form">
-    <label for="jumptopage">Jump to page:</label> <input class="std" type="text" id="jumptopage" name="page" value="" size="5" />
-    <input type="submit" class="submit" value="GO" />
-</form>
-{% endif %}
-</div><!-- end class:search_results_ctrl -->
+          {% if page.has_next %}
+            <li>
+              <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition next_page_number %}"
+                aria-label="Next Page">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          {% else %}
+            <li class="disabled">
+              <span aria-hidden="true">&raquo;</span>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div> {# /col-md-6 #}
+  {% else %}
+    <div class="col-md-9"></div>
+  {% endif %}
+</div>{# end class:search_results_ctrl #}
