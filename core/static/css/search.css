@@ -19,6 +19,13 @@ and search results
   width: 100%;
 }
 
+.highlight_words div {
+  margin: 0px;
+  padding: 3px 1px;
+  background:transparent; /* fallback for browsers not supporting rgba */
+  background: rgba(255, 0, 0, 0.4);
+}
+
 .pagination {
     margin:0;
 }

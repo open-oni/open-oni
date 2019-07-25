@@ -31,19 +31,16 @@
 {% endblock head_item_metadata %}
 
 {% block head_page_css %}
-
-    {{ block.super }}
-
-    <!-- Include css code for viewer -->
-    <link href="{% static 'css/viewer.css' %}" rel="stylesheet" />
-
-    <!-- This rule has to be inline or it does not work. All other single page viewer rules are in external css file linked above -->
-    <style type="text/css">
-      #dummy { /* for specifying aspect ratio of viewer_container */
-        padding-top:{% widthratio page.jp2_length page.jp2_width 100 %}%;
-      }
-    </style>
-
+  {{ block.super }}
+  <link href="{% static 'css/viewer.css' %}" rel="stylesheet">
+  {# This rule has to be inline or it does not work. All other #}
+  {# single page viewer rules are in external css file linked above #}
+  <style>
+    /* for specifying aspect ratio of viewer_container */
+    #dummy {
+      padding-top: {% widthratio page.jp2_length page.jp2_width 100 %}%;
+    }
+  </style>
 {% endblock head_page_css %}
 
 {% block javascript %}

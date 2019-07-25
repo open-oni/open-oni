@@ -6,6 +6,11 @@
 {% load static from staticfiles %}
 {% load humanize %}
 
+{% block head_page_css %}
+  {{ block.super }}
+  <link href="{% sass_src 'css/tablesort.scss' %}" rel="stylesheet">
+{% endblock head_page_css %}
+
 {% block javascript %}
   {{ block.super }}
   <script src="{% static 'vendor/tablesorter/js/jquery.tablesorter.min.js' %}"
@@ -16,7 +21,6 @@
 {% block head_extra %}
 <link rel="alternate" title="Newspapers Atom Feed" href="{% url 'openoni_newspapers_atom' %}" />
 <link rel="alternate" title="Newspapers JSON Feed" href="{% url 'openoni_newspapers_format' "json" %}" />
-<link href="{% sass_src 'css/tablesort.scss' %}" rel="stylesheet" />
 {% endblock head_extra %}
 
 {% block subcontent %}

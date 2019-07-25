@@ -1,5 +1,6 @@
 {% extends "__base.html" %}
 
+{% load sass_tags %}
 {% load static from staticfiles %}
 
 {% comment %}
@@ -67,3 +68,7 @@
   <meta name="description" content="A site for newspapers">
 {% endblock head_page_meta %}
 
+{% block head_page_css %}
+  {{ block.super }}
+  <link href="{% sass_src 'css/main.scss' %}" rel="stylesheet">
+{% endblock head_page_css %}

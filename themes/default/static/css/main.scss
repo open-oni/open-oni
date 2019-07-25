@@ -131,9 +131,13 @@ a:hover {
 }
 
 /* Fix for calendar page, newer bigger base font makes calendars wrap */
-
 .calendar_wrapper {
     font-size: 14px;
+}
+
+/* Accessibility tweak to improve Bootstrap's default contrast */
+.help-block {
+    color: #333;
 }
 
 /* =============

@@ -5,9 +5,8 @@
 {% load static from staticfiles %}
 
 {% block head_page_css %}
-    {{ block.super }}
-
-    <link href="{% static 'css/calendar.css' %}" rel="stylesheet" media="screen">
+  {{ block.super }}
+  <link href="{% static 'css/calendar.css' %}" rel="stylesheet">
 {% endblock head_page_css %}
 
 {% block head_item_metadata %}
