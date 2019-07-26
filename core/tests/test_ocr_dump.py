@@ -72,6 +72,7 @@ class OcrDumpTests(TestCase):
         # mtime on files in the archive should be just after we
         # created the OcrDump object from the batch
         t1 = datetime.datetime.fromtimestamp(members[0].mtime)
+        t1 = timezone.make_aware(t1)
         self.assertTrue(t1 - t0 < datetime.timedelta(seconds=2))
 
         # Make sure the batch is gone - mysql gets purged between tests, but

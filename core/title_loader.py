@@ -78,6 +78,7 @@ class TitleLoader(object):
             s = _extract(record, '005')
             parts = s.split(".")
             dt = datetime(*strptime(parts[0], '%Y%m%d%H%M%S')[0:6])
+            dt = timezone.make_aware(dt)
         except AttributeError:
             dt = timezone.now()
 

@@ -18,13 +18,14 @@ class JsonTests(TestCase):
         b = m.Batch.objects.get(name='batch_curiv_ahwahnee_ver01')
         data = b.json(host="example.com")
         j = json.loads(data)
+        self.maxDiff = None
         self.assertEqual(j,
             {'@context': 'http://iiif.io/api/presentation/2/context.json',
              '@id': 'https://oni.example.com/batches/batch_curiv_ahwahnee_ver01.json',
              '@type': 'sc:Collection',
              'label': 'batch_curiv_ahwahnee_ver01',
              'manifests': [],
-             'metadata': [{'label': 'Ingested', 'value': '2009-03-26T20:59:28-04:00'},
+             'metadata': [{'label': 'Ingested', 'value': '2009-03-27T00:59:28+00:00'},
                           {'label': 'Pages', 'value': 0},
                           {'label': 'Awardee',
                            'value': 'University of California, Riverside; Riverside, CA'}]})
