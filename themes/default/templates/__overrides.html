@@ -4,22 +4,18 @@
 {% load static from staticfiles %}
 
 {% comment %}
-  This file sits between base and layouts (__l_zzz.html files) so you can
+  This file sits between base and layouts, __l_(layout).html files, so you can
   override parts of __base.html.
-
-  To customize the look and feel of your installation, create
-  a new "__overrides.html" file in the appropriate theme
-  (themes/your_theme/templates/__overrides.html) and override blocks of code
-  from "__base.html" as desired. The blocks in __base.thml are listed below.
 
   All of the templates should be building off of this template, so
   there is no need to alter "__base.html" nor to duplicate it in new themes.
 
   {{ block.super }} includes the contents of the original / parent block
-{% endcomment %}
 
-{% comment %}
-  List of blocks as defined in __base.html to override
+  To customize the look and feel of your installation, create
+  a new "__overrides.html" file in the appropriate theme
+  (themes/your_theme/templates/__overrides.html) and override blocks of code
+  from "__base.html" as desired. The blocks in __base.html are listed below:
 
   head_all
     head_site_meta
@@ -59,7 +55,7 @@
 {% block head_site_meta %}
   {{ block.super }}
   {# Add theme's favicon to sitewide meta tags #}
-  <link rel="icon" href="{% static 'images/favicon.png' %}" sizes="192x192">
+  <link href="{% static 'images/favicon.png' %}" rel="icon" sizes="192x192">
 {% endblock head_site_meta %}
 
 {% block head_page_meta %}
