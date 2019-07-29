@@ -139,8 +139,12 @@
         viewer.addHandler("animation-finish", resizePrint);
         viewer.addHandler("animation-start", disablePrint);
 
-        $("#pageNum").change(function(event) { 
+        $("#pageNum").change(function() {
             page_url = $("#pageNum").val();
+            window.location = page_url;
+        });
+        $("#pageNumBottom").change(function() {
+            page_url = $("#pageNumBottom").val();
             window.location = page_url;
         });
 
