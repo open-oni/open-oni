@@ -67,62 +67,89 @@
     <p class="page_about">About <a href="{% url 'openoni_title' title.lccn %}">{{page_head_subheading}}</a> | <a href="../">View Entire Issue ({{page.issue.date_issued}})</a></p>
   {% endblock page_top_material %}
 
-  <div id="item-wrapper"> 
+  <div id="item-wrapper">
 
     {% block page_image_toolbar %}
       <div id="imageViewer_nav">
         <span id="item-ctrl" class="toolbar">
-          <!-- This is where the open seadragon controls are inserted via javascript -->
+          {# OpenSeadragon controls inserted via JavaScript here #}
         </span>
         <span class="other_controls">
           <span class="control">
-            {% if page.previous %}
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.previous.sequence %}">prev</a>
-            {% endif %}
-            Page:
-            <select name="pageNum" id="pageNum" class="input-small">
-              {% for p in issue.pages.all %}
-                <option value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}" {% ifequal p.sequence page.sequence %}selected="selected"{% endifequal %}>{{p.sequence}}</option>
-              {% endfor %}
-            </select>
-            of {{issue.pages.all|length}}
-            {% if page.next %}
-              <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.next.sequence %}">next</a>
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            {% endif %}
-          </span><!-- /control -->
-          <span class="control">
-            {% if previous_issue_first_page %}
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <a href="{% url 'openoni_page' title.lccn previous_issue_first_page.issue.date_issued previous_issue_first_page.issue.edition previous_issue_first_page.sequence %}">prev</a>
-            {% endif %}
-            Issue
-            {% if next_issue_first_page %}
-              <a href="{% url 'openoni_page' title.lccn next_issue_first_page.issue.date_issued next_issue_first_page.issue.edition next_issue_first_page.sequence %}">next</a>
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            {% endif %}
-          </span><!-- /control -->
+            {% if page.previous or page.next %}
+              {% if page.previous %}
+                <span class="glyphicon glyphicon-chevron-left"
+                  aria-hidden="true"></span>
+                <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.previous.sequence %}"
+                  aria-label="Previous page">Prev</a>
+              {% endif %}
+              Page
+              <select name="pageNum" id="pageNum" class="input-small">
+                {% for p in issue.pages.all %}
+                  <option
+                    value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}"
+                    {% ifequal p.sequence page.sequence %}selected="selected"{% endifequal %}
+                    >{{p.sequence}}</option>
+                {% endfor %}
+              </select>
+              of {{issue.pages.all|length}}
+              {% if page.next %}
+                <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.next.sequence %}"
+                  aria-label="Next page">Next</a>
+                <span class="glyphicon glyphicon-chevron-right"
+                  aria-hidden="true"></span>
+              {% endif %}
+             {% else %}
+               No Other Pages
+             {% endif %}
+          </span> {# /Page control #}
+
+          {% if previous_issue_first_page or next_issue_first_page %}
+            <span class="control">
+              {% if previous_issue_first_page %}
+                <span class="glyphicon glyphicon-chevron-left"
+                  aria-hidden="true"></span>
+                <a href="{% url 'openoni_page' title.lccn previous_issue_first_page.issue.date_issued previous_issue_first_page.issue.edition previous_issue_first_page.sequence %}" 
+                  aria-label="Previous issue">Prev</a>
+              {% endif %}
+              <span aria-hidde="true">Issue</span>
+              {% if next_issue_first_page %}
+                <a href="{% url 'openoni_page' title.lccn next_issue_first_page.issue.date_issued next_issue_first_page.issue.edition next_issue_first_page.sequence %}"
+                  aria-label="Next issue">Next</a>
+                <span class="glyphicon glyphicon-chevron-right"
+                  aria-hidden="true"></span>
+              {% endif %}
+            </span>
+          {% else %}
+            <span class="control">No Other Issues</span>
+          {% endif %} {# /Issue control #}
           {% if page.jp2_filename %}
             <span class="control">
-              <span class="glyphicon glyphicon-text-background" aria-hidden="true"></span>
-              <a href="{% url 'openoni_page_ocr' title.lccn issue.date_issued issue.edition page.sequence %}">Text</a>
-            </span><!-- /control -->
+              <span class="glyphicon glyphicon-text-background"
+                aria-hidden="true"></span>
+              <a href="{% url 'openoni_page_ocr' title.lccn issue.date_issued issue.edition page.sequence %}"
+                >Text</a>
+            </span>
             <span class="control">
               <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-              <a href="{% url 'openoni_page_pdf' title.lccn issue.date_issued issue.edition page.sequence %}">PDF</a>
-            </span><!-- /control -->
+              <a href="{% url 'openoni_page_pdf' title.lccn issue.date_issued issue.edition page.sequence %}"
+                >PDF</a>
+            </span>
             <span class="control">
-              <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-              <a href="{% url 'openoni_page_jp2' title.lccn issue.date_issued issue.edition page.sequence %}" download="{{ title.lccn }}-{{ issue.date_issued|date:"Ymd" }}.jp2">JP2 ({{ image_size }})</a>
-            </span><!-- /control -->
+              <span class="glyphicon glyphicon-picture"
+                aria-hidden="true"></span>
+              <a href="{% url 'openoni_page_jp2' title.lccn issue.date_issued issue.edition page.sequence %}"
+                download="{{ title.lccn }}-{{ issue.date_issued|date:"Ymd" }}.jp2"
+                >JP2 ({{ image_size }})</a>
+            </span>
             <span class="control">
-              <span class="glyphicon glyphicon-scissors" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-scissors"
+                aria-hidden="true"></span>
               <a id="clip" href="#" target="print">Clip/Print Image</a>
-            </span><!-- /control -->
+            </span>
           {% endif %}
-        </span><!-- /other_controls -->
-      </div><!-- /imageViewer_nav -->
+        </span>{# /other_controls #}
+      </div>{# /imageViewer_nav #}
     {% endblock page_image_toolbar %}
 
     {% block page_image_viewer %}
@@ -144,7 +171,60 @@
       {% endif %}
     {% endblock page_image_viewer %}
 
-    </div><!-- /item_wrapper -->
+    {# Bottom controls #}
+    <a href="#maincontent">Return to Top</a>
+    <div id="imageViewer_nav" class="pull-right">
+      <span class="control">
+        {% if page.previous or page.next %}
+          {% if page.previous %}
+            <span class="glyphicon glyphicon-chevron-left"
+              aria-hidden="true"></span>
+            <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.previous.sequence %}"
+              aria-label="Previous page">Prev</a>
+          {% endif %}
+          Page
+          <select name="pageNum" id="pageNum" class="input-small">
+            {% for p in issue.pages.all %}
+              <option
+                value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}"
+                {% ifequal p.sequence page.sequence %}selected="selected"{% endifequal %}
+                >{{p.sequence}}</option>
+            {% endfor %}
+          </select>
+          of {{issue.pages.all|length}}
+          {% if page.next %}
+            <a href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.next.sequence %}"
+              aria-label="Next page">Next</a>
+            <span class="glyphicon glyphicon-chevron-right"
+              aria-hidden="true"></span>
+          {% endif %}
+        {% else %}
+          No Other Pages
+        {% endif %}
+      </span> {# /Page control #}
+
+      {% if previous_issue_first_page or next_issue_first_page %}
+        <span class="control">
+          {% if previous_issue_first_page %}
+            <span class="glyphicon glyphicon-chevron-left"
+              aria-hidden="true"></span>
+            <a href="{% url 'openoni_page' title.lccn previous_issue_first_page.issue.date_issued previous_issue_first_page.issue.edition previous_issue_first_page.sequence %}" 
+              aria-label="Previous issue">Prev</a>
+          {% endif %}
+          <span aria-hidde="true">Issue</span>
+          {% if next_issue_first_page %}
+            <a href="{% url 'openoni_page' title.lccn next_issue_first_page.issue.date_issued next_issue_first_page.issue.edition next_issue_first_page.sequence %}"
+              aria-label="Next issue">Next</a>
+            <span class="glyphicon glyphicon-chevron-right"
+              aria-hidden="true"></span>
+          {% endif %}
+        </span>
+      {% else %}
+        <span class="control">No Other Issues</span>
+      {% endif %} {# /Issue control #}
+    </div>
+
+  </div>{# item-wrapper #}
 
   {% block page_bottom_material %}
     {% if issue.copyright_link %}
