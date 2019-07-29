@@ -13,7 +13,6 @@
       {% else %}
         <span class="btn btn-disabled">Previous Issue</span>
       {% endif %}
-      |
       {% if issue.next %}
         <a class="btn btn-default"
           href="{% url 'openoni_issue_pages' issue.next.title.lccn issue.next.date_issued issue.next.edition %}">
