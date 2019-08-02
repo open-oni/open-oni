@@ -235,6 +235,15 @@ Run these commands as a regular user rather than root
 # Repeat as necessary
 ./manage.py load_batch /opt/openoni/data/batches/(batch_name)/
 
+# For batches to be visible in /batches page, must be released
+# Add --reset flag to clear release dates and recalculate them
+# Release date and time come from:
+# 1. bag-info.txt, if found in the batch source
+# 2. Tab-delimited CSV file if provided in format: batch_name \t batch_date
+# 3. http://chroniclingamerica.loc.gov/batches.xml
+# 4. Current server datetime
+./manage.py release
+
 # Run a script with nohup in the background to ingest multiple batches quietly
 # nohup prevents scripts from exiting if one closes the terminal shell
 nohup (command) >> nohup.out
