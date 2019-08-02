@@ -11,7 +11,8 @@
           <strong>Previous Issue</strong>
         </a>
       {% else %}
-        <span class="btn btn-disabled">Previous Issue</span>
+        <button class="btn btn-default"
+          disabled="disabled">Previous Issue</button>
       {% endif %}
       {% if issue.next %}
         <a class="btn btn-default"
@@ -19,7 +20,8 @@
           <strong>Next Issue</strong>
         </a>
       {% else %}
-        <span class="btn btn-disabled">Next Issue</span>
+        <button class="btn btn-default"
+          disabled="disabled">Next Issue</button>
       {% endif %}
     </span>
   </div> {# /col-md-3 #}
