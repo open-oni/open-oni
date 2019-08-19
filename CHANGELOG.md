@@ -294,6 +294,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Invalid static tag use to render static URL in `page.html` data attributes
 
 ### Contributors
+- Karin Dalziel (karindalziel)
 - Tinghui Duan (via Slack)
 - Jessica Dussault (jduss4)
 - Jeremy Echols (jechols)
