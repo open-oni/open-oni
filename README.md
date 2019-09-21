@@ -31,8 +31,7 @@ support in April 2020.
 To evaluate the software, we recommend installing from the [latest Open ONI
 release](https://github.com/open-oni/open-oni/releases/latest).
 
-If you're interested in more recent changes, check out the `dev` branch but be
-warned that we don't absolutely guarantee it will always be in a working state.
+If you're interested in more recent changes, check out the `dev` branch.
 
 ## Documentation
 - [Production Install
@@ -40,7 +39,7 @@ Instructions](https://github.com/open-oni/open-oni/tree/master/docs)
 - [The Open ONI Wiki](https://github.com/open-oni/open-oni/wiki)
 
 ## Support
-Notes that maintainers can only provide a minimal amount of assistance while
+Note that maintainers can only provide a minimal amount of assistance while
 working on Open ONI part-time. Developers cannot be expected to provide
 extensive one-on-one support.
 
