@@ -11,8 +11,6 @@ services:
     volumes:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-mariadb:/var/lib/mysql
-    ports:
-      - ${RDBMSPORT:-3306}:3306
   solr:
     image: solr:6.6
     volumes:
@@ -21,8 +19,6 @@ services:
     entrypoint:
       - docker-entrypoint.sh
       - /tmp/solr/precreate
-    ports:
-      - ${SOLRPORT:-8983}:8983
   rais:
     image: uolibraries/rais
     environment:
