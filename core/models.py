@@ -8,12 +8,12 @@ import hashlib
 import logging
 import tarfile
 import textwrap
-import urlparse
-from cStringIO import StringIO
+import urllib.parse
+from io import StringIO
 
 from rfc3339 import rfc3339
 from lxml import etree
-from urllib import url2pathname
+from urllib.request import url2pathname
 
 from django.db import models
 from django.db.models import permalink, Q
@@ -96,9 +96,9 @@ class Batch(models.Model):
         """Absolute path of batch directory"""
         source = self.source
         if source:
-            u = urlparse.urljoin(source, "data/")
+            u = urllib.parse.urljoin(source, "data/")
         else:
-            u = urlparse.urljoin("file:", self.path)
+            u = urllib.parse.urljoin("file:", self.path)
         return u
 
     @property
@@ -115,7 +115,7 @@ class Batch(models.Model):
 
     @property
     def validated_batch_url(self):
-        return urlparse.urljoin(self.storage_url, self.validated_batch_file)
+        return urllib.parse.urljoin(self.storage_url, self.validated_batch_file)
 
     @property
     def page_count(self):
@@ -140,7 +140,7 @@ class Batch(models.Model):
         l = {}
         for issue in self.issues.all():
             l[issue.title_id] = 1
-        return l.keys()
+        return list(l.keys())
 
     def delete(self, *args, **kwargs):
         # manually delete any OcrDump associated with this batch
@@ -319,7 +319,7 @@ class Title(models.Model):
     @property
     def metadata(self):
         meta = []
-        for k, v in self.solr_doc.items():
+        for k, v in list(self.solr_doc.items()):
             if not v or k in ("country"):
                 continue
             k = k.replace("_", " ")
@@ -422,7 +422,7 @@ class Title(models.Model):
 
     def __unicode__(self):
         # TODO: should edition info go in here if present?
-        return u'%s (%s) %s-%s' % (self.display_name, self.place_of_publication,
+        return '%s (%s) %s-%s' % (self.display_name, self.place_of_publication,
                                    self.start_year, self.end_year)
 
     class Meta:
@@ -852,7 +852,7 @@ class Page(models.Model):
                 previous_page = pages[i]
         return previous_page
 
-    def next(self):
+    def __next__(self):
         """
         return the next page to this one.
         """
@@ -890,14 +890,14 @@ class Page(models.Model):
         return pages[0]
 
     def __unicode__(self):
-        parts = [u'%s' % self.issue.title]
+        parts = ['%s' % self.issue.title]
         parts.append(strftime_safe(self.issue.date_issued, '%B %d, %Y'))
         if self.issue.edition_label:
             parts.append(self.issue.edition_label)
         if self.section_label:
             parts.append(self.section_label)
         parts.append('Image %s' % self.sequence)
-        return u', '.join(parts)
+        return ', '.join(parts)
 
     class Meta:
         ordering = ('sequence',)
@@ -952,7 +952,7 @@ class Place(models.Model):
         return "Unknown"
 
     def __unicode__(self):
-        return u"%s, %s, %s" % (self.city, self.county, self.state)
+        return "%s, %s, %s" % (self.city, self.county, self.state)
 
     class Meta:
         ordering = ('name',)
@@ -991,7 +991,7 @@ class PageNote(models.Model):
     page = models.ForeignKey('Page', related_name='notes')
 
     def __unicode__(self):
-        return u"type: %s label: %s text: %s" % (self.type, self.label, self.text)
+        return "type: %s label: %s text: %s" % (self.type, self.label, self.text)
 
     class Meta:
         ordering = ('text',)
@@ -1004,7 +1004,7 @@ class IssueNote(models.Model):
     issue = models.ForeignKey('Issue', related_name='notes')
 
     def __unicode__(self):
-        return u"type: %s label: %s text: %s" % (self.type, self.label, self.text)
+        return "type: %s label: %s text: %s" % (self.type, self.label, self.text)
 
     class Meta:
         ordering = ('text',)
@@ -1065,7 +1065,7 @@ class Holding(models.Model):
             return [self.description]
 
     def __unicode__(self):
-        return u"%s - %s - %s" % (self.institution.name, self.type, self.description)
+        return "%s - %s - %s" % (self.institution.name, self.type, self.description)
 
     class Meta:
         ordering = ('institution',)
@@ -1193,7 +1193,7 @@ class Institution(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return u"%s, %s, %s" % (self.name, self.city, self.state)
+        return "%s, %s, %s" % (self.name, self.city, self.state)
 
     class Meta:
         ordering = ('name',)

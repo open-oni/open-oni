@@ -175,7 +175,7 @@ class HTMLCalendar(calendar.Calendar):
         a('<div cellspacing="0" class="calendar_wrapper">')
         for i in range(calendar.January, calendar.January + 12, width):
             # months in this row
-            months = range(i, min(i + width, 13))
+            months = list(range(i, min(i + width, 13)))
             a('<div class="calendar_row">')
             for m in months:
                 a('<div class="span3 calendar_month">')
@@ -195,7 +195,7 @@ def get_page(lccn, date, edition, sequence):
     _year, _month, _day = date.split("-")
     try:
         _date = datetime.date(int(_year), int(_month), int(_day))
-    except ValueError, e:
+    except ValueError as e:
         raise Http404
     try:
         page = models.Page.objects.filter(
@@ -204,7 +204,7 @@ def get_page(lccn, date, edition, sequence):
             issue__edition=edition,
             sequence=sequence).order_by("-created").select_related()[0]
         return page
-    except IndexError, e:
+    except IndexError as e:
         raise Http404
 
 
@@ -217,17 +217,17 @@ def _get_tip(lccn, date, edition, sequence=1):
     _year, _month, _day = date.split("-")
     try:
         _date = datetime.date(int(_year), int(_month), int(_day))
-    except ValueError, e:
+    except ValueError as e:
         raise Http404
     try:
         issue = title.issues.filter(
             date_issued=_date, edition=edition).order_by("-created")[0]
-    except IndexError, e:
+    except IndexError as e:
         raise Http404
     try:
         page = issue.pages.filter(
             sequence=int(sequence)).order_by("-created")[0]
-    except IndexError, e:
+    except IndexError as e:
         raise Http404
     return title, issue, page
 
@@ -250,15 +250,15 @@ def _stream_file(path, content_type):
 
 def label(instance):
     if isinstance(instance, models.Title):
-        return u'%s (%s) %s-%s' % (instance.display_name,
+        return '%s (%s) %s-%s' % (instance.display_name,
                                    instance.place_of_publication,
                                    instance.start_year, instance.end_year)
     elif isinstance(instance, models.Issue):
         parts = []
         parts.append(strftime_safe(instance.date_issued, '%B %d, %Y'))
         if instance.edition_label:
-            parts.append(u"%s" % instance.edition_label)
-        return u', '.join(parts)
+            parts.append("%s" % instance.edition_label)
+        return ', '.join(parts)
     elif isinstance(instance, models.Page):
         parts = []
         if instance.section_label:
@@ -266,9 +266,9 @@ def label(instance):
         if instance.number:
             parts.append('Page %s' % instance.number)
         parts.append('Image %s' % instance.sequence)
-        return u', '.join(parts)
+        return ', '.join(parts)
     else:
-        return u"%s" % instance
+        return "%s" % instance
 
 
 def create_crumbs(title, issue=None, date=None, edition=None, page=None):

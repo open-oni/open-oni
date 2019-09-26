@@ -121,20 +121,19 @@ def search_titles_results(request):
         writer = csv.writer(response)
         writer.writerow(csv_header_labels)
         for title in titles:
-            writer.writerow(map(lambda val: smart_str(val or '--'),
-                               (title.lccn, title.name, title.place_of_publication,
+            writer.writerow([smart_str(val or '--') for val in (title.lccn, title.name, title.place_of_publication,
                                 title.start_year, title.end_year, title.publisher,
                                 title.edition, title.frequency,
-                                map(str, title.subjects.all()),
-                                set(map(lambda p: p.state, title.places.all())),
-                                map(lambda p: p.city, title.places.all()),
-                                str(title.country), map(str, title.languages.all()),
-                                title.oclc, title.holding_types)))
+                                list(map(str, title.subjects.all())),
+                                set([p.state for p in title.places.all()]),
+                                [p.city for p in title.places.all()],
+                                str(title.country), list(map(str, title.languages.all())),
+                                title.oclc, title.holding_types)])
         return response
 
     try:
         curr_page = int(request.GET.get('page', 1))
-    except ValueError, e:
+    except ValueError as e:
         curr_page = 1
 
     paginator = solr_index.SolrTitlesPaginator(request.GET)
@@ -148,7 +147,7 @@ def search_titles_results(request):
 
     try:
         rows = int(request.GET.get('rows', '20'))
-    except ValueError, e:
+    except ValueError as e:
         rows = 20
 
     query = request.GET.copy()

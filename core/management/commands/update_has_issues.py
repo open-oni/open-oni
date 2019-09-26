@@ -9,7 +9,7 @@ class Command(BaseCommand):
         q = m.Title.objects.filter(pk__in=m.Issue.objects.values("title"))
         q = q.distinct()
         for t in q:
-            print "%s has issues" % t
+            print("%s has issues" % t)
             t.has_issues = True
             t.save()
 

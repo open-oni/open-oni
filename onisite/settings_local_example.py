@@ -1,5 +1,5 @@
 import os
-import urlparse
+import urllib
 
 # For initial customization, search and update values beginning with 'YOUR_'
 
@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # BASE_URL can NOT include any path elements!
 BASE_URL = os.getenv('ONI_BASE_URL', 'http://localhost')
     # BASE_URL-dependent Settings
-url = urlparse.urlparse(BASE_URL)
+url = urllib.parse.urlparse(BASE_URL)
 
 ALLOWED_HOSTS = [url.netloc]
 

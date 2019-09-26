@@ -1,6 +1,6 @@
 import os
 
-from django_defaults import *
+from .django_defaults import *
 
 ################################################################
 # DJANGO CUSTOMIZATIONS

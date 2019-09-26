@@ -6,4 +6,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for e in models.Ethnicity.objects.all():
-            print e.name, ": ", e.has_issues
+            print(e.name, ": ", e.has_issues)

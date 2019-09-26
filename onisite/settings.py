@@ -1,2 +1,2 @@
-from settings_base import *
-from settings_local import *
+from .settings_base import *
+from .settings_local import *

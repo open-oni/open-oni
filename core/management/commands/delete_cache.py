@@ -22,6 +22,6 @@ class Command(BaseCommand):
         try:
             logger.info("Deleting titles_states cache...")
             cache.delete('titles_states')
-        except Exception, e:
+        except Exception as e:
             logger.exception(e)
             raise CommandError("Unable to delete newspaper info and title state cache")

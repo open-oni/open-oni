@@ -21,12 +21,12 @@ def search_pages_paginator(request):
     # front page only
     try:
         sequence = int(request.GET.get('sequence', '0'))
-    except ValueError, e:
+    except ValueError as e:
         sequence = 0
     # set results per page value
     try:
         rows = int(request.GET.get('rows', '20'))
-    except ValueError, e:
+    except ValueError as e:
         rows = 20
     q = request.GET.copy()
     q['rows'] = rows
@@ -188,7 +188,7 @@ def suggest_titles(request):
     lccn_q = Q(lccn__startswith=q)
     title_q = Q(name_normal__startswith=q)
     for t in models.Title.objects.filter(lccn_q | title_q)[0:50]:
-        titles.append(unicode(t))
+        titles.append(str(t))
         descriptions.append(t.lccn)
         urls.append(settings.BASE_URL + t.url)
 

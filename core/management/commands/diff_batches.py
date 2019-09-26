@@ -53,4 +53,4 @@ class Command(BaseCommand):
                 assert batch in current_batches
                 indicator = "+"
 
-            print "%s%s" % (indicator, batch)
+            print("%s%s" % (indicator, batch))

@@ -11,10 +11,10 @@ from core.utils.utils import fulltext_range
 
 # min and max year set in utils.py
 DAY_CHOICES = [(i, i) for i in range(1,32)]
-MONTH_CHOICES = ((1, u'Jan',), (2, u'Feb',), (3, u'Mar',),
-                 (4, u'Apr',), (5, u'May',), (6, u'Jun',),
-                 (7, u'Jul',), (8, u'Aug',), (9, u'Sep',),
-                 (10, u'Oct',), (11, u'Nov',), (12, u'Dec',))
+MONTH_CHOICES = ((1, 'Jan',), (2, 'Feb',), (3, 'Mar',),
+                 (4, 'Apr',), (5, 'May',), (6, 'Jun',),
+                 (7, 'Jul',), (8, 'Aug',), (9, 'Sep',),
+                 (10, 'Oct',), (11, 'Nov',), (12, 'Dec',))
 
 FREQUENCY_CHOICES = (
     ("", "Select"),
@@ -86,7 +86,7 @@ def _titles_states():
             titles.append((title.lccn, title_name))
             for p in title.places.all():
                 _states.add(p.state)
-        _states = filter(lambda s: s is not None, _states)
+        _states = [s for s in _states if s is not None]
         for state in _states:
             states.append((state, state))
         states = sorted(states)
@@ -234,7 +234,7 @@ class SearchTitlesForm(forms.Form):
         super(SearchTitlesForm, self).__init__(*args, **kwargs)
 
         current_year = datetime.date.today().year
-        years = range(1690, current_year + 1, 10)
+        years = list(range(1690, current_year + 1, 10))
         if years[-1] != current_year:
             years.append(current_year)
         choices = [(year, year) for year in years]

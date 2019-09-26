@@ -20,6 +20,6 @@ class Command(BaseCommand):
             LOGGER.info('removing titles_states from cache')
             cache.delete('titles_states')
 
-        except Exception, e:
+        except Exception as e:
             LOGGER.exception(e)
             raise CommandError("unable to purge the cache. check the purge_batch_cache log for clues")

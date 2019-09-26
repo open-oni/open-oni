@@ -16,7 +16,7 @@ def resize_url(page, size):
 
 def specific_tile_url(page, w, h, x1, y1, x2, y2):
 
-    w, h, x1, y1, x2, y2 = map(int, [w, h, x1, y1, x2, y2])
+    w, h, x1, y1, x2, y2 = list(map(int, [w, h, x1, y1, x2, y2]))
     return "%s/%d,%d,%d,%d/%d,%d/0/default.jpg" % (image_server_for_page(TILE, page), x1, y1, x2-x1, y2-y1, w, h)
 
 def image_server_for_page(server_type, page):

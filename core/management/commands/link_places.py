@@ -1,5 +1,5 @@
 import logging
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 from django.core.management.base import BaseCommand
 from django.db import reset_queries
@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 continue
 
             # formulate a dbpedia place uri
-            path = urllib2.quote('%s,_%s' % (_clean(place.city), 
+            path = urllib.parse.quote('%s,_%s' % (_clean(place.city), 
                                              _clean(place.state)))
             url = URIRef('http://dbpedia.org/resource/%s' % path)
 
@@ -38,7 +38,7 @@ class Command(BaseCommand):
             try: 
                 _logger.debug("looking up %s" % url)
                 graph.load(url)
-            except urllib2.HTTPError, e:
+            except urllib.error.HTTPError as e:
                 _logger.error(e)
 
             # if we've got more than 3 assertions extract some stuff from 
