@@ -1,5 +1,4 @@
-FROM ubuntu:trusty
-MAINTAINER Mark Cooper <mark.cooper@lyrasis.org>
+FROM ubuntu:bionic
 
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
@@ -13,10 +12,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
   libxslt-dev \
   libjpeg-dev \
   mysql-client \
-  python-dev \
-  python-virtualenv \
   rsync \
-  supervisor
+  python3-dev \
+  python3-pip
 
 # Force apache error logs to stderr
 RUN ln -sf /proc/self/fd/1 /var/log/apache2/error.log
