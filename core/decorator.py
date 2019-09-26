@@ -1,7 +1,6 @@
 import os
 import re
 import time
-import hotshot
 
 from mimeparse import best_match
 
