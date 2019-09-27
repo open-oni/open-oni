@@ -648,7 +648,7 @@
     }
   },
   {
-    "pk": "whi ",
+    "pk": "whi",
     "model": "core.Awardee",
     "fields": {
       "name": "Wisconsin Historical Society",
