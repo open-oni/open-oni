@@ -453,8 +453,8 @@ class BatchLoader(object):
         _logger.debug("writing out word coords for %s" %
             page.url)
 
-        f = open(models.coordinates_path(page._url_parts()), "w")
-        f.write(gzip_compress(json.dumps(coords)))
+        f = open(models.coordinates_path(page._url_parts()), "wb")
+        f.write(gzip_compress(json.dumps(coords).encode('utf-8')))
         f.close()
 
     def process_coordinates(self, batch_path):
