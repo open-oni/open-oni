@@ -31,6 +31,8 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 VOLUME /opt/openoni
 WORKDIR /opt/openoni
 
+VOLUME /var/local/onidata
+
 ADD entrypoint.sh /
 RUN chmod u+x /entrypoint.sh
 

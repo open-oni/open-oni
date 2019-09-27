@@ -24,15 +24,19 @@ services:
     environment:
       - RAIS_IIIFURL=${ONI_BASE_URL:-http://localhost}/images/iiif
       - RAIS_TILECACHELEN=250
+      - RAIS_TILEPATH=/var/local/onidata/batches
     volumes:
-      - ./docker/data/batches:/var/local/images:z
+      - onidata:/var/local/onidata:z
+      # RAIS has to be able to read the batch sources, which, for dev, are most
+      # likely stored in the local app directory
+      - ./:/opt/openoni:z
   web:
     build:
       context: ./docker
       dockerfile: Dockerfile-dev
     volumes:
       - ./:/opt/openoni:z
-      - ./docker/data:${ONI_STORAGE_PATH:-/opt/openoni/data}:z
+      - onidata:/var/local/onidata:z
     ports:
       - ${HTTPPORT:-80}:80
     depends_on:
@@ -55,7 +59,8 @@ services:
       - ONI_LOG_TO_FILE
       - ONI_SECRET_KEY
       - ONI_SOLR_URL
-      - ONI_STORAGE_PATH
+      - ONI_STORAGE_PATH=/var/local/onidata
 volumes:
   data-mariadb: {}
   data-solr: {}
+  onidata: {}
