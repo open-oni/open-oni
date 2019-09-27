@@ -185,8 +185,6 @@ class BatchLoader(object):
             event = LoadBatchEvent(batch_name=batch_name, message=msg)
             _logger.info(msg)
             event.save()
-
-            _chart(times)
         except Exception as e:
             msg = "unable to load batch: %s" % e
             _logger.error(msg)
@@ -551,18 +549,6 @@ def get_dimensions(doc, admid):
     if length and width:
         return length[0].text, width[0].text
     return None, None
-
-def _chart(times):
-    """
-    Creates a google chart given a list of times as floats.
-    """
-    num = len(times)
-    if num == 0:
-        return
-    step = max(num/100, 1) # we only want around a 100 datapoints for our chart
-    f_times = ["%.2f" % (times[i][0]) for i in range(0, num, step)]
-    counts = ["%s" % (times[i][1]) for i in range(0, num, step)]
-    _logger.info("\n    http://chart.apis.google.com/chart?cht=lxy&chs=200x125&chd=t:%s|%s&chds=%s,%s,%s,%s" % (",".join(f_times), ",".join(counts), f_times[0], f_times[-1], counts[0], counts[-1]))
 
 def _normalize_batch_name(batch_name):
     batch_name = batch_name.rstrip('/')
