@@ -54,7 +54,7 @@ class TitleLoader(object):
 
             if self.records_processed % 1000 == 0:
                 _logger.info("processed %sk records in %.2f seconds" %
-                             (self.records_processed / 1000, seconds))
+                             (self.records_processed // 1000, seconds))
 
         map_xml(load_record, urllib.request.urlopen(location))
 

@@ -118,7 +118,7 @@ class SolrPaginator(Paginator):
     def _get_previous(self):
         previous_overall_index = self.overall_index - 1
         if previous_overall_index >= 0:
-            p_page = previous_overall_index / self.per_page + 1
+            p_page = previous_overall_index // self.per_page + 1
             p_index = previous_overall_index % self.per_page
             o = self.page(p_page).object_list[p_index]
             q = self.query.copy()
@@ -130,7 +130,7 @@ class SolrPaginator(Paginator):
     def _get_next(self):
         next_overall_index = self.overall_index + 1
         if next_overall_index < self.count:
-            n_page = next_overall_index / self.per_page + 1
+            n_page = next_overall_index // self.per_page + 1
             n_index = next_overall_index % self.per_page
             o = self.page(n_page).object_list[n_index]
             return self.pagination_url(o.url, o.words, n_page, n_index)
@@ -500,7 +500,7 @@ def page_search(d):
     # choose a facet range gap such that the number of date ranges returned
     # is <= 10. These would be used to populate a select dropdown on search
     # results page.
-    gap = max(1, int(math.ceil((year2 - year1)/10)))
+    gap = max(1, int(math.ceil((year2 - year1)//10)))
 
     # increment year range end by 1 to be inclusive
     facet_params = {'facet': 'true','facet_field': [
