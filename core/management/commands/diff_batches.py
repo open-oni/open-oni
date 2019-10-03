@@ -26,7 +26,7 @@ class Command(BaseCommand):
             raise CommandError('Usage is diff_batch %s' % self.args)
 
         batches = set()
-        batch_list = file(batch_list_filename)
+        batch_list = open(batch_list_filename)
         _logger.info("batch_list_filename: %s" % batch_list_filename)
         for line in batch_list:
             batch_name = line.strip()

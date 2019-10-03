@@ -79,7 +79,7 @@ class Command(BaseCommand):
                          'longitude': p.longitude,
                          'latitude': p.latitude})
             reset_queries()
-        json.dump(json_src, file('core/fixtures/place_links.json', 'w'), indent=2)
+        json.dump(json_src, open('core/fixtures/place_links.json', 'w'), indent=2)
         _logger.info("finished dumping place_links.json fixture")
 
 def _clean(u):

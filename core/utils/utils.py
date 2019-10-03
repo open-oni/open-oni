@@ -239,7 +239,7 @@ def _stream_file(path, content_type):
     # calculate len() on the response content!
     if path:
         stat = os.stat(path)
-        r = HttpResponse(wsgiref.util.FileWrapper(file(path)))
+        r = HttpResponse(wsgiref.util.FileWrapper(open(path)))
         r['Content-Type'] = content_type
         r['Content-Length'] = stat.st_size
         r['Last-Modified'] = http_date(stat.st_mtime)
