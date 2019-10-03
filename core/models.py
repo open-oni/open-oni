@@ -852,7 +852,7 @@ class Page(models.Model):
                 previous_page = pages[i]
         return previous_page
 
-    def __next__(self):
+    def next(self):
         """
         return the next page to this one.
         """

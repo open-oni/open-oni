@@ -235,7 +235,7 @@ def page(request, lccn, date, edition, sequence, words=None):
     _issue = issue
     while True:
         next_issue_first_page = None
-        _issue = _issue.__next__
+        _issue = _issue.next
         if not _issue:
             break
         next_issue_first_page = _issue.first_page
