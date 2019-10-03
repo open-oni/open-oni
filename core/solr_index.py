@@ -44,7 +44,7 @@ def _solr_escape(value):
 
 def _sort_facets_asc(solr_facets, field):
     items = list(solr_facets.get('facet_fields')[field].items())
-    return sorted(items, lambda x, y: int(x) - int(y), lambda k: k[1], True)
+    return sorted(items, key = lambda item: int(item[1]), reverse = True)
 
 def title_count():
     solr = SolrConnection(settings.SOLR)
@@ -176,7 +176,7 @@ class SolrPaginator(Paginator):
         }
         # sort by year (desc)
         facets['year'] = sorted(list(solr_facets['facet_ranges']['year']['counts'].items()),
-                                lambda x, y: int(x) - int(y), lambda k: k[0], True)
+                                key = lambda k: k[0], reverse = True)
         facet_gap = self.facet_params['f_year_facet_range_gap']
         if facet_gap > 1:
             facets['year'] = [('%s-%d' % (y[0], int(y[0])+facet_gap-1), y[1]) 
