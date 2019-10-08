@@ -12,7 +12,6 @@ cp $src/_startup_lib.sh /_startup_lib.sh
 cp $src/test.sh /test.sh
 cp $src/manage /usr/local/bin/manage
 cp $src/django-admin /usr/local/bin/django-admin
-cp $src/openoni.ini /etc/openoni.ini.orig
 
 # Copy startup script based on whether this is a test-only container
 if [[ $ONLY_RUN_TESTS == 1 ]]; then
