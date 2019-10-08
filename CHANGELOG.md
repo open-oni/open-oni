@@ -20,8 +20,6 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   dependencies and restart Apache
 - Load batch management command help text and batch existence check with error
   message
-- Use `ALLOWED_HOSTS` and `IS_PRODUCTION` from `/etc/openoni.ini` to override
-  `settings_local.py` if present
 - Sass support for CSS
 - Comments in `docker/_startup_lib.sh` that identify `.env` file as source of
   environment variables used for configuration
@@ -273,6 +271,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Load institutions management command - Already loaded in database migration
   from `fixtures/institutions.json`
 - Unused setting `PROFILE_LOG_BASE` handling
+- Settings overrides from `/etc/openoni.ini`
 - Title pull / sync and local holding loading management commands
 - Unused variable for removed similar pages links info retrieved from Solr
 - Extra `<a>` around "Text" link in page viewer controls
