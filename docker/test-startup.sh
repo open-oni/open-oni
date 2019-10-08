@@ -18,7 +18,6 @@ export DJANGO_SETTINGS_MODULE=onisite.test_settings
 source /_startup_lib.sh
 
 verify_config
-replace_ini_data
 setup_database
 prep_webserver
 

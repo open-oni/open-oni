@@ -16,23 +16,6 @@ verify_config() {
   fi
 }
 
-replace_ini_data() {
-  # Generate a random secret key if that hasn't already happened.  This stays the
-  # same after it's first set.
-  sed -i "s/!SECRET_KEY!/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 80)/g" /etc/openoni.ini.orig
-
-  # Refresh the environmental config for APP_URL in case it needs to change
-  cp /etc/openoni.ini.orig /etc/openoni.ini
-
-  # Add in HTTPPORT from .env file if necessary
-  if [[ $HTTPPORT != "" && $HTTPPORT != 80 ]]; then
-    sed -i "s|!APP_URL!|!APP_URL!:$HTTPPORT|g" /etc/openoni.ini
-  fi
-
-  # Set BASE_URL and public IIIF URL from APP_URL in .env file
-  sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
-}
-
 setup_database() {
   DB_READY=0
   MAX_TRIES=15
