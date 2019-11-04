@@ -7,7 +7,7 @@ from mimeparse import best_match
 from django.utils import cache
 from django.utils import encoding
 from django.http import HttpResponse
-from django.core import urlresolvers
+from django import urls
 
 
 class HttpResponseSeeOther(HttpResponse):
@@ -37,7 +37,7 @@ def rdf_view(f):
     def f1(request, **kwargs):
         # construct a http redirect response to html view
         html_view = f.__name__.replace('_rdf', '')
-        html_url = urlresolvers.reverse('openoni_%s' % html_view, kwargs=kwargs)
+        html_url = urls.reverse('openoni_%s' % html_view, kwargs=kwargs)
         html_redirect = HttpResponseSeeOther(html_url)
 
         # determine the clients preferred representation

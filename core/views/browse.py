@@ -9,7 +9,7 @@ from django import forms as django_forms
 
 from django.conf import settings
 from django.core.paginator import Paginator, InvalidPage
-from django.core import urlresolvers
+from django import urls
 from django.forms import fields
 from django.http import HttpResponse, HttpResponseNotFound, Http404, \
     HttpResponseRedirect, HttpResponsePermanentRedirect
@@ -184,7 +184,7 @@ def page(request, lccn, date, edition, sequence, words=None):
     if fragments:
         path_parts = dict(lccn=lccn, date=date, edition=edition,
                           sequence=sequence)
-        url = urlresolvers.reverse('openoni_page',
+        url = urls.reverse('openoni_page',
                                    kwargs=path_parts)
 
         return HttpResponseRedirect(url + "#" + "&".join(fragments))
@@ -209,7 +209,7 @@ def page(request, lccn, date, edition, sequence, words=None):
             if len(words) > 0:
                 path_parts = dict(lccn=lccn, date=date, edition=edition,
                                   sequence=sequence, words=words)
-                url = urlresolvers.reverse('openoni_page_words',
+                url = urls.reverse('openoni_page_words',
                                            kwargs=path_parts)
                 return HttpResponseRedirect(url)
         except Exception as e:
@@ -524,7 +524,7 @@ def page_print(request, lccn, date, edition, sequence,
                       sequence=sequence,
                       width=width, height=height,
                       x1=x1, y1=y1, x2=x2, y2=y2)
-    url = urlresolvers.reverse('openoni_page_print',
+    url = urls.reverse('openoni_page_print',
                                kwargs=path_parts)
 
     return render(request, 'page_print.html', locals())

@@ -3,7 +3,7 @@ import json
 from rfc3339 import rfc3339
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.db.models import Max, Min, Q
 from django.shortcuts import render

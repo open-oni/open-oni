@@ -23,7 +23,7 @@ from django.utils.http import urlquote
 from core.utils import strftime_safe
 from core.utils.image_urls import thumb_image_url, iiif_info_for_page
 
-from django.core import urlresolvers
+from django import urls
 
 
 class Awardee(models.Model):
@@ -1334,7 +1334,7 @@ class OcrDump(models.Model):
 
 
 def coordinates_path(url_parts):
-    url = urlresolvers.reverse('openoni_page', kwargs=url_parts)
+    url = urls.reverse('openoni_page', kwargs=url_parts)
     path = url2pathname(url)
     if path.startswith("/"):
         path = path[1:]

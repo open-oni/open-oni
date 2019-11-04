@@ -5,7 +5,7 @@ import datetime
 from urllib.parse import urlencode, unquote
 
 from solr import SolrConnection
-from django.core import urlresolvers
+from django import urls
 from django.core.paginator import Paginator, Page
 from django.db import connection, reset_queries
 from django.http import QueryDict
@@ -715,4 +715,4 @@ def similar_pages(page):
     query = '+type:page AND date:%s AND %s AND NOT(lccn:%s)' % (date, query_join([p.city for p in page.issue.title.places.all()], 'city'), page.issue.title.lccn)
     response = solr.query(query, rows=25)
     results = response.results
-    return [utils.get_page(**kwargs) for kwargs in [urlresolvers.resolve(r['id']).kwargs for r in results]]
+    return [utils.get_page(**kwargs) for kwargs in [urls.resolve(r['id']).kwargs for r in results]]
