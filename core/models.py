@@ -16,7 +16,7 @@ from lxml import etree
 from urllib.request import url2pathname
 
 from django.db import models
-from django.db.models import permalink, Q
+from django.db.models import Q
 from django.conf import settings
 from django.utils.http import urlquote
 
@@ -40,14 +40,12 @@ class Awardee(models.Model):
         return Page.objects.filter(issue__batch__awardee__org_code=self.org_code).count()
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_awardee', (), {'institution_code': self.org_code})
+        return urls.reverse('openoni_awardee', kwargs={'institution_code': self.org_code})
 
     @property
-    @permalink
     def json_url(self):
-        return ('openoni_awardee_json', (), {'institution_code': self.org_code})
+        return urls.reverse('openoni_awardee_json', kwargs={'institution_code': self.org_code})
 
     @property
     def abstract_url(self):
@@ -122,14 +120,12 @@ class Batch(models.Model):
         return Page.objects.filter(issue__batch__name=self.name).count()
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_batch', (), {'batch_name': self.name})
+        return urls.reverse('openoni_batch', kwargs={'batch_name': self.name})
 
     @property
-    @permalink
     def json_url(self):
-        return ('openoni_batch_dot_json', (), {'batch_name': self.name})
+        return urls.reverse('openoni_batch_dot_json', kwargs={'batch_name': self.name})
 
     @property
     def abstract_url(self):
@@ -226,14 +222,12 @@ class Title(models.Model):
     sitemap_indexed = models.DateTimeField(auto_now_add=False, null=True)
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_title', (), {'lccn': self.lccn})
+        return urls.reverse('openoni_title', kwargs={'lccn': self.lccn})
 
     @property
-    @permalink
     def json_url(self):
-        return ('openoni_title_dot_json', (), {'lccn': self.lccn})
+        return urls.reverse('openoni_title_dot_json', kwargs={'lccn': self.lccn})
 
     @property
     def abstract_url(self):
@@ -494,9 +488,8 @@ class MARC(models.Model):
         return etree.tostring(table, pretty_print=True)
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_title_marcxml', (), {'lccn': self.title.lccn})
+        return urls.reverse('openoni_title_marcxml', kwargs={'lccn': self.title.lccn})
 
 
 class Issue(models.Model):
@@ -513,29 +506,26 @@ class Issue(models.Model):
         return "%s [%s]" % (self.title.display_name, self.date_issued)
 
     @property
-    @permalink
     def url(self):
         date = self.date_issued
-        return ('openoni_issue_pages', (),
-                {'lccn': self.title.lccn,
+        return urls.reverse('openoni_issue_pages',
+                kwargs={'lccn': self.title.lccn,
                  'date': "%04i-%02i-%02i" % (date.year, date.month, date.day),
                  'edition': self.edition})
 
     @property
-    @permalink
     def json_url(self):
         date = self.date_issued
-        return ('openoni_issue_pages_dot_json', (),
-                {'lccn': self.title.lccn,
+        return urls.reverse('openoni_issue_pages_dot_json',
+                kwargs={'lccn': self.title.lccn,
                  'date': "%04i-%02i-%02i" % (date.year, date.month, date.day),
                  'edition': self.edition})
 
     @property
-    @permalink
     def rdf_url(self):
         date = self.date_issued
-        return ('openoni_issue_pages_dot_rdf', (),
-                {'lccn': self.title.lccn,
+        return urls.reverse('openoni_issue_pages_dot_rdf',
+                kwargs={'lccn': self.title.lccn,
                  'date': "%04i-%02i-%02i" % (date.year, date.month, date.day),
                  'edition': self.edition})
 
@@ -763,19 +753,16 @@ class Page(models.Model):
                 'sequence': self.sequence}
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_page', (), self._url_parts())
+        return urls.reverse('openoni_page', kwargs=self._url_parts())
 
     @property
-    @permalink
     def json_url(self):
-        return ('openoni_page_dot_json', (), self._url_parts())
+        return urls.reverse('openoni_page_dot_json', kwargs=self._url_parts())
 
     @property
-    @permalink
     def rdf_url(self):
-        return ('openoni_page_dot_rdf', (), self._url_parts())
+        return urls.reverse('openoni_page_dot_rdf', kwargs=self._url_parts())
 
 
     @property
@@ -783,24 +770,20 @@ class Page(models.Model):
         return self.url.rstrip('/') + '#page'
 
     @property
-    @permalink
     def jp2_url(self):
-        return ('openoni_page_jp2', (), self._url_parts())
+        return urls.reverse('openoni_page_jp2', kwargs=self._url_parts())
 
     @property
-    @permalink
     def ocr_url(self):
-        return ('openoni_page_ocr_xml', (), self._url_parts())
+        return urls.reverse('openoni_page_ocr_xml', kwargs=self._url_parts())
 
     @property
-    @permalink
     def txt_url(self):
-        return ('openoni_page_ocr_txt', (), self._url_parts())
+        return urls.reverse('openoni_page_ocr_txt', kwargs=self._url_parts())
 
     @property
-    @permalink
     def pdf_url(self):
-        return ('openoni_page_pdf', (), self._url_parts())
+        return urls.reverse('openoni_page_pdf', kwargs=self._url_parts())
 
     @property
     def solr_doc(self):
@@ -1024,9 +1007,8 @@ class Essay(models.Model):
         return self.titles.all()[0]
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_essay', (), {'essay_id': self.id})
+        return urls.reverse('openoni_essay', kwargs={'essay_id': self.id})
 
     class Meta:
         ordering = ['title']
