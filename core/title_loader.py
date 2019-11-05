@@ -6,7 +6,7 @@ from re import sub
 from time import time, strptime
 
 from pymarc import map_xml, record_to_xml
-from django.db import reset_queries
+from django.db import reset_queries, transaction
 from django.utils import timezone
 
 from core import models
@@ -58,6 +58,7 @@ class TitleLoader(object):
 
         map_xml(load_record, urllib.request.urlopen(location))
 
+    @transaction.atomic
     def load_bib(self, record):
         title = None
 
