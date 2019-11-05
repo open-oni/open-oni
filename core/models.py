@@ -76,7 +76,7 @@ class Batch(models.Model):
     name = models.CharField(max_length=250, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
     validated_batch_file = models.CharField(max_length=100)
-    awardee = models.ForeignKey('Awardee', related_name='batches', null=True)
+    awardee = models.ForeignKey('Awardee', related_name='batches', null=True, on_delete = models.CASCADE)
     released = models.DateTimeField(null=True)
     source = models.CharField(max_length=4096, null=True)
     sitemap_indexed = models.DateTimeField(auto_now_add=False, null=True)
@@ -214,7 +214,7 @@ class Title(models.Model):
     issn = models.CharField(null=True, max_length=15)
     start_year = models.CharField(max_length=10)
     end_year = models.CharField(max_length=10)
-    country = models.ForeignKey('Country')
+    country = models.ForeignKey('Country', on_delete = models.CASCADE)
     version = models.DateTimeField()
     created = models.DateTimeField(auto_now_add=True)
     has_issues = models.BooleanField(default=False, db_index=True)
@@ -426,7 +426,7 @@ class Title(models.Model):
 class AltTitle(models.Model):
     name = models.CharField(max_length=250)
     date = models.CharField(max_length=250, null=True)
-    title = models.ForeignKey('Title', related_name='alt_titles')
+    title = models.ForeignKey('Title', related_name='alt_titles', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ['name']
@@ -434,7 +434,7 @@ class AltTitle(models.Model):
 
 class MARC(models.Model):
     xml = models.TextField()
-    title = models.OneToOneField('Title', related_name='marc')
+    title = models.OneToOneField('Title', related_name='marc', on_delete = models.CASCADE)
 
     @property
     def html(self):
@@ -498,8 +498,8 @@ class Issue(models.Model):
     number = models.CharField(max_length=50)
     edition = models.IntegerField()
     edition_label = models.CharField(max_length=100)
-    title = models.ForeignKey('Title', related_name='issues')
-    batch = models.ForeignKey('Batch', related_name='issues')
+    title = models.ForeignKey('Title', related_name='issues', on_delete = models.CASCADE)
+    batch = models.ForeignKey('Batch', related_name='issues', on_delete = models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -655,8 +655,8 @@ class Page(models.Model):
     jp2_length = models.IntegerField(null=True)
     pdf_filename = models.CharField(max_length=250, null=True)
     ocr_filename = models.CharField(max_length=250, null=True)
-    issue = models.ForeignKey('Issue', related_name='pages')
-    reel = models.ForeignKey('Reel', related_name='pages', null=True)
+    issue = models.ForeignKey('Issue', related_name='pages', on_delete = models.CASCADE)
+    reel = models.ForeignKey('Reel', related_name='pages', null=True, on_delete = models.CASCADE)
     indexed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -891,13 +891,13 @@ class Page(models.Model):
 
 class LanguageText(models.Model):
     text = models.TextField()
-    language = models.ForeignKey('Language', null=True)
-    ocr = models.ForeignKey('OCR', related_name="language_texts")
+    language = models.ForeignKey('Language', null=True, on_delete = models.CASCADE)
+    ocr = models.ForeignKey('OCR', related_name="language_texts", on_delete = models.CASCADE)
 
 
 class OCR(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    page = models.OneToOneField('Page', null=True, related_name='ocr')
+    page = models.OneToOneField('Page', null=True, related_name='ocr', on_delete = models.CASCADE)
 
     @property
     def text(self):
@@ -906,7 +906,7 @@ class OCR(models.Model):
 
 class PublicationDate(models.Model):
     text = models.CharField(max_length=500)
-    titles = models.ForeignKey('Title', related_name='publication_dates')
+    titles = models.ForeignKey('Title', related_name='publication_dates', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ['text']
@@ -958,7 +958,7 @@ class Subject(models.Model):
 class Note(models.Model):
     text = models.TextField()
     type = models.CharField(max_length=3)
-    title = models.ForeignKey('Title', related_name='notes')
+    title = models.ForeignKey('Title', related_name='notes', on_delete = models.CASCADE)
 
     def __str__(self):
         return self.text
@@ -971,7 +971,7 @@ class PageNote(models.Model):
     label = models.TextField()
     text = models.TextField()
     type = models.CharField(max_length=50)
-    page = models.ForeignKey('Page', related_name='notes')
+    page = models.ForeignKey('Page', related_name='notes', on_delete = models.CASCADE)
 
     def __str__(self):
         return "type: %s label: %s text: %s" % (self.type, self.label, self.text)
@@ -984,7 +984,7 @@ class IssueNote(models.Model):
     label = models.TextField()
     text = models.TextField()
     type = models.CharField(max_length=50)
-    issue = models.ForeignKey('Issue', related_name='notes')
+    issue = models.ForeignKey('Issue', related_name='notes', on_delete = models.CASCADE)
 
     def __str__(self):
         return "type: %s label: %s text: %s" % (self.type, self.label, self.text)
@@ -997,7 +997,7 @@ class Essay(models.Model):
     title = models.TextField()
     created = models.DateTimeField()
     modified = models.DateTimeField()
-    creator = models.ForeignKey('Awardee', related_name='essays')
+    creator = models.ForeignKey('Awardee', related_name='essays', on_delete = models.CASCADE)
     essay_editor_url = models.TextField()
     html = models.TextField()
     loaded = models.DateTimeField(auto_now_add=True)
@@ -1017,9 +1017,9 @@ class Essay(models.Model):
 class Holding(models.Model):
     description = models.TextField(null=True)
     type = models.CharField(null=True, max_length=25)
-    institution = models.ForeignKey('Institution', related_name='holdings')
+    institution = models.ForeignKey('Institution', related_name='holdings', on_delete = models.CASCADE)
     last_updated = models.CharField(null=True, max_length=10)
-    title = models.ForeignKey('Title', related_name='holdings')
+    title = models.ForeignKey('Title', related_name='holdings', on_delete = models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(null=True, help_text="852$z")
 
@@ -1057,7 +1057,7 @@ class SucceedingTitleLink(models.Model):
     name = models.CharField(null=True, max_length=250)
     lccn = models.CharField(null=True, max_length=50)
     oclc = models.CharField(null=True, max_length=50)
-    title = models.ForeignKey('Title', related_name='succeeding_title_links')
+    title = models.ForeignKey('Title', related_name='succeeding_title_links', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ('name',)
@@ -1067,7 +1067,7 @@ class PreceedingTitleLink(models.Model):
     name = models.CharField(null=True, max_length=250)
     lccn = models.CharField(null=True, max_length=50)
     oclc = models.CharField(null=True, max_length=50)
-    title = models.ForeignKey('Title', related_name='preceeding_title_links')
+    title = models.ForeignKey('Title', related_name='preceeding_title_links', on_delete = models.CASCADE)
 
     def __str__(self):
         return "%s (%s)" % (self.name, self.lccn)
@@ -1080,7 +1080,7 @@ class RelatedTitleLink(models.Model):
     name = models.CharField(null=True, max_length=250)
     lccn = models.CharField(null=True, max_length=50)
     oclc = models.CharField(null=True, max_length=50)
-    title = models.ForeignKey('Title', related_name='related_title_links')
+    title = models.ForeignKey('Title', related_name='related_title_links', on_delete = models.CASCADE)
 
     def __str__(self):
         return "%s (%s)" % (self.name, self.lccn)
@@ -1111,7 +1111,7 @@ class Ethnicity(models.Model):
 
 class EthnicitySynonym(models.Model):
     synonym = models.CharField(null=False, max_length=250)
-    ethnicity = models.ForeignKey('Ethnicity', related_name='synonyms')
+    ethnicity = models.ForeignKey('Ethnicity', related_name='synonyms', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ('synonym',)
@@ -1184,7 +1184,7 @@ class Institution(models.Model):
 class PhysicalDescription(models.Model):
     text = models.TextField()
     type = models.CharField(max_length=3)
-    title = models.ForeignKey('Title', related_name='dates_of_publication')
+    title = models.ForeignKey('Title', related_name='dates_of_publication', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ('type',)
@@ -1193,7 +1193,7 @@ class PhysicalDescription(models.Model):
 class Url(models.Model):
     value = models.TextField()
     type = models.CharField(max_length=1, null=True)
-    title = models.ForeignKey('Title', related_name='urls')
+    title = models.ForeignKey('Title', related_name='urls', on_delete = models.CASCADE)
 
     def __str__(self):
         return self.value
@@ -1201,7 +1201,7 @@ class Url(models.Model):
 
 class Reel(models.Model):
     number = models.CharField(max_length=50)
-    batch = models.ForeignKey('Batch', related_name='reels')
+    batch = models.ForeignKey('Batch', related_name='reels', on_delete = models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     # not explicit mentioned in top level batch.xml
@@ -1215,7 +1215,7 @@ class OcrDump(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     sha1 = models.TextField()
     size = models.BigIntegerField()
-    batch = models.OneToOneField('Batch', related_name='ocr_dump')
+    batch = models.OneToOneField('Batch', related_name='ocr_dump', on_delete = models.CASCADE)
 
     @classmethod
     def new_from_batch(klass, batch):
@@ -1333,5 +1333,5 @@ class LccnDateCopyright(models.Model):
     lccn = models.CharField(max_length=25)
     start_date = models.DateField()
     end_date = models.DateField()
-    copyright = models.ForeignKey('Copyright', related_name='lccn_date_copyright')
+    copyright = models.ForeignKey('Copyright', related_name='lccn_date_copyright', on_delete = models.CASCADE)
 
