@@ -11,7 +11,7 @@ verify_config() {
   fi
 
   # Prepare the ENV dir if necessary
-  if [ ! -d /opt/openoni/ENV ]; then
+  if [ ! -d /opt/openoni/ENV/lib ]; then
     /pip-install.sh
   fi
 }

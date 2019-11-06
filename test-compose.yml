@@ -1,19 +1,22 @@
 version: '2'
 
+volumes:
+  onisrc:
+
 services:
   rdbms:
-    image: mysql:latest
+    image: mariadb:5.5
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=openoni
       - MYSQL_USER=openoni
       - MYSQL_PASSWORD=openoni
     volumes:
-      - ./conf/mysql/:/etc/mysql/conf.d:Z
+      - ./conf/mysql/:/etc/mysql/conf.d:ro
   solr:
     image: solr:6.6
     volumes:
-      - ./docker/solr/:/tmp/solr:Z
+      - ./docker/solr/:/tmp/solr:ro
     entrypoint:
       - docker-entrypoint.sh
       - /tmp/solr/precreate
@@ -22,13 +25,11 @@ services:
       context: ./docker
       dockerfile: Dockerfile-dev
     volumes:
-      - ./:/opt/openoni:Z
+      - ./:/usr/local/src/openoni:ro
+      - onisrc:/opt/openoni
     depends_on:
-      - rdbms
-    links:
       - rdbms
       - solr
     environment:
       - ONLY_RUN_TESTS=1
       - APP_URL
-      - HTTPPORT
