@@ -9,7 +9,7 @@ import logging
 import tarfile
 import textwrap
 import urllib.parse
-from io import StringIO
+import io
 
 from rfc3339 import rfc3339
 from lxml import etree
@@ -1299,14 +1299,14 @@ class OcrDump(models.Model):
         info = tarfile.TarInfo(name=txt_filename)
         info.size = len(ocr_text)
         info.mtime = time.time()
-        tar.addfile(info, StringIO(ocr_text))
+        tar.addfile(info, io.BytesIO(ocr_text))
 
         # add ocr xml
         xml_filename = relative_dir + "ocr.xml"
         info = tarfile.TarInfo(name=xml_filename)
         info.size = os.path.getsize(page.ocr_abs_filename)
         info.mtime = time.time()
-        tar.addfile(info, open(page.ocr_abs_filename))
+        tar.addfile(info, open(page.ocr_abs_filename, "rb"))
 
         logging.info("added %s to %s" % (page, tar.name))
 
@@ -1322,7 +1322,7 @@ class OcrDump(models.Model):
     def _calculate_sha1(self):
         """looks at the dump file and calculates the sha1 digest and stores it
         """
-        f = open(self.path)
+        f = open(self.path, "rb")
         sha1 = hashlib.sha1()
         while True:
             buff = f.read(2 ** 16)
