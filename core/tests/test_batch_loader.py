@@ -64,9 +64,14 @@ class BatchLoaderTest(TestCase):
         self.assertEqual(page.sequence, 1)
         self.assertEqual(page.url, u'/lccn/sn83030214/1999-06-15/ed-1/seq-1/')
 
-        note = page.notes.all()[1]
+        notes = page.notes.order_by("type").all()
+        self.assertEqual(len(notes), 2)
+        note = page.notes.all()[0]
         self.assertEqual(note.type, "noteAboutReproduction")
         self.assertEqual(note.text, "Present")
+        note = page.notes.all()[1]
+        self.assertEqual(note.type, "agencyResponsibleForReproduction")
+        self.assertEqual(note.text, "oru")
 
         # Validate page 1's metadata
         self.assertEqual(page.sequence, 1)
