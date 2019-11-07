@@ -164,7 +164,7 @@ class TitleLoader(object):
         title.save()
 
         marc, marc_created = models.MARC.objects.get_or_create(title=title)
-        marc.xml = record_to_xml(record)
+        marc.xml = record_to_xml(record).decode('utf-8')
         marc.save()
 
         if _is_openoni_electronic_resource(title, record):
