@@ -3,7 +3,6 @@ version: '2.1'
 services:
   rdbms:
     image: mariadb:5.5
-    env_file: .env
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=openoni
@@ -13,7 +12,7 @@ services:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-mariadb:/var/lib/mysql
     ports:
-      - ${RDBMSPORT:-3306}
+      - ${RDBMSPORT:-3306}:3306
   solr:
     image: solr:6.6
     volumes:
@@ -23,10 +22,9 @@ services:
       - docker-entrypoint.sh
       - /tmp/solr/precreate
     ports:
-      - ${SOLRPORT:-8983}
+      - ${SOLRPORT:-8983}:8983
   rais:
     image: uolibraries/rais
-    env_file: .env
     environment:
       - RAIS_IIIFURL=${ONI_BASE_URL:-http://localhost}/images/iiif
       - RAIS_TILECACHELEN=250
@@ -40,14 +38,13 @@ services:
       - ./:/opt/openoni:z
       - ./docker/data:${ONI_STORAGE_PATH:-/opt/openoni/data}:z
     ports:
-      - ${HTTPPORT:-80}
+      - ${HTTPPORT:-80}:80
     depends_on:
       - rdbms
     links:
       - rdbms
       - solr
       - rais
-    env_file: .env
     environment:
       - APACHE_LOG_LEVEL=${APACHE_LOG_LEVEL:-warn}
       - ONI_BASE_URL
