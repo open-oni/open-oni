@@ -1,9 +1,9 @@
 # Open ONI Changelog
 All notable changes to Open ONI will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic
-Versioning](https://semver.org/spec/v2.0.0.html).
+Starting from Open ONI v0.11, The format is based on [Keep a
+Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] - Django 1.11 LTS Upgrade, Production Docs, and Feature Updates
 ### Added
@@ -255,10 +255,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Deprecated
 - Django 1.8 to 1.11
-    - [Full deprecation
-      timeline](https://docs.djangoproject.com/en/1.11/internals/deprecation/)
+    - [Full deprecation timeline](https://docs.djangoproject.com/en/1.11/internals/deprecation/)
       for reference
     - Use of `MIDDLEWARE_CLASSES`, to be removed in Django 2.0
+- Python 2's end of life is coming soon, and Open ONI will *no longer
+  support it* after this release
 
 ### Removed
 - Django 1.8 to 1.11
@@ -291,6 +292,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
     - Handle unreliable path comparison due to trailing slash
     - Handle if `BATCH_STORAGE` path is a symlink
 - Invalid static tag use to render static URL in `page.html` data attributes
+- The docker-based test setup should now function properly
 
 ### Contributors
 - Karin Dalziel (karindalziel)
@@ -302,6 +304,17 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Greg Tunink (techgique)
 
 ### Migration
+
+Migrating to v0.11 requires special attention to a lot of changes.  Read this
+carefully before attempting a migration, and it may behoove you to read over
+the [Django upgrade notes](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/)
+if your ONI instance has a lot of custom code.
+
+- Rewrite your settings **from scratch**.  The new
+  `onisite/settings_local_example.py` file should help guide you, but enough
+  has changed this release that you can't just copy your old settings and
+  expect things to work!
+- If you were using a `docker-compose.override.yml` file, update its version to 2.1
 - Django 1.8 to 1.11
     - [Update use of (Request)Context objects passed to `template.render`
       calls at the end of code in view
