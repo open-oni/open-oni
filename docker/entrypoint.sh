@@ -3,7 +3,7 @@
 # entrypoint.sh copies the startup and management files into their proper
 # locations, then fires off startup.sh
 
-src=/opt/openoni/docker
+src=$ONI_APP_PATH/docker
 cp $src/pip-install.sh /pip-install.sh
 cp $src/pip-reinstall.sh /pip-reinstall.sh
 cp $src/load_batch.sh /load_batch.sh

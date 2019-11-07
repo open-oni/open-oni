@@ -25,10 +25,12 @@ RUN mkdir -p /var/cache/httpd/mod_disk_cache
 RUN chown -R www-data:www-data /var/cache/httpd
 RUN a2dissite 000-default.conf
 
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-VOLUME /opt/openoni
-WORKDIR /opt/openoni
+ARG ONI_APP_PATH
+ENV ONI_APP_PATH ${ONI_APP_PATH:-/opt/openoni}
 
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+VOLUME ${ONI_APP_PATH}
+WORKDIR ${ONI_APP_PATH}
 ADD entrypoint.sh /
 RUN chmod u+x /entrypoint.sh
 

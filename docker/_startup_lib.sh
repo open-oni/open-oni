@@ -11,7 +11,7 @@ verify_config() {
   fi
 
   # Prepare the ENV dir if necessary
-  if [ ! -d /opt/openoni/ENV ]; then
+  if [ ! -d $ONI_APP_PATH/ENV/lib ]; then
     /pip-install.sh
   fi
 }
@@ -47,15 +47,19 @@ setup_database() {
   echo "-------" >&2
   echo "Migrating database" >&2
   source ENV/bin/activate
-  /opt/openoni/manage.py migrate
+  $ONI_APP_PATH/manage.py migrate
 }
 
 prep_webserver() {
   mkdir -p /var/tmp/django_cache && chown -R www-data:www-data /var/tmp/django_cache
-  mkdir -p /opt/openoni/log
+  mkdir -p $ONI_APP_PATH/log
 
   # Update Apache config
-  cp /opt/openoni/docker/apache/openoni.conf /etc/apache2/sites-available/openoni.conf
+  cp $ONI_APP_PATH/docker/apache/openoni.conf /etc/apache2/sites-available/openoni.conf
+
+  # Set app path from env var ONI_APP_PATH
+  escaped_path=$(echo $ONI_APP_PATH | sed "s/\//\\\\\//g")
+  sed -i "s/!ONI_APP_PATH!/$escaped_path/g" /etc/apache2/sites-available/openoni.conf
 
   # Set Apache log level from APACHE_LOG_LEVEL in .env file
   sed -i "s/!LOGLEVEL!/$APACHE_LOG_LEVEL/g" /etc/apache2/sites-available/openoni.conf
@@ -64,14 +68,14 @@ prep_webserver() {
   a2ensite openoni
 
   # Get static files ready for Apache to serve
-  cd /opt/openoni
+  cd $ONI_APP_PATH
   source ENV/bin/activate
 
   echo "-------" >&2
   echo "Running collectstatic" >&2
-  /opt/openoni/manage.py collectstatic --noinput
+  $ONI_APP_PATH/manage.py collectstatic --noinput
   # Sass processor needs write access to STATIC_ROOT
-  chown -R www-data:www-data /opt/openoni/static/compiled
+  chown -R www-data:www-data $ONI_APP_PATH/static/compiled
 
   # Remove any pre-existing PID file which prevents Apache from starting thus
   # causing the container to close immediately after.

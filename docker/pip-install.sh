@@ -12,8 +12,8 @@ pip install -U setuptools
 pip install -U -r requirements.pip
 
 # Miscellaneous
-install -d /opt/openoni/static
-install -d /opt/openoni/.python-eggs
+install -d $ONI_APP_PATH/static
+install -d $ONI_APP_PATH/.python-eggs
 
 # Update requirements.lock
 pip list --format freeze > requirements.lock

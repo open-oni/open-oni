@@ -7,7 +7,7 @@ prep_webserver
 
 echo "Testing"
 
-cd /opt/openoni
+cd $ONI_APP_PATH
 source ENV/bin/activate
 coverage run --source="." --branch \
     --omit="ENV/*,*_example.py,onisite/settings*,onisite/test_settings.py,onisite/urls.py,core/migrations/*,core/tests/*,onisite/wsgi.py" \
