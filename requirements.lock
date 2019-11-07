@@ -7,11 +7,11 @@ future==0.18.2
 idna==2.8
 isodate==0.6.0
 lxml==4.4.1
-mysqlclient==1.4.4
+mysqlclient==1.4.5
 Pillow==6.2.1
 pip==19.3.1
 pymarc==3.1.13
-pyparsing==2.4.2
+pyparsing==2.4.4
 python-mimeparse==1.6.0
 pytz==2019.3
 rdflib==4.2.2
@@ -19,7 +19,7 @@ requests==2.22.0
 rfc3339==6.2
 setuptools==41.6.0
 simplejson==3.16.0
-six==1.12.0
+six==1.13.0
 solrpy==0.9.9
 urllib3==1.25.6
 worldcat==0.3.6
