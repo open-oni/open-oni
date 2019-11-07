@@ -2,14 +2,10 @@ certifi==2019.9.11
 chardet==3.0.4
 coverage==4.5.4
 Django==1.11.26
-django-appconf==1.0.3
-django-compressor==2.3
-django-sass-processor==0.7.4
 feedparser==5.2.1
 future==0.18.2
 idna==2.8
 isodate==0.6.0
-libsass==0.19.4
 lxml==4.4.1
 mysqlclient==1.4.4
 Pillow==6.2.1
@@ -18,11 +14,9 @@ pymarc==3.1.13
 pyparsing==2.4.2
 python-mimeparse==1.6.0
 pytz==2019.3
-rcssmin==1.0.6
 rdflib==4.2.2
 requests==2.22.0
 rfc3339==6.2
-rjsmin==1.1.0
 setuptools==41.6.0
 simplejson==3.16.0
 six==1.12.0

@@ -111,7 +111,6 @@ INSTALLED_APPS = (
     # See https://github.com/open-oni?q=plugin for available plugins
 
     # Open ONI
-    'sass_processor',
     'themes.default',
     'core',
 )

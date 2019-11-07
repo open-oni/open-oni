@@ -1,6 +1,5 @@
 {% extends "__base.html" %}
 
-{% load sass_tags %}
 {% load static from staticfiles %}
 
 {% comment %}
@@ -66,5 +65,5 @@
 
 {% block head_page_css %}
   {{ block.super }}
-  <link href="{% sass_src 'css/main.scss' %}" rel="stylesheet">
+  <link href="{% static 'css/main.css' %}" rel="stylesheet">
 {% endblock head_page_css %}

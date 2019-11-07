@@ -28,7 +28,6 @@ TILE_SERVER = BASE_URL+"/images/tile"
 INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.staticfiles',
-    'sass_processor',
     'themes.default',
     'core',
 )

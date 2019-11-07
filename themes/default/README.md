@@ -15,7 +15,6 @@ INSTALLED_APPS = (
 
     # Open ONI
     'django.contrib.humanize',  # Added to make data more human-readable
-    'sass_processor',
     'themes.YOUR_THEME_NAME_HERE',
     'themes.default',
     'core',

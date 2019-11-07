@@ -1,8 +1,5 @@
 coverage
 Django>=1.11,<1.12
-    django-sass-processor
-        django-compressor
-        libsass
 feedparser
 lxml
 mysqlclient

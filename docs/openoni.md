@@ -153,7 +153,6 @@ INSTALLED_APPS = (
 
     # Open ONI
     'django.contrib.humanize',  # Added to make data more human-readable
-    'sass_processor',
     'themes.nebraska',
     'themes.default',
     'core',
@@ -272,10 +271,7 @@ Run these commands as a regular user rather than root
 cd /opt/openoni
 source ENV/bin/activate
 
-# Note: compilescss commands only necessary for production environment
-./manage.py compilescss
 ./manage.py collectstatic -c
-./manage.py compilescss --delete-files
 
 # Grant write access for both Apache and group
 sudo chown -R apache static/compiled/

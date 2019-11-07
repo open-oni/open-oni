@@ -20,7 +20,6 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
   dependencies and restart Apache
 - Load batch management command help text and batch existence check with error
   message
-- Sass support for CSS
 - Comments in `docker/_startup_lib.sh` that identify `.env` file as source of
   environment variables used for configuration
 - Strict mode use in MariaDB/MySQL via `sql_mode = TRADITIONAL`
@@ -51,7 +50,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
     - Change toggle for disabling sort to `sort-off` class on <th> element,
       rather than defaulting to fourth column
     - Update template to use new toggle classes
-    - Update tablesorter Sass; Use default cursor on unsorted column header
+    - Update tablesorter css; Use default cursor on unsorted column header
     - Move initializing JavaScript on `newspapers.html` to external file
       `newspapers.js`
 - Update jQuery to 3.4.1
@@ -220,17 +219,15 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
     - Clean up `__overrides.html` with clearer documentation including block
       list and simpler default overrides for favicon and page meta tags
     - Add generic favicon.png to default theme
-    - Remove empty/unused `main.scss` from core
-        - Rename default theme's `main.css` to `main.scss`
 - Design consistency
     - Change search / submit / etc buttons to use Bootstrap primary color
     - Title case on button text rather than all letters capitalized
 - Clean up CSS files and conditional inclusion
-    - Move `main.scss` inclusion from `__base.html` into default theme
-      `__overrides.html` as `main.scss` lives in the default theme
-    - Move minimal contents of `a11y.css` into `main.scss`
+    - Move `main.css` inclusion from `__base.html` into default theme
+      `__overrides.html` as `main.css` lives in the default theme
+    - Move minimal contents of `a11y.css` into `main.css`
     - Move minimal contents of `highlights.css` into `search.css`
-    - Move `tablesort.scss` to only be included when necessary
+    - Move `tablesort.css` to only be included when necessary
         - Add margin to top of table for space between search input
     - Remove unnecessary `media` attribute from link elements
     - Move dev-only comments to template comment for `page.html` CSS
@@ -327,17 +324,12 @@ if your ONI instance has a lot of custom code.
       code](https://github.com/open-oni/open-oni/commit/c40ca4eb87a47865c1d88cb92d3b9d316cea277f)
     - [Convert `optparse` to `argparse` in custom management
       commands](https://github.com/open-oni/open-oni/commit/37854ea135ce011add09040de06506c794e130d0)
-- Enable Sass support
-    - Add `sass_processor` to `INSTALLED_APPS` below `django.contrib.humanize`
-      and above `themes.(your theme)`
-    - Add `{% load sass_tags %}` atop associated templates
-    - Rename `main.css` to `main.scss`
 - Tablesorter update for `newspapers.html`
     - Add `sort-titles` class on <th> element to toggle use of title sort parser
       which ignores articles "a", "an", and "the"
     - Add `sort-off` class on <th> element to disabling sorting by column(s)
 - Review updated `__base.html` and default theme `__overrides.html` to mimic
-  inclusion of `main.scss`, favicon, and default page author + description
+  inclusion of favicon and default page author + description
   `<meta>` tags
 - Update skip links and return to top links to target `#maincontent`
 
