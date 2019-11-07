@@ -24,3 +24,4 @@ onisite/plugins/*
 
 # Ignore Docker overrides
 /docker-compose.override.yml
+.env

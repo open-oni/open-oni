@@ -85,7 +85,7 @@ class Batch(models.Model):
 
     @classmethod
     def viewable_batches(klass):
-        if settings.IS_PRODUCTION:
+        if not settings.DEBUG:
             batches = Batch.objects.filter(released__isnull=False)
         else:
             batches = Batch.objects.all()
