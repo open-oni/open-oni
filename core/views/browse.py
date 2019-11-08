@@ -13,7 +13,7 @@ from django.core import urlresolvers
 from django.forms import fields
 from django.http import HttpResponse, HttpResponseNotFound, Http404, \
     HttpResponseRedirect, HttpResponsePermanentRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.defaultfilters import filesizeformat
@@ -37,8 +37,7 @@ def issues(request, year=None):
     page_title = "Browse All Issues"
     page_name = "issues"
     crumbs = list(settings.BASE_CRUMBS)
-    return render_to_response("issues.html", dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'issues.html', locals())
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def issues_title(request, lccn, year=None):
@@ -48,8 +47,7 @@ def issues_title(request, lccn, year=None):
     page_title = "Browse Issues: %s" % title.display_name
     page_name = "issues_title"
     crumbs = create_crumbs(title)
-    return render_to_response('issues_title.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'issues_title.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -61,8 +59,7 @@ def title_holdings(request, lccn):
 
     holdings = title.holdings.select_related('institution').order_by('institution__name')
 
-    return render_to_response('holdings.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'holdings.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -71,8 +68,7 @@ def title_marc(request, lccn):
     page_title = "MARC Bibliographic Record: %s" % label(title)
     page_name = "marc"
     crumbs = create_crumbs(title)
-    return render_to_response('marc.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'marc.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -110,9 +106,8 @@ def title_atom(request, lccn, page_number=1):
         feed_updated = title.created
 
     host = request.get_host()
-    return render_to_response('title.xml', dictionary=locals(),
-                              content_type='application/atom+xml',
-                              context_instance=RequestContext(request))
+    return render(request, 'title.xml', locals(),
+                  content_type='application/atom+xml')
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -134,12 +129,24 @@ def issue_pages(request, lccn, date, edition, page_number=1):
                                     edition=edition).order_by("-created")[0]
     except IndexError, e:
         raise Http404
-    paginator = Paginator(issue.pages.all(), 20)
+    issue_pages = []
+    for page in issue.pages.all():
+        # include both issue and page because of how metadata
+        # is being pulled in the template
+        issue_pages.append({'issue': issue, 'page': page})
+    paginator = Paginator(issue_pages, 20)
     try:
         page = paginator.page(page_number)
     except InvalidPage:
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
+
+    # set page number variables
+    if page.has_previous():
+        previous_page_number = int(page_number) - 1
+    if page.has_next():
+        next_page_number = int(page_number) + 1
+
     if not page.object_list:
         notes = issue.notes.filter(type="noteAboutReproduction")
         num_notes = notes.count()
@@ -150,8 +157,7 @@ def issue_pages(request, lccn, date, edition, page_number=1):
     page_head_heading = "All Pages: %s, %s" % (title.display_name, label(issue))
     page_head_subheading = label(title)
     crumbs = create_crumbs(title, issue, date, edition)
-    response = render_to_response('issue_pages.html', dictionary=locals(),
-                                  context_instance=RequestContext(request))
+    response = render(request, 'issue_pages.html', locals())
     return response
 
 
@@ -251,11 +257,10 @@ def page(request, lccn, date, edition, sequence, words=None):
 
     image_credit = issue.batch.awardee.name
     host = request.get_host()
+    static_url = settings.STATIC_URL
 
     template = "page.html"
-    related_pages = solr_index.similar_pages(page)
-    response = render_to_response(template, dictionary=locals(),
-                                  context_instance=RequestContext(request))
+    response = render(request, template, locals())
     return response
 
 
@@ -280,8 +285,7 @@ def titles(request, start=None, page_number=1):
     browse_val.extend([str(i) for i in range(10)])
     collapse_search_tab = True
     crumbs = list(settings.BASE_CRUMBS)
-    return render_to_response('titles.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'titles.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -312,17 +316,17 @@ def title(request, lccn):
         if num_notes >= 1:
             explanation = rep_notes[0].text
 
-    # adding essay info on this page if it exists
-    first_essay = title.first_essay
     first_issue = title.first_issue
     if first_issue:
         issue_date = first_issue.date_issued
 
-    crumbs = create_crumbs(title)
-    response = render_to_response('title.html', dictionary=locals(),
-                                  context_instance=RequestContext(request))
-    return response
+    # add essay info on this page from either the database or from a template
+    first_essay = title.first_essay
+    essay_template = os.path.join(settings.ESSAY_TEMPLATES, title.lccn+".html")
 
+    crumbs = create_crumbs(title)
+    response = render(request, 'title.html', locals())
+    return response
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def titles_in_city(request, state, county, city,
@@ -349,8 +353,7 @@ def titles_in_city(request, state, county, city,
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
 
-    return render_to_response('reports/city.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/city.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -376,8 +379,7 @@ def titles_in_county(request, state, county,
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
 
-    return render_to_response('reports/county.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/county.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -400,8 +402,7 @@ def titles_in_state(request, state, page_number=1, order='name_normal'):
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
 
-    return render_to_response('reports/state.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/state.html', locals())
 
 
 # TODO: this redirect can go away some suitable time after 08/2010
@@ -471,8 +472,7 @@ def page_ocr(request, lccn, date, edition, sequence):
     page_title = "%s, %s, %s" % (label(title), label(issue), label(page))
     crumbs = create_crumbs(title, issue, date, edition, page)
     host = request.get_host()
-    return render_to_response('page_text.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'page_text.html', locals())
 
 
 def page_pdf(request, lccn, date, edition, sequence):
@@ -527,8 +527,7 @@ def page_print(request, lccn, date, edition, sequence,
     url = urlresolvers.reverse('openoni_page_print',
                                kwargs=path_parts)
 
-    return render_to_response('page_print.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'page_print.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -540,7 +539,9 @@ def issues_first_pages(request, lccn, page_number=1):
 
     first_pages = []
     for issue in issues:
-        first_pages.append(issue.first_page)
+        # include both issue and page because in some cases
+        # an issue exists which has no associated pages
+        first_pages.append({'issue': issue, 'page': issue.first_page})
 
     paginator = Paginator(first_pages, 20)
     try:
@@ -549,9 +550,14 @@ def issues_first_pages(request, lccn, page_number=1):
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
 
+    # set page number variables
+    if page.has_previous():
+        previous_page_number = int(page_number) - 1
+    if page.has_next():
+        next_page_number = int(page_number) + 1
+
     page_title = 'Browse Issues: %s' % label(title)
     page_head_heading = "Browse Issues: %s" % title.display_name
     page_head_subheading = label(title)
     crumbs = create_crumbs(title)
-    return render_to_response('issue_pages.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'issue_pages.html', locals())

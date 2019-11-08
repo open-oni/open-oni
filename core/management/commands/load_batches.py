@@ -15,25 +15,27 @@ _logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    option_list = BaseCommand.option_list + (
-        make_option('--skip-process-ocr', 
-                    action='store_false', 
-                    dest='process_ocr', default=True,
-                    help='Do not generate ocr, and index'),
-        make_option('--skip-process-coordinates', 
-                    action='store_false', 
-                    dest='process_ocr', default=True,
-                    help='Do not write out word coordinates'),
-    )
     help = "Load batches by name from a batch list file"
-    args = '<batch_list_filename>'
+
+    def add_arguments(self, parser):
+        # Positional arguments
+        parser.add_argument('batch_list_filename')
+
+        # Options
+        parser.add_argument('--skip-coordinates', action='store_true',
+                            default=True, dest='process_coordinates',
+                            help='Do not write out word coordinates')
+        parser.add_argument('--skip-process-ocr', action='store_true',
+                            default=True, dest='process_ocr',
+                            help='Do not generate ocr, and index')
 
     def handle(self, batch_list_filename, *args, **options):
         if len(args)!=0:
             raise CommandError('Usage is load_batch %s' % self.args)
 
-        loader = batch_loader.BatchLoader(process_ocr=options['process_ocr'],
-                                          process_coordinates=options['process_coordinates'])
+        loader = batch_loader.BatchLoader(
+            process_ocr=options['process_ocr'],
+            process_coordinates=options['process_coordinates'])
         batch_list = file(batch_list_filename)
         _logger.info("batch_list_filename: %s" % batch_list_filename)
         for line in batch_list:

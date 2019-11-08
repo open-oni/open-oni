@@ -14,10 +14,11 @@ _logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    option_list = BaseCommand.option_list + (
-    )
     help = "Process word coordinates for a batch by name from a batch list file"
-    args = '<batch_list_filename>'
+
+    def add_arguments(self, parser):
+        # Positional arguments
+        parser.add_argument('batch_list_filename')
 
     def handle(self, batch_list_filename, *args, **options):
         if len(args)!=0:

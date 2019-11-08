@@ -1,10 +1,10 @@
 import os
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.conf import settings
 from django.utils import cache
 
-from views import home, browse, directory, image, reports, search, static
+from views import home, browse, directory, reports, search, static
 
 handler404 = 'django.views.defaults.page_not_found'
 handler500 = 'django.views.defaults.server_error'
@@ -30,15 +30,11 @@ urlpatterns = [
         cache_page(home.frontpages, settings.DEFAULT_TTL_SECONDS),
         name="openoni_frontpages_date_json"),
 
+    # Served direct by Apache, but Django needs to provide reversed URL
+    # as data-coordinates_url attribute in page.html, thus 'static.empty' view
     # example: /lccn/sn85066387/1907-03-17/ed-1/seq-4/coordinates/
     url(r'^lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)/coordinates/$',
-        cache_page(image.coordinates, settings.PAGE_IMAGE_TTL_SECONDS),
-        name="openoni_page_coordinates"),
-
-    # example: /lccn/sn85066387/1907-03-17/ed-1/seq-4/coordinates/;words=corn+peas+cigars
-    url(r'^lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)/coordinates/;words=(?P<words>.+)$',
-        cache_page(image.coordinates, settings.DEFAULT_TTL_SECONDS),
-        name="openoni_page_coordinates_words"),
+        static.empty, name="openoni_page_coordinates"),
 
     url(r'^about/$', static.about, name="openoni_about"),
 

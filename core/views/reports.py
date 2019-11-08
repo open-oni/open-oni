@@ -1,56 +1,59 @@
 import csv
 from rfc3339 import rfc3339
-import datetime
 import json
 
 from django.conf import settings
 from django.core import urlresolvers
 from django.db.models import Min, Max, Count
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 from django.core.paginator import Paginator, InvalidPage
 from django.db import connection
-from django.utils import datetime_safe
+from django.utils import timezone
 
 from core import models
 from core import solr_index
 from core.rdf import batch_to_graph, awardee_to_graph
 from core.utils.url import unpack_url_path
 from core.decorator import cache_page, rdf_view, cors
+from core.utils import strftime_safe
 from core.utils.utils import _page_range_short, _rdf_base, _get_tip
 
 
 @cache_page(settings.API_TTL_SECONDS)
 def reports(request):
     page_title = 'Reports'
-    return render_to_response('reports/reports.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/reports.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
 def batches(request, page_number=1):
     page_title = 'Batches'
-    batches = models.Batch.viewable_batches()
+    batches = models.Batch.viewable_batches().order_by('-created')
     paginator = Paginator(batches, 25)
     page = paginator.page(page_number)
     page_range_short = list(_page_range_short(paginator, page))
 
-    return render_to_response('reports/batches.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    # set page number variables
+    if page.has_previous():
+        previous_page_number = int(page_number) - 1
+    if page.has_next():
+        next_page_number = int(page_number) + 1
+
+    return render(request, 'reports/batches.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
 def batches_atom(request, page_number=1):
     batches = models.Batch.viewable_batches()
     batches = batches.order_by('-released')
-    now = rfc3339(datetime.datetime.now())
+    now = rfc3339(timezone.now())
 
     paginator = Paginator(batches, 25)
     page = paginator.page(page_number)
-    return render_to_response('reports/batches.xml', dictionary=locals(),
-                              context_instance=RequestContext(request),
-                              content_type='application/atom+xml')
+    return render(request, 'reports/batches.xml', locals(),
+                  content_type='application/atom+xml')
 
 
 @cors
@@ -85,41 +88,27 @@ def batches_csv(request):
 @cache_page(settings.API_TTL_SECONDS)
 def batch(request, batch_name):
     batch = get_object_or_404(models.Batch, name=batch_name)
+
+    awardee = batch.awardee
+
+    issues = []
+    for issue in batch.issues.all().select_related("title"):
+        page_count = 0 if not issue.pages else issue.pages.count
+        issues.append({'lccn': issue.title.lccn,
+                       'title': issue.title.name,
+                       'date_issued': issue.date_issued,
+                       'page_count': page_count })
+
     reels = []
     for reel in batch.reels.all():
+        page_count = 0 if not reel.pages else reel.pages.count
         reels.append({'number': reel.number,
                       'titles': reel.titles(),
                       'title_range': _title_range(reel),
-                      'page_count': reel.pages.all().count(), })
+                      'page_count': reel.pages.count })
     page_title = 'Batch: %s' % batch.name
 
-    # maybe when we can prefetch_related when django v1.4 is available
-    # https://docs.djangoproject.com/en/dev/ref/models/querysets/#prefetch-related
-    # this can be done more elegantly with the django ORM
-    # for now it's ugly raw-sql and ugly indexed values in the template
-    sql = """
-          SELECT core_title.name,
-              core_title.lccn,
-              DATE_FORMAT(core_issue.date_issued, '%%Y-%%m-%%d') AS issued,
-              COUNT(core_page.id) AS page_count,
-              core_title.name_normal
-          FROM core_batch, core_issue, core_title, core_page
-          WHERE core_batch.name = %s
-            AND core_issue.batch_id = core_batch.name
-            AND core_issue.title_id = core_title.lccn
-            AND core_page.issue_id = core_issue.id
-          GROUP BY core_title.name,
-              core_title.name_normal,
-              core_title.lccn,
-              issued
-          ORDER BY core_title.name_normal, issued ASC
-          """
-    cursor = connection.cursor()
-    cursor.execute(sql, [batch.name])
-    issue_stats = cursor.fetchall()
-
-    return render_to_response('reports/batch.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/batch.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -175,8 +164,7 @@ def page_json(request, lccn, date, edition, sequence):
 def event(request, event_id):
     page_title = 'Event'
     event = get_object_or_404(models.LoadBatchEvent, id=event_id)
-    return render_to_response('reports/event.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/event.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -187,8 +175,7 @@ def events(request, page_number=1):
     page = paginator.page(page_number)
     page_range_short = list(_page_range_short(paginator, page))
 
-    return render_to_response('reports/events.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/events.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -209,9 +196,8 @@ def events_atom(request, page_number=1):
     paginator = Paginator(events, 25)
     page = paginator.page(page_number)
     page_range_short = list(_page_range_short(paginator, page))
-    return render_to_response('reports/events.xml', dictionary=locals(),
-                              context_instance=RequestContext(request),
-                              content_type='application/atom+xml')
+    return render(request, 'reports/events.xml', locals(),
+                  content_type='application/atom+xml')
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -234,8 +220,7 @@ def states(request, format='html'):
         return HttpResponse(json.dumps(states),
                             content_type='application/json')
     states = [n[0] for n in cursor.fetchall()]
-    return render_to_response('reports/states.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/states.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -255,8 +240,7 @@ def counties_in_state(request, state, format='html'):
     counties = [name for name in county_names]
     if len(counties) == 0:
         raise Http404
-    return render_to_response('reports/counties.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/counties.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -272,8 +256,7 @@ GROUP BY state, county HAVING total >= 1 ORDER BY state, county")
 
     states_counties = [(n[0], n[1], n[2]) for n in cursor.fetchall()]
 
-    return render_to_response('reports/states_counties.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/states_counties.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -292,8 +275,7 @@ def cities_in_county(request, state, county, format='html'):
     if format == 'json':
         return HttpResponse(json.dumps(cities),
                             content_type='application/json')
-    return render_to_response('reports/cities.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/cities.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -312,8 +294,7 @@ def cities_in_state(request, state, format='html'):
     if format == 'json':
         return HttpResponse(json.dumps(cities),
                             content_type='application/json')
-    return render_to_response('reports/cities.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/cities.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -326,8 +307,7 @@ def institutions(request, page_number=1):
     except InvalidPage:
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
-    return render_to_response('reports/institutions.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/institutions.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -338,8 +318,7 @@ def institution(request, code):
         holdings__institution=institution).distinct().count()
     holdings_count = models.Holding.objects.filter(
         institution=institution).count()
-    return render_to_response('reports/institution.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/institution.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -354,8 +333,7 @@ def institution_titles(request, code, page_number=1):
     except InvalidPage:
         page = paginator.page(1)
     page_range_short = list(_page_range_short(paginator, page))
-    return render_to_response('reports/institution_titles.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/institution_titles.html', locals())
 
 
 @cache_page(10)
@@ -369,16 +347,14 @@ def status(request):
     essay_count = models.Essay.objects.all().count()
     pages_indexed = solr_index.page_count()
     titles_indexed = solr_index.title_count()
-    return render_to_response('reports/status.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/status.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
 def awardees(request):
     page_title = 'Awardees'
     awardees = models.Awardee.objects.all().order_by('name')
-    return render_to_response('reports/awardees.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/awardees.html', locals())
 
 
 @cors
@@ -404,8 +380,7 @@ def awardee(request, institution_code):
     awardee = get_object_or_404(models.Awardee, org_code=institution_code)
     page_title = 'Awardee: %s' % awardee.name
     batches = models.Batch.objects.filter(awardee=awardee)
-    return render_to_response('reports/awardee.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/awardee.html', locals())
 
 
 @cors
@@ -430,8 +405,7 @@ def awardee_rdf(request, institution_code):
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def terms(request):
-    return render_to_response('reports/terms.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/terms.html', locals())
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
@@ -450,12 +424,9 @@ def batch_summary(request, format='html'):
     cursor.execute(sql)
     batch_details = cursor.fetchall()
     if format == 'txt':
-        return render_to_response('reports/batch_summary.txt', dictionary=locals(),
-                                  context_instance=RequestContext(request),
-                                  content_type="text/plain")
-    return render_to_response('reports/batch_summary.html',
-                              dictionary=locals(),
-                              context_instance=RequestContext(request))
+        return render(request, 'reports/batch_summary.txt', locals(),
+                      content_type='text/plain')
+    return render(request, 'reports/batch_summary.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -466,8 +437,7 @@ def reels(request, page_number=1):
     page = paginator.page(page_number)
     page_range_short = list(_page_range_short(paginator, page))
 
-    return render_to_response('reports/reels.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/reels.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -484,16 +454,14 @@ def reel(request, reel_number):
         reels.append({'batch': reel.batch,
                       'titles': reel.titles(),
                       'title_range': _title_range(reel), })
-    return render_to_response('reports/reel.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/reel.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
 def essays(request):
     page_title = "Newspaper Essays"
     essays = models.Essay.objects.all().order_by('title')
-    return render_to_response('reports/essays.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/essays.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -501,16 +469,14 @@ def essay(request, essay_id):
     essay = get_object_or_404(models.Essay, id=essay_id)
     title = essay.first_title()
     page_title = essay.title
-    return render_to_response('reports/essay.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/essay.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
 def ocr(request):
     page_title = "OCR Data"
     dumps = models.OcrDump.objects.all().order_by('-created')
-    return render_to_response('reports/ocr.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/ocr.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -519,10 +485,9 @@ def ocr_atom(request):
     if dumps.count() > 0:
         last_updated = dumps[0].created
     else:
-        last_updated = datetime.datetime.now()
-    return render_to_response('reports/ocr.xml', dictionary=locals(),
-                              context_instance=RequestContext(request),
-                              content_type='application/atom+xml')
+        last_updated = timezone.now()
+    return render(request, 'reports/ocr.xml', locals(),
+                  content_type='application/atom+xml')
 
 
 @cors
@@ -541,8 +506,7 @@ def languages(request):
     languages = models.LanguageText.objects.values('language__code', 'language__name').annotate(
         count=Count('language'))
 
-    return render_to_response('reports/languages.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/languages.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -559,8 +523,7 @@ def language_batches(request, language, page_number=1):
         except InvalidPage:
             page = paginator.page(1)
         page_range_short = list(_page_range_short(paginator, page))
-    return render_to_response('reports/language_batches.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/language_batches.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -577,8 +540,7 @@ def language_titles(request, language, page_number=1):
         except InvalidPage:
             page = paginator.page(1)
         page_range_short = list(_page_range_short(paginator, page))
-    return render_to_response('reports/language_titles.html', dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, 'reports/language_titles.html', locals())
 
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -616,16 +578,15 @@ def language_pages(request, language, batch, title=None, page_number=1):
         except InvalidPage:
             page = paginator.page(1)
         page_range_short = list(_page_range_short(paginator, page))
-    return render_to_response(path, dictionary=locals(),
-                              context_instance=RequestContext(request))
+    return render(request, path, locals())
 
 
 def _title_range(reel):
     agg = models.Issue.objects.filter(pages__reel=reel).distinct().aggregate(
         mn=Min('date_issued'), mx=Max('date_issued'))
     if agg['mn'] and agg['mx']:
-        mn = datetime_safe.new_datetime(agg['mn']).strftime('%b %d, %Y')
-        mx = datetime_safe.new_datetime(agg['mx']).strftime('%b %d, %Y')
+        mn = strftime_safe(agg['mn'], '%b %d, %Y')
+        mx = strftime_safe(agg['mx'], '%b %d, %Y')
         return "%s - %s" % (mn, mx)
     else:
         return ""

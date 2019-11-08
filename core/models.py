@@ -20,7 +20,7 @@ from django.db.models import permalink, Q
 from django.conf import settings
 from django.utils.http import urlquote
 
-from core.utils import strftime
+from core.utils import strftime_safe
 from core.utils.image_urls import thumb_image_url, iiif_info_for_page
 
 from django.core import urlresolvers
@@ -64,7 +64,7 @@ class Awardee(models.Model):
 
         if include_batches:
             for batch in self.batches.all():
-                j['collections'].append(batch.json(host, include_issues=True, serialize=False))
+                j['collections'].append(batch.json(host, include_issues=False, serialize=False))
 
         if serialize:
             return json.dumps(j, indent=2)
@@ -85,7 +85,7 @@ class Batch(models.Model):
 
     @classmethod
     def viewable_batches(klass):
-        if settings.IS_PRODUCTION:
+        if not settings.DEBUG:
             batches = Batch.objects.filter(released__isnull=False)
         else:
             batches = Batch.objects.all()
@@ -241,7 +241,7 @@ class Title(models.Model):
 
     @property
     def display_name(self):
-        if self.medium:
+        if settings.TITLE_DISPLAY_MEDIUM and self.medium:
             return ' '.join([self.name, self.medium])
         else:
             return self.name
@@ -345,7 +345,7 @@ class Title(models.Model):
             j["manifests"].append({
                 "@id": settings.BASE_URL + issue.json_url,
                 "@type": "sc:Manifest",
-                "label": strftime(issue.date_issued, "%Y-%m-%d")
+                "label": strftime_safe(issue.date_issued, '%Y-%m-%d')
             })
 
         if serialize:
@@ -891,9 +891,7 @@ class Page(models.Model):
 
     def __unicode__(self):
         parts = [u'%s' % self.issue.title]
-        # little hack to get django's datetime support for stftime
-        # when the year is < 1900
-        parts.append(strftime(self.issue.date_issued, '%B %d, %Y'))
+        parts.append(strftime_safe(self.issue.date_issued, '%B %d, %Y'))
         if self.issue.edition_label:
             parts.append(self.issue.edition_label)
         if self.section_label:

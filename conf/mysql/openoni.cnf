@@ -8,6 +8,7 @@ thread_cache_size               = 32
 
 # Data
 character_set_server            = utf8
+sql_mode                        = TRADITIONAL
 
 # Logging
 log_queries_not_using_indexes   = 0

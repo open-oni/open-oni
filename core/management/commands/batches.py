@@ -4,7 +4,6 @@ from core import models
     
 class Command(BaseCommand):
     help = "Displays information about batches"
-    args = ''
 
     def handle(self, *args, **options):
 

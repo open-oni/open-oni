@@ -52,15 +52,19 @@
     background-color:#fff;
 }
 
+#imageViewer_nav #item-ctrl {
+  height: 2em;
+  margin: 0.25em;
+}
+
 #item-ctrl {
     position: relative;
 }
 
 .other_controls {
-    margin-left:160px;
+    border-left: solid 1px #aaa;
     display: inline-block;
-    border-left:solid 1px #aaa;
-    
+    margin-left: 0.5em;
 }
 
 .imageViewer_pagejump {
@@ -69,10 +73,11 @@
 }
 
 #imageViewer_nav .control {
-    border-right:solid 1px #aaa;
-    padding:7px 12px;
+    border-right: solid 1px #aaa;
     display: inline-block;
-
+    height: 2.5em;
+    line-height: 2em;
+    padding: 7px 12px;
 }
 
 #imageViewer_nav .control_pages {

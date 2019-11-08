@@ -15,6 +15,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
   mysql-client \
   python-dev \
   python-virtualenv \
+  rsync \
   supervisor
 
 # Force apache error logs to stderr
@@ -23,7 +24,6 @@ RUN ln -sf /proc/self/fd/1 /var/log/apache2/error.log
 RUN a2enmod cache cache_disk expires rewrite proxy_http
 RUN mkdir -p /var/cache/httpd/mod_disk_cache
 RUN chown -R www-data:www-data /var/cache/httpd
-ADD apache/openoni.conf /etc/apache2/sites-available/openoni-orig.conf
 RUN a2dissite 000-default.conf
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh

@@ -26,9 +26,10 @@ class Command(BaseCommand):
     option.
     """
 
-    option_list = BaseCommand.option_list + (
-        make_option('-p', '--pretend', dest='pretend', action='store_true'),
-    )
+    def add_arguments(self, parser):
+        # Options
+        parser.add_argument('-p', '--pretend', action='store_true',
+            default=False, dest='pretend', help='Pretend; just print titles')
 
     def handle(self, **options):
         for title in Title.objects.filter(urls__value__icontains=

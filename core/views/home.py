@@ -13,7 +13,7 @@ from core import forms
 
 
 def home(request, date=None):
-    context = RequestContext(request, {})
+    context = {}
     context["crumbs"] = list(settings.BASE_CRUMBS)
     today = datetime.date.today()
     context["date"] = date = today.replace(year=today.year-100)
@@ -26,7 +26,7 @@ def home(request, date=None):
         context["page"] = None
         context["heading"] = "Browse Newspaper Content"
     template = get_template("home.html")
-    return HttpResponse(content=template.render(context))
+    return HttpResponse(content=template.render(context, request))
 
 
 def _frontpages(request, date, num_pages=20):

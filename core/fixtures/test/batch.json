@@ -5,7 +5,7 @@
     "fields": {
       "validated_batch_file": "BATCH_1.xml", 
       "awardee": "curiv", 
-      "created": "2009-03-26 20:59:28"
+      "created": "2009-03-26T20:59:28-04:00"
     }
   }
 ]

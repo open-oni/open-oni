@@ -75,8 +75,8 @@ def _titles_states():
     """
     titles_states = cache.get("titles_states")
     if not titles_states:
-        titles = [("", "All newspapers"), ]
-        states = [("", "All states")]
+        titles = []
+        states = []
         # create a temp Set _states to hold states before compiling full list
         _states = set()
         for title in models.Title.objects.filter(has_issues=True).select_related():
@@ -97,13 +97,14 @@ def _titles_states():
 
 
 class CityForm(forms.Form):
-    city = fields.ChoiceField(choices=[])
+    city = fields.ChoiceField(choices=[], required=False)
     city.widget.attrs["class"] = "form-control"
 
     def __init__(self, *args, **kwargs):
         super(CityForm, self).__init__(*args, **kwargs)
         cities = (models.Place
                   .objects
+                  .filter(titles__has_issues=1)
                   .order_by('city')
                   .values('city')
                   .distinct())
@@ -113,11 +114,11 @@ class CityForm(forms.Form):
 
 
 class SearchPagesFormBase(forms.Form):
-    state = fields.ChoiceField(choices=[])
-    date1 = fields.ChoiceField(choices=[])
-    date2 = fields.ChoiceField(choices=[])
-    proxtext = fields.CharField()
-    issue_date = fields.BooleanField()
+    state = fields.ChoiceField(choices=[], required=False)
+    date1 = fields.ChoiceField(choices=[], required=False)
+    date2 = fields.ChoiceField(choices=[], required=False)
+    proxtext = fields.CharField(required=False)
+    issue_date = fields.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(SearchPagesFormBase, self).__init__(*args, **kwargs)
@@ -153,25 +154,26 @@ class SearchResultsForm(forms.Form):
 
 class SearchPagesForm(SearchPagesFormBase):
     # locations
-    city = fields.ChoiceField(label="City")
-    county = fields.ChoiceField(label="County")
-    state = fields.ChoiceField(label="State")
+    city = fields.ChoiceField(label="City", required=False)
+    county = fields.ChoiceField(label="County", required=False)
+    state = fields.ChoiceField(label="State", required=False)
     # date
-    date1 = fields.CharField()
-    date2 = fields.CharField()
-    date_day = fields.ChoiceField(choices=DAY_CHOICES)
-    date_month = fields.ChoiceField(choices=MONTH_CHOICES)
+    date1 = fields.CharField(required=False)
+    date2 = fields.CharField(required=False)
+    date_day = fields.ChoiceField(choices=DAY_CHOICES, required=False)
+    date_month = fields.ChoiceField(choices=MONTH_CHOICES, required=False)
     # text
-    andtext = fields.CharField(label="All of the words")
-    ortext = fields.CharField(label="Any of the words")
-    phrasetext = fields.CharField(label="With the phrase")
-    proxtext = fields.CharField(label="Words")
-    proxdistance = fields.ChoiceField(choices=PROX_CHOICES, label="Distance")
+    andtext = fields.CharField(label="All of the words", required=False)
+    ortext = fields.CharField(label="Any of the words", required=False)
+    phrasetext = fields.CharField(label="With the phrase", required=False)
+    proxtext = fields.CharField(label="Words", required=False)
+    proxdistance = fields.ChoiceField(choices=PROX_CHOICES, label="Distance",
+                                      required=False)
     # misc
-    lccn = fields.MultipleChoiceField(choices=[])
+    lccn = fields.MultipleChoiceField(choices=[], required=False)
     # filters
-    frequency = fields.ChoiceField(label="Frequency")
-    language = fields.ChoiceField(label="Language")
+    frequency = fields.ChoiceField(label="Frequency", required=False)
+    language = fields.ChoiceField(label="Language", required=False)
 
     form_control_items = [
         city, county, state, 
@@ -203,17 +205,22 @@ class SearchPagesForm(SearchPagesFormBase):
 
 
 class SearchTitlesForm(forms.Form):
-    state = fields.ChoiceField(choices=[], initial="")
-    county = fields.ChoiceField(choices=[], initial="")
-    city = fields.ChoiceField(choices=[], initial="")
-    year1 = fields.ChoiceField(choices=[], label="from")
-    year2 = fields.ChoiceField(choices=[], label="to")
-    terms = fields.CharField(max_length=255)
-    frequency = fields.ChoiceField(choices=FREQUENCY_CHOICES, initial="", label="Frequency:")
-    language = fields.ChoiceField(choices=[], initial="", label="Language:")
-    ethnicity = fields.ChoiceField(choices=[], initial="", label="Ethnicity Press:")
-    labor = fields.ChoiceField(choices=[], initial="", label="Labor Press:")
-    material_type = fields.ChoiceField(choices=[], initial="", label="Material Type:")
+    state = fields.ChoiceField(choices=[], initial="", required=False)
+    county = fields.ChoiceField(choices=[], initial="", required=False)
+    city = fields.ChoiceField(choices=[], initial="", required=False)
+    year1 = fields.ChoiceField(choices=[], label="from", required=False)
+    year2 = fields.ChoiceField(choices=[], label="to", required=False)
+    terms = fields.CharField(max_length=255, required=False)
+    frequency = fields.ChoiceField(choices=FREQUENCY_CHOICES, initial="",
+                                   label="Frequency:", required=False)
+    language = fields.ChoiceField(choices=[], initial="", label="Language:",
+                                  required=False)
+    ethnicity = fields.ChoiceField(choices=[], initial="",
+                                   label="Ethnicity Press:", required=False)
+    labor = fields.ChoiceField(choices=[], initial="", label="Labor Press:",
+                               required=False)
+    material_type = fields.ChoiceField(choices=[], initial="",
+                                       label="Material Type:", required=False)
 
     form_control_items = [
         state, county, city, terms,

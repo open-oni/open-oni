@@ -15,13 +15,12 @@ LOGGER = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     help = "Add records to lccn-date-copyright maps table from input file."
+
     def add_arguments(self, parser):
         parser.add_argument('filepath', help="Path to input file")
 
-    def handle(self, *args, **options):
-       
+    def handle(self, filepath, *args, **options):
 
-        filepath = options['filepath']
         try:
             loadCopyrightMap(filepath)
         except Exception as e:

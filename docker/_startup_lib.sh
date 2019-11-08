@@ -3,7 +3,7 @@
 verify_config() {
   # Make sure settings_local.py exists so the app doesn't crash
   if [ ! -f onisite/settings_local.py ]; then
-    touch onisite/settings_local.py
+    cp onisite/settings_local_example.py onisite/settings_local.py
   fi
   # Make sure we have a default urls.py
   if [ ! -f onisite/urls.py ]; then
@@ -11,25 +11,9 @@ verify_config() {
   fi
 
   # Prepare the ENV dir if necessary
-  if [ ! -d /opt/openoni/ENV ]; then
+  if [ ! -d /opt/openoni/ENV/lib ]; then
     /pip-install.sh
   fi
-}
-
-replace_ini_data() {
-  # Generate a random secret key if that hasn't already happened.  This stays the
-  # same after it's first set.
-  sed -i "s/!SECRET_KEY!/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 80)/g" /etc/openoni.ini.orig
-
-  # Refresh the environmental config for APP_URL in case it needs to change
-  cp /etc/openoni.ini.orig /etc/openoni.ini
-
-  # Add in the port if necessary
-  if [[ $HTTPPORT != "" && $HTTPPORT != 80 ]]; then
-    sed -i "s|!APP_URL!|!APP_URL!:$HTTPPORT|g" /etc/openoni.ini
-  fi
-
-  sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
 }
 
 setup_database() {
@@ -70,10 +54,13 @@ prep_webserver() {
   mkdir -p /var/tmp/django_cache && chown -R www-data:www-data /var/tmp/django_cache
   mkdir -p /opt/openoni/log
 
-  # Hack apache to do the RAIS proxying
-  cp /etc/apache2/sites-available/openoni-orig.conf /etc/apache2/sites-available/openoni.conf
-  sed -i "s/!RAIS_HOST!/rais/g" /etc/apache2/sites-available/openoni.conf
+  # Update Apache config
+  cp /opt/openoni/docker/apache/openoni.conf /etc/apache2/sites-available/openoni.conf
+
+  # Set Apache log level from APACHE_LOG_LEVEL in .env file
   sed -i "s/!LOGLEVEL!/$APACHE_LOG_LEVEL/g" /etc/apache2/sites-available/openoni.conf
+
+  # Enable updated Apache config
   a2ensite openoni
 
   # Get static files ready for Apache to serve
@@ -82,6 +69,8 @@ prep_webserver() {
 
   echo "-------" >&2
   echo "Running collectstatic" >&2
+  # Django needs write access to STATIC_ROOT
+  chown -R www-data:www-data /opt/openoni/static/compiled
   /opt/openoni/manage.py collectstatic --noinput
 
   # Remove any pre-existing PID file which prevents Apache from starting thus

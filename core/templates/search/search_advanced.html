@@ -5,7 +5,7 @@
 
 {% block head_page_css %}
   {{ block.super }}
-  <link href="{% static 'css/search.css' %}" rel="stylesheet" media="screen">
+  <link href="{% static 'css/search.css' %}" rel="stylesheet">
 {% endblock head_page_css %}
 
 {% block subcontent %}
@@ -89,32 +89,35 @@
                         {{ form.county }}
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <p>Site contains content from {{ form.fulltextStartYear }} to {{ form.fulltextEndYear }}</p>
-                    <div class="form-inline">
-                        <label for="id_date_from">Start date</label>
-                        <input id="id_date_from" name="date1" type="text"
-                            placeholder="01/01/{{form.fulltextStartYear}}"
-                            aria-describedby="date-format"
-                            pattern="[01][0-9]/[0123][0-9]/[0-9]{4}"
-                            />
-
-                        <label for="id_date_to">End date</label>
-                        <input id="id_date_to" name="date2" type="text"
-                            placeholder="12/31/{{form.fulltextEndYear}}"
-                            aria-describedby="date-format"
-                            pattern="[01][0-9]/[0123][0-9]/[0-9]{4}"
-                            />
-                    </div>
-                    <div class="help-block" id="date-format">Dates must be formatted as MM/DD/YYYY; e.g., 12/31/1900</div>
+                <div class="col-md-3 date_form">
+                    <label for="date_from">
+                        Start Date (Earliest: {{ form.fulltextStartYear }})
+                    </label><br>
+                    <input id="date_from" name="date1" type="date"
+                        min="{{form.fulltextStartYear}}-01-01"
+                        max="{{form.fulltextEndYear}}-12-31"
+                        value="{{form.fulltextStartYear}}-01-01">
+                </div>
+                <div class="col-md-3 date_form">
+                    <label for="date_to">
+                        End Date (Latest: {{ form.fulltextEndYear }})
+                    </label><br>
+                    <input id="date_to" name="date2" type="date"
+                        min="{{form.fulltextStartYear}}-01-01"
+                        max="{{form.fulltextEndYear}}-12-31"
+                        value="{{form.fulltextEndYear}}-12-31">
                 </div>
             </div>
         </fieldset>
 
         <!-- Newspapers / LCCNs -->
-        <h3>Search only the following newspapers:</h3>
+        <h3>Search selected newspapers:</h3>
         <div class="row">
-            <div class="help-block">Hold cmd / control to select more than one</div>
+            <div class="help-block">
+                Hold Cmd/Ctrl key while clicking
+                to select and de-select multiple papers;
+                Search all papers if none selected
+            </div>
             <div class="col-md-2">
                 <label for="id_lccn">Newspaper(s)</label>
             </div>
@@ -134,7 +137,7 @@
                 <label for="id_frequency">{{ form.frequency.label }}</label>
                 {{ form.frequency }}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 buffer-top">
                 <input name="sequence" id="sequence" value="1" type="checkbox" />
                 <label class="norm" for="sequence">Front pages only</label>
             </div>
@@ -151,7 +154,7 @@
             <input type="hidden" name="rows" id="rows" value="20" />
             <input type="hidden" name="searchType" value="advanced" />
             <div class="form-actions">
-                <button id="adv_reset" type="reset" value="clear" class="btn">Clear</button>
+                <button id="adv_reset" type="reset" value="clear" class="btn btn-link">Clear</button>
                 <button type="submit" value="Submit" class="btn btn-primary">Search</button>
             </div>
         </div>

@@ -93,14 +93,22 @@ class SolrPaginator(Paginator):
 
     def _get_count(self):
         "Returns the total number of objects, across all pages."
-        if self._count is None:
+        if not hasattr(self, '_count'):
             solr = SolrConnection(settings.SOLR) # TODO: maybe keep connection around?
             solr_response = solr.query(self._q, fields=['id'])
             self._count = int(solr_response.results.numFound)
         return self._count
     count = property(_get_count)
 
-    def highlight_url(self, url, words, page, index):
+    def highlight_url(self, url, words):
+        q = QueryDict(None, True)
+        if words:
+            q["words"] = " ".join(words)
+            return url + "#" + q.urlencode()
+        else:
+            return url
+
+    def pagination_url(self, url, words, page, index):
         q = self.query.copy()
         q["words"] = " ".join(words)
         q["page"] = page
@@ -114,7 +122,7 @@ class SolrPaginator(Paginator):
             p_index = previous_overall_index % self.per_page
             o = self.page(p_page).object_list[p_index]
             q = self.query.copy()
-            return self.highlight_url(o.url, o.words, p_page, p_index)
+            return self.pagination_url(o.url, o.words, p_page, p_index)
         else:
             return None
     previous_result = property(_get_previous)
@@ -125,7 +133,7 @@ class SolrPaginator(Paginator):
             n_page = next_overall_index / self.per_page + 1
             n_index = next_overall_index % self.per_page
             o = self.page(n_page).object_list[n_index]
-            return self.highlight_url(o.url, o.words, n_page, n_index)
+            return self.pagination_url(o.url, o.words, n_page, n_index)
         else:
             return None
     next_result = property(_get_next)
@@ -185,9 +193,7 @@ class SolrPaginator(Paginator):
                     words.update(find_words(s))
             page.words = sorted(words, key=lambda v: v.lower())
 
-            page.highlight_url = self.highlight_url(page.url,
-                                                    page.words,
-                                                    number, len(pages))
+            page.highlight_url = self.highlight_url(page.url, page.words)
             pages.append(page)
 
         solr_page = Page(pages, number, self)
@@ -479,8 +485,8 @@ def page_search(d):
         if date1 or date2:
             # do NOT apply year min / max to solr query
             # do apply it to facets since they require a specific begin / end year
-            d1 = _solrize_date(str(date1)) if date1 else "*"
-            d2 = _solrize_date(str(date2), is_start=False) if date2 else "*"
+            d1 = _solrize_date(str(date1), 'start')
+            d2 = _solrize_date(str(date2), 'end')
 
             q.append('+date:[%s TO %s]' % (d1, d2))
             year1 = date_boundaries[0] if d1 == "*" else int(str(d1)[:4])
@@ -677,45 +683,28 @@ def _expand_ethnicity(e):
     q = ' OR '.join(parts)
     return "(" + q + ")"
 
-def _solrize_date(d, is_start=True):
+def _solrize_date(date, date_type=''):
     """
-    Takes a string like 01/01/1900 or 01/1900 or 1900 and returns an
+    Takes a date string like 2018/01/01 and returns an
     integer suitable for querying the date field in a solr document.
-    The is_start is relevant for determining what date to round to
-    when given a partial date like 01/1900 or 1900.
     """
-    d = d.strip()
+    solr_date = "*"
+    if date:
+        date = date.strip()
 
-    # 01/01/1900 -> 19000101 ; 1/1/1900 -> 19000101
-    match = re.match(r'(\d\d?)/(\d\d?)/(\d{4})', d)
-    if match:
-        m, d, y = match.groups()
-    else:
-        # 01/1900 -> 19000101 | 19000131
-        match = re.match(r'(\d\d?)/(\d{4})', d)
+        start_year, end_year = fulltext_range()
+        if date_type == 'start' and date == str(start_year) +'-01-01':
+            return '*'
+        elif date_type == 'end' and date == str(end_year) +'-12-31':
+            return '*'
+
+        # 1900-01-01 -> 19000101
+        match = re.match(r'(\d{4})-(\d{2})-(\d{2})', date)
         if match:
-            m, y = match.groups()
-            if is_start:
-                d = '01'
-            else:
-                d = '31'
-        else:
-            # 1900 -> 19000101 | 19001231
-            match = re.match('(\d{4})', d)
-            if match:
-                y = match.group(1)
-                if is_start:
-                    m, d = '01', '01'
-                else:
-                    m, d = '12', '31'
-            else:
-                return None
-
-    if y and m and d:
-        return int(y) * 10000 + int(m) * 100 + int(d)
-    else:
-        return None
-
+            y, m, d = match.groups()
+            if y and m and d:
+                solr_date = y+m+d
+    return solr_date
 
 def similar_pages(page):
     solr = SolrConnection(settings.SOLR)

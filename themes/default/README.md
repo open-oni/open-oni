@@ -1,51 +1,66 @@
-# Default Theme for Open-Oni
+# Default Theme for Open ONI
 
 ## Creating your own theme
 
-This theme is included as part of Open ONI to demonstrate how a theme functions. You can use it out of the box, but if you wish to make changes to it you should make a copy of the theme and add the following to `/settings_local.py`:
-
-```
-INSTALLED_APPS = (
-    'django.contrib.humanize',
-    'django.contrib.staticfiles',
-    'themes.YOUR_THEME_NAME_HERE',
-    'core',
-)
-```
-
-The INSTALLED_APPS directive will overwrite the directive in `/settings_base.py`.
-
-Your folder structure will end up looking like this:
+This theme is included as part of Open ONI to demonstrate how a theme functions. You can use it out of the box, but if you wish to make changes to it you should make a copy of the theme. Your folder structure will end up looking like this:
 
 - ./themes
   - default
   - YOUR_THEME_NAME_HERE
 
-## Overwriting files
+Now add the following to `/settings_local.py`:
+```
+INSTALLED_APPS = (
+    ...
+
+    # Open ONI
+    'django.contrib.humanize',  # Added to make data more human-readable
+    'themes.YOUR_THEME_NAME_HERE',
+    'themes.default',
+    'core',
+)
+```
+
+The INSTALLED_APPS directive will overwrite the default in `django_defaults.py`.
+
+## Customizing your theme
 
 Any file from `/core` you have in your theme will use your file rather than `/core`.
 
-### Includes and _overrides.html
+Common files to override will be in `core/templates/` and the `__overrides.html`
+file. `__overrides.html` allows you to override or extend blocks of code in
+`__base.html` which defines common HTML such as header, navbar, breadcrumbs, and
+footer.
 
-Common files to override will be includes (found in `.../template/includes`) and the `__overrides.html` file. Includes contain common html such as header, footer, and navbar. `__overrides.html` allows you to override blocks of code in `__base.html`.
-
-#### Includes example
-
-You want to add icons to the footer of your site. So, you *copy* the `base_footer.html` file from `/core/templates/includes` to your theme `/theme/YOUR_THEME_NAME_HERE/template/includes` and make changes as needed.
-
-#### __override.html Example:
+### __overrides.html Example:
 
 You don't want to show breadcrumbs in your site. Looking in `__base.html` in `/core`, you can see that the breadcrumbs are contained in a block called breadcrumbs:
 
-```{% block breadcrumbs %}```
+```
+{% block breadcrumbs %}
+```
 
 In `__overrides.html` you can disable breadcrumbs by adding
 
-```{% block breadcrumbs %}{% endblock breadcrumbs %}```
+```
+{% block breadcrumbs %}{% endblock breadcrumbs %}
+```
 
 which will replace the breadcrumbs block in `__base.html` with nothing.
 
-### bootstrap
+### Template block extension
+To keep what's in the default block in `__base.html` but add to it, include the
+`{{ block.super }}` tag in your block, e.g.:
+
+```
+{% block head_site_meta %}
+  {{ block.super }}
+
+  {# Additional markup #}
+{% endblock head_site_meta %}
+```
+
+### Bootstrap
 
 If you wanted to overwrite the `boostrap.min.css` file with your own, you could drop it into:
 

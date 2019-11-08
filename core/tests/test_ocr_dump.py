@@ -7,6 +7,7 @@ import datetime
 
 from django.conf import settings
 from django.test import TestCase
+from django.utils import timezone
 
 import core
 from core.batch_loader import BatchLoader
@@ -49,7 +50,7 @@ class OcrDumpTests(TestCase):
         batch = loader.load_batch(batch_dir)
         self.assertEqual(batch.page_count, 27)
 
-        t0 = datetime.datetime.now()
+        t0 = timezone.now()
 
         dump = OcrDump.new_from_batch(batch)
         self.assertEqual(dump.name, "batch_oru_testbatch_ver01.tar.bz2")
@@ -71,6 +72,7 @@ class OcrDumpTests(TestCase):
         # mtime on files in the archive should be just after we
         # created the OcrDump object from the batch
         t1 = datetime.datetime.fromtimestamp(members[0].mtime)
+        t1 = timezone.make_aware(t1)
         self.assertTrue(t1 - t0 < datetime.timedelta(seconds=2))
 
         # Make sure the batch is gone - mysql gets purged between tests, but

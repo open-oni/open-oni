@@ -3,8 +3,26 @@
 
 {% block head_page_css %}
   {{ block.super }}
-  <link href="{% static 'css/search.css' %}" rel="stylesheet" media="screen">
+  <link href="{% static 'css/search.css' %}" rel="stylesheet">
 {% endblock head_page_css %}
+
+{% block javascript %}
+  {{ block.super }}
+  <script>
+    $(function() {
+      $("[name=jumptopage]").submit(function(e) {
+        e.preventDefault();
+        var base = '{% url 'openoni_titles' %}';
+        var page = this.elements[0].value;
+        {% if start %}
+          window.location.href = base + ';start={{start}}' + ';page=' + page;
+        {% else %}
+          window.location.href = base + ';page=' + page;
+        {% endif %}
+      });
+    });
+  </script>
+{% endblock %}
 
 {% block extrahead %}
     {% if page.has_previous %}
@@ -59,24 +77,4 @@
   <div class="search_results_ctrl bot titles fix-float">
     {% include "includes/titles_browse_ctrl.html" %}
   </div>
-  {% endblock %}
-
-  {% block javascript %}
-  {{ block.super }}
-  <script type="text/javascript">
-      jQuery(function($){
-          $("[name=jumptopage]").submit(function(e){
-              e.preventDefault();
-              var base = '{% url 'openoni_titles' %}';
-              var page = this.elements[0].value;
-              {% if start %}
-              window.location.href=base+';start='+'{{start}}'+';page='+page;
-              {% else %}
-              window.location.href=base+';page='+page;
-              {% endif %}
-              });
-          });
-  </script>
-</div>
-
 {% endblock %}

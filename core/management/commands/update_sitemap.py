@@ -1,5 +1,4 @@
 from rfc3339 import rfc3339
-from datetime import datetime
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -7,6 +6,7 @@ _logger = logging.getLogger(__name__)
 from django.core.management.base import BaseCommand
 from django.core.paginator import Paginator
 from django.db import reset_queries
+from django.utils import timezone
 
 from core import models as m
 from core.rdf import rdf_uri
@@ -76,7 +76,7 @@ def sitemap_urls():
     for batch in m.Batch.objects.filter(sitemap_indexed__isnull=True):
         yield batch.url, batch.released
         yield rdf_uri(batch), batch.released
-        batch.sitemap_indexed = datetime.now()
+        batch.sitemap_indexed = timezone.now()
         batch.save()
         for issue in batch.issues.all():
             yield issue.url, batch.released
@@ -90,6 +90,6 @@ def sitemap_urls():
         page = paginator.page(page_num)
         for title in page.object_list:
             yield title.url, title.created
-            title.sitemap_indexed = datetime.now()
+            title.sitemap_indexed = timezone.now()
             title.save()
 

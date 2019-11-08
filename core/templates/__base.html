@@ -1,169 +1,178 @@
-  <!DOCTYPE html>
 {% load static from staticfiles %}
 {% load humanize %}
 
+<!DOCTYPE html>
 <html lang="en">
-  <head profile="http://dublincore.org/documents/2008/08/04/dc-html/"><!-- todo: I'm not sure this dc declaration should be on pages without dc meta tags -kmd -->
+  {# todo: Revisit dc declaration on pages without dc meta tags -kmd #}
+  <head profile="http://dublincore.org/documents/2008/08/04/dc-html/">
   {% block head_all %}
-
-    {% block head_page_meta %}
+    {% block head_site_meta %}
       <meta charset="utf-8">
       <meta http-equiv="Content-Type" content="text/html" />
       <meta http-equiv="Content-Language" content="en-us" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endblock head_site_meta %}
 
+    {% block head_opensearch %}
+      <link rel="search" href="{% url 'openoni_search_pages_opensearch' %}"
+        type="application/opensearchdescription+xml"
+        title="{{ site_title }} Page Search" />
+      <link rel="search" href="{% url 'openoni_search_titles_opensearch' %}"
+        type="application/opensearchdescription+xml"
+        title="{{ site_title }} Title Search" />
+    {% endblock head_opensearch %}
+
+    {% block head_page_meta %}
     {% endblock head_page_meta %}
 
     <title>
       {% block head_page_title %}
-        {{page_title}}
+        {% if page_title %}{{page_title}} «{% endif %}
+        {% if site_title %}{{site_title}}{% endif %}
       {% endblock head_page_title %}
     </title>
 
-    <!-- ===========
-    CSS FILES
-    ============= -->
-
+    <!-- CSS -->
     {% block head_page_css %}
-      <!-- Bootstrap core CSS -->
-      <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-
-      <!-- Local CSS -->
-      <link href="{% static 'css/highlights.css' %}" rel="stylesheet" media="screen">
-      <link href="{% static 'css/tablesort.css' %}" rel="stylesheet" media="screen">
-      <link href="{% static 'css/a11y.css' %}" rel="stylesheet" media="screen">
-      <link href="{% static 'css/main.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+      rel="stylesheet">
     {% endblock head_page_css %}
 
-    <!-- ===========
-    JS FILES
-    ============= -->
+    <!-- JavaScript -->
+    {% block javascript %}
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script>
+      $(function() {
+        $('ul.nav > li > a[href="' + document.location.pathname + '"]')
+          .parent().addClass('active');
+      });
+    </script>
+    {% endblock javascript %}
 
-    {% block head_page_top_js %}
-        <!-- additional scripts loaded at the bottom: Jquery, Jquery UI, Bootstrap -->
-
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-    {% endblock head_page_top_js %}
-
-
-    <!-- ===========
-    Metadata Etc.
-    ============= -->
-
-    {% block head_item_metadata %}{% endblock head_item_metadata %} <!-- formerly lc_metadata -->
-
-    {% block head_opensearch %}
-      <link title="NDNP Page Search" href="{% url 'openoni_search_pages_opensearch' %}" rel="search" type="application/opensearchdescription+xml" />
-      <link title="NDNP Title Search" href="{% url 'openoni_search_titles_opensearch' %}" rel="search" type="application/opensearchdescription+xml" />
-    {% endblock head_opensearch %}
-
-    <!-- Extra head data from other pages will be included here -->
+    <!-- Page Content Metadata -->
+    {# formerly lc_metadata #}
+    {% block head_item_metadata %}{% endblock head_item_metadata %}
     {% block head_extra %}{% endblock head_extra %}
-
   {% endblock head_all %}
   </head>
 
   <body role="document">
     {% block body_content %}
-
-      <!-- ===========
-      HEADER
-      ============= -->
-
-      <!-- Site Title/Head -->
-
       <header class="site_header">
+        {# Skip link before all other content #}
+        <a class="skiplink" href="#maincontent">Skip to main content</a>
 
-      {% block header %}
+        {% block header %}
+          {% block header_title %}
+            <div class="header_title">
+              <div class="container">
+                <h1 class="title">{{ site_title }}</h1>
+              </div>
+            </div>
+          {% endblock header_title %}
 
-        {% block header_title %}
-          <div class="header_title">
+          {% block navbar %}
+          <nav class="navbar {% block navbar_classes %}navbar-inverse
+            header_navbar{% endblock navbar_classes %}">
             <div class="container">
-              <h1 class="title">{{ site_title }}</h1>
-            </div>
-          </div><!-- /header -->
-        {% endblock header_title %}
-
-   <!-- ===========
-      Navbar
-      ============= -->
-        {% block navbar %}
-        <nav class="navbar {% block navbar_classes %}navbar-inverse header_navbar{% endblock navbar_classes %}">
-          <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                {% block navbar_home %}<li><a href="{% url 'openoni_home' %}">Home</a></li>{% endblock navbar_home %}
-                {% block navbar_pos1 %}<li><a href="{% url 'openoni_newspapers' %}">Newspapers</a></li>{% endblock navbar_pos1 %}
-                {% block navbar_pos2 %}<li><a href="{% url 'openoni_about' %}">About</a></li>{% endblock navbar_pos2 %}
-                {% block navbar_pos3 %}<li><a href="{% url 'openoni_about_api' %}">API</a></li>{% endblock navbar_pos3 %}
-                {% block navbar_pos4 %}<li><a href="{% url 'openoni_issues' %}">Browse by Date</a></li>{% endblock navbar_pos4 %}
-                {% block navbar_pos5 %}<li><a href="{% url 'openoni_help' %}">Help</a></li>{% endblock navbar_pos5 %}
-              </ul>
-
-              {% block navbar_advancedsearch %}
-              <ul class="nav navbar-nav navbar-right">
-                <li class="nav_advanced_search"><a href="{% url 'openoni_search_advanced' %}">Advanced Search</a></li>
-              </ul>
-              {% endblock navbar_advancedsearch %}
-            
-              {% block navbar_search %}
-              <form class="form-inline navbar-form navbar-right"  action="{% url 'openoni_search_pages_results' %}" method="get">
-                <div class="form-group">
-                  {{ city_form.city }}
-                  <input type="hidden" name="rows" id="rows" alt="rows" value="20" />
-                  <input type="hidden" name="searchType" alt="searchType" value="basic" />
-                  <input class="form-control" type="text" name="proxtext" placeholder="search words">
-                </div><!-- /form-group -->
-
-                <button type="submit" class="btn btn-default">
-                  <span class="glyphicon glyphicon-search" aria-hidden="true"><span class="search_text">Search</span></span>
+              {# Brand and toggle get grouped for better mobile display #}
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                  aria-expanded="false" data-toggle="collapse"
+                  data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
                 </button>
-              </form>
-              {% endblock navbar_search %}
+              </div>
 
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
+              {# Collect the nav links, forms, and other content for toggling #}
+              <div class="collapse navbar-collapse"
+                id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  {% block navbar_home %}
+                    <li><a href="{% url 'openoni_home' %}">Home</a></li>
+                  {% endblock navbar_home %}
+                  {% block navbar_pos1 %}
+                    <li>
+                      <a href="{% url 'openoni_newspapers' %}">Newspapers</a>
+                    </li>
+                  {% endblock navbar_pos1 %}
+                  {% block navbar_pos2 %}
+                    <li><a href="{% url 'openoni_about' %}">About</a></li>
+                  {% endblock navbar_pos2 %}
+                  {% block navbar_pos3 %}
+                    <li><a href="{% url 'openoni_about_api' %}">API</a></li>
+                  {% endblock navbar_pos3 %}
+                  {% block navbar_pos4 %}
+                    <li>
+                      <a href="{% url 'openoni_issues' %}">Browse by Date</a>
+                    </li>
+                  {% endblock navbar_pos4 %}
+                  {% block navbar_pos5 %}
+                    <li><a href="{% url 'openoni_help' %}">Help</a></li>
+                  {% endblock navbar_pos5 %}
+                </ul>
 
-        {% endblock navbar %}
+                {% block navbar_advancedsearch %}
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="nav_advanced_search">
+                    <a href="{% url 'openoni_search_advanced' %}">
+                      Advanced Search
+                    </a>
+                  </li>
+                </ul>
+                {% endblock navbar_advancedsearch %}
 
-      {% endblock header %}
+                {% block navbar_search %}
+                <form class="form-inline navbar-form navbar-right" method="get"
+                  action="{% url 'openoni_search_pages_results' %}">
+                  <div class="form-group">
+                    {{ city_form.city }}
+                    <input type="hidden" name="rows" id="rows" alt="rows"
+                      value="20">
+                    <input type="hidden" name="searchType" alt="searchType"
+                      value="basic">
+                    <input class="form-control" type="text" name="proxtext"
+                      placeholder="search words">
+                  </div>
 
+                  <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"
+                      ></span>
+                    <span class="search_text">Search</span>
+                  </button>
+                </form>
+                {% endblock navbar_search %}
+
+              </div>{# /.navbar-collapse #}
+            </div>{# /.container-fluid #}
+          </nav>
+          {% endblock navbar %}
+        {% endblock header %}
       </header>
 
-
-      <!-- ===========
-      MAIN CONTENT
-      ============= -->
       <div class="main_content">
         <div class="container">
+          {% block breadcrumbs %}
+            {% if crumbs and crumbs|length > 1 %}
+              <ol class="breadcrumb">
+                {% for crumb in crumbs %}
+                  <li {% if crumb.active %}class="active"{% endif %}>
+                    <a href="{{crumb.href}}">{{crumb.label}}</a>
+                  </li>
+                {% endfor %}
+              </ol>
+            {% endif %}
+          {% endblock breadcrumbs %}
 
-        {% block breadcrumbs %}
-          {% if crumbs and crumbs|length > 1 %}
-            <ol class="breadcrumb">
-              {% for crumb in crumbs %}
-                <li {% if crumb.active %}class="active"{% endif %}>
-                  <a href="{{crumb.href}}">{{crumb.label}}</a>
-                </li>
-              {% endfor %}
-            </ol>
-          {% endif %}
-        {% endblock breadcrumbs %}
+        {% comment %}
+          Skip link target after breadcrumbs nav block, before content blocks
+          so always present unless entire body_content block overridden
+        {% endcomment %}
+        <div id="maincontent"></div>
 
         {% block content %}
           {% block page_head_container %}
@@ -175,52 +184,24 @@
               {% endblock sub_page_head %}
             {% endblock page_head%}
           {% endblock page_head_container %}
-          <div id="skip_menu">
-            {% block main_content %}{% endblock main_content %}
-          </div>
+
+          {% block main_content %}{% endblock main_content %}
+
           {% block subcontent %}{% endblock subcontent %}
         {% endblock content %}
-        </div><!-- /container -->
-      </div><!--/main_content -->
+        </div>{# /container #}
+      </div>{# /main_content #}
     {% endblock body_content %}
-
-    <!-- ===========
-    FOOTER
-    ============= -->
 
     {% block footer %}
       <div id="footer">
         <div class="container">
-          <p>All your footer things like logos and such go here.</p>
-          <p>Site created using <a href="https://github.com/open-oni/open-oni">open-oni</a> software, built off the Library of Congress's <a href="https://github.com/LibraryofCongress/chronam">chronam</a>.</p>
-        </div><!-- /container -->
-      </div><!-- /footer -->
+          <p>{{site_title}}</p>
+          <p>
+            Powered by <a href="https://github.com/open-oni/open-oni">Open ONI</a>
+          </p>
+        </div>
+      </div>
     {% endblock footer %}
-    
-    <!-- ===========
-    Bottom loading javascripts
-    ============= -->
-
-    {% block javascript %}
-      <!-- JQuery -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-
-      <!-- Highlighting JS (keyword search results and page views -->
-      <script type="text/javascript" async="" src="{% static 'js/highlight.js' %}"></script>
-
-      <!-- Bootstrap -->
-      <script type="text/javascript" async="" src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-
-    {% endblock javascript %}
-
-    <script type="text/javascript">
-      (function($) {
-        function initPage() {
-          $('ul.nav > li > a[href="' + document.location.pathname + '"]').parent().addClass('active');
-          }
-        $(initPage);
-      })(jQuery)
-    </script>
   </body>
 </html>

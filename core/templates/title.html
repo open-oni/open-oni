@@ -211,16 +211,6 @@
             <dd><a id="page_nav_marc" href="{% url 'openoni_title_marc' title.lccn %}">Record</a></dd>
         </dl>
 
-        <div class="title_essay">
-        {% if first_essay %}
-            
-            <h4>{{first_essay.title}}</h4>
-            <p>{{first_essay.html|safe}}</p>
-            <p><em>Provided by: <a href="{% url 'openoni_awardee' first_essay.creator.org_code %}">{{ first_essay.creator }}</a></em></p>
-            
-        <!-- end class:more -->
-        {% endif %}
-        </div><!-- /title_essay -->
     </div><!-- /col-md-7 -->
 
     <div class="col-md-5">
@@ -240,15 +230,21 @@
             </div>
         </div>
         {% endif %}
-        {% if first_essay %}
         <div class="about_issue_more">
-            <div class="title_essay">
-            <h4>{{first_essay.title}}</h4>
-            <p>{{first_essay.html|safe}}</p>
-            <p><em>Provided by: <a href="{% url 'openoni_awardee' first_essay.creator.org_code %}">{{ first_essay.creator }}</a></em></p>
-            </div>
+            {% block essay %}
+                <div class="title_essay">
+                    {# if there is an essay in the database, display, otherwise check for a template #}
+                    {% if first_essay %}
+                        {# older essays in db include title as separate field #}
+                        <h4>{{first_essay.title}}</h4>
+                        <p>{{first_essay.html|safe}}</p>
+                        <p><em>Provided by: <a href="{% url 'openoni_awardee' first_essay.creator.org_code %}">{{ first_essay.creator }}</a></em></p>
+                    {% elif essay_template|template_exists %}
+                        {% include essay_template %}
+                    {% endif %}
+                </div>
+            {% endblock essay %}
         </div><!-- end class:more -->
-        {% endif %}
     </div><!-- /col_md_5 -->
 </div><!-- /row -->
 {% endblock %}

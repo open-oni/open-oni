@@ -16,10 +16,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         try:
-            # delete the total pages count
-            LOGGER.info('removing newspaper_info from cache')
-            cache.delete('newspaper_info')
-
             # delete the advanced search title list
             LOGGER.info('removing titles_states from cache')
             cache.delete('titles_states')

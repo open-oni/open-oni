@@ -6,162 +6,67 @@
 
 {% block head_page_css %}
   {{ block.super }}
-  <link href="{% static 'css/search.css' %}" rel="stylesheet" media="screen">
+  <link href="{% static 'css/search.css' %}" rel="stylesheet">
 {% endblock head_page_css %}
+
+{% block javascript %}
+  {{ block.super }}
+  {# Highlight search text in thumbnails #}
+  <script src="{% static 'js/highlight.js' %}"></script>
+{% endblock javascript %}
 
 {% block subcontent %}
 
-{% block search_page_filter_desc %}
-  <!-- Search results description -->
-  <h3>Filters</h3>
-  <h4 class="term">{{ paginator.count }} results
-    {% if english_search %}containing{% endif %} 
+{% block result_count %}
+    {{ paginator.count }} result{% if paginator.count != 1 %}s{% endif %}
+    {% if english_search %}containing{% endif %}
     {% for part in english_search %}
       <strong>&ldquo;{{ part }}&rdquo;</strong>
       {% if not forloop.last %}<em>and</em>{% endif %}
     {% endfor %}
+{% endblock result_count %}
 
-    {# date filter text #}
-    {% if request.GET.yearRange %}
-      &nbsp; for year range {{ request.GET.yearRange }}
-      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'yearRange' %}">
-        <img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/>
-      </a>
-    {% else %}
-      {% if request.GET.date1 %}
-        &nbsp; for start date {{ request.GET.date1 }}
+{% block search_page_filter_desc %}
+  <h3>Filters</h3>
+  <ul class="list-inline">
+    {# Date filter from Advanced Search #}
+    {% if request.GET.date1 or request.GET.date2 %}
+      {% if not request.GET.yearRange and not searching_all_dates %}
+        <li>
+          <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}"
+            class="btn btn-default" aria-label="Clear Date Filter"
+            title="Clear Date Filter">
+            Date:
+            {% if request.GET.date1 and request.GET.date2 %}
+              {{ request.GET.date1 }} - {{ request.GET.date2 }}
+            {% elif request.GET.date1 %}
+              From {{ request.GET.date1 }}
+            {% elif request.GET.date2 %}
+              Until {{ request.GET.date2 }}
+            {% endif %}
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </a>
+        </li>
       {% endif %}
-      {% if request.GET.date2 %}
-        through end date {{ request.GET.date2 }}
-      {% endif %}
-      {% if request.GET.date1 or request.GET.date2 %}
-        <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}">
-          <img src="/media/images/btn_remove.png" title="clear date filter" alt="remove date filter"/>
-        </a>
-      {% endif %}
-    {% endif %}
-    {% if request.GET.language %}
-      &nbsp; for language {{ request.GET.language }}
-      <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'language' %}">
-        <img src="/media/images/btn_remove.png" title="clear language filter" alt="remove language filter"/>
-      </a>
     {% endif %}
 
     {% if titles %}
-        for titles
-        {% for lccn in titles %}
-            {{lccn}}<a href="{{BASE_URL}}{{request.path}}?{% remove_param_value 'lccn' lccn %}">
-                <img src="/media/images/btn_remove.png"
-                    title="clear title filter {{lccn}}"
-                    alt="clear title filter {{lccn}}" />
-            </a>
-            {% if not forloop.last %}, {% endif %}
-        {% endfor %}
+      {% for title in titles %}
+        <li>
+          <a href="{{BASE_URL}}{{request.path}}?{% remove_param_value 'lccn' title.lccn %}"
+            class="btn btn-default" aria-label="Clear '{{ title.name }}' Filter"
+            title="Clear '{{ title.name }}' Filter">
+            <span>{{ title.abbrev }}</span>
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          </a>
+        </li>
+      {% endfor %}
     {% endif %}
-  </h4>
+  </ul>
 {% endblock search_page_filter_desc %}
 
-{% block search_page_option_set %}
-  {# Sorry for this, but I'm trying to space this so it's clear where the django #}
-  {# template logic flows while still making it clear which HTML tags wrap #}
-  {# what....  Pagination should probably be a helper method of some kind. #}
-  <div class="row search_results_option_set">
-    <div class="col-md-7">
-      <!-- Pagination -->
-      <nav aria-label="Pages">
-        <ul class="pagination pagination-sm">
-  {% if page.has_previous %}
-          <li><a href="{{previous_url}}" aria-label="Previous Page"><span aria-hidden="true">&laquo;</span></a></li>
-  {% else %}
-          <li class="disabled"><span aria-hidden="true">&laquo;</span></li>
-  {% endif %}
-
-  {% for page_number in page_range_short %}
-    {% ifequal page_number "..." %}
-          <li class="disabled"><a>…</a></li>
-    {% else %}
-      {% ifequal page_number page.number %}
-          <li class="active" aria-current="true">
-      {% else %}
-          <li>
-      {% endifequal %}
-            <a href="?{{q}}&amp;page={{page_number}}&amp;sort={{sort}}" aria-label="Page {{page_number}}">{{page_number}}</a>
-          </li>
-    {% endifequal %}
-  {% endfor %}
-
-  {% if page.has_next %}
-          <li><a href="{{next_url}}" aria-label="Next Page"><span aria-hidden="true">&raquo;</span></a></li>
-  {% else %}
-          <li class="disabled"><span aria-hidden="true">&raquo;</span></li>
-  {% endif %}
-        </ul>
-      </nav>
-    <!-- /pagination -->
-    </div>
-
-    <div class="col-md-3">
-    <!-- Jump to page -->
-      <form action="" method="GET" class="jumptopage">
-        <label for="jumptopage">Jump to page:</label>
-        <input class="std" type="text" id="jumptopage" name="page" value="" size="5" />
-
-        {% block search_page_pagination_hidden_filters %}
-          {#### Filter preservation ####}
-
-          {# search text #}
-          <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
-          <input type="hidden" name="proxdistance" value="{{query.proxdistance}}" />
-          <input type="hidden" name="ortext" value="{{query.ortext}}" />
-          <input type="hidden" name="andtext" value="{{query.andtext}}" />
-          <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
-
-          {# location #}
-          <input type="hidden" name="city" value="{{query.city}}" />
-          <input type="hidden" name="county" value="{{query.county}}" />
-
-          {# date range and years #}
-          {# if there is a yearRange, it supercedes the date ranges #}
-          {% if request.GET.yearRange %}
-            <input type="hidden" name="yearRange" value="{{query.yearRange}}" />
-          {% else %}
-            <input type="hidden" name="date1" value="{{query.date1}}" />
-            <input type="hidden" name="date2" value="{{query.date2}}" />
-          {% endif %}
-
-          {# All the chosen LCCNs #}
-          {% for lccn in titles %}
-            <input type="hidden" name="lccn" value="{{lccn}}" />
-          {% endfor %}
-
-          {# miscellaneous filters #}
-          <input type="hidden" name="language" value="{{query.language}}" />
-          <input type="hidden" name="frequency" value="{{query.frequency}}" />
-          <input type="hidden" name="sequence" value="{{query.sequence}}" />
-          <input type="hidden" name="sort" value="{{query.sort}}" />
-          <input type="hidden" name="rows" value="{{query.rows}}" />
-        {% endblock search_page_pagination_hidden_filters %}
-
-        <input type="submit" class="submit" value="GO" />
-      </form>
-    </div>
-    <div class="col-md-2"><!-- todo: fix this, list is missing template and it does not mark which you have chosen -->
-      <!-- Gallery or List view -->
-      {% ifequal view_type 'list' %}
-        <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-        <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
-      {% else %}
-        <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-        <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
-
-      {% endifequal %}
-      <!-- /Gallery or List view -->
-    </div>
-  </div><!-- /row -->
-{% endblock search_page_option_set %}
-
 {% block search_page_results_filter_form %}
-  <form class="form-inline search_results_form" action="" method="GET">
+  <form class="search_results_form" action="" method="GET">
     {% block search_page_results_filter_form_row1 %}
       <div class="row search_results_option_set">
         <div class="col-md-2">
@@ -219,10 +124,6 @@
       <!-- search preferences -->
       <div class="row search_results_option_set">
         <div class="col-md-3">
-          <input name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
-          <label class="norm" for="sequence">Front pages only</label>
-        </div>
-        <div class="col-md-3">
           <label for="id_rows">{{ form.rows.label }}</label>
           {{ form.rows }}
         </div>
@@ -230,8 +131,12 @@
           <label for="id_sort">{{ form.sort.label }}</label>
           {{ form.sort }}
         </div>
-        <div class="col-md-3">
-          <button type="submit" class="btn btn-default">Refine Search</button>
+        <div class="col-md-3 buffer-top">
+          <input name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
+          <label class="norm" for="sequence">Front pages only</label>
+        </div>
+        <div class="col-md-3 buffer-top">
+          <button type="submit" class="btn btn-primary pull-right">Refine Search</button>
         </div>
       </div>
     {% endblock search_page_results_filter_form_row2 %}
@@ -251,49 +156,138 @@
       <input type="hidden" name="date2" value="{{query.date2}}" />
 
       {# All the chosen LCCNs #}
-      {% for lccn in titles %}
-        <input type="hidden" name="lccn" value="{{lccn}}" />
+      {% for title in titles %}
+        <input type="hidden" name="lccn" value="{{ title.lccn }}" />
       {% endfor %}
     {% endblock search_page_results_filter_form_hidden_filters %}
   </form>
 {% endblock search_page_results_filter_form %}
 
-<!-- ======================
-Thumbnails
-======================== -->
+{% block result_numeration %}
+  <h3 class="results">
+    {% if paginator.count == 0 %}
+      No Matches Found
+    {% else %}
+      Result{% if paginator.count != 1 %}s{% endif %}
+      {{ start }}{% if paginator.count > 1 %}-{{ end }}{% endif %}
+    {% endif %}
+  </h3>
+{% endblock result_numeration %}
 
+{% if paginator.count != 0 %}
+  {% block search_page_option_set %}
+    {# Sorry for this, but I'm trying to space this so it's clear where the django #}
+    {# template logic flows while still making it clear which HTML tags wrap #}
+    {# what....  Pagination should probably be a helper method of some kind. #}
+    <div class="row search_results_option_set">
+      <div class="col-md-5">
+        {# Gallery or List view #}
+        <div class="pull-left">
+          {% ifequal view_type 'list' %}
+            <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+            <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+          {% else %}
+            <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+            <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
 
-{% block search_results_box %}
-<div class="content search_results">
-  <h3 class="results">Results {{ start }}-{{ end }}</h3>
+          {% endifequal %}
+        </div>
+        {# /Gallery or List view #}
 
-<br/><br/>
+        {# Jump to page #}
+        {% if page.has_previous or page.has_next %}
+          <form action="" method="GET" class="pull-right">
+            <label for="jumptopage">Jump to page:</label>
+            <input class="std" type="text" id="jumptopage" name="page" value="" size="2" />
 
-<div class="row">
-{% for object in page.object_list %}
-  {% if forloop.counter0|divisibleby:4 and not forloop.first %}
-</div><div class="row">
-  {% endif %}
+            {% block search_page_pagination_hidden_filters %}
+              {#### Filter preservation ####}
 
-    <div class="col-md-3">
-      <a href="{{ object.highlight_url }}" class="thumbnail">
-        <img src="{% thumb_image_url object %}" alt=""
-                class="highlight_words"
-                data-script_name="{{script_name}}"
-                data-id="{{object.url}}"
-                data-words="{{object.words|join:' '}}">
-        {% with object.issue.title as title %}
-          <p>
-            {{title.display_name}} ({{title.place_of_publication}})<br />
-            {{object.issue|label}}, {{object|label}}
-          </p>
-        {% endwith %}
-      </a>
-    </div>
-{% endfor %}
-</div><!-- /row -->
+              {# search text #}
+              <input type="hidden" name="proxtext" value="{{query.proxtext}}" />
+              <input type="hidden" name="proxdistance" value="{{query.proxdistance}}" />
+              <input type="hidden" name="ortext" value="{{query.ortext}}" />
+              <input type="hidden" name="andtext" value="{{query.andtext}}" />
+              <input type="hidden" name="phrasetext" value="{{query.phrasetext}}" />
 
-</div>
-{% endblock search_results_box %}
+              {# location #}
+              <input type="hidden" name="city" value="{{query.city}}" />
+              <input type="hidden" name="county" value="{{query.county}}" />
+
+              {# date range and years #}
+              {# if there is a yearRange, it supercedes the date ranges #}
+              {% if request.GET.yearRange %}
+                <input type="hidden" name="yearRange" value="{{query.yearRange}}" />
+              {% else %}
+                <input type="hidden" name="date1" value="{{query.date1}}" />
+                <input type="hidden" name="date2" value="{{query.date2}}" />
+              {% endif %}
+
+              {# All the chosen LCCNs #}
+              {% for title in titles %}
+                <input type="hidden" name="lccn" value="{{ title.lccn }}" />
+              {% endfor %}
+
+              {# miscellaneous filters #}
+              <input type="hidden" name="language" value="{{query.language}}" />
+              <input type="hidden" name="frequency" value="{{query.frequency}}" />
+              <input type="hidden" name="sequence" value="{{query.sequence}}" />
+              <input type="hidden" name="sort" value="{{query.sort}}" />
+              <input type="hidden" name="rows" value="{{query.rows}}" />
+            {% endblock search_page_pagination_hidden_filters %}
+
+            <input type="submit" class="btn btn-primary" value="Go" />
+          </form>
+        {% endif %}
+        {# /Jump to page #}
+      </div>
+
+      {% block pagination_top %}
+        <div class="col-md-7">
+          {% include 'search/results_pagination.html' %}
+        </div>
+      {% endblock pagination_top %}
+    </div><!-- /row -->
+  {% endblock search_page_option_set %}
+
+  {% block search_results_box %}
+  <div class="content search_results">
+
+  <div class="row">
+  {% for object in page.object_list %}
+    {% if forloop.counter0|divisibleby:4 and not forloop.first %}
+  </div><div class="row">
+    {% endif %}
+
+      <div class="col-md-3">
+        <a href="{{ object.highlight_url }}" class="thumbnail">
+          <img src="{% thumb_image_url object %}" alt=""
+                  class="highlight_words"
+                  data-script_name="{{script_name}}"
+                  data-id="{{object.url}}"
+                  data-words="{{object.words|join:' '}}">
+          {% with object.issue.title as title %}
+            <p>
+              {{title.display_name}} ({{title.place_of_publication}})<br />
+              {{object.issue|label}}, {{object|label}}
+            </p>
+          {% endwith %}
+        </a>
+      </div>
+  {% endfor %}
+  </div><!-- /row -->
+
+  </div>
+  {% endblock search_results_box %}
+
+  <div class="row">
+    <div class="col-md-5"></div>
+    {% block pagination_bottom %}
+      <div class="col-md-7">
+        {% include 'search/results_pagination.html' %}
+      </div>
+    {% endblock pagination_bottom %}
+  </div>
+{% endif %}
 
 {% endblock subcontent %}

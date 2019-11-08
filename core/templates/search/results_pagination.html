@@ -1,0 +1,46 @@
+{% if page.has_previous or page.has_next %}
+  <nav aria-label="Pages" class="pull-right">
+    <ul class="pagination pagination-sm">
+      {% if page.has_previous %}
+        <li>
+          <a href="{{previous_url}}" aria-label="Previous Page">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li class="disabled">
+          <span aria-hidden="true">&laquo;</span>
+        </li>
+      {% endif %}
+
+      {% for page_number in page_range_short %}
+        {% ifequal page_number "..." %}
+          <li class="disabled">
+            <a>…</a>
+          </li>
+        {% else %}
+          {% ifequal page_number page.number %}
+            <li class="active" aria-current="true">
+          {% else %}
+            <li>
+          {% endifequal %}
+            <a href="?{{q}}&amp;page={{page_number}}&amp;sort={{sort}}"
+              aria-label="Page {{page_number}}">{{page_number}}</a>
+          </li>
+        {% endifequal %}
+      {% endfor %}
+
+      {% if page.has_next %}
+        <li>
+          <a href="{{next_url}}" aria-label="Next Page">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      {% else %}
+        <li class="disabled">
+          <span aria-hidden="true">&raquo;</span>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

@@ -1,29 +1,33 @@
-table.tablesorter { border-collapse:collapse; }
-
-table.tablesorter td, table.tablesorter th { 
-    border-left: 1px solid #ccc
+.tablesorter {
+  border-collapse: collapse;
+  margin-top: 1em;
 }
 
-table.tablesorter .left_no_border {
-    border-left: None
+.tablesorter td, .tablesorter th {
+  border-left: 1px solid #ccc;
 }
 
-table.tablesorter tbody tr.odd td {
-    
+.tablesorter .tablesorter-header {
+  background-image: url(../images/bg.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  cursor: pointer;
+  padding-left: 20px;
 }
 
-table.tablesorter thead tr .header {
-    background-image: url(../images/bg.gif);
-    background-repeat: no-repeat;
-    background-position: left center;
-    cursor: pointer;
-    padding-left: 20px;
+.tablesorter .tablesorter-header.tablesorter-headerAsc {
+  background-image: url(../images/asc.gif);
 }
 
-table.tablesorter thead tr .headerSortUp {
-    background-image: url(../images/asc.gif);
+.tablesorter .tablesorter-header.tablesorter-headerDesc {
+  background-image: url(../images/desc.gif);
 }
 
-table.tablesorter thead tr .headerSortDown {
-    background-image: url(../images/desc.gif);
+.tablesorter .tablesorter-header.sorter-false {
+  background-image: none;
+  cursor: default;
+}
+
+.tablesorter .left_no_border {
+  border-left: none;
 }

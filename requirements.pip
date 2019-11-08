@@ -1,5 +1,5 @@
 coverage
-Django>=1.8,<1.9
+Django>=1.11,<1.12
 feedparser
 lxml
 mysqlclient
@@ -8,7 +8,7 @@ pymarc
 python-mimeparse
 rdflib
 requests
-rfc3339==5
+rfc3339
 setuptools
 simplejson
 solrpy

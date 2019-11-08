@@ -17,6 +17,7 @@ import feedparser
 
 from django.core.management.base import BaseCommand
 from django.conf import settings
+from django.utils import timezone
 
 from core.management.commands import configure_logging
 from core.rdf import rdf_uri
@@ -29,12 +30,11 @@ _logger = logging.getLogger(__name__)
 class Command(BaseCommand):
     help = "Updates (Resets if --reset option is used) release datetime on batches from one of following sources (in order of preference) 1. bag-info.txt, if found in the batch source 2. If path to a file is provided with the command, datetime is extracted from the file 3. current public feed 4. current server datetime"
 
-    reset = make_option('--reset',
-        action = 'store_true',
-        dest = 'reset',
-        default = False,
-        help = 'reset release times to nothing before setting them again')
-    option_list = BaseCommand.option_list + (reset, )
+    def add_arguments(self, parser):
+        # Options
+        parser.add_argument(
+            '--reset', action='store_true', default=False, dest='reset',
+            help='reset release times to nothing before setting them again')
 
     def handle(self, *args, **options):
         if options['reset']:
@@ -70,7 +70,7 @@ class Command(BaseCommand):
                 batch.save()
                 continue
             # well, none of the earlier options worked, current timestamp it is.
-            batch.released = datetime.now()
+            batch.released = timezone.now()
             batch.save()
 
 def preprocess_input_file(file_path):

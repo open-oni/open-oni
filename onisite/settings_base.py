@@ -1,73 +1,21 @@
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from django_defaults import *
 
-# "Private" aliases for seconds in a day and week
-_ONEDAY = 60 * 60 * 24
-_ONEWEEK = _ONEDAY * 7
-
-####################################################################
-# DJANGO SETTINGS
-####################################################################
-
-# If true, provides detailed logging and error pages.  DO NOT SET THIS TO TRUE
-# IN PRODUCTION!
-DEBUG = True
-
-# Time zone name for django internally to use
-TIME_ZONE = 'America/New_York'
-
-# App language code: used for I18n translations
-LANGUAGE_CODE = 'en-us'
+################################################################
+# DJANGO CUSTOMIZATIONS
+################################################################
+# Enable browser XSS protection, MIME-type sniff prevention headers,
+# and disable framing / embedding
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 # Site id differentiates DB data if multiple sites use the same database
 SITE_ID = 1
 
-# I18n and L10n settings for translating and localizing the app
-USE_I18N = True
-USE_L10N = True
-
-# Absolute filesystem path to the directory that will hold user-uploaded files
-# (We don't need this)
-MEDIA_ROOT = ''
-MEDIA_URL = ''
-
-# Determines how we store static files; e.g., CSS, images, etc.
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
-
-# Base URL to static files
-STATIC_URL = '/media/'
-
 # Directory path to static files
-STATIC_ROOT = os.path.join(BASE_DIR, '.static-media')
-
-# Module which processes URL routing
-ROOT_URLCONF = 'onisite.urls'
-
-# Database settings.  This should be overridden in settings_local.py or
-# /etc/openoni.ini.
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'rdbms',
-        'NAME': 'openoni',
-        'USER': 'openoni',
-        'PASSWORD': 'openoni',
-        }
-    }
-
-# Make this unique, and don't share it with anybody.  This MUST be overridden
-# either in settings_local.py or /etc/openoni.ini.
-SECRET_KEY = ''
-
-# Classes which implement request/response middleware
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.http.ConditionalGetMiddleware',
-    'core.middleware.TooBusyMiddleware',
-)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'compiled')
 
 # Template configuration (1.8+)
 TEMPLATES = [
@@ -84,161 +32,91 @@ TEMPLATES = [
         ],
 
         'OPTIONS': {
+            # https://docs.djangoproject.com/en/1.9/topics/templates/#module-django.template.backends.django
+
             # Callables which alter the request context
             'context_processors': [
+                # Default
                 'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+#                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+
+                # Open ONI
+                'django.template.context_processors.csrf',
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'core.context_processors.extra_request_info',
-                'core.context_processors.newspaper_info',
             ],
-
-            # Template engine debug info; Defaults to the value of DEBUG
-            #'debug': True,
         },
     },
 ]
 
-# List of configuration classes / app packages in order of priority (i.e., the
-# first item in the list has final say when collisions occur)
-INSTALLED_APPS = (
-    'django.contrib.humanize',
-    'django.contrib.staticfiles',
 
-    'themes.default',
-    'core',
-)
-
-# Determines how django does its caching
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_cache',
-        'TIMEOUT': _ONEWEEK * 8
-    }
-}
-
-# Hosts/domain names that are valid for this site.  This should be overridden
-# in settings_local.py, especially for production!
-#
-# TODO: Allow this to be overridden by the INI file as well
-ALLOWED_HOSTS = ["*"]
-
-####################################################################
-# 3RD-PARTY LIB SETTINGS
-####################################################################
-
-
-####################################################################
-# OPEN-ONI SETTINGS
-####################################################################
-
-# Should be turned on in production.  TODO: this should probably drive the
-# DEBUG setting, at least forcing it to be off when IS_PRODUCTION is true.  We
-# should also make this overrideable in the INI file.
-IS_PRODUCTION = False
-
-LOG_LOCATION = "/opt/openoni/log/"
-
-# Public URLs to the image server endpoints
-#
-# These must be overridden to point to the image server.  They may be set to
-# the same value, but they're kept apart to allow for having static thumbnails,
-# thumbnail caching separated from resize caching, etc.  Thumbnails are a much
-# smaller subset of possible images and therefore benefit a great deal from
-# being cached and/or pregenerated.
-RESIZE_SERVER = "http://example.com/images/iiif"
-TILE_SERVER = "http://example.com/images/iiif"
-
-# How big should thumbnails be?
-THUMBNAIL_WIDTH = 240
-
+################################################################
+# DEFAULT OPEN-ONI SETTINGS
+################################################################
 # These determine the life of various caches (via cache_page)
-DEFAULT_TTL_SECONDS = _ONEDAY
-PAGE_IMAGE_TTL_SECONDS = _ONEWEEK * 2
-API_TTL_SECONDS = 60 * 60  # 1 hour
-FEED_TTL_SECONDS = _ONEWEEK
-
-# Turn this on to allow using tiff files for serving images.  Much faster than
-# JP2s if you don't have Aware, but significantly more memory-intense.
-USE_TIFF = False
-
-# Set this to a server load value at which you want Open ONI to stop handling
-# web requests.  If you aren't sure, just leave this alone.
-TOO_BUSY_LOAD_AVERAGE = 64
-
-# URL to the Solr server.  This should be overridden in settings_local.py or
-# else /etc/openoni.ini.
-SOLR = "http://localhost:8983/solr"
-
-# Languages solr uses
-SOLR_LANGUAGES = (
-    "ara",
-    "bul",
-    "cze",
-    "dan",
-    "ger",
-    "gre",
-    "eng",
-    "spa",
-    "baq",
-    "per",
-    "fin",
-    "fre",
-    "gle",
-    "hin",
-    "hun",
-    "arm",
-    "ind",
-    "ita",
-    "jpn",
-    "lav",
-    "dut",
-    "nor",
-    "por",
-    "rum",
-    "rus",
-    "swe",
-    "tha",
-    "tur",
-)
-
-# Absolute path on disk to the data directory
-STORAGE = '/opt/openoni/data/'
-
-# URL path to the data directory
-STORAGE_URL = '/data/'
-
-# If LC is down, we've mirrored a *lot* of MARC records - just copy the line
-# below into settings_local.py and uncomment it:
-# MARC_RETRIEVAL_URLFORMAT = "https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml"
-MARC_RETRIEVAL_URLFORMAT = "https://chroniclingamerica.loc.gov/lccn/%s/marc.xml"
-#MARC_RETRIEVAL_URLFORMAT = "http://localhost/media/marc/%s/marc.xml"
-
-# Various storage subdirectories
-BATCH_STORAGE = os.path.join(STORAGE, "batches")
-OCR_DUMP_STORAGE = os.path.join(STORAGE, "ocr")
-COORD_STORAGE = os.path.join(STORAGE, "word_coordinates")
-TEMP_TEST_DATA = os.path.join(STORAGE, "temp_test_data")
+API_TTL_SECONDS = 60 * 60  # One hour
+DEFAULT_TTL_SECONDS = API_TTL_SECONDS * 24  # One day
+FEED_TTL_SECONDS = DEFAULT_TTL_SECONDS * 7  # One week
+PAGE_IMAGE_TTL_SECONDS = FEED_TTL_SECONDS * 2  # Two weeks
 
 # List of breadcrumbs that will be shown on all pages
 BASE_CRUMBS = [{'label':'Home', 'href': '/'}]
 
-# BASE_URL is the URL at which this site is hosted, e.g.,
-# http://oregonnews.uoregon.edu.  If this isn't set in the INI file, it *must*
-# be set in settings_local.py.  Leaving it at the default will not work for
-# production or demoing purposes.
-#
-# NOTE: as of now this can NOT include any path elements!
-BASE_URL = 'http://localhost'
+# Batch and title management log directory path
+LOG_LOCATION = os.path.join(BASE_DIR, 'log')
 
-# SITE_TITLE that will be used for display purposes throughout app
-# PROJECT_NAME may be the same as SITE_TITLE but can be used
-# for longer descriptions that will only show up occasionally
-# Example "Open ONI" for most headers, "Open Online Newspapers Initiative"
-# for introduction / about / further information / etc
-# Both should be overridden in settings_local.py
-SITE_TITLE = "Open ONI"
-PROJECT_NAME = "Open Online Newspapers Initiative"
+MARC_RETRIEVAL_URLFORMAT = 'https://chroniclingamerica.loc.gov/lccn/%s/marc.xml'
+
+# Display newspaper titles with medium ("volume", "microform") when available
+TITLE_DISPLAY_MEDIUM = False
+
+
+################################################################
+# DEFAULT IIIF SETTINGS
+################################################################
+# How big should thumbnails be?
+THUMBNAIL_WIDTH = 240
+
+# Use JP2 file paths with RAIS rather than TIFF file paths
+USE_TIFF = False
+
+
+################################################################
+# DEFAULT SOLR SETTINGS
+################################################################
+# Languages solr uses
+SOLR_LANGUAGES = (
+    'ara',
+    'arm',
+    'baq',
+    'bul',
+    'cze',
+    'dan',
+    'dut',
+    'eng',
+    'fin',
+    'fre',
+    'ger',
+    'gle',
+    'gre',
+    'hin',
+    'hun',
+    'ind',
+    'ita',
+    'jpn',
+    'lav',
+    'nor',
+    'per',
+    'por',
+    'rum',
+    'rus',
+    'spa',
+    'swe',
+    'tha',
+    'tur',
+)

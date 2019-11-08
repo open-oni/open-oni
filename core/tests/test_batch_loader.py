@@ -1,4 +1,3 @@
-from datetime import date
 import shutil
 import os
 import tempfile
@@ -11,6 +10,7 @@ import core
 from core.batch_loader import BatchLoader
 from core.models import Title
 from core.models import Batch
+from core.utils import strftime_safe
 
 class BatchLoaderTest(TestCase):
     fixtures = ['test/countries.json', 'test/titles.json', 'test/languages.json']
@@ -57,16 +57,21 @@ class BatchLoaderTest(TestCase):
         self.assertEqual(issue.number, '1')
         self.assertEqual(issue.edition, 1)
         self.assertEqual(issue.title.lccn, 'sn83030214')
-        self.assertEqual(date.strftime(issue.date_issued, '%Y-%m-%d'), '1999-06-15')
+        self.assertEqual(strftime_safe(issue.date_issued, '%Y-%m-%d'), '1999-06-15')
         self.assertEqual(len(issue.pages.all()), 15)
 
         page = issue.pages.all()[0]
         self.assertEqual(page.sequence, 1)
         self.assertEqual(page.url, u'/lccn/sn83030214/1999-06-15/ed-1/seq-1/')
 
-        note = page.notes.all()[1]
+        notes = page.notes.order_by("type").all()
+        self.assertEqual(len(notes), 2)
+        note = page.notes.all()[0]
         self.assertEqual(note.type, "noteAboutReproduction")
         self.assertEqual(note.text, "Present")
+        note = page.notes.all()[1]
+        self.assertEqual(note.type, "agencyResponsibleForReproduction")
+        self.assertEqual(note.text, "oru")
 
         # Validate page 1's metadata
         self.assertEqual(page.sequence, 1)

@@ -9,9 +9,9 @@
       "frequency_date": null, 
       "name": "Kentucky reporter.", 
       "end_year": "19??", 
-      "version": "2004-10-11 13:36:54", 
+      "version": "2004-10-11T13:36:54+00:00", 
       "issn": null, 
-      "created": "2009-11-18 17:19:49", 
+      "created": "2009-11-18T17:19:49+00:00", 
       "frequency": "Weekly", 
       "oclc": "13922717", 
       "name_normal": "kentucky reporter.", 
@@ -33,8 +33,8 @@
       "frequency": "Weekly", 
       "oclc": "ocm09948037", 
       "name_normal": "colored American.", 
-      "created": "2009-02-09 06:44:45",
-      "version": "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version": "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -52,8 +52,8 @@
       "frequency": "Daily (except Sunday)", 
       "oclc": "ocm10954477", 
       "name_normal": "evening times.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -71,8 +71,8 @@
       "frequency": "Daily (except Sunday)", 
       "oclc": "ocm09368601", 
       "name_normal": "evening world.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -90,8 +90,8 @@
       "frequency": "Weekly", 
       "oclc": "ocm08797812", 
       "name_normal": "National forum.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -109,8 +109,8 @@
       "frequency": "Daily", 
       "oclc": "ocm11987624", 
       "name_normal": "Salt Lake herald.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -128,8 +128,8 @@
       "frequency": "Daily", 
       "oclc": "ocm13146227", 
       "name_normal": "San Francisco call.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -147,8 +147,8 @@
       "frequency": "Weekly", 
       "oclc": "ocm09298727", 
       "name_normal": "Suburban citizen.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -166,8 +166,8 @@
       "frequency": "Daily", 
       "oclc": "ocm09406339", 
       "name_normal": "sun.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -185,8 +185,8 @@
       "frequency": "Daily", 
       "oclc": "ocm12872288", 
       "name_normal": "times dispatch.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -204,8 +204,8 @@
       "frequency": "Weekly", 
       "oclc": "ocm10587828", 
       "name_normal": "Washington bee.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -223,8 +223,8 @@
       "frequency": "Daily (except Sunday)", 
       "oclc": "ocm10630160", 
       "name_normal": "Washington times.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -242,8 +242,8 @@
       "frequency": "Weekly", 
       "oclc": "ocm09334969", 
       "name_normal": "Weekly news.",
-      "created": "2009-02-09 06:44:45",
-      "version"               : "2004-10-11 13:00:00",
+      "created": "2009-02-09T06:44:45+00:00",
+      "version"               : "2004-10-11T13:00:00+00:00",
       "country": "nyu"
     }
   }, 
@@ -257,9 +257,9 @@
       "frequency_date": null, 
       "name": "The Sunday globe.", 
       "end_year": "1901", 
-      "version": "2008-01-17 09:08:24", 
+      "version": "2008-01-17T09:08:24+00:00", 
       "issn": "1940-7343", 
-      "created": "2009-09-21 19:48:28", 
+      "created": "2009-09-21T19:48:28+00:00", 
       "frequency": "Weekly", 
       "oclc": "9297869", 
       "name_normal": "sunday globe.", 
@@ -277,9 +277,9 @@
       "frequency_date": null, 
       "name": "Sunday morning globe.", 
       "end_year": "1901", 
-      "version": "2008-01-17 09:08:25", 
+      "version": "2008-01-17T09:08:25+00:00", 
       "issn": "1940-7351", 
-      "created": "2009-09-21 19:48:28", 
+      "created": "2009-09-21T19:48:28+00:00", 
       "frequency": "Weekly", 
       "oclc": "9297925", 
       "name_normal": "sunday morning globe.", 
@@ -297,9 +297,9 @@
       "frequency_date": null, 
       "name": "Sunday Washington globe.", 
       "end_year": "????", 
-      "version": "2008-01-17 09:08:25", 
+      "version": "2008-01-17T09:08:25+00:00", 
       "issn": "1940-736X", 
-      "created": "2009-09-21 19:48:28", 
+      "created": "2009-09-21T19:48:28+00:00", 
       "frequency": "Weekly", 
       "oclc": "9298094", 
       "name_normal": "sunday washington globe.", 

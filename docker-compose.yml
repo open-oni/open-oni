@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 
 services:
   rdbms:
@@ -12,7 +12,7 @@ services:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-mariadb:/var/lib/mysql
     ports:
-      - "$RDBMSPORT:3306"
+      - ${RDBMSPORT:-3306}:3306
   solr:
     image: solr:6.6
     volumes:
@@ -22,11 +22,11 @@ services:
       - docker-entrypoint.sh
       - /tmp/solr/precreate
     ports:
-      - "$SOLRPORT:8983"
+      - ${SOLRPORT:-8983}:8983
   rais:
     image: uolibraries/rais
     environment:
-      - RAIS_IIIFURL=$APP_URL:$HTTPPORT/images/iiif
+      - RAIS_IIIFURL=${ONI_BASE_URL:-http://localhost}/images/iiif
       - RAIS_TILECACHELEN=250
     volumes:
       - ./docker/data/batches:/var/local/images:z
@@ -35,10 +35,10 @@ services:
       context: ./docker
       dockerfile: Dockerfile-dev
     volumes:
-      - ./:/opt/openoni:Z
-      - ./docker/data:/opt/openoni/data:z
+      - ./:/opt/openoni:z
+      - ./docker/data:${ONI_STORAGE_PATH:-/opt/openoni/data}:z
     ports:
-      - "$HTTPPORT:80"
+      - ${HTTPPORT:-80}:80
     depends_on:
       - rdbms
     links:
@@ -46,9 +46,20 @@ services:
       - solr
       - rais
     environment:
-      - APP_URL
-      - HTTPPORT
-      - APACHE_LOG_LEVEL
+      - APACHE_LOG_LEVEL=${APACHE_LOG_LEVEL:-warn}
+      - ONI_BASE_URL
+      - ONI_DB_HOST
+      - ONI_DB_PORT
+      - ONI_DB_NAME
+      - ONI_DB_USER
+      - ONI_DB_PASSWORD
+      - ONI_DEBUG
+      - ONI_HSTS_SECONDS
+      - ONI_LOG_SQL
+      - ONI_LOG_TO_FILE
+      - ONI_SECRET_KEY
+      - ONI_SOLR_URL
+      - ONI_STORAGE_PATH
 volumes:
   data-mariadb: {}
   data-solr: {}

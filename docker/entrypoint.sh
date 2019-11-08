@@ -4,14 +4,20 @@
 # locations, then fires off startup.sh
 
 src=/opt/openoni/docker
+
+# Set source to the read-only ONI source mount for test runs
+if [[ $ONLY_RUN_TESTS == 1 ]]; then
+  src=/usr/local/src/openoni/docker
+fi
+
 cp $src/pip-install.sh /pip-install.sh
+cp $src/pip-reinstall.sh /pip-reinstall.sh
 cp $src/load_batch.sh /load_batch.sh
 cp $src/_startup_lib.sh /_startup_lib.sh
 
 cp $src/test.sh /test.sh
 cp $src/manage /usr/local/bin/manage
 cp $src/django-admin /usr/local/bin/django-admin
-cp $src/openoni.ini /etc/openoni.ini.orig
 
 # Copy startup script based on whether this is a test-only container
 if [[ $ONLY_RUN_TESTS == 1 ]]; then
