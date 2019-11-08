@@ -5,7 +5,8 @@ Starting from Open ONI v0.11, The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - Django 1.11 LTS Upgrade, Production Docs, and Feature Updates
+## [v0.11.0] - Django 1.11 LTS Upgrade, Production Docs, and Feature Updates
+
 ### Added
 - This changelog, with all previous releases
 - CentOS 7 deployment documentation in `docs/` and config files in `conf/`
