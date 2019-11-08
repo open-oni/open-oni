@@ -2,13 +2,12 @@
 
 {% extends "__l_main.html" %}
 {% load custom_filters %}
-{% load sass_tags %}
 {% load static from staticfiles %}
 {% load humanize %}
 
 {% block head_page_css %}
   {{ block.super }}
-  <link href="{% sass_src 'css/tablesort.scss' %}" rel="stylesheet">
+  <link href="{% static 'css/tablesort.css' %}" rel="stylesheet">
 {% endblock head_page_css %}
 
 {% block javascript %}

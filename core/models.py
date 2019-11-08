@@ -64,7 +64,7 @@ class Awardee(models.Model):
 
         if include_batches:
             for batch in self.batches.all():
-                j['collections'].append(batch.json(host, include_issues=True, serialize=False))
+                j['collections'].append(batch.json(host, include_issues=False, serialize=False))
 
         if serialize:
             return json.dumps(j, indent=2)
@@ -85,7 +85,7 @@ class Batch(models.Model):
 
     @classmethod
     def viewable_batches(klass):
-        if settings.IS_PRODUCTION:
+        if not settings.DEBUG:
             batches = Batch.objects.filter(released__isnull=False)
         else:
             batches = Batch.objects.all()

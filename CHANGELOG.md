@@ -1,12 +1,338 @@
 # Open ONI Changelog
 All notable changes to Open ONI will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic
-Versioning](https://semver.org/spec/v2.0.0.html).
+Starting from Open ONI v0.11, The format is based on [Keep a
+Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-Coming soon
+## [v0.11.0] - Django 1.11 LTS Upgrade, Production Docs, and Feature Updates
+
+### Added
+- This changelog, with all previous releases
+- CentOS 7 deployment documentation in `docs/` and config files in `conf/`
+- `navbar_classes` template block in `__base.html`'s
+  `<nav class="navbar …"` attribute
+- Year filter and language filter selects on search results pages
+- Multiple template blocks in `search_pages_results.html`, `newspapers.html`,
+  and `page.html`
+- Template block around link to batch on issue page
+- Date filtering tests
+- `pip-reinstall.sh` script to reinstall Python virtual environment and pip
+  dependencies and restart Apache
+- Load batch management command help text and batch existence check with error
+  message
+- Comments in `docker/_startup_lib.sh` that identify `.env` file as source of
+  environment variables used for configuration
+- Strict mode use in MariaDB/MySQL via `sql_mode = TRADITIONAL`
+- Configuration boolean for whether title name displays medium in parentheses,
+  e.g. "(volume)" or "(microform)"
+- `custom_size_image_url` template tag for requesting custom image sizes
+- On-page JavaScript newspaper title filtering on `newspapers.html`
+    - Rearrange layout of title / page counts and filter input with Bootstrap
+- `strftime_safe` method in `core/utils.py` to print years before 1900
+    - Alias `core.utils.strftime` to this function for backwards compatibility
+    - Replace direct calls to `datetime_safe.new_datetime` with `strftime_safe`
+
+### Changed
+- Upgrade Django from 1.8 LTS to 1.11 LTS
+    - [Full release notes](https://docs.djangoproject.com/en/1.11/releases/) for
+      reference
+    - pip dependencies updated as well
+        - Version constraint on rfc3339 removed - library still maintained
+          and updates are compatible
+    - Pass `MiddlewareMixin` to middleware class definitions for compatibility
+      with `MIDDLEWARE` setting change from `MIDDLEWARE_CLASSES`
+    - Replace `render_to_response` with `render` in view code
+- Update Bootstrap to 3.4.1
+- Update OpenSeadragon to 2.4.1
+- Update jQuery tablesorter to 2.31.1
+    - Change toggle for using title sort parser to `sort-titles` class on
+      <th> element, rather than defaulting to first column
+    - Change toggle for disabling sort to `sort-off` class on <th> element,
+      rather than defaulting to fourth column
+    - Update template to use new toggle classes
+    - Update tablesorter css; Use default cursor on unsorted column header
+    - Move initializing JavaScript on `newspapers.html` to external file
+      `newspapers.js`
+- Update jQuery to 3.4.1
+    - Remove jQuery CDN loading; replace with local copy of jQuery 3.4.1
+    - Move JS libraries loading from bottom of `<body>` back into `<head>`
+    - Remove conditional loading of now missing HTML5 shim
+    - Update JavaScript use across all templates
+        - Move javascript template block to top of files
+        - Update jQuery on-DOM-load ready syntax
+        - Improve multiple issue JS for non-plugin calendar
+            - Make minimally keyboard-accessible
+- `README.md` updates
+    - Link to GitHub wiki and releases
+    - Recommend installing from latest release to evaluate software and
+      checking out `dev` branch for contributing changes
+    - Simplify section blurbs and link to wiki pages for more information
+    - Add "Support" section outlining support expectations
+    - Add list of Open ONI-powered sites
+    - Update Markdown syntax and reorganize sections
+    - Add link text communicating which links navigate to the wiki
+- Docker / Apache / deployment script changes
+    - Set Django code Docker bind mount volume to shared-across-containers
+      SELinux label
+    - Pip updates itself before installing dependencies, now much more quickly
+    - Create and destroy database for each test run
+    - Dump OCR management command no longer relies upon celery, enabling removal
+    - Serve word coordinates files through Apache, bypassing Django
+    - Update Apache config every time web container starts rather than only
+      during Docker image creation
+- Update and reorganize Django settings files
+    - Begin with the default config generated for a new Django app in
+      `django_defaults.py`
+    - Only environment-independent settings in `settings_base.py`
+    - Include default list with commented omissions and additions in overrides
+    - Use default enabling of i18n, l10n, and timezone support set to UTC zone
+    - Remove some defaults included in overrides but not changed, e.g.
+      `STATIC_URL`
+    - Retain session, messages, and security middleware previously omitted
+    - Change compiled static assets path `STATIC_ROOT` to `static/compiled`
+        - Update corresponding Apache config
+    - Put settings that shouldn't change for dev / production environments in
+      separate files `settings_development.py`, `settings_production.py`
+        - Development environment
+            - Disable client-side caching via custom middleware
+            - Use console output email backend
+            - Change Apache WSGI config to reload the app after every request so
+              multiple processes and threads don't persist and render page
+              contents based on cached versions of the code base
+        - Production environment
+            - Switch static file storage class from `CachedStaticFilesStorage`
+              to `ManifestStaticFilesStorage` for performance and graceful
+              Apache restart compatibility
+    - Move commonly changed settings to `settings_local_example.py`
+        - Place env-independent settings at the top
+        - Default to dev environment
+        - Include unchanging settings for environments from separate files
+        - Collect settings which seem more likely to be changed for production
+        - Comment out all production settings; add instructions on how to use
+        - Add disabled-by-default SQL logging config which doesn't disable other
+          loggers to dev environment settings
+        - Differentiate `YOUR_` strings for possibly differening web, database,
+          and Solr hosts; log and data paths
+        - Add optional debug file logging config
+        - Add email settings for host, from, subject, etc with guiding comments
+        - Copy file to `settings_local.py` during Docker container creation
+    - Review [Django deployment
+      checklist](https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/)
+      and add settings to remove warnings from `manage.py check --deploy`
+          - Add MIME-type sniffing prevention header in `settings_base.py`
+          - Add broken link email middleware in `settings_production.py` and
+            related toggling settings in `settings_local_example.py`
+          - Add database connection re-use setting in
+            `settings_local_example.py`
+          - Add CSRF, secure cookie, `SECURE_SSL_REDIRECT` settings;
+            collectHTTPS/HSTS-related settings together in
+            `settings_local_example.py`
+          - Add `X_FRAME_OPTIONS = 'DENY'` to `settings_base.py`
+    - Update `urls_example.py` with Django recommendation to use raw strings
+      and comments to guide plugin, theme, and core Open ONI URL includes
+- Update tests to pass; Remove system tests
+    - Modify times in fixture JSON to TZ-aware format with UTC times
+    - Remove system tests as Django and Python dictated/tracked elsewhere
+    - Make datetime objects TZ-aware in `title_loader`, `test_ocr_dump`
+    - Update timestamps in JSON tests to match UTC format
+    - Update IIIF manifest JSON tests to match updated manifest format
+- Improve search page results layout / functionality
+    - Date range search handling refactored
+        - dateFilterType param removed; yearRange supercedes date1 and date2
+    - Solr query won't pass query params for dates if no date filtering
+      requested
+    - Remove `form-inline` class so selects display below related labels
+    - Shorten "Jump to page" input field
+    - Move "Front pages only" check left of submit
+    - Add space above checkbox and submit button
+    - Move "Refine search" button to right to align with other controls
+    - Move filters and result numeration above pagination controls
+    - Move result count above filter controls
+    - Move pagination controls to separate template and include both above and
+      below results
+    - Move gallery/list display control to left, pagination controls right
+    - Don't display pagination or result template blocks if no results
+    - Don't display pagination controls if only one result page
+    - Fix pluralization and "No matches found" text with result counts
+    - Remove duplicate text and update spacing in list view-specific template
+    - Improve filter removal controls
+        - Change controls to inline list with Bootstrap buttons
+        - Display truncated title of paper rather than just LCCN value
+        - Drop removal button redundant to year filter select
+        - Only show removal for date range filter from Advanced Search if
+          overriding year filter select not in use
+        - Update hidden inputs to retain filter values across form submissions
+        - Clarify date filter removal text to communicate whether both fields
+          are populated or only a From date or Until date present
+    - Don't include highlight words param in pagination URLs where not necessary
+        - Only add param if highlight words present
+- Advanced Search improvements
+    - Search any Solr language present in newspaper titles which have issues
+    - Date range inputs are now native date inputs, `type="date"`
+        - Back end code updated to handle YYYY-MM-DD format sent to the server
+        - Related tests updated
+        - Set initial values to site-wide min and max; bypass inclusion in Solr
+          query if unmodified from these values
+              - This requires default values pass through as GET parameters upon
+                form submission; Hide date filter removal link when these
+                default values are not actually filtering
+        - Update styling to give date inputs more width for easier use and
+          display date limits for site's newspapers closer to inputs
+    - Update newspaper title multi-select
+        - Re-write label and instructions for clarity
+        - Remove "All newspapers" option which results in error
+-  Page viewer changes
+    - Specify issue date on button to view entire issue
+    - Improve overlapping and spacing around viewer controls; Make more
+      consistent across browsers
+    - Update page and issue controls to display message when no pagination
+    - Add aria-label and aria-hidden attributes to improve screen reading
+    - Add "Return to Top" link at bottom left
+    - Copy page and issue pagination controls at bottom right; Add necessary
+      related JS
+-  Modernize issue pages, batches report pagination
+    - Wrap pagination controls in Bootstrap row
+    - Add margin below pagination control row
+    - Adapt pagination template from search results
+    - Add page variables in view code
+    - Convert some dev comments to template comments
+    - Make previous/next issue links Bootstrap buttons
+- Newspaper titles page (`newspapers.html`) updates
+    - Site-wide page count total above newspaper title table
+    - Fix typo using `<th>` elements in the table body
+- Issue page changes
+    - Handle issues with no pages in `issue_pages.html` and associated
+      `views/browse.py`
+    - "View First Issue" and "View Last Issue" links go to main issue page
+      rather than issue first page
+- Review and clean `__base.html`
+    - Remove templates in theme from core files (__overrides, home, about)
+    - Clean up `__base.html` and templates in default theme
+        - Reorganize template blocks with sitewide content blocks first
+        - Move sitewide meta tags to new template block `head_site_meta`
+        - Use site title in OpenSearch titles
+        - Set better page title default (page-specific title before site title)
+        - Use template-only comments, trim whitespace, 80-character margin
+        - Modernize CSS and JavaScript markup (drop extra attributes)
+        - Add sitewide skip link and target between template blocks,
+          so less likely to be overridden
+    - Clean up `__overrides.html` with clearer documentation including block
+      list and simpler default overrides for favicon and page meta tags
+    - Add generic favicon.png to default theme
+- Design consistency
+    - Change search / submit / etc buttons to use Bootstrap primary color
+    - Title case on button text rather than all letters capitalized
+- Clean up CSS files and conditional inclusion
+    - Move `main.css` inclusion from `__base.html` into default theme
+      `__overrides.html` as `main.css` lives in the default theme
+    - Move minimal contents of `a11y.css` into `main.css`
+    - Move minimal contents of `highlights.css` into `search.css`
+    - Move `tablesort.css` to only be included when necessary
+        - Add margin to top of table for space between search input
+    - Remove unnecessary `media` attribute from link elements
+    - Move dev-only comments to template comment for `page.html` CSS
+- Update return to top links with new skip link target `#maincontent`
+    - Remove old `#skip_menu` and `.backtotop` class with no related CSS or JS
+    - Change all link text to "Return to Top"
+    - Remove block elements around links to prevent page-width block elements
+      from pushing other nearby controls down
+- Remove `required` attribute from Django-generated form fields
+- Display essay on newspaper title page if present in database or if file with
+  LCCN for name present at configurable `ESSAY_TEMPLATES` path
+    - Documentation in ` core/templates/essays/README.md`
+- Change SQL to Django ORM for batch issue list to include issues with no pages
+- Sort batches report page list by most recently created first
+- Update Not Found (404) and Error (500) page templates to remove site title
+  variable use and unnecessary CSS classes
+- Replace `datetime.now()` calls with timezone-aware `timezone.now()`
+- Only load `highlight.js` on `search_pages_results.html`
+- Update default theme README instructions for creating a new theme
+- Clean up improperly formatted `OpenONI` strings and incorrectly search and
+  replaced strings in URLs
+
+### Deprecated
+- Django 1.8 to 1.11
+    - [Full deprecation timeline](https://docs.djangoproject.com/en/1.11/internals/deprecation/)
+      for reference
+    - Use of `MIDDLEWARE_CLASSES`, to be removed in Django 2.0
+- Python 2's end of life is coming soon, and Open ONI will *no longer
+  support it* after this release
+
+### Removed
+- Django 1.8 to 1.11
+    - Passing (Request)Context objects to template.render
+    - `django.conf.urls.patterns` use in `urls.py`
+    - `render_to_response` param `context_instance` to render templates at the
+      end of view code
+    - `optparse` support for custom management commands (replaced by `argparse`)
+- celery from `requirements.pip`; Unused Celery management commands
+- Load institutions management command - Already loaded in database migration
+  from `fixtures/institutions.json`
+- Unused setting `PROFILE_LOG_BASE` handling
+- Settings overrides from `/etc/openoni.ini`
+- Title pull / sync and local holding loading management commands
+- Unused variable for removed similar pages links info retrieved from Solr
+- Extra `<a>` around "Text" link in page viewer controls
+- `newspaper_info` context processor which queried Solr or cache every request,
+  but is no longer in use
+- Misleading batch link if viewing first pages, as the pages could be from
+  multiple batches
+- Cities with no issues from nav search's select
+    - This can result from batches purged leaving records in the Places table
+
+### Fixed
+- Language filtering test
+- Solr code's SolrPaginator `_count` attribute presence check
+- Use `_logger` for logging calls
+- Batch loading in `batch_loader.py`
+    - Bulk foreign key handling
+    - Handle unreliable path comparison due to trailing slash
+    - Handle if `BATCH_STORAGE` path is a symlink
+- Invalid static tag use to render static URL in `page.html` data attributes
+- The docker-based test setup should now function properly
+
+### Contributors
+- Karin Dalziel (karindalziel)
+- Tinghui Duan (via Slack)
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Linda Sato (lsat12357)
+- John Scancella (johnscancella)
+- Greg Tunink (techgique)
+
+### Migration
+
+Migrating to v0.11 requires special attention to a lot of changes.  Read this
+carefully before attempting a migration, and it may behoove you to read over
+the [Django upgrade notes](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/)
+if your ONI instance has a lot of custom code.
+
+- Rewrite your settings **from scratch**.  The new
+  `onisite/settings_local_example.py` file should help guide you, but enough
+  has changed this release that you can't just copy your old settings and
+  expect things to work!
+- If you were using a `docker-compose.override.yml` file, update its version to 2.1
+- Django 1.8 to 1.11
+    - [Update use of (Request)Context objects passed to `template.render`
+      calls at the end of code in view
+      definitions](https://docs.djangoproject.com/en/1.11/ref/templates/upgrading/#get-template-and-select-template)
+    - [Import `django.utils.deprecation.MiddlewareMixin` in middleware and pass
+      `MiddlewareMixin` to middleware class
+      definitions](https://github.com/open-oni/open-oni/commit/c51d7235d47690884da00a794c3f522933579925)
+    - Remove import of `django.conf.urls.patterns` from `urls.py` files
+    - [Replace `render_to_response` with `render` in view
+      code](https://github.com/open-oni/open-oni/commit/c40ca4eb87a47865c1d88cb92d3b9d316cea277f)
+    - [Convert `optparse` to `argparse` in custom management
+      commands](https://github.com/open-oni/open-oni/commit/37854ea135ce011add09040de06506c794e130d0)
+- Tablesorter update for `newspapers.html`
+    - Add `sort-titles` class on <th> element to toggle use of title sort parser
+      which ignores articles "a", "an", and "the"
+    - Add `sort-off` class on <th> element to disabling sorting by column(s)
+- Review updated `__base.html` and default theme `__overrides.html` to mimic
+  inclusion of favicon and default page author + description
+  `<meta>` tags
+- Update skip links and return to top links to target `#maincontent`
 
 ## [v0.10.0] - 2018-01-29 - Hey it actually really works again!
 - Unpinned RAIS for Docker users

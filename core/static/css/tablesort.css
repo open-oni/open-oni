@@ -1,0 +1,33 @@
+.tablesorter {
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+
+.tablesorter td, .tablesorter th {
+  border-left: 1px solid #ccc;
+}
+
+.tablesorter .tablesorter-header {
+  background-image: url(../images/bg.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  cursor: pointer;
+  padding-left: 20px;
+}
+
+.tablesorter .tablesorter-header.tablesorter-headerAsc {
+  background-image: url(../images/asc.gif);
+}
+
+.tablesorter .tablesorter-header.tablesorter-headerDesc {
+  background-image: url(../images/desc.gif);
+}
+
+.tablesorter .tablesorter-header.sorter-false {
+  background-image: none;
+  cursor: default;
+}
+
+.tablesorter .left_no_border {
+  border-left: none;
+}

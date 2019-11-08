@@ -14,9 +14,7 @@ def extra_request_info(request):
         'city_form': CityForm(),
         'fulltext_enddate': date_boundaries[1],
         'fulltext_startdate': date_boundaries[0],
-        'omniture_url': settings.OMNITURE_SCRIPT if "OMNITURE_SCRIPT" in dir(settings) else None,
         'project_name': settings.PROJECT_NAME if "PROJECT_NAME" in dir(settings) else None,
-        'sharetool_url': settings.SHARETOOL_URL if "SHARETOOL_URL" in dir(settings) else None,
         'site_title': settings.SITE_TITLE if "SITE_TITLE" in dir(settings) else None,
     }
 

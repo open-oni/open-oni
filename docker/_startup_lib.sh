@@ -16,23 +16,6 @@ verify_config() {
   fi
 }
 
-replace_ini_data() {
-  # Generate a random secret key if that hasn't already happened.  This stays the
-  # same after it's first set.
-  sed -i "s/!SECRET_KEY!/$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c 80)/g" /etc/openoni.ini.orig
-
-  # Refresh the environmental config for APP_URL in case it needs to change
-  cp /etc/openoni.ini.orig /etc/openoni.ini
-
-  # Add in HTTPPORT from .env file if necessary
-  if [[ $HTTPPORT != "" && $HTTPPORT != 80 ]]; then
-    sed -i "s|!APP_URL!|!APP_URL!:$HTTPPORT|g" /etc/openoni.ini
-  fi
-
-  # Set BASE_URL and public IIIF URL from APP_URL in .env file
-  sed -i "s|!APP_URL!|$APP_URL|g" /etc/openoni.ini
-}
-
 setup_database() {
   DB_READY=0
   MAX_TRIES=15
@@ -86,9 +69,9 @@ prep_webserver() {
 
   echo "-------" >&2
   echo "Running collectstatic" >&2
-  /opt/openoni/manage.py collectstatic --noinput
-  # Sass processor needs write access to STATIC_ROOT
+  # Django needs write access to STATIC_ROOT
   chown -R www-data:www-data /opt/openoni/static/compiled
+  /opt/openoni/manage.py collectstatic --noinput
 
   # Remove any pre-existing PID file which prevents Apache from starting thus
   # causing the container to close immediately after.

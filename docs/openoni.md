@@ -18,7 +18,7 @@
             - [Title and Project Name](#title-and-project-name)
         - [Logging](#logging)
         - [URLs](#urls)
-        - [WSGI Path](#wsgi-path)
+        - [Error Emails](#error-emails)
 - [Compile Static Assets](#compile-static-assets)
 - [Load Batches](#load-batches)
 
@@ -153,7 +153,6 @@ INSTALLED_APPS = (
 
     # Open ONI
     'django.contrib.humanize',  # Added to make data more human-readable
-    'sass_processor',
     'themes.nebraska',
     'themes.default',
     'core',
@@ -207,6 +206,63 @@ urlpatterns = [
 ]
 ```
 
+#### Error Emails
+Django provides the ability to [send emails about 5xx error and 404 responses an
+app generates](https://docs.djangoproject.com/en/1.11/howto/error-reporting/).
+They can be a bit spammy, but we include documentation about how to enable them
+if anyone wants to try them out.
+
+One must add an additional middleware in `settings_local.py`:
+
+```py
+    MIDDLEWARE = (
+        'django.middleware.security.SecurityMiddleware',
+        'core.middleware.TooBusyMiddleware',                          # Open ONI
+        'django.middleware.http.ConditionalGetMiddleware',            # Open ONI
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.common.BrokenLinkEmailsMiddleware',        # Open ONI
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    )
+```
+
+Additional configuration is required for how and to whom Django sends emails:
+
+```py
+    """
+    Optional email error reporting
+    https://docs.djangoproject.com/en/1.11/howto/error-reporting/
+
+    EMAIL_HOST settings only necessary if another server or service sends email.
+    Defaults to 'localhost', sending from the same server running Django.
+    Additional settings for further email host configuration:
+    https://docs.djangoproject.com/en/1.11/ref/settings/#email-host
+    """
+    #EMAIL_HOST = 'YOUR_EMAIL_HOST'
+    #EMAIL_HOST_PASSWORD = 'YOUR_EMAIL_HOST_PASSWORD'
+    #EMAIL_HOST_USER = 'YOUR_EMAIL_HOST_USER'
+
+    """
+    'From' address on error emails sent to ADMINS and MANAGERS:
+    If sending email from different server, replace `@' + url.netloc` with host.
+    """
+    #SERVER_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@' + url.netloc
+
+    # ADMINS receive 5xx error emails; MANAGERS receive 404 error emails.
+    #ADMINS = [
+    #    ('YOUR_admin1', 'YOUR_admin1@example.com'),
+    #    ('YOUR_adminX', 'YOUR_adminX@example.com')
+    #]
+    #MANAGERS = [
+    #    ('YOUR_mngr1', 'YOUR_mngr13@example.com'),
+    #    ('YOUR_mngrX', 'YOUR_mngrX4@example.com')
+    #]
+    #IGNORABLE_404_URLS = [
+    #    re.compile(r'YOUR_known_404_URL_regex_to_prevent_emails'),
+    #]
+```
 
 ## Compile Static Assets
 Run these commands as a regular user rather than root
@@ -234,6 +290,15 @@ Run these commands as a regular user rather than root
 ```bash
 # Repeat as necessary
 ./manage.py load_batch /opt/openoni/data/batches/(batch_name)/
+
+# For batches to be visible in /batches page, must be released
+# Add --reset flag to clear release dates and recalculate them
+# Release date and time come from:
+# 1. bag-info.txt, if found in the batch source
+# 2. Tab-delimited CSV file if provided in format: batch_name \t batch_date
+# 3. http://chroniclingamerica.loc.gov/batches.xml
+# 4. Current server datetime
+./manage.py release
 
 # Run a script with nohup in the background to ingest multiple batches quietly
 # nohup prevents scripts from exiting if one closes the terminal shell

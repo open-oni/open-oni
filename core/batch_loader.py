@@ -200,7 +200,7 @@ class BatchLoader(object):
                 _logger.exception(pbe)
             raise BatchLoaderException(msg)
 
-        if settings.IS_PRODUCTION:
+        if not settings.DEBUG:
             batch.released = timezone.now()
             batch.save()
 
