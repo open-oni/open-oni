@@ -1,5 +1,7 @@
 from rfc3339 import rfc3339
 
+import os
+import shutil
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -10,11 +12,14 @@ from django.utils import timezone
 
 from core import models as m
 from core.rdf import rdf_uri
+from onisite import settings
 
 class Command(BaseCommand):
     help = "Indexes new batches in the sitemap"
 
     def handle(self, **options):
+        shutil.rmtree('static/sitemaps', ignore_errors = True)
+        os.makedirs('static/sitemaps', exist_ok = True)
         write_sitemaps()
 
 
