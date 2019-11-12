@@ -85,7 +85,7 @@ def title_rdf(request, lccn):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def title_atom(request, lccn, page_number=1):
     title = get_object_or_404(models.Title, lccn=lccn)
-    issues = title.issues.all().order_by('-batch__released', '-date_issued')
+    issues = title.issues.all().order_by('-batch__created', '-date_issued')
     paginator = Paginator(issues, 100)
     try:
         page = paginator.page(page_number)
@@ -93,15 +93,11 @@ def title_atom(request, lccn, page_number=1):
         raise Http404("No such page %s for title feed" % page_number)
 
     # figure out the time the title was most recently updated
-    # typically the release date of the batch, otherwise
-    # when the batch was ingested
+    # via the create date of the batch
     issues = page.object_list
     num_issues = issues.count()
     if num_issues > 0:
-        if issues[0].batch.released:
-            feed_updated = issues[0].batch.released
-        else:
-            feed_updated = issues[0].batch.created
+        feed_updated = issues[0].batch.created
     else:
         feed_updated = title.created
 
