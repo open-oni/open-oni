@@ -5,6 +5,36 @@ Starting from Open ONI v0.11, The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased] - Unreleased
+
+### Added
+
+### Changed
+
+- All code in ONI core, including the default theme, is now Python 3
+  - Python 2 code will no longer work anywhere in the stack: plugins, themes, core overrides, etc.
+  - The docker setup installs a much newer Ubuntu server as well as Python 3.6
+- Docker-compose changes:
+  - MariaDB and Solr ports are no longer forcibly exposed to the host
+    - If you need these, use a `docker-compose.override.yml` file
+  - Batches must now live under `./data/batches`, not `./docker/data/batches` for ingest
+    - This fixes odd issues which can occur when mounting over an existing
+      mount point (we mount `.` as `/opt/openoni`, and previously were mounting
+      `./docker/data` as `/opt/openoni/data`, effectively shadowing the actual data directory)
+  - All generated ingest artifacts now live in a named volume
+
+### Migration
+
+- If you use any of our plugins, make sure you look over their repositories and
+  get a version that is built for Python 3
+- Custom themes and plugins you've built will need to be fixed for Python 3 -
+  exact fixes are out of scope for ONI, but you can learn a lot from the
+  [Python porting documentation](https://docs.python.org/3/howto/pyporting.html)
+  as well as the [2to3](https://docs.python.org/2/library/2to3.html) tool's
+  documentation.
+- Move your local/development batches into `./data` if you previously had them
+  in `./docker/data`
+
 ## [v0.11.0] - Django 1.11 LTS Upgrade, Production Docs, and Feature Updates
 
 ### Added
