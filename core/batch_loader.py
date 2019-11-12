@@ -3,7 +3,6 @@ import os.path
 import re
 import logging
 import urllib.request, urllib.error, urllib.parse
-import urllib.parse
 
 import io
 import gzip
