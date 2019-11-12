@@ -79,17 +79,13 @@ class Batch(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     validated_batch_file = models.CharField(max_length=100)
     awardee = models.ForeignKey('Awardee', related_name='batches', null=True)
-    released = models.DateTimeField(null=True)
     source = models.CharField(max_length=4096, null=True)
     sitemap_indexed = models.DateTimeField(auto_now_add=False, null=True)
 
     @classmethod
     def viewable_batches(klass):
-        if not settings.DEBUG:
-            batches = Batch.objects.filter(released__isnull=False)
-        else:
-            batches = Batch.objects.all()
-        return batches.order_by("-released")
+        batches = Batch.objects.all()
+        return batches.order_by("-created")
 
     @property
     def storage_url(self):
@@ -271,9 +267,9 @@ class Title(models.Model):
             return None
 
     @property
-    def last_issue_released(self):
+    def last_issue_created(self):
         try:
-            return self.issues.order_by("-batch__released")[0]
+            return self.issues.order_by("-batch__created")[0]
         except IndexError:
             return None
 

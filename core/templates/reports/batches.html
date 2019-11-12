@@ -79,7 +79,6 @@ in the <a href="{% url 'openoni_batches_atom' %}">Atom</a> and
     <th>Batch Name</th>
     <th>Awardee</th>
     <th>Total Pages</th>
-    <th>Released</th>
   </tr>
 
 {% for batch in page.object_list %}
@@ -93,7 +92,6 @@ in the <a href="{% url 'openoni_batches_atom' %}">Atom</a> and
         </a>
     </td>
     <td>{{ batch.page_count }}</td>
-    <td>{{ batch.released|date:"F d, Y" }}</td>
   </tr>
 
 {% endfor %}

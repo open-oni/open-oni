@@ -61,15 +61,15 @@ def newspapers_atom(request):
     # get a list of titles with issues that are in order by when they
     # were last updated
     titles = models.Title.objects.filter(has_issues=True)
-    titles = titles.annotate(last_release=Max('issues__batch__released'))
-    titles = titles.order_by('-last_release')
+    titles = titles.annotate(last_create=Max('issues__batch__created'))
+    titles = titles.order_by('-last_create')
 
     # get the last update time for all the titles to use as the
     # updated time for the feed
     if titles.count() > 0:
-        last_issue = titles[0].last_issue_released
-        if last_issue.batch.released:
-            feed_updated = last_issue.batch.released
+        last_issue = titles[0].last_issue_created
+        if last_issue.batch.created:
+            feed_updated = last_issue.batch.created
         else:
             feed_updated = last_issue.batch.created
     else:
