@@ -1,22 +1,23 @@
-FROM ubuntu:trusty
-MAINTAINER Mark Cooper <mark.cooper@lyrasis.org>
+FROM ubuntu:bionic
 
 RUN apt-get update
+
+# Grab "core" requirements before anything else
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
   apache2 \
   ca-certificates \
   gcc \
   git \
-  libapache2-mod-wsgi \
   libmysqlclient-dev \
   libxml2-dev \
   libxslt-dev \
   libjpeg-dev \
   mysql-client \
-  python-dev \
-  python-virtualenv \
-  rsync \
-  supervisor
+  rsync
+
+RUN apt-get -y install --no-install-recommends python3-dev python3-pip
+
+RUN apt-get -y install --no-install-recommends libapache2-mod-wsgi-py3
 
 # Force apache error logs to stderr
 RUN ln -sf /proc/self/fd/1 /var/log/apache2/error.log
@@ -29,6 +30,8 @@ RUN a2dissite 000-default.conf
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 VOLUME /opt/openoni
 WORKDIR /opt/openoni
+
+VOLUME /var/local/onidata
 
 ADD entrypoint.sh /
 RUN chmod u+x /entrypoint.sh

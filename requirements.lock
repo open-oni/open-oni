@@ -22,4 +22,5 @@ simplejson==3.16.0
 six==1.13.0
 solrpy==0.9.9
 urllib3==1.25.6
+wheel==0.33.6
 worldcat==0.3.6

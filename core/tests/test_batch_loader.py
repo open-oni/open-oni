@@ -62,7 +62,7 @@ class BatchLoaderTest(TestCase):
 
         page = issue.pages.all()[0]
         self.assertEqual(page.sequence, 1)
-        self.assertEqual(page.url, u'/lccn/sn83030214/1999-06-15/ed-1/seq-1/')
+        self.assertEqual(page.url, '/lccn/sn83030214/1999-06-15/ed-1/seq-1/')
 
         notes = page.notes.order_by("type").all()
         self.assertEqual(len(notes), 2)
@@ -99,15 +99,15 @@ class BatchLoaderTest(TestCase):
         self.assertEqual(solr_doc['date'], '19990615')
         self.assertEqual(solr_doc['batch'], 'batch_oru_testbatch_ver01')
         self.assertEqual(solr_doc['subject'], [
-            u'New York (N.Y.)--Newspapers.',
-            u'New York County (N.Y.)--Newspapers.'])
+            'New York (N.Y.)--Newspapers.',
+            'New York County (N.Y.)--Newspapers.'])
         self.assertEqual(solr_doc['place'], [
-            u'New York--Brooklyn--New York City', 
-            u'New York--Queens--New York City'])
+            'New York--Brooklyn--New York City', 
+            'New York--Queens--New York City'])
         self.assertEqual(solr_doc['note'], [
-            u"I'll take Manhattan",
-            u'The Big Apple'])
-        self.assertTrue(not solr_doc.has_key('essay'))
+            "I'll take Manhattan",
+            'The Big Apple'])
+        self.assertTrue('essay' not in solr_doc)
         self.assertEqual(solr_doc['ocr_eng'], 'LCCNsn83030214Page1')
 
         # purge the batch and make sure it's gone from the db

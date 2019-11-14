@@ -261,7 +261,7 @@ GROUP BY state, county HAVING total >= 1 ORDER BY state, county")
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def cities_in_county(request, state, county, format='html'):
-    state, county = map(unpack_url_path, (state, county))
+    state, county = list(map(unpack_url_path, (state, county)))
     if state is None or county is None:
         raise Http404
     page_title = 'Cities in %s, %s' % (state, county)

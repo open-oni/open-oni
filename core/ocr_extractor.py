@@ -52,10 +52,10 @@ class OCRHandler(ContentHandler):
                 self._page[self._language] = [l]
             self._line = []
         if tag == 'Page':
-            for l in self._page.keys():
+            for l in list(self._page.keys()):
                 self._page[l] = '\n'.join(self._page[l])
     def text(self):
-        return "\n".join(self._page.values())
+        return "\n".join(list(self._page.values()))
 
     def lang_text(self):
         return self._page

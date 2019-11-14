@@ -8,6 +8,13 @@ services:
   rdbms:
     volumes:
       - ./docker/mysql/:/etc/mysql/conf.d:Z
+
+    # This override exposes MariaDB to your host so you can locally run mysql
+    # commands.  Don't use this unless you really want the docker *host* to
+    # expose MariaDB!  This is generally not desirable in production.
+    ports:
+      - 3306:3306
+
   # This example pins RAIS to a set version rather than just pulling the latest
   rais:
     image: uolibraries/rais:2.10.1

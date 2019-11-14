@@ -1,6 +1,6 @@
 import logging
 
-from cStringIO import StringIO
+from io import StringIO
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
@@ -37,7 +37,7 @@ class Command(BaseCommand):
             record = pymarc.parse_xml_to_array(StringIO(title.marc.xml))[0]
             if record['245']['h'] == '[electronic resource].':
                 if options['pretend']:
-                    print title
+                    print(title)
                 else:
                     _log.info("deleting %s [%s] from solr index")
                     solr_index.delete_title(title)

@@ -110,21 +110,21 @@ class SolrIndexTests(TestCase):
 
     def test_page_search_ortext(self):
         q = ' OR '.join(['%s:("apples" "oranges")' % lang for lang in self.ocr_langs])
-        self.assertEqual(si.page_search(Q('ortext=apples%20oranges'))[0], u'+type:page +((ocr:("apples" "oranges")^10000 ) OR %s )' % q)
+        self.assertEqual(si.page_search(Q('ortext=apples%20oranges'))[0], '+type:page +((ocr:("apples" "oranges")^10000 ) OR %s )' % q)
 
     def test_page_search_andtext(self):
         q = ' OR '.join(['%s:(+"apples" +"oranges")' % lang for lang in self.ocr_langs])
-        self.assertEqual(si.page_search(Q('andtext=apples%20oranges'))[0], u'+type:page +((ocr:(+"apples" +"oranges")^10000 ) OR %s )' % q)
+        self.assertEqual(si.page_search(Q('andtext=apples%20oranges'))[0], '+type:page +((ocr:(+"apples" +"oranges")^10000 ) OR %s )' % q)
 
     def test_page_search_phrase(self):
         q = ' OR '.join(['%s:"new york yankees"' % lang for lang in self.ocr_langs])
-        self.assertEqual(si.page_search(Q('phrasetext=new%20york%20yankees'))[0], u'+type:page +((ocr:"new york yankees"^10000 ) OR %s )' % q)
+        self.assertEqual(si.page_search(Q('phrasetext=new%20york%20yankees'))[0], '+type:page +((ocr:"new york yankees"^10000 ) OR %s )' % q)
 
     def test_page_search_proxtext(self):
         q = ' OR '.join(['%s:"apples oranges"~10' % lang for lang in self.ocr_langs])
-        self.assertEqual(si.page_search(Q('proxtext=apples%20oranges&proxdistance=10'))[0], u'+type:page +((ocr:("apples oranges"~10)^10000 ) OR %s )' %q)
+        self.assertEqual(si.page_search(Q('proxtext=apples%20oranges&proxdistance=10'))[0], '+type:page +((ocr:("apples oranges"~10)^10000 ) OR %s )' %q)
         q = ' OR '.join(['%s:"apples oranges"~5' % lang for lang in self.ocr_langs])
-        self.assertEqual(si.page_search(Q('proxtext=apples%20oranges'))[0], u'+type:page +((ocr:("apples oranges"~5)^10000 ) OR %s )' %q)
+        self.assertEqual(si.page_search(Q('proxtext=apples%20oranges'))[0], '+type:page +((ocr:("apples oranges"~5)^10000 ) OR %s )' %q)
 
     def test_page_search_language(self):
         self.assertEqual(si.page_search(Q('proxtext=apples%20oranges&language=English'))[0], '+type:page +language:English +((ocr:("apples oranges"~5)^10000 AND ocr_eng:"apples oranges"~5 ) OR ocr_eng:"apples oranges"~5 )')

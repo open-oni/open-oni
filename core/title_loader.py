@@ -1,6 +1,6 @@
 import logging
-import urlparse
-import urllib2
+import urllib.parse
+import urllib.request, urllib.error, urllib.parse
 from datetime import datetime
 from re import sub
 from time import time, strptime
@@ -25,7 +25,7 @@ class TitleLoader(object):
         self.errors = 0
 
     def load_file(self, location, skip=0):
-        location = urlparse.urljoin("file:", location)
+        location = urllib.parse.urljoin("file:", location)
         t0 = time()
         times = []
 
@@ -44,7 +44,7 @@ class TitleLoader(object):
                     elif record.leader[6] == 'a':
                         self.load_bib(record)
 
-            except Exception, e:
+            except Exception as e:
                 _logger.error("unable to load: %s" % e)
                 _logger.exception(e)
                 self.errors += 1
@@ -54,9 +54,9 @@ class TitleLoader(object):
 
             if self.records_processed % 1000 == 0:
                 _logger.info("processed %sk records in %.2f seconds" %
-                             (self.records_processed / 1000, seconds))
+                             (self.records_processed // 1000, seconds))
 
-        map_xml(load_record, urllib2.urlopen(location))
+        map_xml(load_record, urllib.request.urlopen(location))
 
     def load_bib(self, record):
         title = None
@@ -491,7 +491,7 @@ def nsplit(s, n):
     """returns a string split up into sequences of length n
     http://mail.python.org/pipermail/python-list/2005-August/335131.html
     """
-    return [s[k:k + n] for k in xrange(0, len(s), n)]
+    return [s[k:k + n] for k in range(0, len(s), n)]
 
 
 class TitleLoaderException(RuntimeError):

@@ -8,12 +8,12 @@ import hashlib
 import logging
 import tarfile
 import textwrap
-import urlparse
-from cStringIO import StringIO
+import urllib.parse
+import io
 
 from rfc3339 import rfc3339
 from lxml import etree
-from urllib import url2pathname
+from urllib.request import url2pathname
 
 from django.db import models
 from django.db.models import permalink, Q
@@ -70,7 +70,7 @@ class Awardee(models.Model):
             return json.dumps(j, indent=2)
         return j
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -96,9 +96,9 @@ class Batch(models.Model):
         """Absolute path of batch directory"""
         source = self.source
         if source:
-            u = urlparse.urljoin(source, "data/")
+            u = urllib.parse.urljoin(source, "data/")
         else:
-            u = urlparse.urljoin("file:", self.path)
+            u = urllib.parse.urljoin("file:", self.path)
         return u
 
     @property
@@ -115,7 +115,7 @@ class Batch(models.Model):
 
     @property
     def validated_batch_url(self):
-        return urlparse.urljoin(self.storage_url, self.validated_batch_file)
+        return urllib.parse.urljoin(self.storage_url, self.validated_batch_file)
 
     @property
     def page_count(self):
@@ -140,7 +140,7 @@ class Batch(models.Model):
         l = {}
         for issue in self.issues.all():
             l[issue.title_id] = 1
-        return l.keys()
+        return list(l.keys())
 
     def delete(self, *args, **kwargs):
         # manually delete any OcrDump associated with this batch
@@ -177,7 +177,7 @@ class Batch(models.Model):
         else:
             return b
 
-    def __unicode__(self):
+    def __str__(self):
         return self.full_name
 
 
@@ -199,7 +199,7 @@ class LoadBatchEvent(models.Model):
         except Title.DoesNotExist:
             return None
 
-    def __unicode__(self):
+    def __str__(self):
         return self.batch_name
 
 
@@ -319,7 +319,7 @@ class Title(models.Model):
     @property
     def metadata(self):
         meta = []
-        for k, v in self.solr_doc.items():
+        for k, v in list(self.solr_doc.items()):
             if not v or k in ("country"):
                 continue
             k = k.replace("_", " ")
@@ -420,9 +420,9 @@ class Title(models.Model):
 
         return titles
 
-    def __unicode__(self):
+    def __str__(self):
         # TODO: should edition info go in here if present?
-        return u'%s (%s) %s-%s' % (self.display_name, self.place_of_publication,
+        return '%s (%s) %s-%s' % (self.display_name, self.place_of_publication,
                                    self.start_year, self.end_year)
 
     class Meta:
@@ -509,7 +509,7 @@ class Issue(models.Model):
     batch = models.ForeignKey('Batch', related_name='issues')
     created = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s [%s]" % (self.title.display_name, self.date_issued)
 
     @property
@@ -889,15 +889,15 @@ class Page(models.Model):
             return None
         return pages[0]
 
-    def __unicode__(self):
-        parts = [u'%s' % self.issue.title]
+    def __str__(self):
+        parts = ['%s' % self.issue.title]
         parts.append(strftime_safe(self.issue.date_issued, '%B %d, %Y'))
         if self.issue.edition_label:
             parts.append(self.issue.edition_label)
         if self.section_label:
             parts.append(self.section_label)
         parts.append('Image %s' % self.sequence)
-        return u', '.join(parts)
+        return ', '.join(parts)
 
     class Meta:
         ordering = ('sequence',)
@@ -951,8 +951,8 @@ class Place(models.Model):
             return self.county
         return "Unknown"
 
-    def __unicode__(self):
-        return u"%s, %s, %s" % (self.city, self.county, self.state)
+    def __str__(self):
+        return "%s, %s, %s" % (self.city, self.county, self.state)
 
     class Meta:
         ordering = ('name',)
@@ -965,7 +965,7 @@ class Subject(models.Model):
     # TODO maybe split out types into different classes
     # e.g. GeographicSubject, TopicalSubject ?
 
-    def __unicode__(self):
+    def __str__(self):
         return self.heading
 
     class Meta:
@@ -977,7 +977,7 @@ class Note(models.Model):
     type = models.CharField(max_length=3)
     title = models.ForeignKey('Title', related_name='notes')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
     class Meta:
@@ -990,8 +990,8 @@ class PageNote(models.Model):
     type = models.CharField(max_length=50)
     page = models.ForeignKey('Page', related_name='notes')
 
-    def __unicode__(self):
-        return u"type: %s label: %s text: %s" % (self.type, self.label, self.text)
+    def __str__(self):
+        return "type: %s label: %s text: %s" % (self.type, self.label, self.text)
 
     class Meta:
         ordering = ('text',)
@@ -1003,8 +1003,8 @@ class IssueNote(models.Model):
     type = models.CharField(max_length=50)
     issue = models.ForeignKey('Issue', related_name='notes')
 
-    def __unicode__(self):
-        return u"type: %s label: %s text: %s" % (self.type, self.label, self.text)
+    def __str__(self):
+        return "type: %s label: %s text: %s" % (self.type, self.label, self.text)
 
     class Meta:
         ordering = ('text',)
@@ -1064,8 +1064,8 @@ class Holding(models.Model):
         else:
             return [self.description]
 
-    def __unicode__(self):
-        return u"%s - %s - %s" % (self.institution.name, self.type, self.description)
+    def __str__(self):
+        return "%s - %s - %s" % (self.institution.name, self.type, self.description)
 
     class Meta:
         ordering = ('institution',)
@@ -1087,7 +1087,7 @@ class PreceedingTitleLink(models.Model):
     oclc = models.CharField(null=True, max_length=50)
     title = models.ForeignKey('Title', related_name='preceeding_title_links')
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%s)" % (self.name, self.lccn)
 
     class Meta:
@@ -1100,7 +1100,7 @@ class RelatedTitleLink(models.Model):
     oclc = models.CharField(null=True, max_length=50)
     title = models.ForeignKey('Title', related_name='related_title_links')
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%s)" % (self.name, self.lccn)
 
     class Meta:
@@ -1141,7 +1141,7 @@ class Language(models.Model):
     lingvoj = models.CharField(null=True, max_length=200)
     titles = models.ManyToManyField('Title', related_name='languages')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -1161,7 +1161,7 @@ class Country(models.Model):
     name = models.CharField(null=False, max_length=100)
     region = models.CharField(null=False, max_length=100)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%s)" % (self.name, self.region)
 
     class Meta:
@@ -1192,8 +1192,8 @@ class Institution(models.Model):
     zip = models.CharField(null=True, max_length=20)
     created = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
-        return u"%s, %s, %s" % (self.name, self.city, self.state)
+    def __str__(self):
+        return "%s, %s, %s" % (self.name, self.city, self.state)
 
     class Meta:
         ordering = ('name',)
@@ -1213,7 +1213,7 @@ class Url(models.Model):
     type = models.CharField(max_length=1, null=True)
     title = models.ForeignKey('Title', related_name='urls')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.value
 
 
@@ -1286,7 +1286,7 @@ class OcrDump(models.Model):
             return json.dumps(i, indent=2)
         return j
 
-    def __unicode__(self):
+    def __str__(self):
         return "path=%s size=%s sha1=%s" % (self.path, self.size, self.sha1)
 
     def _add_page(self, page, tar):
@@ -1299,14 +1299,14 @@ class OcrDump(models.Model):
         info = tarfile.TarInfo(name=txt_filename)
         info.size = len(ocr_text)
         info.mtime = time.time()
-        tar.addfile(info, StringIO(ocr_text))
+        tar.addfile(info, io.BytesIO(ocr_text))
 
         # add ocr xml
         xml_filename = relative_dir + "ocr.xml"
         info = tarfile.TarInfo(name=xml_filename)
         info.size = os.path.getsize(page.ocr_abs_filename)
         info.mtime = time.time()
-        tar.addfile(info, open(page.ocr_abs_filename))
+        tar.addfile(info, open(page.ocr_abs_filename, "rb"))
 
         logging.info("added %s to %s" % (page, tar.name))
 
@@ -1322,7 +1322,7 @@ class OcrDump(models.Model):
     def _calculate_sha1(self):
         """looks at the dump file and calculates the sha1 digest and stores it
         """
-        f = open(self.path)
+        f = open(self.path, "rb")
         sha1 = hashlib.sha1()
         while True:
             buff = f.read(2 ** 16)

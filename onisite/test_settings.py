@@ -1,4 +1,4 @@
-from settings_base import *
+from .settings_base import *
 
 # Required settings that don't really matter, but need to exist for tests to run
 SECRET_KEY = "FOO"

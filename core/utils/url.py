@@ -1,5 +1,5 @@
-from urllib import quote
-from urllib import unquote
+from urllib.parse import quote
+from urllib.parse import unquote
 
 
 def quote_underscore(s, safe=''):
@@ -17,8 +17,6 @@ def pack_url_path(value, none='-'):
     if value is None:
         value = none
     value = value.lower()
-    if isinstance(value, unicode):
-        value = value.encode('utf-8')
     return quote_underscore(value)
     
 def unpack_url_path(path, none='-'):

@@ -4,7 +4,7 @@ from django.conf.urls import url
 from django.conf import settings
 from django.utils import cache
 
-from views import home, browse, directory, reports, search, static
+from .views import home, browse, directory, reports, search, static
 
 handler404 = 'django.views.defaults.page_not_found'
 handler500 = 'django.views.defaults.server_error'
