@@ -59,6 +59,7 @@ services:
       - ONI_LOG_TO_FILE
       - ONI_SECRET_KEY
       - ONI_SOLR_URL
+      # DON'T OVERRIDE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!  Apache expects to find word coordinate files here!
       - ONI_STORAGE_PATH=/var/local/onidata
 volumes:
   data-mariadb: {}
