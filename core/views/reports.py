@@ -3,7 +3,7 @@ from rfc3339 import rfc3339
 import json
 
 from django.conf import settings
-from django.core import urlresolvers
+from django import urls
 from django.db.models import Min, Max, Count
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, get_object_or_404
@@ -445,7 +445,7 @@ def reel(request, reel_number):
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([
         {'label': 'Reels',
-         'href': urlresolvers.reverse('openoni_reels')},
+         'href': urls.reverse('openoni_reels')},
     ])
     page_title = 'Reel %s' % reel_number
     m_reels = models.Reel.objects.filter(number=reel_number)

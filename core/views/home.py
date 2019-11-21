@@ -6,7 +6,7 @@ from django.conf import settings
 from django.http import Http404, HttpResponse
 from django.template import RequestContext
 from django.template.loader import get_template
-from django.core import urlresolvers
+from django import urls
 
 from core import models
 from core import forms
@@ -47,7 +47,7 @@ def _frontpages(request, date, num_pages=20):
                           date=issue.date_issued,
                           edition=issue.edition,
                           sequence=first_page.sequence)
-        url = urlresolvers.reverse('openoni_page', kwargs=path_parts)
+        url = urls.reverse('openoni_page', kwargs=path_parts)
         results.append({
             'label': "%s" % issue.title.display_name,
             'url': url,

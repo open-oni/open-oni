@@ -4,7 +4,7 @@ from rfc3339 import rfc3339
 
 from django.db.models import Q
 from django.conf import settings
-from django.core import urlresolvers
+from django import urls
 from django.core.paginator import InvalidPage
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
@@ -45,7 +45,7 @@ def search_pages_results(request, view_type='gallery'):
     try:
         page = paginator.page(paginator._cur_page)
     except InvalidPage:
-        url = urlresolvers.reverse('openoni_search_pages_results')
+        url = urls.reverse('openoni_search_pages_results')
         # Set the page to the first page
         q['page'] = 1
         return HttpResponseRedirect('%s?%s' % (url, q.urlencode()))
@@ -211,7 +211,7 @@ def search_pages_navigation(request):
     if not ('page' in request.GET and 'index' in request.GET):
         return HttpResponseNotFound()
 
-    search_url = urlresolvers.reverse('openoni_search_pages_results')
+    search_url = urls.reverse('openoni_search_pages_results')
 
     paginator = search_pages_paginator(request)
 

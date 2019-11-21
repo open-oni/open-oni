@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core import urlresolvers
+from django import urls
 from django.http import HttpResponse
 from core.models import Batch, Title, Issue, Page
 from core.decorator import cache_page
@@ -12,7 +12,7 @@ def about(request):
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([
         {'label':'About',
-         'href': urlresolvers.reverse('openoni_about'),
+         'href': urls.reverse('openoni_about'),
          'active': True},
     ])
     return render(request, 'about.html', locals())
@@ -23,7 +23,7 @@ def about_api(request):
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([
         {'label':'About API',
-         'href': urlresolvers.reverse('openoni_about_api'),
+         'href': urls.reverse('openoni_about_api'),
          'active': True},
     ])
     batches = Batch.objects.all()
@@ -51,7 +51,7 @@ def help(request):
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([
         {'label':'Help',
-         'href': urlresolvers.reverse('openoni_help'),
+         'href': urls.reverse('openoni_help'),
          'active': True},
     ])
     return render(request, 'help.html', locals())

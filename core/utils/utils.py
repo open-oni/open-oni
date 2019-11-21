@@ -4,7 +4,7 @@ import os
 import wsgiref.util
 
 from django.conf import settings
-from django.core import urlresolvers
+from django import urls
 from django.core.cache import cache
 from django.http import HttpResponse, Http404
 from django.db.models import Min, Max
@@ -73,7 +73,7 @@ class HTMLCalendar(calendar.Calendar):
                 _class = "single"
                 lccn, date_issued, edition, title = issues[0]
                 kw = dict(lccn=lccn, date=date_issued, edition=edition)
-                url = urlresolvers.reverse('openoni_issue_pages', kwargs=kw)
+                url = urls.reverse('openoni_issue_pages', kwargs=kw)
                 if self.all_issues:
                     # list the title(s) being linked since this view is for all papers
                     _day = """<div class='btn-group'><a class='btn dropdown-toggle' 
@@ -96,7 +96,7 @@ class HTMLCalendar(calendar.Calendar):
                 _day += "<ul class='dropdown-menu'>"
                 for lccn, date_issued, edition, title in issues:
                     kw = dict(lccn=lccn, date=date_issued, edition=edition)
-                    url = urlresolvers.reverse('openoni_issue_pages',
+                    url = urls.reverse('openoni_issue_pages',
                                                kwargs=kw)
                     if self.all_issues:
                         _day += """<li><a href="%s">%s</a></li>""" % (url, title)
@@ -274,12 +274,12 @@ def label(instance):
 def create_crumbs(title, issue=None, date=None, edition=None, page=None):
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([{'label': label(title.name.split(":")[0]),
-                    'href': urlresolvers.reverse('openoni_title',
+                    'href': urls.reverse('openoni_title',
                                                  kwargs={'lccn': title.lccn})}])
     if date and edition is not None:
         crumbs.append(
             {'label': label(issue),
-             'href': urlresolvers.reverse('openoni_issue_pages',
+             'href': urls.reverse('openoni_issue_pages',
                                           kwargs={'lccn': title.lccn,
                                                   'date': date,
                                                   'edition': edition})})
@@ -287,7 +287,7 @@ def create_crumbs(title, issue=None, date=None, edition=None, page=None):
     if page is not None:
         crumbs.append(
             {'label': label(page),
-             'href': urlresolvers.reverse('openoni_page',
+             'href': urls.reverse('openoni_page',
                                           kwargs={'lccn': title.lccn,
                                                   'date': date,
                                                   'edition': edition,
