@@ -233,9 +233,13 @@ class TitleLoader(object):
         code = _extract(record, '008')[35:38]
         try:
             langs = [models.Language.objects.get(code=code)]
-        except models.Language.DoesNotExist:
+        except models.Language.DoesNotExist as e:
             langs = []
             _logger.error("Code %s, not found in language table." % code)
+
+            # Re-raise the exception to avoid creating an invalid title
+            # (language is a required field!)
+            raise e
 
         subfields_to_eval = ['a', 'b']
         for f041 in record.get_fields('041'):
