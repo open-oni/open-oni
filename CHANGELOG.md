@@ -35,6 +35,13 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 - Move your local/development batches into `./data` if you previously had them
   in `./docker/data`
 
+## [v0.11.1] - Hotfix for word coordinates and image viewer
+
+### Fixed
+
+- Bug in the word coordinate location has been fixed for docker-compose users
+- Fixed RAIS (IIIF server) setup in docker-compose
+
 ## [v0.11.0] - Django 1.11 LTS Upgrade, Production Docs, and Feature Updates
 
 ### Added
