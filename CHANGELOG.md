@@ -5,14 +5,16 @@ Starting from Open ONI v0.11, The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased] - Unreleased
+## [unreleased] - Python 3 and Django 2.2 upgrades
 
 ### Added
 
 ### Changed
 
-- All code in ONI core, including the default theme, is now Python 3
-  - Python 2 code will no longer work anywhere in the stack: plugins, themes, core overrides, etc.
+- All code in ONI core, including the default theme, has been migrated to work with Django 2.2 LTS
+  - Django 2.2 only supports Python 3, so all Python 2 support has been dropped
+  - Python 2 code will no longer work anywhere in the stack: plugins, themes,
+    core overrides, etc.
   - The docker setup installs a much newer Ubuntu server as well as Python 3.6
 - Docker-compose changes:
   - MariaDB and Solr ports are no longer forcibly exposed to the host
@@ -21,19 +23,27 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
     - This fixes odd issues which can occur when mounting over an existing
       mount point (we mount `.` as `/opt/openoni`, and previously were mounting
       `./docker/data` as `/opt/openoni/data`, effectively shadowing the actual data directory)
-  - All generated ingest artifacts now live in a named volume
+  - All generated ingest artifacts now live in a named volume, `onidata`, which
+    is mounted into multiple containers as `/var/local/onidata`
 
 ### Migration
 
 - If you use any of our plugins, make sure you look over their repositories and
-  get a version that is built for Python 3
-- Custom themes and plugins you've built will need to be fixed for Python 3 -
-  exact fixes are out of scope for ONI, but you can learn a lot from the
-  [Python porting documentation](https://docs.python.org/3/howto/pyporting.html)
-  as well as the [2to3](https://docs.python.org/2/library/2to3.html) tool's
-  documentation.
+  get a version that is built for Django 2.2.  Django 2.2 only supports Python
+  3, so plugins which work with Django 2.2 will work with Python 3.
+- Custom themes and plugins you've built will need to be fixed for Django 2.2,
+  and therefore Python 3
+  - Exact fixes are out of scope for ONI, but you can learn a lot from:
+    - The [Python porting documentation](https://docs.python.org/3/howto/pyporting.html)
+    - The [2to3](https://docs.python.org/2/library/2to3.html) tool's documentation
+    - The [Django upgrade documentation](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/)
+  - Most themes and plugins will need minimal work to get updated, but complex
+    Python code could require a lot of migration effort
 - Move your local/development batches into `./data` if you previously had them
   in `./docker/data`
+- If you use docker with a custom configuration, make sure you mount `onidata`
+  into your `web` container in the same place your Apache configuration is
+  expecting to find word coordinates.
 
 ## [v0.11.1] - Hotfix for word coordinates and image viewer
 
