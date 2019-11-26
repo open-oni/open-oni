@@ -47,7 +47,7 @@ def batches(request, page_number=1):
 @cache_page(settings.API_TTL_SECONDS)
 def batches_atom(request, page_number=1):
     batches = models.Batch.viewable_batches()
-    batches = batches.order_by('-released')
+    batches = batches.order_by('-created')
     now = rfc3339(timezone.now())
 
     paginator = Paginator(batches, 25)
@@ -74,15 +74,13 @@ def batches_json(request):
 
 @cache_page(settings.API_TTL_SECONDS)
 def batches_csv(request):
-    csv_header_labels = ('Created', 'Name', 'Awardee', 'Total Pages',
-                         'Released',)
+    csv_header_labels = ('Created', 'Name', 'Awardee', 'Total Pages')
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="openoni_batches.csv"'
     writer = csv.writer(response)
     writer.writerow(csv_header_labels)
     for batch in models.Batch.viewable_batches():
-        writer.writerow((batch.created, batch.name, batch.awardee.name, 
-                         batch.page_count, batch.released))
+        writer.writerow((batch.created, batch.name, batch.awardee.name, batch.page_count))
     return response
 
 @cache_page(settings.API_TTL_SECONDS)

@@ -197,10 +197,6 @@ class BatchLoader(object):
                 _logger.exception(pbe)
             raise BatchLoaderException(msg)
 
-        if not settings.DEBUG:
-            batch.released = timezone.now()
-            batch.save()
-
         # updates the min and max years of all titles
         set_fulltext_range()
         return batch
