@@ -9,6 +9,7 @@ data/word_coordinates
 .coverage
 static/compiled
 static/cov
+static/sitemaps
 
 # :P
 .DS_Store
