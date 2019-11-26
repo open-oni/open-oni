@@ -25,7 +25,7 @@ if url.scheme == 'https':
     Test with a low value (e.g. 300)
     before setting a high value (e.g. 15552000) for long-term use
     """
-    SECURE_HSTS_SECONDS = os.getenv('ONI_HSTS_SECONDS', 0)
+    SECURE_HSTS_SECONDS = int(os.getenv('ONI_HSTS_SECONDS', 0))
     SECURE_SSL_REDIRECT = True if SECURE_HSTS_SECONDS > 0 else False
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True if SECURE_HSTS_SECONDS > 0 else False
     SECURE_HSTS_PRELOAD = True if SECURE_HSTS_SECONDS > 0 else False
