@@ -23,6 +23,9 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
       `./docker/data` as `/opt/openoni/data`, effectively shadowing the actual data directory)
   - All generated ingest artifacts now live in a named volume
 
+### Fixed
+- Sitemap Apache alias paths
+
 ### Migration
 
 - If you use any of our plugins, make sure you look over their repositories and
