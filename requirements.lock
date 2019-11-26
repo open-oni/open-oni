@@ -1,7 +1,7 @@
 certifi==2019.9.11
 chardet==3.0.4
 coverage==4.5.4
-Django==1.11.26
+Django==2.2.7
 feedparser==5.2.1
 future==0.18.2
 idna==2.8
@@ -21,6 +21,7 @@ setuptools==41.6.0
 simplejson==3.16.0
 six==1.13.0
 solrpy==0.9.9
+sqlparse==0.3.0
 urllib3==1.25.6
 wheel==0.33.6
 worldcat==0.3.6

@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('released', models.DateTimeField(null=True)),
                 ('source', models.CharField(max_length=4096, null=True)),
                 ('sitemap_indexed', models.DateTimeField(null=True)),
-                ('awardee', models.ForeignKey(related_name='batches', to='core.Awardee', null=True)),
+                ('awardee', models.ForeignKey(related_name='batches', to='core.Awardee', null=True, on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -62,7 +62,7 @@ class Migration(migrations.Migration):
                 ('essay_editor_url', models.TextField()),
                 ('html', models.TextField()),
                 ('loaded', models.DateTimeField(auto_now_add=True)),
-                ('creator', models.ForeignKey(related_name='essays', to='core.Awardee')),
+                ('creator', models.ForeignKey(related_name='essays', to='core.Awardee', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['title'],
@@ -82,7 +82,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('synonym', models.CharField(max_length=250)),
-                ('ethnicity', models.ForeignKey(related_name='synonyms', to='core.Ethnicity')),
+                ('ethnicity', models.ForeignKey(related_name='synonyms', to='core.Ethnicity', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('synonym',),
@@ -128,7 +128,7 @@ class Migration(migrations.Migration):
                 ('edition', models.IntegerField()),
                 ('edition_label', models.CharField(max_length=100)),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('batch', models.ForeignKey(related_name='issues', to='core.Batch')),
+                ('batch', models.ForeignKey(related_name='issues', to='core.Batch', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('date_issued',),
@@ -141,7 +141,7 @@ class Migration(migrations.Migration):
                 ('label', models.TextField()),
                 ('text', models.TextField()),
                 ('type', models.CharField(max_length=50)),
-                ('issue', models.ForeignKey(related_name='notes', to='core.Issue')),
+                ('issue', models.ForeignKey(related_name='notes', to='core.Issue', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('text',),
@@ -172,7 +172,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('text', models.TextField()),
-                ('language', models.ForeignKey(to='core.Language', null=True)),
+                ('language', models.ForeignKey(to='core.Language', null=True, on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -225,7 +225,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('sha1', models.TextField()),
                 ('size', models.BigIntegerField()),
-                ('batch', models.OneToOneField(related_name='ocr_dump', to='core.Batch')),
+                ('batch', models.OneToOneField(related_name='ocr_dump', to='core.Batch', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -243,7 +243,7 @@ class Migration(migrations.Migration):
                 ('ocr_filename', models.CharField(max_length=250, null=True)),
                 ('indexed', models.BooleanField(default=False)),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('issue', models.ForeignKey(related_name='pages', to='core.Issue')),
+                ('issue', models.ForeignKey(related_name='pages', to='core.Issue', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('sequence',),
@@ -256,7 +256,7 @@ class Migration(migrations.Migration):
                 ('label', models.TextField()),
                 ('text', models.TextField()),
                 ('type', models.CharField(max_length=50)),
-                ('page', models.ForeignKey(related_name='notes', to='core.Page')),
+                ('page', models.ForeignKey(related_name='notes', to='core.Page', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('text',),
@@ -319,7 +319,7 @@ class Migration(migrations.Migration):
                 ('number', models.CharField(max_length=50)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('implicit', models.BooleanField(default=False)),
-                ('batch', models.ForeignKey(related_name='reels', to='core.Batch')),
+                ('batch', models.ForeignKey(related_name='reels', to='core.Batch', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -379,7 +379,7 @@ class Migration(migrations.Migration):
                 ('has_issues', models.BooleanField(default=False, db_index=True)),
                 ('uri', models.URLField(help_text=b'856$u', max_length=500, null=True)),
                 ('sitemap_indexed', models.DateTimeField(null=True)),
-                ('country', models.ForeignKey(to='core.Country')),
+                ('country', models.ForeignKey(to='core.Country', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['name_normal'],
@@ -413,8 +413,8 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=250)),
                 ('url', models.CharField(max_length=1000)),
                 ('description', models.TextField()),
-                ('page', models.ForeignKey(to='core.Page', null=True)),
-                ('topic', models.ForeignKey(to='core.Topic')),
+                ('page', models.ForeignKey(to='core.Page', null=True, on_delete=models.CASCADE)),
+                ('topic', models.ForeignKey(to='core.Topic', on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -423,18 +423,18 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('value', models.TextField()),
                 ('type', models.CharField(max_length=1, null=True)),
-                ('title', models.ForeignKey(related_name='urls', to='core.Title')),
+                ('title', models.ForeignKey(related_name='urls', to='core.Title', on_delete=models.CASCADE)),
             ],
         ),
         migrations.AddField(
             model_name='topic',
             name='category',
-            field=models.ForeignKey(to='core.TopicCategory'),
+            field=models.ForeignKey(to='core.TopicCategory', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='succeedingtitlelink',
             name='title',
-            field=models.ForeignKey(related_name='succeeding_title_links', to='core.Title'),
+            field=models.ForeignKey(related_name='succeeding_title_links', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='subject',
@@ -444,17 +444,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='relatedtitlelink',
             name='title',
-            field=models.ForeignKey(related_name='related_title_links', to='core.Title'),
+            field=models.ForeignKey(related_name='related_title_links', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='publicationdate',
             name='titles',
-            field=models.ForeignKey(related_name='publication_dates', to='core.Title'),
+            field=models.ForeignKey(related_name='publication_dates', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='preceedingtitlelink',
             name='title',
-            field=models.ForeignKey(related_name='preceeding_title_links', to='core.Title'),
+            field=models.ForeignKey(related_name='preceeding_title_links', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='place',
@@ -464,32 +464,32 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='physicaldescription',
             name='title',
-            field=models.ForeignKey(related_name='dates_of_publication', to='core.Title'),
+            field=models.ForeignKey(related_name='dates_of_publication', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='page',
             name='reel',
-            field=models.ForeignKey(related_name='pages', to='core.Reel', null=True),
+            field=models.ForeignKey(related_name='pages', to='core.Reel', null=True, on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='ocr',
             name='page',
-            field=models.OneToOneField(related_name='ocr', null=True, to='core.Page'),
+            field=models.OneToOneField(related_name='ocr', null=True, to='core.Page', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='note',
             name='title',
-            field=models.ForeignKey(related_name='notes', to='core.Title'),
+            field=models.ForeignKey(related_name='notes', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='marc',
             name='title',
-            field=models.OneToOneField(related_name='marc', to='core.Title'),
+            field=models.OneToOneField(related_name='marc', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='languagetext',
             name='ocr',
-            field=models.ForeignKey(related_name='language_texts', to='core.OCR'),
+            field=models.ForeignKey(related_name='language_texts', to='core.OCR', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='language',
@@ -499,17 +499,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='issue',
             name='title',
-            field=models.ForeignKey(related_name='issues', to='core.Title'),
+            field=models.ForeignKey(related_name='issues', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='holding',
             name='institution',
-            field=models.ForeignKey(related_name='holdings', to='core.Institution'),
+            field=models.ForeignKey(related_name='holdings', to='core.Institution', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='holding',
             name='title',
-            field=models.ForeignKey(related_name='holdings', to='core.Title'),
+            field=models.ForeignKey(related_name='holdings', to='core.Title', on_delete=models.CASCADE),
         ),
         migrations.AddField(
             model_name='essay',
@@ -519,6 +519,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='alttitle',
             name='title',
-            field=models.ForeignKey(related_name='alt_titles', to='core.Title'),
+            field=models.ForeignKey(related_name='alt_titles', to='core.Title', on_delete=models.CASCADE),
         ),
     ]

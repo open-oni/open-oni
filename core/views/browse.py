@@ -9,7 +9,7 @@ from django import forms as django_forms
 
 from django.conf import settings
 from django.core.paginator import Paginator, InvalidPage
-from django.core import urlresolvers
+from django import urls
 from django.forms import fields
 from django.http import HttpResponse, HttpResponseNotFound, Http404, \
     HttpResponseRedirect, HttpResponsePermanentRedirect
@@ -85,7 +85,7 @@ def title_rdf(request, lccn):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def title_atom(request, lccn, page_number=1):
     title = get_object_or_404(models.Title, lccn=lccn)
-    issues = title.issues.all().order_by('-batch__released', '-date_issued')
+    issues = title.issues.all().order_by('-batch__created', '-date_issued')
     paginator = Paginator(issues, 100)
     try:
         page = paginator.page(page_number)
@@ -93,15 +93,11 @@ def title_atom(request, lccn, page_number=1):
         raise Http404("No such page %s for title feed" % page_number)
 
     # figure out the time the title was most recently updated
-    # typically the release date of the batch, otherwise
-    # when the batch was ingested
+    # via the create date of the batch
     issues = page.object_list
     num_issues = issues.count()
     if num_issues > 0:
-        if issues[0].batch.released:
-            feed_updated = issues[0].batch.released
-        else:
-            feed_updated = issues[0].batch.created
+        feed_updated = issues[0].batch.created
     else:
         feed_updated = title.created
 
@@ -184,7 +180,7 @@ def page(request, lccn, date, edition, sequence, words=None):
     if fragments:
         path_parts = dict(lccn=lccn, date=date, edition=edition,
                           sequence=sequence)
-        url = urlresolvers.reverse('openoni_page',
+        url = urls.reverse('openoni_page',
                                    kwargs=path_parts)
 
         return HttpResponseRedirect(url + "#" + "&".join(fragments))
@@ -209,7 +205,7 @@ def page(request, lccn, date, edition, sequence, words=None):
             if len(words) > 0:
                 path_parts = dict(lccn=lccn, date=date, edition=edition,
                                   sequence=sequence, words=words)
-                url = urlresolvers.reverse('openoni_page_words',
+                url = urls.reverse('openoni_page_words',
                                            kwargs=path_parts)
                 return HttpResponseRedirect(url)
         except Exception as e:
@@ -524,7 +520,7 @@ def page_print(request, lccn, date, edition, sequence,
                       sequence=sequence,
                       width=width, height=height,
                       x1=x1, y1=y1, x2=x2, y2=y2)
-    url = urlresolvers.reverse('openoni_page_print',
+    url = urls.reverse('openoni_page_print',
                                kwargs=path_parts)
 
     return render(request, 'page_print.html', locals())

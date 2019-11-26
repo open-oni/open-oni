@@ -6,7 +6,7 @@ from re import sub
 from time import time, strptime
 
 from pymarc import map_xml, record_to_xml
-from django.db import reset_queries
+from django.db import reset_queries, transaction
 from django.utils import timezone
 
 from core import models
@@ -58,6 +58,7 @@ class TitleLoader(object):
 
         map_xml(load_record, urllib.request.urlopen(location))
 
+    @transaction.atomic
     def load_bib(self, record):
         title = None
 
@@ -163,7 +164,7 @@ class TitleLoader(object):
         title.save()
 
         marc, marc_created = models.MARC.objects.get_or_create(title=title)
-        marc.xml = record_to_xml(record)
+        marc.xml = record_to_xml(record).decode('utf-8')
         marc.save()
 
         if _is_openoni_electronic_resource(title, record):
@@ -242,7 +243,7 @@ class TitleLoader(object):
                 sf_langs = _get_langs(f041.get_subfields(sf))
                 [langs.append(sf_lang) for sf_lang in sf_langs if sf_lang not in langs]
 
-        title.languages = list(set(langs))
+        title.languages.set(langs)
         return
 
     def _extract_places(self, record, title):
@@ -264,7 +265,7 @@ class TitleLoader(object):
                 place.city = city
                 place.save()
             places.append(place)
-        title.places = places
+        title.places.set(places)
         return
 
     def _extract_publication_dates(self, record, title):
@@ -290,7 +291,7 @@ class TitleLoader(object):
                 type=type
             )
             subjects.append(subject)
-        title.subjects = subjects
+        title.subjects.set(subjects)
         return
 
     def _extract_notes(self, record, title):
