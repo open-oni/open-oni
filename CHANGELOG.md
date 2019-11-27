@@ -38,6 +38,15 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 - Move your local/development batches into `./data` if you previously had them
   in `./docker/data`
 
+### Removed
+
+- The concept of "released" batches has been removed to reduce confusion:
+  ingested batches become part of the system regardless of their "released"
+  status, and are simply not displayed on the (undocumented) `/batches` list.
+  This is extremely confusing and not terribly helpful, so we've opted to
+  simply remove the feature entirely.  All batches are now live upon ingest
+  (which, again, they always were, it just wasn't terribly obvious).
+
 ## [v0.11.1] - Hotfix for word coordinates and image viewer
 
 ### Fixed
