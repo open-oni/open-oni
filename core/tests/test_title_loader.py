@@ -1,5 +1,6 @@
 from django.test import TestCase
 import os
+import pymarc
 
 from lxml import etree
 
@@ -192,6 +193,14 @@ class TitleLoaderTests(TestCase):
         self.assertEqual(loader.records_processed, 2)
         self.assertRaises(Title.DoesNotExist, Title.objects.get,
                           lccn='sn83030846')
+
+    def test_load_title_missing_language(self):
+        filename = abs_filename('./test-data/title-missing-language.xml')
+        marc = pymarc.parse_xml_to_array(filename)[0]
+        loader = TitleLoader()
+        title = Title.objects.get(lccn='sn83030846')
+        self.assertRaises(core.models.Language.DoesNotExist,
+          loader._extract_languages, marc, title)
 
     def test_rda_place_of_publication(self):
         loader = TitleLoader()
