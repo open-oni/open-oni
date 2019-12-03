@@ -31,6 +31,9 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 - If you use any of our plugins, make sure you look over their repositories and
   get a version that is built for Django 2.2.  Django 2.2 only supports Python
   3, so plugins which work with Django 2.2 will work with Python 3.
+  - Plugins built by the ONI team should generally include compatibility information in their README; here's
+    [our calendar plugin's information](https://github.com/open-oni/plugin_calendar#compatibility),
+    for example.
 - Custom themes and plugins you've built will need to be fixed for Django 2.2,
   and therefore Python 3
   - Exact fixes are out of scope for ONI, but you can learn a lot from:
