@@ -5,6 +5,9 @@ Starting from Open ONI v0.11, The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+Please respect the 80-character text margin and follow the [GitHub Flavored
+Markdown Spec](https://github.github.com/gfm/).
+
 <!-- Template - Please preserve this order of sections
 ## [Unreleased] - Brief description
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
