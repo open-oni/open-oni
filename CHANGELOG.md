@@ -5,13 +5,32 @@ Starting from Open ONI v0.11, The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - Python 3 and Django 2.2 upgrades
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v0.11.1...dev
+<!-- Template - Please preserve this order of sections
+## [Unreleased] - Brief description
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
+
+### Fixed
 
 ### Added
 
 ### Changed
 
+### Removed
+
+### Migration
+
+### Deprecated
+
+### Contributors
+-->
+
+## [Unreleased] - Python 3 and Django 2.2 upgrades
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v0.11.1...dev
+
+### Fixed
+- Sitemap Apache alias paths
+
+### Changed
 - All code in ONI core, including the default theme, has been migrated to work with Django 2.2 LTS
   - Django 2.2 only supports Python 3, so all Python 2 support has been dropped
   - Python 2 code will no longer work anywhere in the stack: plugins, themes,
@@ -27,11 +46,15 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
   - All generated ingest artifacts now live in a named volume, `onidata`, which
     is mounted into multiple containers as `/var/local/onidata`
 
-### Fixed
-- Sitemap Apache alias paths
+### Removed
+- The concept of "released" batches has been removed to reduce confusion:
+  ingested batches become part of the system regardless of their "released"
+  status, and are simply not displayed on the (undocumented) `/batches` list.
+  This is extremely confusing and not terribly helpful, so we've opted to
+  simply remove the feature entirely.  All batches are now live upon ingest
+  (which, again, they always were, it just wasn't terribly obvious).
 
 ### Migration
-
 - If you use any of our plugins, make sure you look over their repositories and
   get a version that is built for Django 2.2.  Django 2.2 only supports Python
   3, so plugins which work with Django 2.2 will work with Python 3.
@@ -52,25 +75,35 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
   into your `web` container in the same place your Apache configuration is
   expecting to find word coordinates.
 
-### Removed
 
-- The concept of "released" batches has been removed to reduce confusion:
-  ingested batches become part of the system regardless of their "released"
-  status, and are simply not displayed on the (undocumented) `/batches` list.
-  This is extremely confusing and not terribly helpful, so we've opted to
-  simply remove the feature entirely.  All batches are now live upon ingest
-  (which, again, they always were, it just wasn't terribly obvious).
+### Contributors
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Greg Tunink (techgique)
 
 ## [v0.11.1] - Hotfix for word coordinates and image viewer
 [v0.11.1]: https://github.com/open-oni/open-oni/compare/v0.11.0...v0.11.1
 
 ### Fixed
-
 - Bug in the word coordinate location has been fixed for docker-compose users
 - Fixed RAIS (IIIF server) setup in docker-compose
 
+### Contributor
+- Jeremy Echols (jechols)
+
 ## [v0.11.0] - Django 1.11 LTS Upgrade, Production Docs, and Feature Updates
 [v0.11.0]: https://github.com/open-oni/open-oni/compare/v0.10.0...v0.11.0
+
+### Fixed
+- Language filtering test
+- Solr code's SolrPaginator `_count` attribute presence check
+- Use `_logger` for logging calls
+- Batch loading in `batch_loader.py`
+    - Bulk foreign key handling
+    - Handle unreliable path comparison due to trailing slash
+    - Handle if `BATCH_STORAGE` path is a symlink
+- Invalid static tag use to render static URL in `page.html` data attributes
+- The docker-based test setup should now function properly
 
 ### Added
 - This changelog, with all previous releases
@@ -316,14 +349,6 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 - Clean up improperly formatted `OpenONI` strings and incorrectly search and
   replaced strings in URLs
 
-### Deprecated
-- Django 1.8 to 1.11
-    - [Full deprecation timeline](https://docs.djangoproject.com/en/1.11/internals/deprecation/)
-      for reference
-    - Use of `MIDDLEWARE_CLASSES`, to be removed in Django 2.0
-- Python 2's end of life is coming soon, and Open ONI will *no longer
-  support it* after this release
-
 ### Removed
 - Django 1.8 to 1.11
     - Passing (Request)Context objects to template.render
@@ -345,26 +370,6 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
   multiple batches
 - Cities with no issues from nav search's select
     - This can result from batches purged leaving records in the Places table
-
-### Fixed
-- Language filtering test
-- Solr code's SolrPaginator `_count` attribute presence check
-- Use `_logger` for logging calls
-- Batch loading in `batch_loader.py`
-    - Bulk foreign key handling
-    - Handle unreliable path comparison due to trailing slash
-    - Handle if `BATCH_STORAGE` path is a symlink
-- Invalid static tag use to render static URL in `page.html` data attributes
-- The docker-based test setup should now function properly
-
-### Contributors
-- Karin Dalziel (karindalziel)
-- Tinghui Duan (via Slack)
-- Jessica Dussault (jduss4)
-- Jeremy Echols (jechols)
-- Linda Sato (lsat12357)
-- John Scancella (johnscancella)
-- Greg Tunink (techgique)
 
 ### Migration
 
@@ -398,6 +403,23 @@ if your ONI instance has a lot of custom code.
   inclusion of favicon and default page author + description
   `<meta>` tags
 - Update skip links and return to top links to target `#maincontent`
+
+### Deprecated
+- Django 1.8 to 1.11
+    - [Full deprecation timeline](https://docs.djangoproject.com/en/1.11/internals/deprecation/)
+      for reference
+    - Use of `MIDDLEWARE_CLASSES`, to be removed in Django 2.0
+- Python 2's end of life is coming soon, and Open ONI will *no longer
+  support it* after this release
+
+### Contributors
+- Karin Dalziel (karindalziel)
+- Tinghui Duan (via Slack)
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Linda Sato (lsat12357)
+- John Scancella (johnscancella)
+- Greg Tunink (techgique)
 
 ## [v0.10.0] - 2018-01-29 - Hey it actually really works again!
 [v0.10.0]: https://github.com/open-oni/open-oni/compare/v0.9.0...v0.10.0
