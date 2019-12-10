@@ -5,7 +5,8 @@ Starting from Open ONI v0.11, The format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased] - Python 3 and Django 2.2 upgrades
+## [Unreleased] - Python 3 and Django 2.2 upgrades
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v0.11.1...dev
 
 ### Added
 
@@ -61,6 +62,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
   (which, again, they always were, it just wasn't terribly obvious).
 
 ## [v0.11.1] - Hotfix for word coordinates and image viewer
+[v0.11.1]: https://github.com/open-oni/open-oni/compare/v0.11.0...v0.11.1
 
 ### Fixed
 
@@ -68,6 +70,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 - Fixed RAIS (IIIF server) setup in docker-compose
 
 ## [v0.11.0] - Django 1.11 LTS Upgrade, Production Docs, and Feature Updates
+[v0.11.0]: https://github.com/open-oni/open-oni/compare/v0.10.0...v0.11.0
 
 ### Added
 - This changelog, with all previous releases
@@ -397,20 +400,28 @@ if your ONI instance has a lot of custom code.
 - Update skip links and return to top links to target `#maincontent`
 
 ## [v0.10.0] - 2018-01-29 - Hey it actually really works again!
+[v0.10.0]: https://github.com/open-oni/open-oni/compare/v0.9.0...v0.10.0
+
 - Unpinned RAIS for Docker users
 - Fixed URL for pulling MARC records from Chronicling America
 
 ## [v0.9.0] - 2018-01-24 - Hey it works again!
+[v0.9.0]: https://github.com/open-oni/open-oni/compare/v0.8.0...v0.9.0
+
 - Freezes dependencies to fix a problem where new installs would simply not work
   due to missing python libraries
 - Updates advanced search to put "Search Terms" above "Proximity Search" based
   on user feedback
 
 ## [v0.8.0] - 2017-11-14 - Bug fixes
+[v0.8.0]: https://github.com/open-oni/open-oni/compare/v0.7.0...v0.8.0
+
 Adds "proximity" searching back into the advanced search, and improves
 accessibility with the search results pagination
 
 ## [v0.7.0] - 2017-10-25 - Bug fixes
+[v0.7.0]: https://github.com/open-oni/open-oni/compare/v0.6.0...v0.7.0
+
 Multiple bugs have been addressed:
 - The "about" page, when the first or last issue wasn't digitized, no longer
   crashes
@@ -422,6 +433,8 @@ Multiple bugs have been addressed:
 - Various other "refine search" persistence problems have been addressed
 
 ## [v0.6.0] - 2017-09-21 - New languages support, universal viewer support, mariadb
+[v0.6.0]: https://github.com/open-oni/open-oni/compare/v0.5.0...v0.6.0
+
 This is a big back-end release:
 - We've now got Solr configured to support a bunch of new languages instead of
   just the four or five we had from the chronam fork.
@@ -431,17 +444,23 @@ This is a big back-end release:
   IIIF systems like the Universal Viewer!
 
 ## [v0.5.0] - 2017-09-07 - Bug fixes
+[v0.5.0]: https://github.com/open-oni/open-oni/compare/v0.4.0...v0.5.0
+
 - Fixes a failure that affected everybody trying to set up a new ONI site. Oops.
 - Adds image attribution on image pages
 - Fixes a crash in the title "front pages" view when a published image wasn't
   digitized
 
 ## [v0.4.0] - 2017-08-29 - Bug fixes and dev improvements
+[v0.4.0]: https://github.com/open-oni/open-oni/compare/v0.3.0...v0.4.0
+
 Highlights finally work properly (we think)!! Also, skip links work better,
 there's an easier way to run tests locally via docker, and Apache log level is
 configurable by an environment variable.
 
 ## [v0.3.0] - 2017-08-24 - Search fixed and slightly better UI
+[v0.3.0]: https://github.com/open-oni/open-oni/compare/v0.2.2...v0.3.0
+
 - Improves accessibility on the advanced search form and the search results
   templates
 - Removes state dropdowns from advanced search and search results templates
@@ -449,33 +468,27 @@ configurable by an environment variable.
   with essays associated
 
 ## [v0.2.2] - 2017-08-22 - Faster purge
+[v0.2.2]: https://github.com/open-oni/open-oni/compare/v0.2.1...v0.2.2
+
 Removes the solr and mysql optimization as a default step when purging batches,
 as it can take a very long time with large datasets. Optimization can still be
 done by adding `--optimize` to the purge command.
 
 ## [v0.2.1] - 2017-08-11 - Image URL bug fixes
+[v0.2.1]: https://github.com/open-oni/open-oni/compare/v0.2.0...v0.2.1
+
 Fixes a bug where resized image URLs were always at the thumbnail size. Adds a
 new size option, "tiny", for accommodating smaller devices more effectively.
 
 ## [v0.2.0] - 2017-08-09
+[v0.2.0]: https://github.com/open-oni/open-oni/compare/v0.1.0...v0.2.0
+
 This release upgrades the docker-compose setup to use Solr 6.6, and fixes a few
 bugs only discovered when there were multiple pages of batches
 
 ## [v0.1.0] - 2017-07-24
+[v0.1.0]: https://github.com/open-oni/open-oni/releases/tag/v0.1.0
+
 This is the official initial release of Open ONI. The changes since forking are
 too numerous to try and describe.
-
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v0.10.0...dev
-[v0.10.0]: https://github.com/open-oni/open-oni/compare/v0.9.0...v0.10.0
-[v0.9.0]: https://github.com/open-oni/open-oni/compare/v0.8.0...v0.9.0
-[v0.8.0]: https://github.com/open-oni/open-oni/compare/v0.7.0...v0.8.0
-[v0.7.0]: https://github.com/open-oni/open-oni/compare/v0.6.0...v0.7.0
-[v0.6.0]: https://github.com/open-oni/open-oni/compare/v0.5.0...v0.6.0
-[v0.5.0]: https://github.com/open-oni/open-oni/compare/v0.4.0...v0.5.0
-[v0.4.0]: https://github.com/open-oni/open-oni/compare/v0.3.0...v0.4.0
-[v0.3.0]: https://github.com/open-oni/open-oni/compare/v0.2.2...v0.3.0
-[v0.2.2]: https://github.com/open-oni/open-oni/compare/v0.2.1...v0.2.2
-[v0.2.1]: https://github.com/open-oni/open-oni/compare/v0.2.0...v0.2.1
-[v0.2.0]: https://github.com/open-oni/open-oni/compare/v0.1.0...v0.2.0
-[v0.1.0]: https://github.com/open-oni/open-oni/releases/tag/v0.1.0
 
