@@ -33,9 +33,9 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 ### Changed
 - All code in ONI core, including the default theme, has been migrated to work
   with Django 2.2 LTS
-  - Django 2.2 only supports Python 3, so all Python 2 support has been dropped
-  - Python 2 code will no longer work anywhere in the stack: plugins, themes,
-    core overrides, etc.
+  - Django 2.2 only supports Python 3
+    - Python 2 code will no longer work anywhere in the stack: plugins, themes,
+      core overrides, etc.
   - The docker setup installs a much newer Ubuntu server as well as Python 3.6
 - Docker-compose changes:
   - MariaDB and Solr ports are no longer forcibly exposed to the host
@@ -50,6 +50,7 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
     is mounted into multiple containers as `/var/local/onidata`
 
 ### Removed
+- All Python 2 support / compatibility
 - The concept of "released" batches has been removed to reduce confusion:
   ingested batches become part of the system regardless of their "released"
   status, and are simply not displayed on the (undocumented) `/batches` list.
@@ -82,6 +83,11 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
   into your `web` container in the same place your Apache configuration is
   expecting to find word coordinates.
 
+### Deprecated
+- [Django Deprecation
+  Timeline](https://docs.djangoproject.com/en/2.2/internals/deprecation/)
+- MariaDB and Solr will be upgraded for Open ONI 1.0, so existing databases and
+  Solr indices will have to be repopulated
 
 ### Contributors
 - Jessica Dussault (jduss4)
