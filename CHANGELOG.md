@@ -31,7 +31,8 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 - Sitemap Apache alias paths
 
 ### Changed
-- All code in ONI core, including the default theme, has been migrated to work with Django 2.2 LTS
+- All code in ONI core, including the default theme, has been migrated to work
+  with Django 2.2 LTS
   - Django 2.2 only supports Python 3, so all Python 2 support has been dropped
   - Python 2 code will no longer work anywhere in the stack: plugins, themes,
     core overrides, etc.
@@ -39,10 +40,12 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 - Docker-compose changes:
   - MariaDB and Solr ports are no longer forcibly exposed to the host
     - If you need these, use a `docker-compose.override.yml` file
-  - Batches must now live under `./data/batches`, not `./docker/data/batches` for ingest
+  - Batches must now live under `./data/batches`, not `./docker/data/batches`
+    for ingest
     - This fixes odd issues which can occur when mounting over an existing
       mount point (we mount `.` as `/opt/openoni`, and previously were mounting
-      `./docker/data` as `/opt/openoni/data`, effectively shadowing the actual data directory)
+      `./docker/data` as `/opt/openoni/data`, effectively shadowing the actual
+      data directory)
   - All generated ingest artifacts now live in a named volume, `onidata`, which
     is mounted into multiple containers as `/var/local/onidata`
 
@@ -58,15 +61,19 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 - If you use any of our plugins, make sure you look over their repositories and
   get a version that is built for Django 2.2.  Django 2.2 only supports Python
   3, so plugins which work with Django 2.2 will work with Python 3.
-  - Plugins built by the ONI team should generally include compatibility information in their README; here's
-    [our calendar plugin's information](https://github.com/open-oni/plugin_calendar#compatibility),
-    for example.
+  - Plugins built by the ONI team should generally include compatibility
+    information in their README; here's [our calendar plugin's
+    information](https://github.com/open-oni/plugin_calendar#compatibility), for
+    example.
 - Custom themes and plugins you've built will need to be fixed for Django 2.2,
   and therefore Python 3
   - Exact fixes are out of scope for ONI, but you can learn a lot from:
-    - The [Python porting documentation](https://docs.python.org/3/howto/pyporting.html)
-    - The [2to3](https://docs.python.org/2/library/2to3.html) tool's documentation
-    - The [Django upgrade documentation](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/)
+    - The [Python porting
+      documentation](https://docs.python.org/3/howto/pyporting.html)
+    - The [2to3](https://docs.python.org/2/library/2to3.html) tool's
+      documentation
+    - The [Django upgrade
+      documentation](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/)
   - Most themes and plugins will need minimal work to get updated, but complex
     Python code could require a lot of migration effort
 - Move your local/development batches into `./data` if you previously had them
@@ -375,14 +382,16 @@ Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 
 Migrating to v0.11 requires special attention to a lot of changes.  Read this
 carefully before attempting a migration, and it may behoove you to read over
-the [Django upgrade notes](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/)
-if your ONI instance has a lot of custom code.
+the [Django upgrade
+notes](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/) if your ONI
+instance has a lot of custom code.
 
 - Rewrite your settings **from scratch**.  The new
   `onisite/settings_local_example.py` file should help guide you, but enough
   has changed this release that you can't just copy your old settings and
   expect things to work!
-- If you were using a `docker-compose.override.yml` file, update its version to 2.1
+- If you were using a `docker-compose.override.yml` file, update its version to
+  2.1
 - Django 1.8 to 1.11
     - [Update use of (Request)Context objects passed to `template.render`
       calls at the end of code in view
@@ -406,7 +415,8 @@ if your ONI instance has a lot of custom code.
 
 ### Deprecated
 - Django 1.8 to 1.11
-    - [Full deprecation timeline](https://docs.djangoproject.com/en/1.11/internals/deprecation/)
+    - [Full deprecation
+      timeline](https://docs.djangoproject.com/en/1.11/internals/deprecation/)
       for reference
     - Use of `MIDDLEWARE_CLASSES`, to be removed in Django 2.0
 - Python 2's end of life is coming soon, and Open ONI will *no longer
