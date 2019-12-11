@@ -68,7 +68,7 @@ PAGE_IMAGE_TTL_SECONDS = FEED_TTL_SECONDS * 2  # Two weeks
 BASE_CRUMBS = [{'label':'Home', 'href': '/'}]
 
 # Batch and title management log directory path
-LOG_LOCATION = os.path.join(BASE_DIR, 'log')
+LOG_LOCATION = os.path.join(BASE_DIR, 'log', '')
 
 MARC_RETRIEVAL_URLFORMAT = 'https://chroniclingamerica.loc.gov/lccn/%s/marc.xml'
 
