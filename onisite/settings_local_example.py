@@ -178,7 +178,7 @@ if DEBUG:
     # Output emails to console
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-    # Suggested order: https://docs.djangoproject.com/en/1.11/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.DisableClientSideCachingMiddleware',         # Open ONI
@@ -229,7 +229,7 @@ else:
         }
     }
 
-    # Suggested order: https://docs.djangoproject.com/en/1.11/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.TooBusyMiddleware',                          # Open ONI

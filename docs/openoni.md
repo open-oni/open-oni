@@ -146,7 +146,7 @@ urlpatterns = [
 
 ### Error Emails
 Django provides the ability to [send emails about 5xx error and 404 responses an
-app generates](https://docs.djangoproject.com/en/1.11/howto/error-reporting/).
+app generates](https://docs.djangoproject.com/en/2.2/howto/error-reporting/).
 They can be a bit spammy, but we include documentation about how to enable them
 if anyone wants to try them out.
 
@@ -171,12 +171,12 @@ Additional configuration is required for how and to whom Django sends emails:
 ```py
     """
     Optional email error reporting
-    https://docs.djangoproject.com/en/1.11/howto/error-reporting/
+    https://docs.djangoproject.com/en/2.2/howto/error-reporting/
 
     EMAIL_HOST settings only necessary if another server or service sends email.
     Defaults to 'localhost', sending from the same server running Django.
     Additional settings for further email host configuration:
-    https://docs.djangoproject.com/en/1.11/ref/settings/#email-host
+    https://docs.djangoproject.com/en/2.2/ref/settings/#email-host
     """
     #EMAIL_HOST = 'YOUR_EMAIL_HOST'
     #EMAIL_HOST_PASSWORD = 'YOUR_EMAIL_HOST_PASSWORD'
