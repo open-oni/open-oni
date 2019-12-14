@@ -6,7 +6,6 @@
 - [Install](#install)
     - [File-based Cache Directory](#file-based-cache-directory)
     - [Python Dependencies](#python-dependencies)
-    - [Migrate Database](#migrate-database)
     - [Newspaper Data Symlink](#newspaper-data-symlink)
 - [Configure](#configure)
     - [Local Settings](#local-settings)
@@ -15,6 +14,7 @@
     - [Logging](#logging)
     - [URLs](#urls)
     - [Error Emails](#error-emails)
+- [Migrate Database](#migrate-database)
 - [Compile Static Assets](#compile-static-assets)
 - [Load Batches](#load-batches)
 
@@ -42,13 +42,6 @@ Install Open ONI's Python dependencies
 cd /opt/openoni/
 source ENV/bin/activate
 pip install -r requirements.lock
-```
-
-### Migrate Database
-```bash
-cd /opt/openoni
-source ENV/bin/activate
-./manage.py migrate
 ```
 
 ### Newspaper Data Symlink
@@ -200,6 +193,13 @@ Additional configuration is required for how and to whom Django sends emails:
     #IGNORABLE_404_URLS = [
     #    re.compile(r'YOUR_known_404_URL_regex_to_prevent_emails'),
     #]
+```
+
+## Migrate Database
+```bash
+cd /opt/openoni
+source ENV/bin/activate
+./manage.py migrate
 ```
 
 ## Compile Static Assets

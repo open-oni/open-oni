@@ -55,6 +55,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Updated `docs/` CentOS 7 documentation
   - Reorganize for a more linear reading to configure everything
   - Add Python 3 mod_wsgi documentation
+  - Move database migration step after defining settings
 - Updated WSGIDaemonProcess directives in `conf/apache/django.conf`
   - Added WSGI `python-home` and `python-path` options
   - Set `processes` to 12 for production directive
