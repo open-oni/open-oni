@@ -3,20 +3,21 @@
 **Contents**
 
 - [Install](#install)
-- [Access Control](#access-control)
-- [Backups](#backups)
-
+- [Schema and Access Control](#schema-and-access-control)
 
 ## Install
 
-Installation and configuration documentation in progress
+General installation and configuration is outside the scope of Open ONI
+documentation, but installing the necessary package is the first step:
+
+`sudo yum install mariadb-server`
 
 Django also requires development libraries from MariaDB
 
-`yum install mariadb-devel`
+`sudo yum install mariadb-devel`
 
 
-## Access Control
+## Schema and Access Control
 
 Create schema `openoni`
 
@@ -25,31 +26,13 @@ Add `openoni` user only connecting from `localhost`
 Grant `openoni` user all privileges except `GRANT OPTION`
 on `openoni%` schema(s)
 
+`mysql -u root -p`:
 
-## Backups
-Backup script in progress
+```bash
+CREATE SCHEMA `openoni`;
 
-Download this script to `/var/local/mariadb/backup/`
+CREATE USER openoni@localhost IDENTIFIED BY 'password';
 
-Running the script will instruct that it must be run as `root` and one must add
-the root MariaDB password to `/root/.my.cnf` like
-
-```ini
-[mysql]
-password=abc
-
-[mysqldump]
-password=abc
-```
-
-As the file contains a sensitive password,
-ensure `/root/.my.cnf` is only readable by `root`
-
-Schedule a regular backup in `/etc/crontab`:
-```cron
-# REGULAR TASKS
-
-# Daily MariaDB Backup at 2am
-  0  2  *  *  * root       /var/local/mariadb/backup/dump_dbs.sh -qs
+GRANT ALL PRIVILEGES ON 'openoni%'@'localhost' TO 'openoni'@'localhost';
 ```
 

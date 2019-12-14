@@ -51,6 +51,13 @@ Markdown Spec](https://github.github.com/gfm/).
       data directory)
   - All generated ingest artifacts now live in a named volume, `onidata`, which
     is mounted into multiple containers as `/var/local/onidata`
+- Updated `docs/` CentOS 7 documentation
+  - Reorganize for a more linear reading to configure everything
+  - Add Python 3 mod_wsgi documentation
+- Updated WSGIDaemonProcess directives in `conf/apache/django.conf`
+  - Added WSGI `python-home` and `python-path` options
+  - Set `processes` to 12 for production directive
+  - Moved server-wide Apache directives to `docs/services/apache.md`
 
 ### Removed
 - All Python 2 support / compatibility

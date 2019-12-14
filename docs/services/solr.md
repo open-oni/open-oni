@@ -3,40 +3,35 @@
 **Contents**
 
 - [Install](#install)
-- [Create Open ONI Core](#create-openoni-core)
-- [Backups](#backups)
 - [Configure](#configure)
-
 
 ## Install
 
-Installation and configuration documentation in progress
+General installation and configuration is outside the scope of Open ONI
+documentation, but follow these to start:
+- [Solr Downloads](https://lucene.apache.org/solr/downloads.html)
+- [Production Service
+  Install](https://lucene.apache.org/solr/guide/6_6/taking-solr-to-production.html#TakingSolrtoProduction-ServiceInstallationScript)
 
-
-## Create Open ONI Core
+## Configure
 ```bash
 sudo -u solr /opt/solr/bin/solr create_core -c openoni
 ```
 
+Copy in Open ONI's Solr `schema.xml` and `solrconfig.xml`. Delete
+`managed-schema` so Solr regenerates it based on `schema.xml`. Ensure Solr has
+appropriate permissions on copied files. Restart Solr so the core uses the Open
+ONI schema.
 
-## Backups
-Backup scripts in progress
+```bash
+sudo cp /opt/openoni/docker/solr/schema.xml /var/solr/data/openoni/conf/schema.xml
+sudo cp /opt/openoni/docker/solr/solrconfig.xml /var/solr/data/openoni/conf/solrconfig.xml
 
-Download the files to `/var/local/solr/`
+# https://lucene.apache.org/solr/guide/6_6/schema-factory-definition-in-solrconfig.html#SchemaFactoryDefinitioninSolrConfig-Switchingfromschema.xmltoManagedSchema
+sudo rm /var/solr/data/openoni/conf/managed-schema
 
-Follow the instructions in the accompanying README.md file
+sudo chown -R solr.solr /var/solr/data/openoni
 
-Schedule a regular backup in `/etc/crontab`:
-```cron
-# REGULAR TASKS
-
-# Daily Solr Backup at 4am
-  0  4  *  *  * solr       /var/local/solr/backup/backup.py -q
+sudo service solr restart
 ```
-
-
-## Configure
-Further config is handled after the Open ONI repository is cloned
-
-[Configure Open ONI Schema](/docs/openoni.md#solr-schema)
 
