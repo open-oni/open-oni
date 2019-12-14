@@ -33,6 +33,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Fixed
 - Sitemap Apache alias paths
 - Added empty `log/` directory to prevent errors when not present
+- Database connection was missing option to always set strict mode
 
 ### Changed
 - All code in ONI core, including the default theme, has been migrated to work
