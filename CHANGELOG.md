@@ -27,11 +27,13 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [Unreleased] - Python 3 and Django 2.2 upgrades
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v0.11.1...dev
+## [v0.12] - Python 3 and Django 2.2 upgrades
+[v0.12]: https://github.com/open-oni/open-oni/compare/v0.11.1...v0.12
 
 ### Fixed
 - Sitemap Apache alias paths
+- Added empty `log/` directory to prevent errors when not present
+- Database connection was missing option to always set strict mode
 
 ### Changed
 - All code in ONI core, including the default theme, has been migrated to work
@@ -51,6 +53,14 @@ Markdown Spec](https://github.github.com/gfm/).
       data directory)
   - All generated ingest artifacts now live in a named volume, `onidata`, which
     is mounted into multiple containers as `/var/local/onidata`
+- Updated `docs/` CentOS 7 documentation
+  - Reorganize for a more linear reading to configure everything
+  - Add Python 3 mod_wsgi documentation
+  - Move database migration step after defining settings
+- Updated WSGIDaemonProcess directives in `conf/apache/django.conf`
+  - Added WSGI `python-home` and `python-path` options
+  - Set `processes` to 8 for production directive
+  - Moved server-wide Apache directives to `docs/services/apache.md`
 
 ### Removed
 - All Python 2 support / compatibility
@@ -95,6 +105,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 - Jessica Dussault (jduss4)
 - Jeremy Echols (jechols)
+- Andrew Gearhart (AndrewGearhart)
 - Greg Tunink (techgique)
 
 ## [v0.11.1] - Hotfix for word coordinates and image viewer

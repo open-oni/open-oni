@@ -43,6 +43,7 @@ DATABASES = {
         'NAME':     os.getenv('ONI_DB_NAME', 'openoni'),
         'USER':     os.getenv('ONI_DB_USER', 'openoni'),
         'PASSWORD': os.getenv('ONI_DB_PASSWORD', 'openoni'),
+        'OPTIONS': { 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" },
     }
 }
 
@@ -178,7 +179,7 @@ if DEBUG:
     # Output emails to console
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-    # Suggested order: https://docs.djangoproject.com/en/1.11/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.DisableClientSideCachingMiddleware',         # Open ONI
@@ -229,7 +230,7 @@ else:
         }
     }
 
-    # Suggested order: https://docs.djangoproject.com/en/1.11/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.TooBusyMiddleware',                          # Open ONI
