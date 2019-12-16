@@ -27,6 +27,23 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [Unreleased]
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v0.12.0...dev
+
+### Fixed
+
+### Added
+
+### Changed
+
+### Removed
+
+### Migration
+
+### Deprecated
+
+### Contributors
+
 ## [v0.12.0] - Python 3 and Django 2.2 upgrades
 [v0.12.0]: https://github.com/open-oni/open-oni/compare/v0.11.1...v0.12.0
 
