@@ -27,8 +27,8 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [v0.12] - Python 3 and Django 2.2 upgrades
-[v0.12]: https://github.com/open-oni/open-oni/compare/v0.11.1...v0.12
+## [v0.12.0] - Python 3 and Django 2.2 upgrades
+[v0.12.0]: https://github.com/open-oni/open-oni/compare/v0.11.1...v0.12.0
 
 ### Fixed
 - Sitemap Apache alias paths
