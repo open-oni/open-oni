@@ -12,13 +12,13 @@ class OcrExtractorTests(TestCase):
         ocr_file = join(dir, 'ocr.xml')
         text, coord_info = ocr_extractor(ocr_file)
         coords = coord_info["coords"]
-        expected_text = {"eng": file(join(dir, 'ocr.txt')).read().decode('utf-8')}
+        expected_text = {"eng": open(join(dir, 'ocr.txt'), encoding='utf-8').read()}
 
         self.assertEqual(text, expected_text)
-        self.assertEqual(len(coords.keys()), 2150)
+        self.assertEqual(len(list(coords.keys())), 2150)
         self.assertEqual(len(coords['place']), 3)
         # Craft. should be normalized to Craft
         # since Solr's highlighting will not include
         # trailing punctuation in highlighted text
-        self.assertTrue(coords.has_key('Craft'))
-        self.assertTrue(not coords.has_key('Craft.'))
+        self.assertTrue('Craft' in coords)
+        self.assertTrue('Craft.' not in coords)

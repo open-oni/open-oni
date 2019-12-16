@@ -1,5 +1,7 @@
 from rfc3339 import rfc3339
 
+import os
+import shutil
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -10,11 +12,14 @@ from django.utils import timezone
 
 from core import models as m
 from core.rdf import rdf_uri
+from onisite import settings
 
 class Command(BaseCommand):
     help = "Indexes new batches in the sitemap"
 
     def handle(self, **options):
+        shutil.rmtree('static/sitemaps', ignore_errors = True)
+        os.makedirs('static/sitemaps', exist_ok = True)
         write_sitemaps()
 
 
@@ -74,16 +79,16 @@ def sitemap_urls():
     titles, and their respective modified time as a tuple.
     """
     for batch in m.Batch.objects.filter(sitemap_indexed__isnull=True):
-        yield batch.url, batch.released
-        yield rdf_uri(batch), batch.released
+        yield batch.url, batch.created
+        yield rdf_uri(batch), batch.created
         batch.sitemap_indexed = timezone.now()
         batch.save()
         for issue in batch.issues.all():
-            yield issue.url, batch.released
-            yield rdf_uri(issue), batch.released
+            yield issue.url, batch.created
+            yield rdf_uri(issue), batch.created
             for page in issue.pages.all():
-                yield page.url, batch.released
-                yield rdf_uri(page), batch.released
+                yield page.url, batch.created
+                yield rdf_uri(page), batch.created
 
     paginator = Paginator(m.Title.objects.filter(sitemap_indexed__isnull=True), 10000)
     for page_num in range(1, paginator.num_pages + 1):
@@ -92,4 +97,3 @@ def sitemap_urls():
             yield title.url, title.created
             title.sitemap_indexed = timezone.now()
             title.save()
-

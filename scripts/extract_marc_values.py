@@ -66,10 +66,10 @@ if __name__ == '__main__':
         try:
             random_value = choice(values) 
             values.remove(random_value)
-            print ','.join([random_value[0], random_value[1]])
+            print(','.join([random_value[0], random_value[1]]))
         except IndexError:
             continue
 
-    print "TOTAL # OF RECORDS: %s" % total 
+    print("TOTAL # OF RECORDS: %s" % total) 
     
 

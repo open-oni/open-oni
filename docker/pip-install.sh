@@ -1,12 +1,11 @@
 #!/bin/bash
 
 # Create and activate Python virtual environment
-virtualenv ENV
-source ENV/bin/activate
-
-# Update pip and setuptools
-pip install -U pip
+pip3 install -U pip
+pip install --upgrade virtualenv
 pip install -U setuptools
+virtualenv -p python3 ENV
+source ENV/bin/activate
 
 # Install / update Open ONI dependencies
 pip install -U -r requirements.pip

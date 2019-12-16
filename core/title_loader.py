@@ -1,12 +1,12 @@
 import logging
-import urlparse
-import urllib2
+import urllib.parse
+import urllib.request, urllib.error, urllib.parse
 from datetime import datetime
 from re import sub
 from time import time, strptime
 
 from pymarc import map_xml, record_to_xml
-from django.db import reset_queries
+from django.db import reset_queries, transaction
 from django.utils import timezone
 
 from core import models
@@ -25,7 +25,7 @@ class TitleLoader(object):
         self.errors = 0
 
     def load_file(self, location, skip=0):
-        location = urlparse.urljoin("file:", location)
+        location = urllib.parse.urljoin("file:", location)
         t0 = time()
         times = []
 
@@ -44,7 +44,7 @@ class TitleLoader(object):
                     elif record.leader[6] == 'a':
                         self.load_bib(record)
 
-            except Exception, e:
+            except Exception as e:
                 _logger.error("unable to load: %s" % e)
                 _logger.exception(e)
                 self.errors += 1
@@ -54,10 +54,11 @@ class TitleLoader(object):
 
             if self.records_processed % 1000 == 0:
                 _logger.info("processed %sk records in %.2f seconds" %
-                             (self.records_processed / 1000, seconds))
+                             (self.records_processed // 1000, seconds))
 
-        map_xml(load_record, urllib2.urlopen(location))
+        map_xml(load_record, urllib.request.urlopen(location))
 
+    @transaction.atomic
     def load_bib(self, record):
         title = None
 
@@ -163,7 +164,7 @@ class TitleLoader(object):
         title.save()
 
         marc, marc_created = models.MARC.objects.get_or_create(title=title)
-        marc.xml = record_to_xml(record)
+        marc.xml = record_to_xml(record).decode('utf-8')
         marc.save()
 
         if _is_openoni_electronic_resource(title, record):
@@ -232,9 +233,13 @@ class TitleLoader(object):
         code = _extract(record, '008')[35:38]
         try:
             langs = [models.Language.objects.get(code=code)]
-        except models.Language.DoesNotExist:
+        except models.Language.DoesNotExist as e:
             langs = []
             _logger.error("Code %s, not found in language table." % code)
+
+            # Re-raise the exception to avoid creating an invalid title
+            # (language is a required field!)
+            raise e
 
         subfields_to_eval = ['a', 'b']
         for f041 in record.get_fields('041'):
@@ -242,7 +247,7 @@ class TitleLoader(object):
                 sf_langs = _get_langs(f041.get_subfields(sf))
                 [langs.append(sf_lang) for sf_lang in sf_langs if sf_lang not in langs]
 
-        title.languages = list(set(langs))
+        title.languages.set(langs)
         return
 
     def _extract_places(self, record, title):
@@ -264,7 +269,7 @@ class TitleLoader(object):
                 place.city = city
                 place.save()
             places.append(place)
-        title.places = places
+        title.places.set(places)
         return
 
     def _extract_publication_dates(self, record, title):
@@ -290,7 +295,7 @@ class TitleLoader(object):
                 type=type
             )
             subjects.append(subject)
-        title.subjects = subjects
+        title.subjects.set(subjects)
         return
 
     def _extract_notes(self, record, title):
@@ -491,7 +496,7 @@ def nsplit(s, n):
     """returns a string split up into sequences of length n
     http://mail.python.org/pipermail/python-list/2005-August/335131.html
     """
-    return [s[k:k + n] for k in xrange(0, len(s), n)]
+    return [s[k:k + n] for k in range(0, len(s), n)]
 
 
 class TitleLoaderException(RuntimeError):

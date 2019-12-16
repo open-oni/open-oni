@@ -4,7 +4,7 @@ import os
 import wsgiref.util
 
 from django.conf import settings
-from django.core import urlresolvers
+from django import urls
 from django.core.cache import cache
 from django.http import HttpResponse, Http404
 from django.db.models import Min, Max
@@ -73,7 +73,7 @@ class HTMLCalendar(calendar.Calendar):
                 _class = "single"
                 lccn, date_issued, edition, title = issues[0]
                 kw = dict(lccn=lccn, date=date_issued, edition=edition)
-                url = urlresolvers.reverse('openoni_issue_pages', kwargs=kw)
+                url = urls.reverse('openoni_issue_pages', kwargs=kw)
                 if self.all_issues:
                     # list the title(s) being linked since this view is for all papers
                     _day = """<div class='btn-group'><a class='btn dropdown-toggle' 
@@ -96,7 +96,7 @@ class HTMLCalendar(calendar.Calendar):
                 _day += "<ul class='dropdown-menu'>"
                 for lccn, date_issued, edition, title in issues:
                     kw = dict(lccn=lccn, date=date_issued, edition=edition)
-                    url = urlresolvers.reverse('openoni_issue_pages',
+                    url = urls.reverse('openoni_issue_pages',
                                                kwargs=kw)
                     if self.all_issues:
                         _day += """<li><a href="%s">%s</a></li>""" % (url, title)
@@ -175,7 +175,7 @@ class HTMLCalendar(calendar.Calendar):
         a('<div cellspacing="0" class="calendar_wrapper">')
         for i in range(calendar.January, calendar.January + 12, width):
             # months in this row
-            months = range(i, min(i + width, 13))
+            months = list(range(i, min(i + width, 13)))
             a('<div class="calendar_row">')
             for m in months:
                 a('<div class="span3 calendar_month">')
@@ -195,7 +195,7 @@ def get_page(lccn, date, edition, sequence):
     _year, _month, _day = date.split("-")
     try:
         _date = datetime.date(int(_year), int(_month), int(_day))
-    except ValueError, e:
+    except ValueError as e:
         raise Http404
     try:
         page = models.Page.objects.filter(
@@ -204,7 +204,7 @@ def get_page(lccn, date, edition, sequence):
             issue__edition=edition,
             sequence=sequence).order_by("-created").select_related()[0]
         return page
-    except IndexError, e:
+    except IndexError as e:
         raise Http404
 
 
@@ -217,17 +217,17 @@ def _get_tip(lccn, date, edition, sequence=1):
     _year, _month, _day = date.split("-")
     try:
         _date = datetime.date(int(_year), int(_month), int(_day))
-    except ValueError, e:
+    except ValueError as e:
         raise Http404
     try:
         issue = title.issues.filter(
             date_issued=_date, edition=edition).order_by("-created")[0]
-    except IndexError, e:
+    except IndexError as e:
         raise Http404
     try:
         page = issue.pages.filter(
             sequence=int(sequence)).order_by("-created")[0]
-    except IndexError, e:
+    except IndexError as e:
         raise Http404
     return title, issue, page
 
@@ -239,7 +239,7 @@ def _stream_file(path, content_type):
     # calculate len() on the response content!
     if path:
         stat = os.stat(path)
-        r = HttpResponse(wsgiref.util.FileWrapper(file(path)))
+        r = HttpResponse(wsgiref.util.FileWrapper(open(path, 'rb')))
         r['Content-Type'] = content_type
         r['Content-Length'] = stat.st_size
         r['Last-Modified'] = http_date(stat.st_mtime)
@@ -250,15 +250,15 @@ def _stream_file(path, content_type):
 
 def label(instance):
     if isinstance(instance, models.Title):
-        return u'%s (%s) %s-%s' % (instance.display_name,
+        return '%s (%s) %s-%s' % (instance.display_name,
                                    instance.place_of_publication,
                                    instance.start_year, instance.end_year)
     elif isinstance(instance, models.Issue):
         parts = []
         parts.append(strftime_safe(instance.date_issued, '%B %d, %Y'))
         if instance.edition_label:
-            parts.append(u"%s" % instance.edition_label)
-        return u', '.join(parts)
+            parts.append("%s" % instance.edition_label)
+        return ', '.join(parts)
     elif isinstance(instance, models.Page):
         parts = []
         if instance.section_label:
@@ -266,20 +266,20 @@ def label(instance):
         if instance.number:
             parts.append('Page %s' % instance.number)
         parts.append('Image %s' % instance.sequence)
-        return u', '.join(parts)
+        return ', '.join(parts)
     else:
-        return u"%s" % instance
+        return "%s" % instance
 
 
 def create_crumbs(title, issue=None, date=None, edition=None, page=None):
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([{'label': label(title.name.split(":")[0]),
-                    'href': urlresolvers.reverse('openoni_title',
+                    'href': urls.reverse('openoni_title',
                                                  kwargs={'lccn': title.lccn})}])
     if date and edition is not None:
         crumbs.append(
             {'label': label(issue),
-             'href': urlresolvers.reverse('openoni_issue_pages',
+             'href': urls.reverse('openoni_issue_pages',
                                           kwargs={'lccn': title.lccn,
                                                   'date': date,
                                                   'edition': edition})})
@@ -287,7 +287,7 @@ def create_crumbs(title, issue=None, date=None, edition=None, page=None):
     if page is not None:
         crumbs.append(
             {'label': label(page),
-             'href': urlresolvers.reverse('openoni_page',
+             'href': urls.reverse('openoni_page',
                                           kwargs={'lccn': title.lccn,
                                                   'date': date,
                                                   'edition': edition,

@@ -2,10 +2,10 @@ import re
 import math
 import logging
 import datetime
-from urllib import urlencode, unquote
+from urllib.parse import urlencode, unquote
 
 from solr import SolrConnection
-from django.core import urlresolvers
+from django import urls
 from django.core.paginator import Paginator, Page
 from django.db import connection, reset_queries
 from django.http import QueryDict
@@ -43,8 +43,8 @@ def _solr_escape(value):
     return ESCAPE_CHARS_RE.sub(r'\\\g<char>', value)
 
 def _sort_facets_asc(solr_facets, field):
-    items = solr_facets.get('facet_fields')[field].items()
-    return sorted(items, lambda x, y: int(x) - int(y), lambda k: k[1], True)
+    items = list(solr_facets.get('facet_fields')[field].items())
+    return sorted(items, key = lambda item: int(item[1]), reverse = True)
 
 def title_count():
     solr = SolrConnection(settings.SOLR)
@@ -118,7 +118,7 @@ class SolrPaginator(Paginator):
     def _get_previous(self):
         previous_overall_index = self.overall_index - 1
         if previous_overall_index >= 0:
-            p_page = previous_overall_index / self.per_page + 1
+            p_page = previous_overall_index // self.per_page + 1
             p_index = previous_overall_index % self.per_page
             o = self.page(p_page).object_list[p_index]
             q = self.query.copy()
@@ -130,7 +130,7 @@ class SolrPaginator(Paginator):
     def _get_next(self):
         next_overall_index = self.overall_index + 1
         if next_overall_index < self.count:
-            n_page = next_overall_index / self.per_page + 1
+            n_page = next_overall_index // self.per_page + 1
             n_index = next_overall_index % self.per_page
             o = self.page(n_page).object_list[n_index]
             return self.pagination_url(o.url, o.words, n_page, n_index)
@@ -175,8 +175,8 @@ class SolrPaginator(Paginator):
             'state': _sort_facets_asc(solr_facets, 'state'),
         }
         # sort by year (desc)
-        facets['year'] = sorted(solr_facets['facet_ranges']['year']['counts'].items(),
-                                lambda x, y: int(x) - int(y), lambda k: k[0], True)
+        facets['year'] = sorted(list(solr_facets['facet_ranges']['year']['counts'].items()),
+                                key = lambda k: k[0], reverse = True)
         facet_gap = self.facet_params['f_year_facet_range_gap']
         if facet_gap > 1:
             facets['year'] = [('%s-%d' % (y[0], int(y[0])+facet_gap-1), y[1]) 
@@ -317,7 +317,7 @@ def get_titles_from_solr_documents(solr_response):
         try:
             title = models.Title.objects.get(lccn=lccn)
             results.append(title)
-        except models.Title.DoesNotExist, e:
+        except models.Title.DoesNotExist as e:
             pass # TODO: log exception
     return results
 
@@ -387,7 +387,7 @@ def title_search(d):
     q = ' '.join(q)
     # keep the gap 10 for year range 100, 20 for year range 200 and so on
     range_gap = int(math.ceil((int(year2) - int(year1)) / 100.0)) * 5
-    year_facets = range(int(year1), int(year2), range_gap or 1)
+    year_facets = list(range(int(year1), int(year2), range_gap or 1))
     facets = {'facet': 'true', 'facet_field': ['state', 'county'], 
               'facet_mincount': 1, 'year_facets': year_facets}
     return q, facets
@@ -500,7 +500,7 @@ def page_search(d):
     # choose a facet range gap such that the number of date ranges returned
     # is <= 10. These would be used to populate a select dropdown on search
     # results page.
-    gap = max(1, int(math.ceil((year2 - year1)/10)))
+    gap = max(1, int(math.ceil((year2 - year1)//10)))
 
     # increment year range end by 1 to be inclusive
     facet_params = {'facet': 'true','facet_field': [
@@ -550,7 +550,7 @@ def query_join(values, field, and_clause=False):
 
 def find_words(s):
     ems = re.findall('<em>.+?</em>', s)
-    words = map(lambda em: em[4:-5], ems) # strip <em> and </em>
+    words = [em[4:-5] for em in ems] # strip <em> and </em>
     return words
 
 
@@ -587,7 +587,7 @@ def index_title(title, solr=None):
     _log.info("indexing title: lccn=%s" % title.lccn)
     try:
         solr.add(**title.solr_doc)
-    except Exception, e:
+    except Exception as e:
         _log.exception(e)
 
 def delete_title(title):
@@ -638,7 +638,7 @@ def word_matches_for_page(page_id, words):
     params = {"hl.snippets": 100, "hl.requireFieldMatch": 'true', "hl.maxAnalyzedChars": '102400'}
     response = solr.query(q, fields=['id'], highlight=ocr_list, **params)
 
-    if not response.highlighting.has_key(page_id):
+    if page_id not in response.highlighting:
         return []
 
     words = set()
@@ -712,9 +712,7 @@ def similar_pages(page):
     year, month, day = '{0:02d}'.format(d.year), '{0:02d}'.format(d.month), '{0:02d}'.format(d.day) 
     date = ''.join(map(str, (year, month, day)))
 
-    query = '+type:page AND date:%s AND %s AND NOT(lccn:%s)' % (date, query_join(map(lambda p: p.city, 
-                                           page.issue.title.places.all()), 'city'), page.issue.title.lccn)
+    query = '+type:page AND date:%s AND %s AND NOT(lccn:%s)' % (date, query_join([p.city for p in page.issue.title.places.all()], 'city'), page.issue.title.lccn)
     response = solr.query(query, rows=25)
     results = response.results
-    return map(lambda kwargs: utils.get_page(**kwargs), 
-               map(lambda r: urlresolvers.resolve(r['id']).kwargs, results))
+    return [utils.get_page(**kwargs) for kwargs in [urls.resolve(r['id']).kwargs for r in results]]

@@ -1,136 +1,68 @@
-# Open ONI
+# Open ONI Django App
 
 **Contents**
 
 - [Dependencies](#dependencies)
 - [Install](#install)
-    - [Clone Open ONI](#clone-openoni)
-    - [SELinux Permissions](#selinux-permissions)
     - [File-based Cache Directory](#file-based-cache-directory)
-    - [Python Virtual Environment](#python-virtual-environment)
-    - [Migrate Database](#migrate-database)
+    - [Python Dependencies](#python-dependencies)
     - [Newspaper Data Symlink](#newspaper-data-symlink)
 - [Configure](#configure)
-    - [Solr Schema](#solr-schema)
-    - [Django](#django)
-        - [Local Settings](#local-settings)
-            - [Theme and Plugins](#theme-and-plugins)
-            - [Title and Project Name](#title-and-project-name)
-        - [Logging](#logging)
-        - [URLs](#urls)
-        - [Error Emails](#error-emails)
+    - [Local Settings](#local-settings)
+        - [Theme and Plugins](#theme-and-plugins)
+        - [Title and Project Name](#title-and-project-name)
+    - [Logging](#logging)
+    - [URLs](#urls)
+    - [Error Emails](#error-emails)
+- [Migrate Database](#migrate-database)
 - [Compile Static Assets](#compile-static-assets)
 - [Load Batches](#load-batches)
 
-
 ## Dependencies
-Install [required services](/docs/services/)
-
-`yum install python-virtualenv`
-
+- Download the [Open ONI files](/docs/README.md#open-oni-files)
+- Prepare the [Python environment](/docs/README.md#python-environment)
+- Install and configure required [services](/docs/services/)
 
 ## Install
 
-### Clone Open ONI
-
-```bash
-chgrp webadmins /opt
-chmod 2775 /opt
-cd /opt
-```
-
-Run these commands as a regular user rather than root
-```
-git clone git@github.com:open-oni/open-oni.git openoni
-cd openoni
-
-# Check out the desired branch or release, e.g.:
-git checkout dev
-```
-
-### SELinux Permissions
-```bash
-# Python executables need httpd-executable SELinux context
-semanage fcontext -a -t httpd_sys_script_exec_t "/opt/openoni/ENV/lib/python2.7/site-packages/.+\.so"
-
-# Static asset path needs Apache write access
-mkdir /opt/openoni/static/compiled
-semanage fcontext -a -t httpd_sys_rw_content_t "/opt/openoni/static/compiled(/.*)?"
-
-restorecon -F -R /opt/openoni/
-```
-
 ### File-based Cache Directory
-This is only used if the production settings file is enabled in Open ONI's `settings_local.py`
+This is used when the app is not running with `DEBUG` enabled. The file path is
+defined in `settings_local.py`.
 
 ```bash
-mkdir -p /var/tmp/django_cache
-chown apache /var/tmp/django_cache
-chmod 2770 /var/tmp/django_cache
+sudo mkdir -p /var/tmp/django_cache
+sudo chown apache /var/tmp/django_cache
+sudo chmod 2770 /var/tmp/django_cache
 ```
 
-### Python Virtual Environment
-Run these commands as a regular user rather than root
+### Python Dependencies
+Install Open ONI's Python dependencies
 
 ```bash
-cd /opt/openoni
-
-# Create and activate Python virtual environment
-virtualenv ENV
+cd /opt/openoni/
 source ENV/bin/activate
-
-# Update pip and setuptools
-pip install -U pip
-pip install -U setuptools
-
-# Install / update Open ONI dependencies
-pip install -U -r requirements.pip
-```
-
-### Migrate Database
-Run these commands as a regular user rather than root
-
-```bash
-cd /opt/openoni
-source ENV/bin/activate
-./manage.py migrate
+pip install -r requirements.lock
 ```
 
 ### Newspaper Data Symlink
-Run these commands as a regular user rather than root
+If you wish to symlink Open ONI's batches directory to another path, e.g.
+`/var/local/newspapers`, run these commands
 
 ```bash
-cd /opt/openoni
-source ENV/bin/activate
-
 rm -rf data/batches
 ln -s /var/local/newspapers data/batches
-
-./manage.py batches
 ```
-
 
 ## Configure
 
-### Solr Schema
-```bash
-cp /opt/openoni/docker/solr/schema.xml /var/solr/data/openoni/conf/schema.xml
-cp /opt/openoni/docker/solr/solrconfig.xml /var/solr/data/openoni/conf/solrconfig.xml
-chown -R solr.solr /var/solr/data/openoni
-
-service solr restart
-```
-
-### Django
-
-#### Local Settings
+### Local Settings
 ```bash
 cp settings_local_example.py settings_local.py
 ```
 
 Follow instructions within for the appropriate deployment environment
 
-##### Theme and Plugins
+#### Theme and Plugins
 Add the theme and plugins it incorporates to `INSTALLED_APPS`:
 
 ```py
@@ -159,7 +91,7 @@ INSTALLED_APPS = (
 )
 ```
 
-##### Title and Project Name
+#### Title and Project Name
 Set the title and project name text for the website
 
 ```py
@@ -172,15 +104,14 @@ SITE_TITLE = "Nebraska Newspapers"
 PROJECT_NAME = "Nebraska Newspapers"
 ```
 
-
-#### Logging
+### Logging
 Create symlink at `/var/log/openoni` to `/opt/openoni/log`
 
 ```bash
 ln -s /opt/openoni/log /var/log/openoni
 ```
 
-#### URLs
+### URLs
 Set the URLs file to use the theme and plugins it incorporates
 
 ```bash
@@ -206,9 +137,9 @@ urlpatterns = [
 ]
 ```
 
-#### Error Emails
+### Error Emails
 Django provides the ability to [send emails about 5xx error and 404 responses an
-app generates](https://docs.djangoproject.com/en/1.11/howto/error-reporting/).
+app generates](https://docs.djangoproject.com/en/2.2/howto/error-reporting/).
 They can be a bit spammy, but we include documentation about how to enable them
 if anyone wants to try them out.
 
@@ -233,12 +164,12 @@ Additional configuration is required for how and to whom Django sends emails:
 ```py
     """
     Optional email error reporting
-    https://docs.djangoproject.com/en/1.11/howto/error-reporting/
+    https://docs.djangoproject.com/en/2.2/howto/error-reporting/
 
     EMAIL_HOST settings only necessary if another server or service sends email.
     Defaults to 'localhost', sending from the same server running Django.
     Additional settings for further email host configuration:
-    https://docs.djangoproject.com/en/1.11/ref/settings/#email-host
+    https://docs.djangoproject.com/en/2.2/ref/settings/#email-host
     """
     #EMAIL_HOST = 'YOUR_EMAIL_HOST'
     #EMAIL_HOST_PASSWORD = 'YOUR_EMAIL_HOST_PASSWORD'
@@ -264,6 +195,13 @@ Additional configuration is required for how and to whom Django sends emails:
     #]
 ```
 
+## Migrate Database
+```bash
+cd /opt/openoni
+source ENV/bin/activate
+./manage.py migrate
+```
+
 ## Compile Static Assets
 Run these commands as a regular user rather than root
 
@@ -278,7 +216,9 @@ sudo chown -R apache static/compiled/
 sudo chmod -R g+w static/compiled/
 ```
 
-In production environments, perform a graceful Apache restart after re-compiling static assets so the app uses the updated static file hash fingerprints in the URLs rendered in templates:
+Perform a graceful Apache restart after re-compiling static assets so the app
+uses the updated static file hash fingerprints in the URLs rendered in
+templates:
 
 ```bash
 sudo apachectl graceful
@@ -290,15 +230,6 @@ Run these commands as a regular user rather than root
 ```bash
 # Repeat as necessary
 ./manage.py load_batch /opt/openoni/data/batches/(batch_name)/
-
-# For batches to be visible in /batches page, must be released
-# Add --reset flag to clear release dates and recalculate them
-# Release date and time come from:
-# 1. bag-info.txt, if found in the batch source
-# 2. Tab-delimited CSV file if provided in format: batch_name \t batch_date
-# 3. http://chroniclingamerica.loc.gov/batches.xml
-# 4. Current server datetime
-./manage.py release
 
 # Run a script with nohup in the background to ingest multiple batches quietly
 # nohup prevents scripts from exiting if one closes the terminal shell

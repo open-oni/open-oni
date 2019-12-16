@@ -58,7 +58,7 @@ class OcrDumpTests(TestCase):
 
         # make sure the sha1 looks good
         sha1 = hashlib.sha1()
-        fh = open(dump.path)
+        fh = open(dump.path, "rb")
         buff = fh.read()
         sha1.update(buff)
         self.assertEqual(dump.sha1, sha1.hexdigest())

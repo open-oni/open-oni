@@ -3,7 +3,7 @@ import json
 from rfc3339 import rfc3339
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.db.models import Max, Min, Q
 from django.shortcuts import render
@@ -61,15 +61,15 @@ def newspapers_atom(request):
     # get a list of titles with issues that are in order by when they
     # were last updated
     titles = models.Title.objects.filter(has_issues=True)
-    titles = titles.annotate(last_release=Max('issues__batch__released'))
-    titles = titles.order_by('-last_release')
+    titles = titles.annotate(last_create=Max('issues__batch__created'))
+    titles = titles.order_by('-last_create')
 
     # get the last update time for all the titles to use as the
     # updated time for the feed
     if titles.count() > 0:
-        last_issue = titles[0].last_issue_released
-        if last_issue.batch.released:
-            feed_updated = last_issue.batch.released
+        last_issue = titles[0].last_issue_created
+        if last_issue.batch.created:
+            feed_updated = last_issue.batch.created
         else:
             feed_updated = last_issue.batch.created
     else:
@@ -121,20 +121,19 @@ def search_titles_results(request):
         writer = csv.writer(response)
         writer.writerow(csv_header_labels)
         for title in titles:
-            writer.writerow(map(lambda val: smart_str(val or '--'),
-                               (title.lccn, title.name, title.place_of_publication,
+            writer.writerow([smart_str(val or '--') for val in (title.lccn, title.name, title.place_of_publication,
                                 title.start_year, title.end_year, title.publisher,
                                 title.edition, title.frequency,
-                                map(str, title.subjects.all()),
-                                set(map(lambda p: p.state, title.places.all())),
-                                map(lambda p: p.city, title.places.all()),
-                                str(title.country), map(str, title.languages.all()),
-                                title.oclc, title.holding_types)))
+                                list(map(str, title.subjects.all())),
+                                set([p.state for p in title.places.all()]),
+                                [p.city for p in title.places.all()],
+                                str(title.country), list(map(str, title.languages.all())),
+                                title.oclc, title.holding_types)])
         return response
 
     try:
         curr_page = int(request.GET.get('page', 1))
-    except ValueError, e:
+    except ValueError as e:
         curr_page = 1
 
     paginator = solr_index.SolrTitlesPaginator(request.GET)
@@ -148,7 +147,7 @@ def search_titles_results(request):
 
     try:
         rows = int(request.GET.get('rows', '20'))
-    except ValueError, e:
+    except ValueError as e:
         rows = 20
 
     query = request.GET.copy()

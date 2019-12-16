@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 import json
-from urllib import urlopen
+from urllib.request import urlopen
 
 from core.models import Batch
 
@@ -15,7 +15,7 @@ class Command(BaseCommand):
         while url:
             batch_info = json.loads(urlopen(url).read())
             for batch in batch_info['batches']:
-                print "comparing %(name)s with %(page_count)s pages" % batch
+                print("comparing %(name)s with %(page_count)s pages" % batch)
                 try:
                     my_batch = Batch.objects.get(name=batch['name'])
                     if my_batch.page_count != batch['page_count']:
@@ -26,14 +26,14 @@ class Command(BaseCommand):
             url = batch_info.get('next', None) 
 
         if len(missing_batches) > 0:
-            print "missing batches:"
+            print("missing batches:")
             for batch in missing_batches:
-                print "  %s" % batch['name']
-            print
+                print("  %s" % batch['name'])
+            print()
 
         if len(missing_pages) > 0:
-            print "batches that are missing pages:"
+            print("batches that are missing pages:")
             for batch in missing_pages:
-                print "  %s has %s instead of %s pages" % (batch['name'],
-                        batch['my_page_count'], batch['page_count'])
-            print
+                print("  %s has %s instead of %s pages" % (batch['name'],
+                        batch['my_page_count'], batch['page_count']))
+            print()

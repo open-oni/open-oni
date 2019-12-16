@@ -4,7 +4,7 @@ from rfc3339 import rfc3339
 
 from django.db.models import Q
 from django.conf import settings
-from django.core import urlresolvers
+from django import urls
 from django.core.paginator import InvalidPage
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
@@ -21,12 +21,12 @@ def search_pages_paginator(request):
     # front page only
     try:
         sequence = int(request.GET.get('sequence', '0'))
-    except ValueError, e:
+    except ValueError as e:
         sequence = 0
     # set results per page value
     try:
         rows = int(request.GET.get('rows', '20'))
-    except ValueError, e:
+    except ValueError as e:
         rows = 20
     q = request.GET.copy()
     q['rows'] = rows
@@ -45,7 +45,7 @@ def search_pages_results(request, view_type='gallery'):
     try:
         page = paginator.page(paginator._cur_page)
     except InvalidPage:
-        url = urlresolvers.reverse('openoni_search_pages_results')
+        url = urls.reverse('openoni_search_pages_results')
         # Set the page to the first page
         q['page'] = 1
         return HttpResponseRedirect('%s?%s' % (url, q.urlencode()))
@@ -188,7 +188,7 @@ def suggest_titles(request):
     lccn_q = Q(lccn__startswith=q)
     title_q = Q(name_normal__startswith=q)
     for t in models.Title.objects.filter(lccn_q | title_q)[0:50]:
-        titles.append(unicode(t))
+        titles.append(str(t))
         descriptions.append(t.lccn)
         urls.append(settings.BASE_URL + t.url)
 
@@ -211,7 +211,7 @@ def search_pages_navigation(request):
     if not ('page' in request.GET and 'index' in request.GET):
         return HttpResponseNotFound()
 
-    search_url = urlresolvers.reverse('openoni_search_pages_results')
+    search_url = urls.reverse('openoni_search_pages_results')
 
     paginator = search_pages_paginator(request)
 

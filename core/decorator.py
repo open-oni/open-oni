@@ -1,14 +1,13 @@
 import os
 import re
 import time
-import hotshot
 
 from mimeparse import best_match
 
 from django.utils import cache
 from django.utils import encoding
 from django.http import HttpResponse
-from django.core import urlresolvers
+from django import urls
 
 
 class HttpResponseSeeOther(HttpResponse):
@@ -37,8 +36,8 @@ def cache_page(ttl):
 def rdf_view(f):
     def f1(request, **kwargs):
         # construct a http redirect response to html view
-        html_view = f.func_name.replace('_rdf', '')
-        html_url = urlresolvers.reverse('openoni_%s' % html_view, kwargs=kwargs)
+        html_view = f.__name__.replace('_rdf', '')
+        html_url = urls.reverse('openoni_%s' % html_view, kwargs=kwargs)
         html_redirect = HttpResponseSeeOther(html_url)
 
         # determine the clients preferred representation
@@ -76,8 +75,8 @@ def opensearch_clean(f):
     """
     def f1(request, **kwargs):
         new_get = request.GET.copy()
-        for k, v in new_get.items():
-            if type(v) == unicode and re.match(r'^\{.+\?\}$', v):
+        for k, v in list(new_get.items()):
+            if type(v) == str and re.match(r'^\{.+\?\}$', v):
                 new_get.pop(k)
         request.GET = new_get
         return f(request, **kwargs)

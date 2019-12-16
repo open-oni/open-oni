@@ -1,5 +1,6 @@
 from django.test import TestCase
 import os
+import pymarc
 
 from lxml import etree
 
@@ -122,9 +123,9 @@ class TitleLoaderTests(TestCase):
     def test_marc_html(self):
         t = Title.objects.get(lccn='sn83030846')
         html = t.marc.html
-        self.assertTrue('<td>00000cas a22000007a 4500</td>' in html)
-        self.assertTrue('<td>9688987</td>' in html)
-        self.assertTrue('<span class="marc-subfield-value">NPU</span>' in html)
+        self.assertTrue(b'<td>00000cas a22000007a 4500</td>' in html)
+        self.assertTrue(b'<td>9688987</td>' in html)
+        self.assertTrue(b'<span class="marc-subfield-value">NPU</span>' in html)
 
     def test_language(self):
         t = Title.objects.get(lccn='sn83030846')
@@ -140,12 +141,12 @@ class TitleLoaderTests(TestCase):
     def test_solr_doc(self):
         t = Title.objects.get(lccn='sn83030846')
         solr = t.solr_doc
-        self.assertEqual(solr['place_of_publication'], u'Albany, N.Y.')
-        self.assertEqual(solr['publisher'], u'The Living Issue Co.')
+        self.assertEqual(solr['place_of_publication'], 'Albany, N.Y.')
+        self.assertEqual(solr['publisher'], 'The Living Issue Co.')
         self.assertEqual(solr['start_year'], 1873)
         self.assertEqual(solr['essay'], [])
-        self.assertEqual(solr['title'], u'The living issue.')
-        self.assertEqual(solr['lccn'], u'sn83030846')
+        self.assertEqual(solr['title'], 'The living issue.')
+        self.assertEqual(solr['lccn'], 'sn83030846')
         self.assertEqual(solr['end_year'], 1887)
         self.assertEqual(solr['type'], 'title')
         self.assertEqual(solr['id'], '/lccn/sn83030846/')
@@ -156,7 +157,7 @@ class TitleLoaderTests(TestCase):
         self.assertTrue('New York' in solr['county'])
         self.assertTrue('Oneida' in solr['county'])
         self.assertTrue('Otsego' in solr['county'])
-        self.assertTrue(u'English' in solr['language'])
+        self.assertTrue('English' in solr['language'])
         self.assertTrue('Description based on: Vol. 1, no. 8 (Apr. 12, 1873).' in solr['note'])
         self.assertTrue('Published as: Living issue. Prohibition, <Dec. 17, 1874>.' in solr['note'])
         self.assertTrue('Published at New York, N.Y., <1874>-1879; at Portland, Me., 1879-<1880>; at Cooperstown, N.Y., <1881-1882>; at Utica, N.Y., <1883>-Jan. 27, 1887; at Lincoln, Neb., <Feb. 1887>-' in solr['note'])
@@ -192,6 +193,14 @@ class TitleLoaderTests(TestCase):
         self.assertEqual(loader.records_processed, 2)
         self.assertRaises(Title.DoesNotExist, Title.objects.get,
                           lccn='sn83030846')
+
+    def test_load_title_missing_language(self):
+        filename = abs_filename('./test-data/title-missing-language.xml')
+        marc = pymarc.parse_xml_to_array(filename)[0]
+        loader = TitleLoader()
+        title = Title.objects.get(lccn='sn83030846')
+        self.assertRaises(core.models.Language.DoesNotExist,
+          loader._extract_languages, marc, title)
 
     def test_rda_place_of_publication(self):
         loader = TitleLoader()

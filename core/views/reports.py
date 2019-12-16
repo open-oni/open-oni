@@ -3,7 +3,7 @@ from rfc3339 import rfc3339
 import json
 
 from django.conf import settings
-from django.core import urlresolvers
+from django import urls
 from django.db.models import Min, Max, Count
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, get_object_or_404
@@ -47,7 +47,7 @@ def batches(request, page_number=1):
 @cache_page(settings.API_TTL_SECONDS)
 def batches_atom(request, page_number=1):
     batches = models.Batch.viewable_batches()
-    batches = batches.order_by('-released')
+    batches = batches.order_by('-created')
     now = rfc3339(timezone.now())
 
     paginator = Paginator(batches, 25)
@@ -74,15 +74,13 @@ def batches_json(request):
 
 @cache_page(settings.API_TTL_SECONDS)
 def batches_csv(request):
-    csv_header_labels = ('Created', 'Name', 'Awardee', 'Total Pages',
-                         'Released',)
+    csv_header_labels = ('Created', 'Name', 'Awardee', 'Total Pages')
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="openoni_batches.csv"'
     writer = csv.writer(response)
     writer.writerow(csv_header_labels)
     for batch in models.Batch.viewable_batches():
-        writer.writerow((batch.created, batch.name, batch.awardee.name, 
-                         batch.page_count, batch.released))
+        writer.writerow((batch.created, batch.name, batch.awardee.name, batch.page_count))
     return response
 
 @cache_page(settings.API_TTL_SECONDS)
@@ -261,7 +259,7 @@ GROUP BY state, county HAVING total >= 1 ORDER BY state, county")
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def cities_in_county(request, state, county, format='html'):
-    state, county = map(unpack_url_path, (state, county))
+    state, county = list(map(unpack_url_path, (state, county)))
     if state is None or county is None:
         raise Http404
     page_title = 'Cities in %s, %s' % (state, county)
@@ -445,7 +443,7 @@ def reel(request, reel_number):
     crumbs = list(settings.BASE_CRUMBS)
     crumbs.extend([
         {'label': 'Reels',
-         'href': urlresolvers.reverse('openoni_reels')},
+         'href': urls.reverse('openoni_reels')},
     ])
     page_title = 'Reel %s' % reel_number
     m_reels = models.Reel.objects.filter(number=reel_number)

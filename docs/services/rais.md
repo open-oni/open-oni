@@ -4,29 +4,32 @@
 
 - [Install](#install)
     - [Dependencies](#dependencies)
-    - [Clone from GitHub](#clone-from-github)
+    - [Download from GitHub](#download-from-github)
     - [Configure Permissions](#configure-permissions)
     - [Configure Docker Compose](#configure-docker-compose)
         - [Override File](#override-file)
     - [Add Apache Config](#add-apache-config)
-
 
 ## Install
 
 ### Dependencies
 
 ```bash
-yum install docker docker-compose
-systemctl enable docker
-systemctl start docker
+sudo yum install docker docker-compose
+sudo systemctl enable docker
+sudo systemctl start docker
 ```
 
-### Clone from GitHub
+### Download from GitHub
 
 ```bash
-mkdir /var/local/docker
-chmod 750 /var/local/docker
-cd /var/local/docker
+sudo mkdir /var/local/docker
+sudo chmod 750 /var/local/docker
+sudo cd /var/local/docker
+```
+Download the latest release to `/var/local/docker/rais/`, or clone from GitHub:
+
+```bash
 git clone https://github.com/uoregon-libraries/rais-image-server rais
 
 cd rais
@@ -38,22 +41,24 @@ git checkout master
 ### Configure Permissions
 ```bash
 # Set SELinux context on files to be mounted in container
-semanage fcontext -a -t container_file_t "/var/local/docker/rais/(?:cap-max|rais-example)\.toml"
-restorecon -F -R /var/local/docker/rais
+sudo semanage fcontext -a -t container_file_t "/var/local/docker/rais/(?:cap-max|rais-example)\.toml"
+sud restorecon -F -R /var/local/docker/rais
 
-semanage fcontext -a -t container_file_t "/opt/openoni/data/batches(/.*)?"
-restorecon -F -R /opt/openoni/data/batches
+sudo semanage fcontext -a -t container_file_t "/opt/openoni/data/batches(/.*)?"
+sudo restorecon -F -R /opt/openoni/data/batches
 
 # Set file permissions for newspaper files
 cd /opt/openoni/data/batches
-chmod -R g+rwX (batch_name or * for all)
-chmod -R o+rX (batch_name or * for all)
-find . -type d -exec chmod g+s {} \;
-find . -type f -exec chmod -x {} \;
+sudo chmod -R g+rwX (batch_name or * for all)
+sudo chmod -R o+rX (batch_name or * for all)
+sudo find . -type d -exec chmod g+s {} \;
+sudo find . -type f -exec chmod -x {} \;
 ```
 
 ### Configure Docker Compose
 Define custom docker-compose config file
+
+`cd /var/local/docker/rais`
 
 `vim docker-compose.override.yml`:
 ```yml
@@ -104,7 +109,7 @@ RAIS_PLUGINS=datadog.so
 
 Start RAIS docker container
 
-`docker-compose -f docker-compose.override.yml up -d`
+`sudo docker-compose -f docker-compose.override.yml up -d`
 
 #### Override File
 Docker Compose is supposed to automatically use a `docker-compose.override.yml`
@@ -116,9 +121,12 @@ git branch where the override file is moved to `docker-compose.yml` and the
 extra option can be omitted
 
 ### Add Apache Config
-Copy [RAIS Apache config](/conf/apache/rais.conf) into the drop-in directory which will be included in your virtual host block
+Copy [RAIS Apache config](/conf/apache/rais.conf) into an appropriate
+drop-in directory which will be included in your virtual host:
 
 ```bash
-cp /opt/openoni/conf/apache/rais.conf /etc/httpd/local/vhosts/_vhost-includes/
+sudo cp /opt/openoni/conf/apache/rais.conf /etc/httpd/(path/to/vhost/drop-in-dir)/
 ```
+
+Or copy the contents into your virtual host file.
 

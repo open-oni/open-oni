@@ -1,5 +1,5 @@
 import os
-import urlparse
+import urllib
 
 # For initial customization, search and update values beginning with 'YOUR_'
 
@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # BASE_URL can NOT include any path elements!
 BASE_URL = os.getenv('ONI_BASE_URL', 'http://localhost')
     # BASE_URL-dependent Settings
-url = urlparse.urlparse(BASE_URL)
+url = urllib.parse.urlparse(BASE_URL)
 
 ALLOWED_HOSTS = [url.netloc]
 
@@ -25,7 +25,7 @@ if url.scheme == 'https':
     Test with a low value (e.g. 300)
     before setting a high value (e.g. 15552000) for long-term use
     """
-    SECURE_HSTS_SECONDS = os.getenv('ONI_HSTS_SECONDS', 0)
+    SECURE_HSTS_SECONDS = int(os.getenv('ONI_HSTS_SECONDS', 0))
     SECURE_SSL_REDIRECT = True if SECURE_HSTS_SECONDS > 0 else False
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True if SECURE_HSTS_SECONDS > 0 else False
     SECURE_HSTS_PRELOAD = True if SECURE_HSTS_SECONDS > 0 else False
@@ -43,6 +43,7 @@ DATABASES = {
         'NAME':     os.getenv('ONI_DB_NAME', 'openoni'),
         'USER':     os.getenv('ONI_DB_USER', 'openoni'),
         'PASSWORD': os.getenv('ONI_DB_PASSWORD', 'openoni'),
+        'OPTIONS': { 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" },
     }
 }
 
@@ -178,7 +179,7 @@ if DEBUG:
     # Output emails to console
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-    # Suggested order: https://docs.djangoproject.com/en/1.11/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.DisableClientSideCachingMiddleware',         # Open ONI
@@ -229,7 +230,7 @@ else:
         }
     }
 
-    # Suggested order: https://docs.djangoproject.com/en/1.11/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.TooBusyMiddleware',                          # Open ONI

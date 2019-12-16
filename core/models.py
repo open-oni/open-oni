@@ -8,22 +8,22 @@ import hashlib
 import logging
 import tarfile
 import textwrap
-import urlparse
-from cStringIO import StringIO
+import urllib.parse
+import io
 
 from rfc3339 import rfc3339
 from lxml import etree
-from urllib import url2pathname
+from urllib.request import url2pathname
 
 from django.db import models
-from django.db.models import permalink, Q
+from django.db.models import Q
 from django.conf import settings
 from django.utils.http import urlquote
 
 from core.utils import strftime_safe
 from core.utils.image_urls import thumb_image_url, iiif_info_for_page
 
-from django.core import urlresolvers
+from django import urls
 
 
 class Awardee(models.Model):
@@ -40,14 +40,12 @@ class Awardee(models.Model):
         return Page.objects.filter(issue__batch__awardee__org_code=self.org_code).count()
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_awardee', (), {'institution_code': self.org_code})
+        return urls.reverse('openoni_awardee', kwargs={'institution_code': self.org_code})
 
     @property
-    @permalink
     def json_url(self):
-        return ('openoni_awardee_json', (), {'institution_code': self.org_code})
+        return urls.reverse('openoni_awardee_json', kwargs={'institution_code': self.org_code})
 
     @property
     def abstract_url(self):
@@ -70,7 +68,7 @@ class Awardee(models.Model):
             return json.dumps(j, indent=2)
         return j
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -78,27 +76,23 @@ class Batch(models.Model):
     name = models.CharField(max_length=250, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
     validated_batch_file = models.CharField(max_length=100)
-    awardee = models.ForeignKey('Awardee', related_name='batches', null=True)
-    released = models.DateTimeField(null=True)
+    awardee = models.ForeignKey('Awardee', related_name='batches', null=True, on_delete = models.CASCADE)
     source = models.CharField(max_length=4096, null=True)
     sitemap_indexed = models.DateTimeField(auto_now_add=False, null=True)
 
     @classmethod
     def viewable_batches(klass):
-        if not settings.DEBUG:
-            batches = Batch.objects.filter(released__isnull=False)
-        else:
-            batches = Batch.objects.all()
-        return batches.order_by("-released")
+        batches = Batch.objects.all()
+        return batches.order_by("-created")
 
     @property
     def storage_url(self):
         """Absolute path of batch directory"""
         source = self.source
         if source:
-            u = urlparse.urljoin(source, "data/")
+            u = urllib.parse.urljoin(source, "data/")
         else:
-            u = urlparse.urljoin("file:", self.path)
+            u = urllib.parse.urljoin("file:", self.path)
         return u
 
     @property
@@ -115,21 +109,19 @@ class Batch(models.Model):
 
     @property
     def validated_batch_url(self):
-        return urlparse.urljoin(self.storage_url, self.validated_batch_file)
+        return urllib.parse.urljoin(self.storage_url, self.validated_batch_file)
 
     @property
     def page_count(self):
         return Page.objects.filter(issue__batch__name=self.name).count()
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_batch', (), {'batch_name': self.name})
+        return urls.reverse('openoni_batch', kwargs={'batch_name': self.name})
 
     @property
-    @permalink
     def json_url(self):
-        return ('openoni_batch_dot_json', (), {'batch_name': self.name})
+        return urls.reverse('openoni_batch_dot_json', kwargs={'batch_name': self.name})
 
     @property
     def abstract_url(self):
@@ -140,7 +132,7 @@ class Batch(models.Model):
         l = {}
         for issue in self.issues.all():
             l[issue.title_id] = 1
-        return l.keys()
+        return list(l.keys())
 
     def delete(self, *args, **kwargs):
         # manually delete any OcrDump associated with this batch
@@ -177,7 +169,7 @@ class Batch(models.Model):
         else:
             return b
 
-    def __unicode__(self):
+    def __str__(self):
         return self.full_name
 
 
@@ -199,7 +191,7 @@ class LoadBatchEvent(models.Model):
         except Title.DoesNotExist:
             return None
 
-    def __unicode__(self):
+    def __str__(self):
         return self.batch_name
 
 
@@ -218,7 +210,7 @@ class Title(models.Model):
     issn = models.CharField(null=True, max_length=15)
     start_year = models.CharField(max_length=10)
     end_year = models.CharField(max_length=10)
-    country = models.ForeignKey('Country')
+    country = models.ForeignKey('Country', on_delete = models.CASCADE)
     version = models.DateTimeField()
     created = models.DateTimeField(auto_now_add=True)
     has_issues = models.BooleanField(default=False, db_index=True)
@@ -226,14 +218,12 @@ class Title(models.Model):
     sitemap_indexed = models.DateTimeField(auto_now_add=False, null=True)
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_title', (), {'lccn': self.lccn})
+        return urls.reverse('openoni_title', kwargs={'lccn': self.lccn})
 
     @property
-    @permalink
     def json_url(self):
-        return ('openoni_title_dot_json', (), {'lccn': self.lccn})
+        return urls.reverse('openoni_title_dot_json', kwargs={'lccn': self.lccn})
 
     @property
     def abstract_url(self):
@@ -271,9 +261,9 @@ class Title(models.Model):
             return None
 
     @property
-    def last_issue_released(self):
+    def last_issue_created(self):
         try:
-            return self.issues.order_by("-batch__released")[0]
+            return self.issues.order_by("-batch__created")[0]
         except IndexError:
             return None
 
@@ -319,7 +309,7 @@ class Title(models.Model):
     @property
     def metadata(self):
         meta = []
-        for k, v in self.solr_doc.items():
+        for k, v in list(self.solr_doc.items()):
             if not v or k in ("country"):
                 continue
             k = k.replace("_", " ")
@@ -420,9 +410,9 @@ class Title(models.Model):
 
         return titles
 
-    def __unicode__(self):
+    def __str__(self):
         # TODO: should edition info go in here if present?
-        return u'%s (%s) %s-%s' % (self.display_name, self.place_of_publication,
+        return '%s (%s) %s-%s' % (self.display_name, self.place_of_publication,
                                    self.start_year, self.end_year)
 
     class Meta:
@@ -432,7 +422,7 @@ class Title(models.Model):
 class AltTitle(models.Model):
     name = models.CharField(max_length=250)
     date = models.CharField(max_length=250, null=True)
-    title = models.ForeignKey('Title', related_name='alt_titles')
+    title = models.ForeignKey('Title', related_name='alt_titles', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ['name']
@@ -440,7 +430,7 @@ class AltTitle(models.Model):
 
 class MARC(models.Model):
     xml = models.TextField()
-    title = models.OneToOneField('Title', related_name='marc')
+    title = models.OneToOneField('Title', related_name='marc', on_delete = models.CASCADE)
 
     @property
     def html(self):
@@ -494,9 +484,8 @@ class MARC(models.Model):
         return etree.tostring(table, pretty_print=True)
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_title_marcxml', (), {'lccn': self.title.lccn})
+        return urls.reverse('openoni_title_marcxml', kwargs={'lccn': self.title.lccn})
 
 
 class Issue(models.Model):
@@ -505,37 +494,34 @@ class Issue(models.Model):
     number = models.CharField(max_length=50)
     edition = models.IntegerField()
     edition_label = models.CharField(max_length=100)
-    title = models.ForeignKey('Title', related_name='issues')
-    batch = models.ForeignKey('Batch', related_name='issues')
+    title = models.ForeignKey('Title', related_name='issues', on_delete = models.CASCADE)
+    batch = models.ForeignKey('Batch', related_name='issues', on_delete = models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s [%s]" % (self.title.display_name, self.date_issued)
 
     @property
-    @permalink
     def url(self):
         date = self.date_issued
-        return ('openoni_issue_pages', (),
-                {'lccn': self.title.lccn,
+        return urls.reverse('openoni_issue_pages',
+                kwargs={'lccn': self.title.lccn,
                  'date': "%04i-%02i-%02i" % (date.year, date.month, date.day),
                  'edition': self.edition})
 
     @property
-    @permalink
     def json_url(self):
         date = self.date_issued
-        return ('openoni_issue_pages_dot_json', (),
-                {'lccn': self.title.lccn,
+        return urls.reverse('openoni_issue_pages_dot_json',
+                kwargs={'lccn': self.title.lccn,
                  'date': "%04i-%02i-%02i" % (date.year, date.month, date.day),
                  'edition': self.edition})
 
     @property
-    @permalink
     def rdf_url(self):
         date = self.date_issued
-        return ('openoni_issue_pages_dot_rdf', (),
-                {'lccn': self.title.lccn,
+        return urls.reverse('openoni_issue_pages_dot_rdf',
+                kwargs={'lccn': self.title.lccn,
                  'date': "%04i-%02i-%02i" % (date.year, date.month, date.day),
                  'edition': self.edition})
 
@@ -665,8 +651,8 @@ class Page(models.Model):
     jp2_length = models.IntegerField(null=True)
     pdf_filename = models.CharField(max_length=250, null=True)
     ocr_filename = models.CharField(max_length=250, null=True)
-    issue = models.ForeignKey('Issue', related_name='pages')
-    reel = models.ForeignKey('Reel', related_name='pages', null=True)
+    issue = models.ForeignKey('Issue', related_name='pages', on_delete = models.CASCADE)
+    reel = models.ForeignKey('Reel', related_name='pages', null=True, on_delete = models.CASCADE)
     indexed = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -763,19 +749,16 @@ class Page(models.Model):
                 'sequence': self.sequence}
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_page', (), self._url_parts())
+        return urls.reverse('openoni_page', kwargs=self._url_parts())
 
     @property
-    @permalink
     def json_url(self):
-        return ('openoni_page_dot_json', (), self._url_parts())
+        return urls.reverse('openoni_page_dot_json', kwargs=self._url_parts())
 
     @property
-    @permalink
     def rdf_url(self):
-        return ('openoni_page_dot_rdf', (), self._url_parts())
+        return urls.reverse('openoni_page_dot_rdf', kwargs=self._url_parts())
 
 
     @property
@@ -783,24 +766,20 @@ class Page(models.Model):
         return self.url.rstrip('/') + '#page'
 
     @property
-    @permalink
     def jp2_url(self):
-        return ('openoni_page_jp2', (), self._url_parts())
+        return urls.reverse('openoni_page_jp2', kwargs=self._url_parts())
 
     @property
-    @permalink
     def ocr_url(self):
-        return ('openoni_page_ocr_xml', (), self._url_parts())
+        return urls.reverse('openoni_page_ocr_xml', kwargs=self._url_parts())
 
     @property
-    @permalink
     def txt_url(self):
-        return ('openoni_page_ocr_txt', (), self._url_parts())
+        return urls.reverse('openoni_page_ocr_txt', kwargs=self._url_parts())
 
     @property
-    @permalink
     def pdf_url(self):
-        return ('openoni_page_pdf', (), self._url_parts())
+        return urls.reverse('openoni_page_pdf', kwargs=self._url_parts())
 
     @property
     def solr_doc(self):
@@ -889,15 +868,15 @@ class Page(models.Model):
             return None
         return pages[0]
 
-    def __unicode__(self):
-        parts = [u'%s' % self.issue.title]
+    def __str__(self):
+        parts = ['%s' % self.issue.title]
         parts.append(strftime_safe(self.issue.date_issued, '%B %d, %Y'))
         if self.issue.edition_label:
             parts.append(self.issue.edition_label)
         if self.section_label:
             parts.append(self.section_label)
         parts.append('Image %s' % self.sequence)
-        return u', '.join(parts)
+        return ', '.join(parts)
 
     class Meta:
         ordering = ('sequence',)
@@ -908,13 +887,13 @@ class Page(models.Model):
 
 class LanguageText(models.Model):
     text = models.TextField()
-    language = models.ForeignKey('Language', null=True)
-    ocr = models.ForeignKey('OCR', related_name="language_texts")
+    language = models.ForeignKey('Language', null=True, on_delete = models.CASCADE)
+    ocr = models.ForeignKey('OCR', related_name="language_texts", on_delete = models.CASCADE)
 
 
 class OCR(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    page = models.OneToOneField('Page', null=True, related_name='ocr')
+    page = models.OneToOneField('Page', null=True, related_name='ocr', on_delete = models.CASCADE)
 
     @property
     def text(self):
@@ -923,7 +902,7 @@ class OCR(models.Model):
 
 class PublicationDate(models.Model):
     text = models.CharField(max_length=500)
-    titles = models.ForeignKey('Title', related_name='publication_dates')
+    titles = models.ForeignKey('Title', related_name='publication_dates', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ['text']
@@ -951,8 +930,8 @@ class Place(models.Model):
             return self.county
         return "Unknown"
 
-    def __unicode__(self):
-        return u"%s, %s, %s" % (self.city, self.county, self.state)
+    def __str__(self):
+        return "%s, %s, %s" % (self.city, self.county, self.state)
 
     class Meta:
         ordering = ('name',)
@@ -965,7 +944,7 @@ class Subject(models.Model):
     # TODO maybe split out types into different classes
     # e.g. GeographicSubject, TopicalSubject ?
 
-    def __unicode__(self):
+    def __str__(self):
         return self.heading
 
     class Meta:
@@ -975,9 +954,9 @@ class Subject(models.Model):
 class Note(models.Model):
     text = models.TextField()
     type = models.CharField(max_length=3)
-    title = models.ForeignKey('Title', related_name='notes')
+    title = models.ForeignKey('Title', related_name='notes', on_delete = models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.text
 
     class Meta:
@@ -988,10 +967,10 @@ class PageNote(models.Model):
     label = models.TextField()
     text = models.TextField()
     type = models.CharField(max_length=50)
-    page = models.ForeignKey('Page', related_name='notes')
+    page = models.ForeignKey('Page', related_name='notes', on_delete = models.CASCADE)
 
-    def __unicode__(self):
-        return u"type: %s label: %s text: %s" % (self.type, self.label, self.text)
+    def __str__(self):
+        return "type: %s label: %s text: %s" % (self.type, self.label, self.text)
 
     class Meta:
         ordering = ('text',)
@@ -1001,10 +980,10 @@ class IssueNote(models.Model):
     label = models.TextField()
     text = models.TextField()
     type = models.CharField(max_length=50)
-    issue = models.ForeignKey('Issue', related_name='notes')
+    issue = models.ForeignKey('Issue', related_name='notes', on_delete = models.CASCADE)
 
-    def __unicode__(self):
-        return u"type: %s label: %s text: %s" % (self.type, self.label, self.text)
+    def __str__(self):
+        return "type: %s label: %s text: %s" % (self.type, self.label, self.text)
 
     class Meta:
         ordering = ('text',)
@@ -1014,7 +993,7 @@ class Essay(models.Model):
     title = models.TextField()
     created = models.DateTimeField()
     modified = models.DateTimeField()
-    creator = models.ForeignKey('Awardee', related_name='essays')
+    creator = models.ForeignKey('Awardee', related_name='essays', on_delete = models.CASCADE)
     essay_editor_url = models.TextField()
     html = models.TextField()
     loaded = models.DateTimeField(auto_now_add=True)
@@ -1024,9 +1003,8 @@ class Essay(models.Model):
         return self.titles.all()[0]
 
     @property
-    @permalink
     def url(self):
-        return ('openoni_essay', (), {'essay_id': self.id})
+        return urls.reverse('openoni_essay', kwargs={'essay_id': self.id})
 
     class Meta:
         ordering = ['title']
@@ -1035,9 +1013,9 @@ class Essay(models.Model):
 class Holding(models.Model):
     description = models.TextField(null=True)
     type = models.CharField(null=True, max_length=25)
-    institution = models.ForeignKey('Institution', related_name='holdings')
+    institution = models.ForeignKey('Institution', related_name='holdings', on_delete = models.CASCADE)
     last_updated = models.CharField(null=True, max_length=10)
-    title = models.ForeignKey('Title', related_name='holdings')
+    title = models.ForeignKey('Title', related_name='holdings', on_delete = models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(null=True, help_text="852$z")
 
@@ -1064,8 +1042,8 @@ class Holding(models.Model):
         else:
             return [self.description]
 
-    def __unicode__(self):
-        return u"%s - %s - %s" % (self.institution.name, self.type, self.description)
+    def __str__(self):
+        return "%s - %s - %s" % (self.institution.name, self.type, self.description)
 
     class Meta:
         ordering = ('institution',)
@@ -1075,7 +1053,7 @@ class SucceedingTitleLink(models.Model):
     name = models.CharField(null=True, max_length=250)
     lccn = models.CharField(null=True, max_length=50)
     oclc = models.CharField(null=True, max_length=50)
-    title = models.ForeignKey('Title', related_name='succeeding_title_links')
+    title = models.ForeignKey('Title', related_name='succeeding_title_links', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ('name',)
@@ -1085,9 +1063,9 @@ class PreceedingTitleLink(models.Model):
     name = models.CharField(null=True, max_length=250)
     lccn = models.CharField(null=True, max_length=50)
     oclc = models.CharField(null=True, max_length=50)
-    title = models.ForeignKey('Title', related_name='preceeding_title_links')
+    title = models.ForeignKey('Title', related_name='preceeding_title_links', on_delete = models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%s)" % (self.name, self.lccn)
 
     class Meta:
@@ -1098,9 +1076,9 @@ class RelatedTitleLink(models.Model):
     name = models.CharField(null=True, max_length=250)
     lccn = models.CharField(null=True, max_length=50)
     oclc = models.CharField(null=True, max_length=50)
-    title = models.ForeignKey('Title', related_name='related_title_links')
+    title = models.ForeignKey('Title', related_name='related_title_links', on_delete = models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%s)" % (self.name, self.lccn)
 
     class Meta:
@@ -1129,7 +1107,7 @@ class Ethnicity(models.Model):
 
 class EthnicitySynonym(models.Model):
     synonym = models.CharField(null=False, max_length=250)
-    ethnicity = models.ForeignKey('Ethnicity', related_name='synonyms')
+    ethnicity = models.ForeignKey('Ethnicity', related_name='synonyms', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ('synonym',)
@@ -1141,7 +1119,7 @@ class Language(models.Model):
     lingvoj = models.CharField(null=True, max_length=200)
     titles = models.ManyToManyField('Title', related_name='languages')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -1161,7 +1139,7 @@ class Country(models.Model):
     name = models.CharField(null=False, max_length=100)
     region = models.CharField(null=False, max_length=100)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s (%s)" % (self.name, self.region)
 
     class Meta:
@@ -1192,8 +1170,8 @@ class Institution(models.Model):
     zip = models.CharField(null=True, max_length=20)
     created = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
-        return u"%s, %s, %s" % (self.name, self.city, self.state)
+    def __str__(self):
+        return "%s, %s, %s" % (self.name, self.city, self.state)
 
     class Meta:
         ordering = ('name',)
@@ -1202,7 +1180,7 @@ class Institution(models.Model):
 class PhysicalDescription(models.Model):
     text = models.TextField()
     type = models.CharField(max_length=3)
-    title = models.ForeignKey('Title', related_name='dates_of_publication')
+    title = models.ForeignKey('Title', related_name='dates_of_publication', on_delete = models.CASCADE)
 
     class Meta:
         ordering = ('type',)
@@ -1211,15 +1189,15 @@ class PhysicalDescription(models.Model):
 class Url(models.Model):
     value = models.TextField()
     type = models.CharField(max_length=1, null=True)
-    title = models.ForeignKey('Title', related_name='urls')
+    title = models.ForeignKey('Title', related_name='urls', on_delete = models.CASCADE)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.value
 
 
 class Reel(models.Model):
     number = models.CharField(max_length=50)
-    batch = models.ForeignKey('Batch', related_name='reels')
+    batch = models.ForeignKey('Batch', related_name='reels', on_delete = models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     # not explicit mentioned in top level batch.xml
@@ -1233,7 +1211,7 @@ class OcrDump(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     sha1 = models.TextField()
     size = models.BigIntegerField()
-    batch = models.OneToOneField('Batch', related_name='ocr_dump')
+    batch = models.OneToOneField('Batch', related_name='ocr_dump', on_delete = models.CASCADE)
 
     @classmethod
     def new_from_batch(klass, batch):
@@ -1286,7 +1264,7 @@ class OcrDump(models.Model):
             return json.dumps(i, indent=2)
         return j
 
-    def __unicode__(self):
+    def __str__(self):
         return "path=%s size=%s sha1=%s" % (self.path, self.size, self.sha1)
 
     def _add_page(self, page, tar):
@@ -1299,14 +1277,14 @@ class OcrDump(models.Model):
         info = tarfile.TarInfo(name=txt_filename)
         info.size = len(ocr_text)
         info.mtime = time.time()
-        tar.addfile(info, StringIO(ocr_text))
+        tar.addfile(info, io.BytesIO(ocr_text))
 
         # add ocr xml
         xml_filename = relative_dir + "ocr.xml"
         info = tarfile.TarInfo(name=xml_filename)
         info.size = os.path.getsize(page.ocr_abs_filename)
         info.mtime = time.time()
-        tar.addfile(info, open(page.ocr_abs_filename))
+        tar.addfile(info, open(page.ocr_abs_filename, "rb"))
 
         logging.info("added %s to %s" % (page, tar.name))
 
@@ -1322,7 +1300,7 @@ class OcrDump(models.Model):
     def _calculate_sha1(self):
         """looks at the dump file and calculates the sha1 digest and stores it
         """
-        f = open(self.path)
+        f = open(self.path, "rb")
         sha1 = hashlib.sha1()
         while True:
             buff = f.read(2 ** 16)
@@ -1334,7 +1312,7 @@ class OcrDump(models.Model):
 
 
 def coordinates_path(url_parts):
-    url = urlresolvers.reverse('openoni_page', kwargs=url_parts)
+    url = urls.reverse('openoni_page', kwargs=url_parts)
     path = url2pathname(url)
     if path.startswith("/"):
         path = path[1:]
@@ -1351,5 +1329,5 @@ class LccnDateCopyright(models.Model):
     lccn = models.CharField(max_length=25)
     start_date = models.DateField()
     end_date = models.DateField()
-    copyright = models.ForeignKey('Copyright', related_name='lccn_date_copyright')
+    copyright = models.ForeignKey('Copyright', related_name='lccn_date_copyright', on_delete = models.CASCADE)
 

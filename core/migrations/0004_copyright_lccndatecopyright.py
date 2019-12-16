@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+
 
 from django.db import migrations, models
 
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('lccn', models.CharField(max_length=25)),
                 ('start_date', models.DateField()),
                 ('end_date', models.DateField()),
-                ('copyright', models.ForeignKey(related_name='lccn_date_copyright', to='core.Copyright')),
+                ('copyright', models.ForeignKey(related_name='lccn_date_copyright', to='core.Copyright', on_delete=models.CASCADE)),
             ],
         ),
     ]

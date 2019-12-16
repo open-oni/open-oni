@@ -1,7 +1,7 @@
 import datetime
 import os
 import re
-import urlparse
+import urllib.parse
 
 from itertools import groupby
 
@@ -9,7 +9,7 @@ from django import forms as django_forms
 
 from django.conf import settings
 from django.core.paginator import Paginator, InvalidPage
-from django.core import urlresolvers
+from django import urls
 from django.forms import fields
 from django.http import HttpResponse, HttpResponseNotFound, Http404, \
     HttpResponseRedirect, HttpResponsePermanentRedirect
@@ -85,7 +85,7 @@ def title_rdf(request, lccn):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def title_atom(request, lccn, page_number=1):
     title = get_object_or_404(models.Title, lccn=lccn)
-    issues = title.issues.all().order_by('-batch__released', '-date_issued')
+    issues = title.issues.all().order_by('-batch__created', '-date_issued')
     paginator = Paginator(issues, 100)
     try:
         page = paginator.page(page_number)
@@ -93,15 +93,11 @@ def title_atom(request, lccn, page_number=1):
         raise Http404("No such page %s for title feed" % page_number)
 
     # figure out the time the title was most recently updated
-    # typically the release date of the batch, otherwise
-    # when the batch was ingested
+    # via the create date of the batch
     issues = page.object_list
     num_issues = issues.count()
     if num_issues > 0:
-        if issues[0].batch.released:
-            feed_updated = issues[0].batch.released
-        else:
-            feed_updated = issues[0].batch.created
+        feed_updated = issues[0].batch.created
     else:
         feed_updated = title.created
 
@@ -122,12 +118,12 @@ def issue_pages(request, lccn, date, edition, page_number=1):
     _year, _month, _day = date.split("-")
     try:
         _date = datetime.date(int(_year), int(_month), int(_day))
-    except ValueError, e:
+    except ValueError as e:
         raise Http404
     try:
         issue = title.issues.filter(date_issued=_date,
                                     edition=edition).order_by("-created")[0]
-    except IndexError, e:
+    except IndexError as e:
         raise Http404
     issue_pages = []
     for page in issue.pages.all():
@@ -184,7 +180,7 @@ def page(request, lccn, date, edition, sequence, words=None):
     if fragments:
         path_parts = dict(lccn=lccn, date=date, edition=edition,
                           sequence=sequence)
-        url = urlresolvers.reverse('openoni_page',
+        url = urls.reverse('openoni_page',
                                    kwargs=path_parts)
 
         return HttpResponseRedirect(url + "#" + "&".join(fragments))
@@ -209,10 +205,10 @@ def page(request, lccn, date, edition, sequence, words=None):
             if len(words) > 0:
                 path_parts = dict(lccn=lccn, date=date, edition=edition,
                                   sequence=sequence, words=words)
-                url = urlresolvers.reverse('openoni_page_words',
+                url = urls.reverse('openoni_page_words',
                                            kwargs=path_parts)
                 return HttpResponseRedirect(url)
-        except Exception, e:
+        except Exception as e:
             if settings.DEBUG:
                 raise e
             # else squish the exception so the page will still get
@@ -331,7 +327,7 @@ def title(request, lccn):
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def titles_in_city(request, state, county, city,
                    page_number=1, order='name_normal'):
-    state, county, city = map(unpack_url_path, (state, county, city))
+    state, county, city = list(map(unpack_url_path, (state, county, city)))
     page_title = "Titles in City: %s, %s" % (city, state)
     titles = models.Title.objects.all()
     if city:
@@ -359,7 +355,7 @@ def titles_in_city(request, state, county, city,
 @cache_page(settings.DEFAULT_TTL_SECONDS)
 def titles_in_county(request, state, county,
                      page_number=1, order='name_normal'):
-    state, county = map(unpack_url_path, (state, county))
+    state, county = list(map(unpack_url_path, (state, county)))
     page_title = "Titles in County: %s, %s" % (county, state)
     titles = models.Title.objects.all()
     if county:
@@ -446,8 +442,8 @@ def _search_engine_words(request):
     referer = request.META.get('HTTP_REFERER')
     if not referer:
         return []
-    uri = urlparse.urlparse(referer)
-    qs = urlparse.parse_qs(uri.query)
+    uri = urllib.parse.urlparse(referer)
+    qs = urllib.parse.parse_qs(uri.query)
 
     # extract a potential search query from refering url
     if 'q' in qs:
@@ -524,7 +520,7 @@ def page_print(request, lccn, date, edition, sequence,
                       sequence=sequence,
                       width=width, height=height,
                       x1=x1, y1=y1, x2=x2, y2=y2)
-    url = urlresolvers.reverse('openoni_page_print',
+    url = urls.reverse('openoni_page_print',
                                kwargs=path_parts)
 
     return render(request, 'page_print.html', locals())

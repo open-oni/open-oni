@@ -3,11 +3,12 @@ import os
 from django.conf.urls import url
 from django.conf import settings
 from django.utils import cache
+from django.views.defaults import page_not_found, server_error
 
-from views import home, browse, directory, reports, search, static
+from .views import home, browse, directory, reports, search, static
 
-handler404 = 'django.views.defaults.page_not_found'
-handler500 = 'django.views.defaults.server_error'
+handler404 = page_not_found
+handler500 = server_error
 
 
 def cache_page(function, ttl):

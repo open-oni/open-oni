@@ -1,6 +1,6 @@
 from xml.etree import ElementTree
 
-import urllib
+import urllib.request, urllib.parse, urllib.error
 try:
     import simplejson as json
 except ImportError:
@@ -13,7 +13,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         uri = 'http://www.loc.gov/standards/codelists/countries.xml'
-        xml = urllib.urlopen(uri)
+        xml = urllib.request.urlopen(uri)
         doc = ElementTree.parse(xml)
         countries = []
 
@@ -24,5 +24,5 @@ class Command(BaseCommand):
             countries.append({'pk': code, 'model': 'core.countries', 
                               'fields': {'name': name, 'region': region}})
 
-        print json.dumps(countries, indent=2)
+        print(json.dumps(countries, indent=2))
 
