@@ -105,6 +105,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 - Jessica Dussault (jduss4)
 - Jeremy Echols (jechols)
+- Andrew Gearhart (AndrewGearhart)
 - Greg Tunink (techgique)
 
 ## [v0.11.1] - Hotfix for word coordinates and image viewer
