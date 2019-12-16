@@ -59,7 +59,7 @@ Markdown Spec](https://github.github.com/gfm/).
   - Move database migration step after defining settings
 - Updated WSGIDaemonProcess directives in `conf/apache/django.conf`
   - Added WSGI `python-home` and `python-path` options
-  - Set `processes` to 12 for production directive
+  - Set `processes` to 8 for production directive
   - Moved server-wide Apache directives to `docs/services/apache.md`
 
 ### Removed
