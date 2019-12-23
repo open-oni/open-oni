@@ -35,10 +35,41 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Added
 
 ### Changed
+- Upgraded to Solr 8.3 - this includes our docker-compose setup as well as the
+  way Solr is configured
 
 ### Removed
 
 ### Migration
+- Review settings changes:
+  - New: `SOLR_API` must be added to `onisite/settings_local.py`.  A
+    docker-compose-friendly example has been added to
+    `onisite/settings_local_example.py`.
+- You will have to reindex all your data, which could take a long time, so
+  prepare in advance!
+  - Docker developers (production docker users should consider the cost of
+    downtime and decide if this approach is feasible / acceptable):
+    - Take the stack down: `docker-compose down`
+    - Remove the old solr data manually: `docker volume rm openoni_data-solr`
+    - Restart the stack: `docker-compose up -d`
+    - Reindex data: `docker-compose exec web manage index`
+    - For advanced users: note the new solr data location in `/var/solr`
+      instead of `/opt/solr`.  If you have docker overrides related to the solr
+      data mount, make sure you change it!
+  - Bare metal:
+    - You may have to remove Solr entirely and then manually install Solr 8.3
+      - It's possible to run Solr 6.6 and Solr 8.3 side-by-side in order to
+        simplify the migration and reduce / eliminate downtime, but the steps
+        for doing so are out of scope here as this can be a rather advanced
+        operation, and can vary greatly depending on one's current setup.
+    - Update your ONI config to point to the Solr 8.3 instance, if it has
+      changed
+    - Start Solr 8.3, and when it's ready, set it up with our configuration and
+      then reindex your data:
+      - `cd /opt/openoni`
+      - `source ENV/bin/activate`
+      - `./manage.py setup_index`
+      - `./manage.py index`
 
 ### Deprecated
 
