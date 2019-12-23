@@ -12,13 +12,12 @@ services:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-mariadb:/var/lib/mysql
   solr:
-    image: solr:6.6
+    image: solr:8.3-slim
     volumes:
-      - ./docker/solr/:/tmp/solr:Z
-      - data-solr:/opt/solr
-    entrypoint:
-      - docker-entrypoint.sh
-      - /tmp/solr/precreate
+      - data-solr:/var/solr
+    command:
+      - solr-precreate
+      - openoni
   rais:
     image: uolibraries/rais
     environment:
