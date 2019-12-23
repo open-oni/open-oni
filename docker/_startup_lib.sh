@@ -50,6 +50,12 @@ setup_database() {
   /opt/openoni/manage.py migrate
 }
 
+setup_index() {
+  echo "Installing Solr configs" >&2
+  source ENV/bin/activate
+  /opt/openoni/manage.py setup_index
+}
+
 prep_webserver() {
   mkdir -p /var/tmp/django_cache && chown -R www-data:www-data /var/tmp/django_cache
   mkdir -p /opt/openoni/log
