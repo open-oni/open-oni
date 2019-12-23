@@ -42,7 +42,7 @@
     },
     {
       "name": "date",
-      "type": "tint",
+      "type": "pint",
       "multiValued": false,
       "indexed": true,
       "required": false,
@@ -50,7 +50,7 @@
     },
     {
       "name": "day",
-      "type": "tint",
+      "type": "pint",
       "multiValued": false,
       "indexed": true,
       "required": false,
@@ -74,7 +74,7 @@
     },
     {
       "name": "end_year",
-      "type": "tint",
+      "type": "pint",
       "multiValued": false,
       "indexed": true,
       "required": false,
@@ -129,7 +129,7 @@
     },
     {
       "name": "month",
-      "type": "tint",
+      "type": "pint",
       "multiValued": false,
       "indexed": true,
       "required": false,
@@ -193,7 +193,7 @@
     },
     {
       "name": "sequence",
-      "type": "tint",
+      "type": "pint",
       "multiValued": false,
       "indexed": true,
       "required": false,
@@ -201,7 +201,7 @@
     },
     {
       "name": "start_year",
-      "type": "tint",
+      "type": "pint",
       "multiValued": false,
       "indexed": true,
       "required": false,
@@ -281,7 +281,7 @@
     },
     {
       "name": "year",
-      "type": "tint",
+      "type": "pint",
       "multiValued": false,
       "indexed": true,
       "required": false,
