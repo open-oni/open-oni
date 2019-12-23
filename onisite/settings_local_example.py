@@ -51,6 +51,7 @@ DEBUG = True if os.getenv('ONI_DEBUG', 0) == '1' else False
 
 SECRET_KEY = os.getenv('ONI_SECRET_KEY', 'openoni')
 
+SOLR_API = os.getenv('ONI_SOLR_API', 'http://solr:8983/api')
 SOLR = os.getenv('ONI_SOLR_URL', 'http://solr:8983/solr/openoni')
 
 # Absolute path on disk to the data directory
