@@ -18,7 +18,7 @@ verify_config() {
 
 setup_database() {
   DB_READY=0
-  MAX_TRIES=15
+  MAX_TRIES=30
   TRIES=0
   while [ $DB_READY == 0 ]
     do
