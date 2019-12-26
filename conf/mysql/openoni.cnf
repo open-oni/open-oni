@@ -70,7 +70,6 @@ innodb_log_files_in_group       = 2
 innodb_max_dirty_pages_pct      = 75
 innodb_max_purge_lag            = 0
 innodb_strict_mode              = 1
-innodb_support_xa               = 1
 sync_binlog                     = 1
 
 # Memory
