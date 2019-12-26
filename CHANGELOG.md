@@ -41,6 +41,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Removed
 
 ### Migration
+- If you're using docker, rebuild your ONI image: `docker-compose build`
 - Review settings changes:
   - New: `SOLR_API` must be added to `onisite/settings_local.py`.  A
     docker-compose-friendly example has been added to
