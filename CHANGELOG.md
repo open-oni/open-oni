@@ -42,12 +42,15 @@ Markdown Spec](https://github.github.com/gfm/).
 - `SOLR` setting now derived in `core/apps.py` [initialization
   customization](https://docs.djangoproject.com/en/2.2/ref/applications/#django.apps.AppConfig.ready)
   from user-facing `SOLR_BASE_URL` setting
+- Upgraded to MariaDB 10.4 for docker-compose users
 
 ### Removed
 - Solr configuration files have been removed, as mentioned in the "Changed"
   section
 
 ### Migration
+- If you're using docker, upgrade your MariaDB database:
+  - `docker-compose exec rdbms mysql_upgrade -p123456`
 - If you're using docker, rebuild your ONI image: `docker-compose build`
 - Docker developers will need to destroy all test volumes and the local test
   docker image or tests will not pass:
