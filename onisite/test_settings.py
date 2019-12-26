@@ -16,6 +16,7 @@ TITLE_DISPLAY_MEDIUM = False
 TOO_BUSY_LOAD_AVERAGE = 64
 IS_PRODUCTION = False
 SOLR = 'http://solr:8983/solr/openoni'
+SOLR_API = 'http://solr:8983/api'
 
 # These are explicitly overridden in order to verify the JSON is using the
 # proper URLs, and not "http://testserver"

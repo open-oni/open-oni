@@ -14,12 +14,10 @@ services:
     volumes:
       - ./conf/mysql/:/etc/mysql/conf.d:ro
   solr:
-    image: solr:6.6
-    volumes:
-      - ./docker/solr/:/tmp/solr:ro
-    entrypoint:
-      - docker-entrypoint.sh
-      - /tmp/solr/precreate
+    image: solr:8.3-slim
+    command:
+      - solr-precreate
+      - openoni
   test:
     build:
       context: ./docker

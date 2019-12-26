@@ -42,6 +42,9 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Migration
 - If you're using docker, rebuild your ONI image: `docker-compose build`
+- Docker developers will need to destroy all test volumes and the local test
+  docker image or tests will not pass:
+  - `docker-compose -f ./test-compose.yml -p onitest down -v --rmi=local`
 - Review settings changes:
   - New: `SOLR_API` must be added to `onisite/settings_local.py`.  A
     docker-compose-friendly example has been added to
