@@ -126,5 +126,5 @@ class Command(BaseCommand):
         if len(errors) == 1 and errors[0] == f"Field '{name}' already exists.\n":
             return True
 
-        _logger.error(f"Unable to add field type '{name}': " + ', '.join(errors))
+        _logger.error(f"Unable to add field '{name}': " + ', '.join(errors))
         return False
