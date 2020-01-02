@@ -54,6 +54,11 @@ Markdown Spec](https://github.github.com/gfm/).
     `onisite/settings_local_example.py`.
 - You will have to reindex all your data, which could take a long time, so
   prepare in advance!
+  - **Note**: if you defined fields or altered configuration in Solr manually,
+    you will need to determine how to do this using the APIs, and possibly set
+    up something manual rather than using the script (`setup_index`) mentioned
+    below.  If you feel like ONI needs a different configuration, please send
+    us a PR explaining what you feel should change, and why.
   - Docker developers (production docker users should consider the cost of
     downtime and decide if this approach is feasible / acceptable):
     - Take the stack down: `docker-compose down`
