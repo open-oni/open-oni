@@ -54,7 +54,7 @@ Markdown Spec](https://github.github.com/gfm/).
   - Docker developers (production docker users should consider the cost of
     downtime and decide if this approach is feasible / acceptable):
     - Take the stack down: `docker-compose down`
-    - Remove the old solr data manually: `docker volume rm openoni_data-solr`
+    - Remove the old solr data manually: `docker volume rm open-oni_data-solr`
     - Restart the stack: `docker-compose up -d`
     - Reindex data: `docker-compose exec web manage index`
     - For advanced users: note the new solr data location in `/var/solr`
