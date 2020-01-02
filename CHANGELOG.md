@@ -37,11 +37,12 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Changed
 - Upgraded to Solr 8.3 - this includes our docker-compose setup as well as the
   way Solr is configured
-  - The schema.xml and solrconfig.xml files have been removed in leiu of using
+  - The schema.xml and solrconfig.xml files have been removed in lieu of using
     the Solr 8.3 APIs to define fields and field types
 
 ### Removed
-- Solr configuration files have been removed, as mentioned in the "Changed" section
+- Solr configuration files have been removed, as mentioned in the "Changed"
+  section
 
 ### Migration
 - If you're using docker, rebuild your ONI image: `docker-compose build`
