@@ -24,9 +24,8 @@ services:
     environment:
       - RAIS_IIIFURL=${ONI_BASE_URL:-http://localhost}/images/iiif
       - RAIS_TILECACHELEN=250
-      - RAIS_TILEPATH=/var/local/onidata/batches
+      - RAIS_TILEPATH=/opt/openoni/data/batches
     volumes:
-      - onidata:/var/local/onidata:z
       # RAIS has to be able to read the batch sources, which, for dev, are most
       # likely stored in the local app directory
       - ./:/opt/openoni:z
@@ -36,7 +35,6 @@ services:
       dockerfile: Dockerfile-dev
     volumes:
       - ./:/opt/openoni:z
-      - onidata:/var/local/onidata:z
     ports:
       - ${HTTPPORT:-80}:80
     depends_on:
@@ -59,9 +57,7 @@ services:
       - ONI_LOG_TO_FILE
       - ONI_SECRET_KEY
       - ONI_SOLR_URL
-      # DON'T OVERRIDE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!  Apache expects to find word coordinate files here!
-      - ONI_STORAGE_PATH=/var/local/onidata
+
 volumes:
   data-mariadb: {}
   data-solr: {}
-  onidata: {}
