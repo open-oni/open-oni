@@ -39,6 +39,9 @@ Markdown Spec](https://github.github.com/gfm/).
   way Solr is configured
   - The schema.xml and solrconfig.xml files have been removed in lieu of using
     the Solr 8.3 APIs to define fields and field types
+- `SOLR` setting now derived in `core/apps.py` [initialization
+  customization](https://docs.djangoproject.com/en/2.2/ref/applications/#django.apps.AppConfig.ready)
+  from user-facing `SOLR_BASE_URL` setting
 
 ### Removed
 - Solr configuration files have been removed, as mentioned in the "Changed"
