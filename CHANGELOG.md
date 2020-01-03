@@ -27,6 +27,32 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v0.12.1] - Hotfix
+[v0.12.0]: https://github.com/open-oni/open-oni/compare/v0.12.0...v0.12.1
+
+### Changed
+- Changelog for v0.12.0 was missing some steps, making migrations from v0.11.1
+  and prior significantly more difficult than necessary
+
+### Removed
+- The docker-compose "onidata" volume was unnecessary and made migrations from
+  v0.11.1 and prior appear to have data loss (they didn't), so it has been
+  removed and the system reconfigured to not expect it
+
+### Migration
+- If you're coming from v0.11.1 or prior, the notes in v0.12.0 will suffice
+- If you're coming from v0.12.0, and using docker, you should destroy your
+  volumes and reingest all data
+  - Our docker-compose setup is intended for development, not production, so
+    this shouldn't pose a problem, but if you have been using docker in
+    production, please ping us on [our slack
+    channel](http://bit.ly/openoni-slack-signup) for assistance migrating.
+
+### Contributors
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Greg Tunink (techgique)
+
 ## [v0.12.0] - Python 3 and Django 2.2 upgrades
 [v0.12.0]: https://github.com/open-oni/open-oni/compare/v0.11.1...v0.12.0
 
@@ -72,6 +98,11 @@ Markdown Spec](https://github.github.com/gfm/).
   (which, again, they always were, it just wasn't terribly obvious).
 
 ### Migration
+- Remove your `ENV` directory entirely - it will be full of Python 2 code you
+  no longer need, and while it shouldn't conflict, some of our automations
+  don't happen if the `ENV` directory is already present
+- If you're using docker, rebuild your ONI image from scratch:
+  - `docker-compose build --no-cache`
 - If you use any of our plugins, make sure you look over their repositories and
   get a version that is built for Django 2.2.  Django 2.2 only supports Python
   3, so plugins which work with Django 2.2 will work with Python 3.
@@ -79,6 +110,10 @@ Markdown Spec](https://github.github.com/gfm/).
     information in their README; here's [our calendar plugin's
     information](https://github.com/open-oni/plugin_calendar#compatibility), for
     example.
+- `settings_local.py` and `urls.py` will need to be changed.  There are modules
+  which no longer exist in Python 3, which we used in those files in Python 2.
+  The easiest approach is to simply re-copy the example files and alter them,
+  assuming you haven't had major overrides to settings.
 - Custom themes and plugins you've built will need to be fixed for Django 2.2,
   and therefore Python 3
   - Exact fixes are out of scope for ONI, but you can learn a lot from:
@@ -90,11 +125,8 @@ Markdown Spec](https://github.github.com/gfm/).
       documentation](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/)
   - Most themes and plugins will need minimal work to get updated, but complex
     Python code could require a lot of migration effort
-- Move your local/development batches into `./data` if you previously had them
-  in `./docker/data`
-- If you use docker with a custom configuration, make sure you mount `onidata`
-  into your `web` container in the same place your Apache configuration is
-  expecting to find word coordinates.
+- Move your local/development batches and word coordinates into `./data` if you
+  previously had them in `./docker/data`
 
 ### Deprecated
 - [Django Deprecation
