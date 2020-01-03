@@ -50,9 +50,8 @@ Markdown Spec](https://github.github.com/gfm/).
   docker image or tests will not pass:
   - `docker-compose -f ./test-compose.yml -p onitest down -v --rmi=local`
 - Review settings changes:
-  - New: `SOLR_API` must be added to `onisite/settings_local.py`.  A
-    docker-compose-friendly example has been added to
-    `onisite/settings_local_example.py`.
+  - Rename `SOLR` to `SOLR_BASE_URL` and remove `/solr/openoni` endpoint path
+    in `onisite/settings_local.py`. See example file for reference.
 - You will have to reindex all your data, which could take a long time, so
   prepare in advance!
   - **Note**: if you defined fields or altered configuration in Solr manually,
