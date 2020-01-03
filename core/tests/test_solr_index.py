@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.conf import settings
 from django.http import QueryDict as Q
+from django.utils import timezone
 
 from core import solr_index as si
 
@@ -146,7 +147,8 @@ class SolrIndexTests(TestCase):
 
         # Ignore dates matching earliest and latest known dates
         self.assertEqual(si._solrize_date('1400-01-01', 'start'), "*")
-        self.assertEqual(si._solrize_date('2019-12-31', 'end'), "*")
+        self.assertEqual(si._solrize_date(str(timezone.now().year) + '-12-31',
+          'end'), "*")
 
         # Incomplete or invalid dates are ignored
         self.assertEqual(si._solrize_date('1900/03/01'), "*")
