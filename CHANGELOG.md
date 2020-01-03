@@ -90,11 +90,8 @@ Markdown Spec](https://github.github.com/gfm/).
       documentation](https://docs.djangoproject.com/en/2.2/howto/upgrade-version/)
   - Most themes and plugins will need minimal work to get updated, but complex
     Python code could require a lot of migration effort
-- Move your local/development batches into `./data` if you previously had them
-  in `./docker/data`
-- If you use docker with a custom configuration, make sure you mount `onidata`
-  into your `web` container in the same place your Apache configuration is
-  expecting to find word coordinates.
+- Move your local/development batches and word coordinates into `./data` if you
+  previously had them in `./docker/data`
 
 ### Deprecated
 - [Django Deprecation
