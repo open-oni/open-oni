@@ -27,6 +27,32 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v0.12.1] - Hotfix
+[v0.12.0]: https://github.com/open-oni/open-oni/compare/v0.12.0...v0.12.1
+
+### Changed
+- Changelog for v0.12.0 was missing some steps, making migrations from v0.11.1
+  and prior significantly more difficult than necessary
+
+### Removed
+- The docker-compose "onidata" volume was unnecessary and made migrations from
+  v0.11.1 and prior appear to have data loss (they didn't), so it has been
+  removed and the system reconfigured to not expect it
+
+### Migration
+- If you're coming from v0.11.1 or prior, the notes in v0.12.0 will suffice
+- If you're coming from v0.12.0, and using docker, you should destroy your
+  volumes and reingest all data
+  - Our docker-compose setup is intended for development, not production, so
+    this shouldn't pose a problem, but if you have been using docker in
+    production, please ping us on [our slack
+    channel](http://bit.ly/openoni-slack-signup) for assistance migrating.
+
+### Contributors
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Greg Tunink (techgique)
+
 ## [v0.12.0] - Python 3 and Django 2.2 upgrades
 [v0.12.0]: https://github.com/open-oni/open-oni/compare/v0.11.1...v0.12.0
 
