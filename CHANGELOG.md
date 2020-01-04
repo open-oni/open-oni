@@ -42,6 +42,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - `SOLR` setting now derived in `core/apps.py` [initialization
   customization](https://docs.djangoproject.com/en/2.2/ref/applications/#django.apps.AppConfig.ready)
   from user-facing `SOLR_BASE_URL` setting
+- Moved more internal settings derived from user settings to `core/apps.py`
 - Upgraded to MariaDB 10.4 for docker-compose users
 
 ### Removed
