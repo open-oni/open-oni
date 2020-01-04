@@ -30,7 +30,6 @@ RUN chown -R www-data:www-data /var/cache/httpd
 RUN a2dissite 000-default.conf
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
-VOLUME /opt/openoni
 WORKDIR /opt/openoni
 
 ADD entrypoint.sh /
