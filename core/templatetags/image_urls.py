@@ -25,4 +25,4 @@ def specific_tile_url(page, w, h, x1, y1, x2, y2):
 
 @register.simple_tag
 def iiif_info(page):
-    return image_urls.iiif_for_page(page)
+    return image_urls.page_iiif_info_url(page)
