@@ -21,7 +21,7 @@ from django.conf import settings
 from django.utils.http import urlquote
 
 from core.utils import strftime_safe
-from core.utils.image_urls import thumb_image_url, iiif_info_for_page
+from core.utils.image_urls import thumb_image_url, iiif_for_page
 
 from django import urls
 
@@ -664,20 +664,20 @@ class Page(models.Model):
             "images": [{
                 "resource": {
                     "service": {
-                        "@id": iiif_info_for_page(self),
+                        "@id": iiif_for_page(self),
                         "@context": "http://iiif.io/api/image/2/context.json",
                         "profile": "http://iiif.io/api/image/2/level0.json"
                     },
                     "format": "image/jpeg",
                     "height": self.jp2_length,
                     "width": self.jp2_width,
-                    "@id": iiif_info_for_page(self),
+                    "@id": iiif_for_page(self),
                     "@type": "dctypes:Image"
                 },
                 "motivation": "sc:painting",
-                "@id": iiif_info_for_page(self),
+                "@id": iiif_for_page(self),
                 "@type": "oa:Annotation",
-		"on": iiif_info_for_page(self),
+		"on": iiif_for_page(self),
                 "rendering": [
                     {"@id": settings.BASE_URL + self.pdf_url, "format": "application/pdf"},
                     {"@id": settings.BASE_URL + self.jp2_url, "format": "image/jp2"},
@@ -688,7 +688,7 @@ class Page(models.Model):
                 ]
             }],
             "label": str(self.sequence),
-            "@id": iiif_info_for_page(self),
+            "@id": iiif_for_page(self),
             "@type": "sc:Canvas"
         }
 

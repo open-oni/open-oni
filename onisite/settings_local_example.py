@@ -20,10 +20,6 @@ if url.scheme == 'https':
     """
     SECURE_HSTS_SECONDS = int(os.getenv('ONI_HSTS_SECONDS', 0))
 
-# IIIF server public URL endpoints
-RESIZE_SERVER = BASE_URL + '/images/resize'
-TILE_SERVER = BASE_URL + '/images/iiif'
-
 DATABASES = {
     'default': {
         'ENGINE':   'django.db.backends.mysql',
@@ -37,6 +33,9 @@ DATABASES = {
 }
 
 DEBUG = True if os.getenv('ONI_DEBUG', 0) == '1' else False
+
+# IIIF server public URL endpoint
+IIIF_URL = os.getenv('ONI_IIIF_URL', 'http://localhost/images/iiif')
 
 SECRET_KEY = os.getenv('ONI_SECRET_KEY', 'openoni')
 

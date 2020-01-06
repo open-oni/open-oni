@@ -21,13 +21,12 @@ services:
   rais:
     image: uolibraries/rais
     environment:
-      - RAIS_IIIFURL=${ONI_BASE_URL:-http://localhost}/images/iiif
+      - RAIS_IIIFURL=${ONI_IIIF_URL:-http://localhost/images/iiif}
       - RAIS_TILECACHELEN=250
       - RAIS_TILEPATH=/opt/openoni/data/batches
     volumes:
-      # RAIS has to be able to read the batch sources, which, for dev, are most
-      # likely stored in the local app directory
-      - ./:/opt/openoni:z
+      # Image files must be available at RAIS_TILEPATH
+      - ./data/batches:/opt/openoni/data/batches:z
   web:
     build:
       context: ./docker
@@ -52,6 +51,7 @@ services:
       - ONI_DB_PASSWORD
       - ONI_DEBUG
       - ONI_HSTS_SECONDS
+      - ONI_IIIF_URL
       - ONI_LOG_SQL
       - ONI_LOG_TO_FILE
       - ONI_SECRET_KEY
