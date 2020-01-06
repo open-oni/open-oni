@@ -19,9 +19,8 @@ SOLR_BASE_URL = 'http://solr:8983'
 
 # These are explicitly overridden in order to verify the JSON is using the
 # proper URLs, and not "http://testserver"
-BASE_URL="https://oni.example.com"
-RESIZE_SERVER = BASE_URL+"/images/resize"
-TILE_SERVER = BASE_URL+"/images/tile"
+BASE_URL = "https://oni.example.com"
+IIIF_URL = BASE_URL + "/images/iiif"
 
 # List of configuration classes / app packages in order of priority (i.e., the
 # first item in the list has final say when collisions occur)
