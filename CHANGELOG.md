@@ -49,6 +49,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Removed
 - Solr configuration files have been removed, as mentioned in the "Changed"
   section
+- Docker: Apache file-based caching for /images/resize requests
 
 ### Migration
 - If you're using docker, upgrade your MariaDB database:
