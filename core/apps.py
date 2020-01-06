@@ -13,8 +13,6 @@ class CoreConfig(AppConfig):
             # BASE_URL-dependent settings
         url = urllib.parse.urlparse(s.BASE_URL)
 
-        s.ALLOWED_HOSTS = [url.netloc]
-
         # HTTPS settings
         if url.scheme == 'https':
             s.CSRF_COOKIE_SECURE = True

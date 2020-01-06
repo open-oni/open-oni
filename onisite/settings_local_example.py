@@ -11,6 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # BASE_URL can NOT include any path elements!
 BASE_URL = os.getenv('ONI_BASE_URL', 'http://localhost')
 url = urllib.parse.urlparse(BASE_URL)
+ALLOWED_HOSTS = [url.netloc]
 
 if url.scheme == 'https':
     """
