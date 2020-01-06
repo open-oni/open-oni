@@ -42,11 +42,14 @@ Markdown Spec](https://github.github.com/gfm/).
 - `SOLR` setting now derived in `core/apps.py` [initialization
   customization](https://docs.djangoproject.com/en/2.2/ref/applications/#django.apps.AppConfig.ready)
   from user-facing `SOLR_BASE_URL` setting
+- Moved more internal settings derived from user settings to `core/apps.py`
+- Combined IIIF URL settings into a single env-configurable URL setting
 - Upgraded to MariaDB 10.4 for docker-compose users
 
 ### Removed
 - Solr configuration files have been removed, as mentioned in the "Changed"
   section
+- Docker: Apache file-based caching for /images/resize requests
 
 ### Migration
 - If you're using docker, upgrade your MariaDB database:
@@ -58,6 +61,8 @@ Markdown Spec](https://github.github.com/gfm/).
 - Review settings changes:
   - Rename `SOLR` to `SOLR_BASE_URL` and remove `/solr/openoni` endpoint path
     in `onisite/settings_local.py`. See example file for reference.
+  - `RESIZE_SERVER` and `TILE_SERVER` are replaced by `IIIF_URL`,
+    which may be set with the environment variable `ONI_IIIF_URL`
 - You will have to reindex all your data, which could take a long time, so
   prepare in advance!
   - **Note**: if you defined fields or altered configuration in Solr manually,
