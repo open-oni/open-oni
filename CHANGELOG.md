@@ -35,7 +35,8 @@ spring. Major components are now all using supported versions:
 - Python 3.6 (Supported until 2021-12)
 - Django 2.2 LTS (Supported until 2022-04)
 - MariaDB 10.4 (Supported until 2024-06)
-- Solr 8.3 (Supported until 10.0, estimated 2022 with ~18-month between major releases)
+- Solr 8.3 (Supported until 10.0, estimated 2022 with ~18-month between major
+  releases)
 
 We expect Open ONI's major components to be supported until the next Django LTS
 release 3.22 in April 2021, at which point we will likely upgrade Open ONI's
