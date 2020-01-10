@@ -27,12 +27,19 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [Unreleased]
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v0.12.1...dev
+## [v0.13.0] - Open ONI components all using supported versions
+[v0.13.0]: https://github.com/open-oni/open-oni/compare/v0.12.1...v0.13.0
 
-### Fixed
+This pre-release lays the foundation for Open ONI 1.0, to be released this
+spring. Major components are now all using supported versions:
+- Python 3.6 (Supported until 2021-12)
+- Django 2.2 LTS (Supported until 2022-04)
+- MariaDB 10.4 (Supported until 2024-06)
+- Solr 8.3 (Supported until 10.0, estimated 2022 with ~18-month between major releases)
 
-### Added
+We expect Open ONI's major components to be supported until the next Django LTS
+release 3.22 in April 2021, at which point we will likely upgrade Open ONI's
+components between major releases again.
 
 ### Changed
 - Upgraded to Solr 8.3 - this includes our docker-compose setup as well as the
@@ -94,12 +101,13 @@ Markdown Spec](https://github.github.com/gfm/).
       - `./manage.py setup_index`
       - `./manage.py index`
 
-### Deprecated
-
 ### Contributors
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Greg Tunink (techgique)
 
 ## [v0.12.1] - Hotfix
-[v0.12.0]: https://github.com/open-oni/open-oni/compare/v0.12.0...v0.12.1
+[v0.12.1]: https://github.com/open-oni/open-oni/compare/v0.12.0...v0.12.1
 
 ### Changed
 - Changelog for v0.12.0 was missing some steps, making migrations from v0.11.1
