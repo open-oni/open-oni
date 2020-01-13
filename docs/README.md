@@ -38,8 +38,7 @@ ONI](https://github.com/open-oni/open-oni/releases) and extract the files to
 our services.
 
 `openoni` is presumed to be a group including all users who will modify ONI
-files, ingest batches, etc. Set this group to have write permissions, then set
-SELinux file contexts.
+files, ingest batches, etc. Set this group to have write permissions.
 
 ```bash
 sudo chgrp -R openoni /opt/openoni

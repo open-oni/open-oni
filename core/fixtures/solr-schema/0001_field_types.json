@@ -1,0 +1,48 @@
+{
+  "add-field-type": [
+    {
+      "name": "text",
+      "class": "solr.TextField",
+      "analyzer": {
+        "tokenizer": {
+          "class": "solr.WhitespaceTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.ASCIIFoldingFilterFactory"
+          },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "lang/stopwords_en.txt,lang/stopwords_fr.txt,lang/stopwords_es.txt,lang/stopwords_it.txt,lang/stopwords_de.txt",
+            "ignoreCase": "true"
+          },
+          {
+            "class": "solr.WordDelimiterFilterFactory"
+          },
+          {
+            "class": "solr.RemoveDuplicatesTokenFilterFactory"
+          }
+        ]
+      }
+    },
+    {
+      "name": "text_lower",
+      "class": "solr.TextField",
+      "omitNorms": true,
+      "sortMissingLast": true,
+      "analyzer": {
+        "tokenizer": {
+          "class": "solr.WhitespaceTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          }
+        ]
+      }
+    }
+  ]
+}

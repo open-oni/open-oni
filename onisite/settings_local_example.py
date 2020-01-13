@@ -10,30 +10,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ################################################################
 # BASE_URL can NOT include any path elements!
 BASE_URL = os.getenv('ONI_BASE_URL', 'http://localhost')
-    # BASE_URL-dependent Settings
 url = urllib.parse.urlparse(BASE_URL)
-
 ALLOWED_HOSTS = [url.netloc]
 
-# HTTPS Settings
 if url.scheme == 'https':
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-
     """
     Enable HSTS by setting SECURE_HSTS_SECONDS > 0.
     Test with a low value (e.g. 300)
     before setting a high value (e.g. 15552000) for long-term use
     """
     SECURE_HSTS_SECONDS = int(os.getenv('ONI_HSTS_SECONDS', 0))
-    SECURE_SSL_REDIRECT = True if SECURE_HSTS_SECONDS > 0 else False
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True if SECURE_HSTS_SECONDS > 0 else False
-    SECURE_HSTS_PRELOAD = True if SECURE_HSTS_SECONDS > 0 else False
-
-# IIIF server public URL endpoints
-RESIZE_SERVER = BASE_URL + '/images/resize'
-TILE_SERVER = BASE_URL + '/images/iiif'
-    # End of BASE_URL-dependent Settings
 
 DATABASES = {
     'default': {
@@ -49,18 +35,15 @@ DATABASES = {
 
 DEBUG = True if os.getenv('ONI_DEBUG', 0) == '1' else False
 
+# IIIF server public URL endpoint
+IIIF_URL = os.getenv('ONI_IIIF_URL', 'http://localhost/images/iiif')
+
 SECRET_KEY = os.getenv('ONI_SECRET_KEY', 'openoni')
 
-SOLR = os.getenv('ONI_SOLR_URL', 'http://solr:8983/solr/openoni')
+SOLR_BASE_URL = os.getenv('ONI_SOLR_URL', 'http://solr:8983')
 
 # Absolute path on disk to the data directory
 STORAGE = os.getenv('ONI_STORAGE_PATH', os.path.join(BASE_DIR, 'data'))
-    # STORAGE-dependent Settings
-BATCH_STORAGE = os.path.join(STORAGE, 'batches')
-COORD_STORAGE = os.path.join(STORAGE, 'word_coordinates')
-OCR_DUMP_STORAGE = os.path.join(STORAGE, 'ocr')
-TEMP_TEST_DATA = os.path.join(STORAGE, 'temp_test_data')
-    # End of STORAGE-dependent Settings
 
 """
 Django logging outputs in Apache logs by default.

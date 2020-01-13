@@ -1,0 +1,291 @@
+{
+  "add-field": [
+    {
+      "name": "alt_title",
+      "type": "text",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "batch",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "city",
+      "type": "string",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "country",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "county",
+      "type": "string",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "date",
+      "type": "pint",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "day",
+      "type": "pint",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "edition",
+      "type": "text",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "edition_label",
+      "type": "text",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "end_year",
+      "type": "pint",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "essay",
+      "type": "text",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "frequency",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "geographic_coverage",
+      "type": "string",
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "holding_type",
+      "type": "string",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "language",
+      "type": "string",
+      "multiValued": true,
+      "indexed": true,
+      "required": true,
+      "stored": true
+    },
+    {
+      "name": "lccn",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "required": true,
+      "stored": true
+    },
+    {
+      "name": "month",
+      "type": "pint",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "note",
+      "type": "text",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "page",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "place",
+      "type": "string",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "place_of_publication",
+      "type": "text",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "place_of_publication_facet",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "publisher",
+      "type": "text",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "section_label",
+      "type": "text",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "sequence",
+      "type": "pint",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "start_year",
+      "type": "pint",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "state",
+      "type": "string",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "subject",
+      "type": "text",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "subject_facet",
+      "type": "string",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "text",
+      "type": "text_general",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": false
+    },
+    {
+      "name": "title",
+      "type": "text",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "title_facet",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "title_normal",
+      "type": "text_lower",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "multiValued": false,
+      "indexed": true,
+      "required": true,
+      "stored": true
+    },
+    {
+      "name": "url",
+      "type": "text",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "year",
+      "type": "pint",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    }
+  ]
+}

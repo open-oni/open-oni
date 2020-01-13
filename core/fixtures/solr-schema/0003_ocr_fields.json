@@ -1,0 +1,236 @@
+{
+  "add-field": [
+    {
+      "name": "ocr",
+      "type": "text",
+      "multiValued": true,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_ara",
+      "type": "text_ar",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_arm",
+      "type": "text_hy",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_baq",
+      "type": "text_eu",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_bul",
+      "type": "text_bg",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_cze",
+      "type": "text_cz",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_dan",
+      "type": "text_da",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_dut",
+      "type": "text_nl",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_eng",
+      "type": "text_en",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_fin",
+      "type": "text_fi",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_fre",
+      "type": "text_fr",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_ger",
+      "type": "text_de",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_gle",
+      "type": "text_ga",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_gre",
+      "type": "text_el",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_hin",
+      "type": "text_hi",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_hun",
+      "type": "text_hu",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_ind",
+      "type": "text_id",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_ita",
+      "type": "text_it",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_jpn",
+      "type": "text_ja",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_lav",
+      "type": "text_lv",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_nor",
+      "type": "text_no",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_per",
+      "type": "text_fa",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_por",
+      "type": "text_pt",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_rum",
+      "type": "text_ro",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_rus",
+      "type": "text_ru",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_spa",
+      "type": "text_es",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_swe",
+      "type": "text_sv",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_tha",
+      "type": "text_th",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    },
+    {
+      "name": "ocr_tur",
+      "type": "text_tr",
+      "multiValued": false,
+      "indexed": true,
+      "required": false,
+      "stored": true
+    }
+  ]
+}

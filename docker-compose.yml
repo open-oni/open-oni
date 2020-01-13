@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   rdbms:
-    image: mariadb:5.5
+    image: mariadb:10.4
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=openoni
@@ -12,23 +12,21 @@ services:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-mariadb:/var/lib/mysql
   solr:
-    image: solr:6.6
+    image: solr:8.3-slim
     volumes:
-      - ./docker/solr/:/tmp/solr:Z
-      - data-solr:/opt/solr
-    entrypoint:
-      - docker-entrypoint.sh
-      - /tmp/solr/precreate
+      - data-solr:/var/solr
+    command:
+      - solr-precreate
+      - openoni
   rais:
     image: uolibraries/rais
     environment:
-      - RAIS_IIIFURL=${ONI_BASE_URL:-http://localhost}/images/iiif
+      - RAIS_IIIFURL=${ONI_IIIF_URL:-http://localhost/images/iiif}
       - RAIS_TILECACHELEN=250
       - RAIS_TILEPATH=/opt/openoni/data/batches
     volumes:
-      # RAIS has to be able to read the batch sources, which, for dev, are most
-      # likely stored in the local app directory
-      - ./:/opt/openoni:z
+      # Image files must be available at RAIS_TILEPATH
+      - ./data/batches:/opt/openoni/data/batches:z
   web:
     build:
       context: ./docker
@@ -53,6 +51,7 @@ services:
       - ONI_DB_PASSWORD
       - ONI_DEBUG
       - ONI_HSTS_SECONDS
+      - ONI_IIIF_URL
       - ONI_LOG_SQL
       - ONI_LOG_TO_FILE
       - ONI_SECRET_KEY

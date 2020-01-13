@@ -27,8 +27,88 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v0.13.0] - Open ONI components all using supported versions
+[v0.13.0]: https://github.com/open-oni/open-oni/compare/v0.12.1...v0.13.0
+
+This pre-release lays the foundation for Open ONI 1.0, to be released this
+spring. Major components are now all using supported versions:
+- Python 3.6 (Supported until 2021-12)
+- Django 2.2 LTS (Supported until 2022-04)
+- MariaDB 10.4 (Supported until 2024-06)
+- Solr 8.3 (Supported until 10.0, estimated 2022 with ~18-month between major
+  releases)
+
+We expect Open ONI's major components to be supported until the next Django LTS
+release 3.2 in April 2021, at which point we will likely upgrade Open ONI's
+components between major releases again.
+
+### Changed
+- Upgraded to Solr 8.3 - this includes our docker-compose setup as well as the
+  way Solr is configured
+  - The schema.xml and solrconfig.xml files have been removed in lieu of using
+    the Solr 8.3 APIs to define fields and field types
+- `SOLR` setting now derived in `core/apps.py` [initialization
+  customization](https://docs.djangoproject.com/en/2.2/ref/applications/#django.apps.AppConfig.ready)
+  from user-facing `SOLR_BASE_URL` setting
+- Moved more internal settings derived from user settings to `core/apps.py`
+- Combined IIIF URL settings into a single env-configurable URL setting
+- Upgraded to MariaDB 10.4 for docker-compose users
+
+### Removed
+- Solr configuration files have been removed, as mentioned in the "Changed"
+  section
+- Docker: Apache file-based caching for /images/resize requests
+
+### Migration
+- If you're using docker, upgrade your MariaDB database:
+  - `docker-compose exec rdbms mysql_upgrade -p123456`
+- If you're using docker, rebuild your ONI image: `docker-compose build`
+- Docker developers will need to destroy all test volumes and the local test
+  docker image or tests will not pass:
+  - `docker-compose -f ./test-compose.yml -p onitest down -v --rmi=local`
+- Review settings changes:
+  - Rename `SOLR` to `SOLR_BASE_URL` and remove `/solr/openoni` endpoint path
+    in `onisite/settings_local.py`. See example file for reference.
+  - `RESIZE_SERVER` and `TILE_SERVER` are replaced by `IIIF_URL`,
+    which may be set with the environment variable `ONI_IIIF_URL`
+- You will have to reindex all your data, which could take a long time, so
+  prepare in advance!
+  - **Note**: if you defined fields or altered configuration in Solr manually,
+    you will need to determine how to do this using the APIs, and possibly set
+    up something manual rather than using the script (`setup_index`) mentioned
+    below.  If you feel like ONI needs a different configuration, please send
+    us a PR explaining what you feel should change, and why.
+  - Docker developers (production docker users should consider the cost of
+    downtime and decide if this approach is feasible / acceptable):
+    - Take the stack down: `docker-compose down`
+    - Remove the old solr data manually: `docker volume rm open-oni_data-solr`
+    - Restart the stack: `docker-compose up -d`
+    - Reindex data: `docker-compose exec web manage index`
+    - For advanced users: note the new solr data location in `/var/solr`
+      instead of `/opt/solr`.  If you have docker overrides related to the solr
+      data mount, make sure you change it!
+  - Bare metal:
+    - You may have to remove Solr entirely and then manually install Solr 8.3
+      - It's possible to run Solr 6.6 and Solr 8.3 side-by-side in order to
+        simplify the migration and reduce / eliminate downtime, but the steps
+        for doing so are out of scope here as this can be a rather advanced
+        operation, and can vary greatly depending on one's current setup.
+    - Update your ONI config to point to the Solr 8.3 instance, if it has
+      changed
+    - Start Solr 8.3, and when it's ready, set it up with our configuration and
+      then reindex your data:
+      - `cd /opt/openoni`
+      - `source ENV/bin/activate`
+      - `./manage.py setup_index`
+      - `./manage.py index`
+
+### Contributors
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Greg Tunink (techgique)
+
 ## [v0.12.1] - Hotfix
-[v0.12.0]: https://github.com/open-oni/open-oni/compare/v0.12.0...v0.12.1
+[v0.12.1]: https://github.com/open-oni/open-oni/compare/v0.12.0...v0.12.1
 
 ### Changed
 - Changelog for v0.12.0 was missing some steps, making migrations from v0.11.1
