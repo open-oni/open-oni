@@ -39,7 +39,7 @@ spring. Major components are now all using supported versions:
   releases)
 
 We expect Open ONI's major components to be supported until the next Django LTS
-release 3.22 in April 2021, at which point we will likely upgrade Open ONI's
+release 3.2 in April 2021, at which point we will likely upgrade Open ONI's
 components between major releases again.
 
 ### Changed
