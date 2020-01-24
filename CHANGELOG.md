@@ -35,6 +35,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Added
 
 ### Changed
+- Update tablesorter JS library to 2.31.2
 
 ### Removed
 
@@ -43,6 +44,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Deprecated
 
 ### Contributors
+- Greg Tunink (techgique)
 
 ## [v0.13.0] - Open ONI components all using supported versions
 [v0.13.0]: https://github.com/open-oni/open-oni/compare/v0.12.1...v0.13.0
