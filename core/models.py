@@ -20,7 +20,6 @@ from django.db.models import Q
 from django.conf import settings
 from django.utils.http import urlquote
 
-from core.utils import strftime_safe
 from core.utils.image_urls import thumb_image_url, page_iiif_info_url
 
 from django import urls
@@ -335,7 +334,7 @@ class Title(models.Model):
             j["manifests"].append({
                 "@id": settings.BASE_URL + issue.json_url,
                 "@type": "sc:Manifest",
-                "label": strftime_safe(issue.date_issued, '%Y-%m-%d')
+                "label": issue.date_issued.strftime('%Y-%m-%d')
             })
 
         if serialize:
@@ -870,7 +869,7 @@ class Page(models.Model):
 
     def __str__(self):
         parts = ['%s' % self.issue.title]
-        parts.append(strftime_safe(self.issue.date_issued, '%B %d, %Y'))
+        parts.append(self.issue.date_issued.strftime('%B %d, %Y'))
         if self.issue.edition_label:
             parts.append(self.issue.edition_label)
         if self.section_label:

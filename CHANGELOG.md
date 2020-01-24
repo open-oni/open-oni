@@ -37,8 +37,18 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Changed
 
 ### Removed
+- `core/utils/__init__.py`, which overrode `strftime` with
+  `django.utils.datetime_safe`'s `strftime` and provided alias `strftime_safe`
+  for Python 2's inability to handle dates prior to 1900. Python 3 handles dates
+  from 1000 on consistently.
 
 ### Migration
+- Remove any imports of `strftime` or `strftime_safe` from `core.utils` and
+  update code using DateField model instances, e.g. `issue.date_issued`, from
+  - `strftime(issue.date_issued, date_format_string)` or
+  - `strftime_safe(issue.date_issued, date_format_string)`
+  to
+  - `issue.date_issued.strftime(date_format_string)`
 
 ### Deprecated
 
