@@ -19,9 +19,9 @@
 - [Load Batches](#load-batches)
 
 ## Dependencies
-- Download the [Open ONI files](/docs/README.md#open-oni-files)
-- Prepare the [Python environment](/docs/README.md#python-environment)
-- Install and configure required [services](/docs/services/)
+- Download the [Open ONI files](/docs/install-centos/README.md#open-oni-files)
+- Prepare the [Python environment](/docs/install-centos/README.md#python-environment)
+- Install and configure required [services](/docs/install-centos/services/)
 
 ## Install
 
@@ -235,4 +235,3 @@ Run these commands as a regular user rather than root
 # nohup prevents scripts from exiting if one closes the terminal shell
 nohup (command) >> nohup.out
 ```
-
