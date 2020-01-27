@@ -31,6 +31,7 @@ Markdown Spec](https://github.github.com/gfm/).
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v0.13.0...dev
 
 ### Fixed
+- Reindex no longer crashes when indexing pages with no images
 - IIIF APIs no longer crash on pages that don't have images
 
 ### Added
@@ -40,6 +41,8 @@ Markdown Spec](https://github.github.com/gfm/).
 - Add Bootstrap classes on skip link for better cross-browser compatibility
   - Remove simpler CSS rules applied to `skiplink` class
   - Retain `skiplink` class for backwards-compatibility and customization
+- Page reindexer no longer deletes pages prior to reindexing them, to avoid
+  downtime when reindexing large sites
 
 ### Removed
 - `core/utils/__init__.py`, which overrode `strftime` with
@@ -70,6 +73,11 @@ Markdown Spec](https://github.github.com/gfm/).
       dt = make_aware(dt, settings.TIME_ZONE)
       ```
     - Call the method on your object as `dt.strftime(date_format_string)`
+- If you use the reindexer routinely (`./manage.py index` or `./manage.py
+  index_pages`), and were reliant on the behavior of deleting the indexed page
+  data, you'll want to change your approach to first run `./manage.py
+  zap_index`.  The new behavior deliberately does *not* delete pages
+  implicitly.
 
 ### Deprecated
 
