@@ -104,7 +104,45 @@ class ApiTests(TestCase):
                                                                        'format': 'text/xml'}]}],
                                             'label': '1',
                                             'thumbnail': 'https://oni.example.com/images/iiif/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0005.jp2/full/240,/0/default.jpg',
-                                            'width': 6394}],
+                                            'width': 6394},
+
+                                            {
+                                                '@id': 'https://oni.example.com/images/iiif/None',
+                                                '@type': 'sc:Canvas',
+                                                'width': 4500,
+                                                'height': 6825,
+                                                'label': '2',
+                                                'metadata': [
+                                                    {'label': 'Note about reproduction', 'value': 'Not digitized, published'},
+                                                ],
+                                            },
+
+											{'@id': 'https://oni.example.com/images/iiif/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0003.jp2',
+											'@type': 'sc:Canvas',
+											'height': 8600,
+											'images': [{'@id': 'https://oni.example.com/images/iiif/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0003.jp2',
+											'@type': 'oa:Annotation',
+											'motivation': 'sc:painting',
+											'on': 'https://oni.example.com/images/iiif/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0003.jp2',
+											'rendering': [{'@id': 'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-3.pdf',
+											'format': 'application/pdf'},
+											{'@id': 'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-3.jp2',
+											'format': 'image/jp2'},
+											{'@id': 'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-3/',
+											'format': 'text/html'}],
+											'resource': {'@id': 'https://oni.example.com/images/iiif/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0003.jp2',
+											'@type': 'dctypes:Image',
+											'format': 'image/jpeg',
+											'height': 8600,
+											'service': {'@context': 'http://iiif.io/api/image/2/context.json',
+											'@id': 'https://oni.example.com/images/iiif/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0003.jp2',
+											'profile': 'http://iiif.io/api/image/2/level0.json'},
+											'width': 6400},
+											'seeAlso': [{'@id': 'https://oni.example.com/lccn/sn83030214/1898-01-01/ed-1/seq-3/ocr.xml',
+											'format': 'text/xml'}]}],
+											'label': '3',
+											'thumbnail': 'https://oni.example.com/images/iiif/batch_curiv_ahwahnee_ver01%2Fdata%2Fsn83030214%2F00175037652%2F1898010101%2F0003.jp2/full/240,/0/default.jpg',
+											'width': 6400}],
                              'label': 'issue order'}]})
 
     def test_page_json(self):
@@ -155,7 +193,7 @@ class ApiTests(TestCase):
                              'label': 'New-York tribune. [1898-01-01]'}],
              'metadata': [{'label': 'Ingested',
                             'value': '2009-03-27T00:59:28+00:00'},
-                           {'label': 'Pages', 'value': 1},
+                           {'label': 'Pages', 'value': 3},
                            {'label': 'Awardee',
                             'value': 'University of California, Riverside'}]})
 
@@ -174,7 +212,7 @@ class ApiTests(TestCase):
                                'label': 'batch_curiv_ahwahnee_ver01',
                                'metadata': [{'label': 'Ingested',
                                               'value': '2009-03-27T00:59:28+00:00'},
-                                             {'label': 'Pages', 'value': 1},
+                                             {'label': 'Pages', 'value': 3},
                                              {'label': 'Awardee',
                                               'value': 'University of California, Riverside'}]}],
              'label': 'University of California, Riverside'})
@@ -194,7 +232,7 @@ class ApiTests(TestCase):
                                'label': 'batch_curiv_ahwahnee_ver01',
                                'metadata': [{'label': 'Ingested',
                                               'value': '2009-03-27T00:59:28+00:00'},
-                                             {'label': 'Pages', 'value': 1},
+                                             {'label': 'Pages', 'value': 3},
                                              {'label': 'Awardee',
                                               'value': 'University of California, Riverside'}]}],
              'label': 'Batches'})
