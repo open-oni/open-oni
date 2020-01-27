@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.conf import settings
 from django.http import QueryDict as Q
 from django.utils import timezone
+from solr import SolrConnection
 
 from core import solr_index as si
 
