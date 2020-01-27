@@ -603,7 +603,7 @@ def index_pages():
     solr = SolrConnection(settings.SOLR)
     solr.delete_query('type:page')
     cursor = connection.cursor()
-    cursor.execute("SELECT id FROM core_page")
+    cursor.execute("SELECT id FROM core_page WHERE ocr_filename IS NOT NULL AND ocr_filename <> ''")
     count = 0
     while True:
         row = cursor.fetchone()

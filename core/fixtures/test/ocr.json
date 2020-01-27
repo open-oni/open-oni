@@ -1,0 +1,54 @@
+[
+  {
+    "model": "core.ocr",
+    "pk": 1,
+    "fields": {
+      "created": "2020-01-24T20:02:26.106Z",
+      "page": 1
+    }
+  },
+  {
+    "model": "core.ocr",
+    "pk": 2,
+    "fields": {
+      "created": "2020-01-24T20:02:26.106Z",
+      "page": 3
+    }
+  },
+  {
+    "model": "core.ocr",
+    "pk": 3,
+    "fields": {
+      "created": "2020-01-24T20:02:26.106Z",
+      "page": 2
+    }
+  },
+  {
+    "model": "core.languagetext",
+    "pk": 1,
+    "fields": {
+      "text": "This is fake OCR from page 1.  Page 1 in page.json has OCR data, so this will get indexed.",
+      "language": "eng",
+      "ocr": 1
+    }
+  },
+  {
+    "model": "core.languagetext",
+    "pk": 2,
+    "fields": {
+      "text": "This is fake OCR from page 3.  Page 3 in page.json has OCR data, so this, too, will get indexed.",
+      "language": "eng",
+      "ocr": 2
+    }
+  },
+  {
+    "model": "core.languagetext",
+    "pk": 3,
+    "fields": {
+      "text": "This is fake OCR from page 2.  Page 2 in page.json has no OCR data, so this will not get indexed.",
+      "language": "eng",
+      "ocr": 3
+    }
+  }
+]
+

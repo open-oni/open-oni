@@ -11,7 +11,9 @@ class SolrIndexTests(TestCase):
     Exercise some search form -> solr query translations
     """
 
-    fixtures = ['test/ethnicities.json', 'test/languages.json']
+    fixtures = ['test/countries.json', 'test/titles.json', 'test/ocr.json',
+                'test/awardee.json', 'test/batch.json', 'test/issue.json',
+                'test/page.json', 'test/ethnicities.json', 'test/languages.json']
     ocr_langs = ['ocr_%s' %l for l in settings.SOLR_LANGUAGES]
 
 
@@ -46,9 +48,9 @@ class SolrIndexTests(TestCase):
 
 
     # index_pages
-
-    # TODO index all pages in database, does not use a "since" time arg
-
+    def test_index_pages(self):
+        si.index_pages()
+        self.assertEqual(si.page_count(), 2)
 
     # page_count
 
