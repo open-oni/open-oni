@@ -26,5 +26,37 @@
       "section_label": "",
      "reel": 5551212
     }
+  },
+  {
+    "pk": 2,
+    "model": "core.page",
+    "fields": {
+      "created": "2020-01-24T00:00:00+00:00",
+      "sequence": 2,
+      "number": "",
+      "indexed": 0,
+      "issue": 1,
+      "section_label": "",
+      "reel": 5551212
+    }
+  },
+  {
+    "pk": 3,
+    "model": "core.page",
+    "fields": {
+      "created": "2020-01-24T00:02:00+00:00",
+      "jp2_width": 6400,
+      "sequence": 3,
+      "jp2_length": 8600,
+      "number": "",
+      "tiff_filename": "sn83030214/00175037652/1898010101/0003.tif",
+      "jp2_filename": "sn83030214/00175037652/1898010101/0003.jp2",
+      "pdf_filename": "sn83030214/00175037652/1898010101/0003.pdf",
+      "indexed": 1,
+      "ocr_filename": "sn83030214/00175037652/1898010101/0003.xml",
+      "issue": 1,
+      "section_label": "",
+      "reel": 5551212
+    }
   }
 ]
