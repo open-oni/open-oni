@@ -601,7 +601,6 @@ def index_pages():
     """
     _log = logging.getLogger(__name__)
     solr = SolrConnection(settings.SOLR)
-    solr.delete_query('type:page')
     cursor = connection.cursor()
     cursor.execute("SELECT id FROM core_page WHERE ocr_filename IS NOT NULL AND ocr_filename <> ''")
     count = 0

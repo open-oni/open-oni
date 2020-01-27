@@ -49,6 +49,9 @@ class SolrIndexTests(TestCase):
 
     # index_pages
     def test_index_pages(self):
+        solr = SolrConnection(settings.SOLR)
+        solr.delete_query('type:page')
+        self.assertEqual(si.page_count(), 0)
         si.index_pages()
         self.assertEqual(si.page_count(), 2)
 
