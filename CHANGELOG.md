@@ -39,8 +39,34 @@ Markdown Spec](https://github.github.com/gfm/).
 - Update tablesorter JS library to 2.31.2
 
 ### Removed
+- `core/utils/__init__.py`, which overrode `strftime` with
+  `django.utils.datetime_safe`'s `strftime` and provided alias `strftime_safe`
+  for Python 2's inability to handle dates prior to 1900. Python 3 handles dates
+  from 1000 on consistently.
 
 ### Migration
+- Update code using `strftime` or `strftime_safe` from `core.utils`
+  - For DateField model instances, e.g. `issue.date_issued`
+    - Remove any imports from `core.utils`
+    - Change
+      - `strftime(issue.date_issued, date_format_string)` or
+      - `strftime_safe(issue.date_issued, date_format_string)`
+      to
+      - `issue.date_issued.strftime(date_format_string)`
+  - For non-DateField model instance objects
+    - Import `date`, `datetime`, or `time` from `datetime`
+    - Make `datetime` and `time` objects aware of the timezone to avoid warning
+      messages with:
+      ```python
+      from datetime import datetime
+
+      from django.conf import settings
+      from django.utils.timezone import make_aware
+
+      dt = datetime.now()
+      dt = make_aware(dt, settings.TIME_ZONE)
+      ```
+    - Call the method on your object as `dt.strftime(date_format_string)`
 
 ### Deprecated
 

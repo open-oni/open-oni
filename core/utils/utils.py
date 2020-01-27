@@ -13,7 +13,6 @@ from django.utils import timezone
 from django.utils.http import http_date
 
 from core import models
-from core.utils import strftime_safe
 
 
 MIN_YEAR = 1400
@@ -255,7 +254,7 @@ def label(instance):
                                    instance.start_year, instance.end_year)
     elif isinstance(instance, models.Issue):
         parts = []
-        parts.append(strftime_safe(instance.date_issued, '%B %d, %Y'))
+        parts.append(instance.date_issued.strftime('%B %d, %Y'))
         if instance.edition_label:
             parts.append("%s" % instance.edition_label)
         return ', '.join(parts)
