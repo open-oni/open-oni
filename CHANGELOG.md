@@ -31,6 +31,7 @@ Markdown Spec](https://github.github.com/gfm/).
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v0.13.0...dev
 
 ### Fixed
+- IIIF APIs no longer crash on pages that don't have images
 
 ### Added
 
