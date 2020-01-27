@@ -657,40 +657,55 @@ class Page(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def json(self, host, serialize=True):
-        j = {
-            "thumbnail": thumb_image_url(self),
-            "height": self.jp2_length,
-            "width": self.jp2_width,
-            "images": [{
-                "resource": {
-                    "service": {
-                        "@id": page_iiif_info_url(self),
-                        "@context": "http://iiif.io/api/image/2/context.json",
-                        "profile": "http://iiif.io/api/image/2/level0.json"
-                    },
-                    "format": "image/jpeg",
-                    "height": self.jp2_length,
-                    "width": self.jp2_width,
-                    "@id": page_iiif_info_url(self),
-                    "@type": "dctypes:Image"
-                },
-                "motivation": "sc:painting",
+        if self.relative_image_path is None:
+            # If there's no image, we have to fake all the data just so IIIF
+            # isn't completely busted.  We give a fake ID and use standard U.S.
+            # Broadsheet dimensions (at 300dpi) for the width / height.
+            j = {
                 "@id": page_iiif_info_url(self),
-                "@type": "oa:Annotation",
-                "on": page_iiif_info_url(self),
-                "rendering": [
-                    {"@id": settings.BASE_URL + self.pdf_url, "format": "application/pdf"},
-                    {"@id": settings.BASE_URL + self.jp2_url, "format": "image/jp2"},
-                    {"@id": settings.BASE_URL + self.url, "format": "text/html"}
+                "@type": "sc:Canvas",
+                "label": str(self.sequence),
+                "width": 4500,
+                "height": 6825,
+                "metadata": [
+                    {"label": "Note about reproduction", "value": "Not digitized, published"},
                 ],
-                "seeAlso": [
-                    {"@id": settings.BASE_URL + self.ocr_url, "format": "text/xml"}
-                ]
-            }],
-            "label": str(self.sequence),
-            "@id": page_iiif_info_url(self),
-            "@type": "sc:Canvas"
-        }
+            }
+        else:
+            j = {
+                "thumbnail": thumb_image_url(self),
+                "height": self.jp2_length,
+                "width": self.jp2_width,
+                "images": [{
+                    "resource": {
+                        "service": {
+                            "@id": page_iiif_info_url(self),
+                            "@context": "http://iiif.io/api/image/2/context.json",
+                            "profile": "http://iiif.io/api/image/2/level0.json"
+                        },
+                        "format": "image/jpeg",
+                        "height": self.jp2_length,
+                        "width": self.jp2_width,
+                        "@id": page_iiif_info_url(self),
+                        "@type": "dctypes:Image"
+                    },
+                    "motivation": "sc:painting",
+                    "@id": page_iiif_info_url(self),
+                    "@type": "oa:Annotation",
+                    "on": page_iiif_info_url(self),
+                    "rendering": [
+                        {"@id": settings.BASE_URL + self.pdf_url, "format": "application/pdf"},
+                        {"@id": settings.BASE_URL + self.jp2_url, "format": "image/jp2"},
+                        {"@id": settings.BASE_URL + self.url, "format": "text/html"}
+                    ],
+                    "seeAlso": [
+                        {"@id": settings.BASE_URL + self.ocr_url, "format": "text/xml"}
+                    ]
+                }],
+                "label": str(self.sequence),
+                "@id": page_iiif_info_url(self),
+                "@type": "sc:Canvas"
+            }
 
         if serialize:
             return json.dumps(j, indent=2)
