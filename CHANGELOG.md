@@ -37,6 +37,9 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Changed
 - Update tablesorter JS library to 2.31.2
+- Add Bootstrap classes on skip link for better cross-browser compatibility
+  - Remove simpler CSS rules applied to `skiplink` class
+  - Retain `skiplink` class for backwards-compatibility and customization
 
 ### Removed
 - `core/utils/__init__.py`, which overrode `strftime` with
