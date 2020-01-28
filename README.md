@@ -73,7 +73,8 @@ assistance.
 ## Contribute
 If you are interested in collaborating on the project, please read ["Contribute"
 in our wiki](https://github.com/open-oni/open-oni/wiki/Contribute) for more
-details.
+details. Everyone interacting within the Open ONI community is expected to
+follow the [Open ONI Community Code of Conduct](/CODE_OF_CONDUCT.md)
 
 ## License
 [Licensed](https://github.com/open-oni/open-oni/blob/master/LICENSE) under the
