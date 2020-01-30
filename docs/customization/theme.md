@@ -144,4 +144,16 @@ javascript
 
 ## CSS Customization
 
-This documentation is pending
+If you wanted to overwrite the `boostrap.min.css` file with your own, you could drop it into:
+
+```
+- themes
+  - YOUR_THEME_NAME_HERE
+    - static
+      - vendor
+        - bootstrap
+          - css
+            - boostrap.min.css
+```
+
+This may be useful if you want to compile your own `bootstrap.min.css` using sass or less or the online generator.

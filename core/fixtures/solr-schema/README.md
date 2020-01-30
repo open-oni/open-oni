@@ -1,5 +1,4 @@
-Solr Schema Fixtures
----
+# Solr Schema Fixtures
 
 This directory holds the JSON files which define ONI's Solr schema.  These
 files must:
@@ -23,3 +22,5 @@ throught the Solr APIs.  Field types and regular fields are actually checked
 for uniqueness, so I'm not sure why copy fields aren't, but I don't know what
 the ramifications may be of having dozens of redefined copy fields... and I'm
 pretty sure we're better off not finding out.
+
+[View Open ONI's primary documentation](/docs/)

@@ -34,7 +34,7 @@ If you're interested in more recent changes, check out the `dev` branch.
 - [Installation, Configuration, and Troubleshooting](https://github.com/open-oni/open-oni/tree/master/docs)
 - [Development Standards, General Information](https://github.com/open-oni/open-oni/wiki)
 - [Changelog](/CHANGELOG.md)
-- [Contribute](https://github.com/open-oni/open-oni/CONTRIBUTE.md)
+- [Contribute](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
 - [About Open ONI, Project History](https://open-oni.github.io/)
 
 ## Support
@@ -71,7 +71,7 @@ assistance.
 
 ## Contribute
 If you are interested in collaborating on the project, please review
-[CONTRIBUTE.md](https://github.com/open-oni/open-oni/CONTRIBUTE.md)
+[CONTRIBUTE.md](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
 for more details.
 
 ## License
