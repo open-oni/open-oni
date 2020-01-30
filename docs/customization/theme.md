@@ -8,12 +8,14 @@ Quick reference to update static files (CSS, images, etc) after making changes i
 docker exec -it openoni-dev manage collectstatic --noinput
 ```
 
-Collected static files are stored in the .static-files directory
+Collected static files are stored in the .static-files directory. You will need
+to compile static assets after making changes to CSS and JS.
 
 - [Create a New Theme](#create-a-new-theme)
 - [Customize Your Theme](#customize-your-theme)
 - [Common Overrides](#common-overrides)
-- [CSS Customization (TODO)](#css-customization)
+- [CSS Customization](#css-customization)
+- [Compile Static Assets](#compile-static-assets)
 
 You may also want to view the documentation on adding plugins like a map and "on this day" sections, found [here](https://github.com/open-oni/open-oni/wiki/Plugins).
 
@@ -157,3 +159,26 @@ If you wanted to overwrite the `boostrap.min.css` file with your own, you could 
 ```
 
 This may be useful if you want to compile your own `bootstrap.min.css` using sass or less or the online generator.
+
+## Compile Static Assets
+
+Run these commands as a regular user rather than root
+
+```bash
+cd /opt/openoni
+source ENV/bin/activate
+
+./manage.py collectstatic -c
+
+# Grant write access for both Apache and group
+sudo chown -R apache static/compiled/
+sudo chmod -R g+w static/compiled/
+```
+
+Perform a graceful Apache restart after re-compiling static assets so the app
+uses the updated static file hash fingerprints in the URLs rendered in
+templates:
+
+```bash
+sudo apachectl graceful
+```

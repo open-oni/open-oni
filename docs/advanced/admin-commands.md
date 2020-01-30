@@ -43,13 +43,36 @@ source ENV/bin/activate
 
 ## load_batch
 
+This command loads the metadata and pages associated with a batch into a
+database and search index. It may take up to several hours to complete,
+depending on the batch size and machine. If there is a chance of interruption
+to where the command is running (for example, on a remote machine), you may
+wish to preface the command with `nohup` in order to ensure the batch will be
+completed regardless of your connection.
+
 Ensure that your batch location is a directory containing a `data` directory.
 
 ```bash
-manage.py load_batch /path/to/batchname
+manage.py load_batch /path/to/batch_name
 ```
 With docker, a path is not needed if your batch is in `data/batches`:
 
-```
+```bash
 docker-compose exec web /load_batch.sh batch_name 
+```
+
+## purge_batch
+
+This command removes pages associated with a batch from the search index and
+database, but does not remove titles specific to this batch. It is effective
+even on batches which were only partially loaded.
+
+```bash
+manage.py purge_batch batch_name
+```
+
+With docker:
+
+```bash
+docker-compose exec web manage purge_batch batch_name
 ```

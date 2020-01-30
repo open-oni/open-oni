@@ -8,7 +8,7 @@ If you are contributing to Open ONI, we recommend that you use Docker for
 development purposes.
 
 - [CentOS](/docs/install/centos)
-- [Ubuntu (incomplete)](/docs/install/ubuntu.md)
+- [Ubuntu](/docs/install/ubuntu.md) (incomplete)
 - [Docker](/docs/install/docker.md)
 
 When updating, please review the changelog for information and instructions
@@ -24,12 +24,12 @@ about upgrading versions, breaking changes, etc
 
 ## Manage Data
 
-- [Ingest and Purge batches](/docs/manage-data/batches-ingest-purge.md)
+- [Load and Purge batches](/docs/manage-data/batches-load-purge.md)
 - [Custom LCCN and MARC records](/docs/manage-data/custom-lccn-marc.md)
 - [Essays](/docs/manage-data/essays.md)
 
 ## Advanced
 
-- [Admin Commands Reference](/docs/admin-commands.md) (in progress)
+- [Admin Commands Reference](/docs/advanced/admin-commands.md) (in progress)
 - [Docker Commands Quick Reference](/docs/advanced/reference.md)
 - [Solr Schema Setup](/core/fixtures/solr-schema/README.md)

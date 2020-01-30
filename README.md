@@ -71,7 +71,7 @@ assistance.
 
 ## Contribute
 If you are interested in collaborating on the project, please review
-[CONTRIBUTE.md](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
+[CONTRIBUTING.md](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
 for more details.
 
 ## License
