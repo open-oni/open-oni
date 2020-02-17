@@ -45,7 +45,6 @@ cd ..
 
 # You have to have the services running in order to ingest
 docker-compose up -d
-docker-compose exec web /load_batch.sh batch_uuml_thys_ver01
 ```
 
 Then run our custom batch-loader wrapper:
@@ -108,6 +107,12 @@ docker-compose -f test-compose.yml -p onitest up test
 The test container definition runs a shortcut for unit tests with a special
 settings file for forcing in reproducible URLs and ensuring a very "clean",
 consistent environment.
+
+Remove all test containers, volumes, and images with the following command:
+
+```bash
+docker-compose -f test-compose.yml -p onitest down -v --rmi local
+```
 
 ### Rebuild static files
 

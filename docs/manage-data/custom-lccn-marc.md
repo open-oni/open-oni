@@ -35,4 +35,5 @@ Open ONI has a `load_titles` tool which accepts a path to directory containing
 MARC records. Once a title is loaded in the database, loading a batch will no
 longer attempt to retrieve MARC data.
 
-TODO list docker and non docker versions of load titles command
+Please see the [admin commands documentation](/docs/advanced/admin-commands.md)
+for more information about `load_titles`.

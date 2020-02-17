@@ -29,7 +29,7 @@ source ENV/bin/activate
 - load_batches
 - load_copyright
 - load_copyright_map
-- load_titles
+- [load_titles](#load_titles)
 - make_countries_fixture
 - process_coordinates
 - purge_batch
@@ -60,6 +60,10 @@ With docker, a path is not needed if your batch is in `data/batches`:
 ```bash
 docker-compose exec web /load_batch.sh batch_name 
 ```
+
+## load_titles
+
+Documentation pending.
 
 ## purge_batch
 

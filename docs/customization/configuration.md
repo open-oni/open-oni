@@ -1,23 +1,12 @@
 # Configuring Your App
 
+## `settings_local.py`
+
 Unlike a vanilla django installation, our `onisite/settings.py` is not where
 all settings are stored. This file actually combines django's defaults
 (`onisite/django_defaults.py`), the Open ONI defaults
 (`onisite/settings_base.py`), and your local configuration
 (`onisite/settings_local.py`).
-
-To get started, open the file
-[`onisite/settings_base.py`](https://github.com/open-oni/open-oni/blob/master/onisite/settings_base.py),
-and look at the settings closely. Most of them can be left alone for simple
-installations, but it's helpful to familiarize yourself with them so you know
-what makes sense for your site. All settings should have decent comments to
-help you know what to change and how. Any settings you don't understand should
-be left alone.
-
-The `onisite/urls.py` file is another place for customizations, but only if you
-add apps which need to route URLs themselves. Most sites won't need this.
-
-## `settings_local.py`
 
 Basic site customizations can be done by creating `onisite/settings_local.py`
 in the same location you find `onisite/settings_base.py`, and overriding
@@ -51,10 +40,15 @@ INSTALLED_APPS = (
   'django.contrib.humanize',
   'django.contrib.staticfiles',
 
-  'mytheme', # Instead of 'default'
+  'themes.mytheme',
+  'themes.default',
   'core',
 )
 ```
+
+Additional settings are documented in [`onisite/settings_base.py`](https://github.com/open-oni/open-oni/blob/master/onisite/settings_base.py).
+Most simple installations will not need to override these settings, but they
+are available for advanced users.
 
 ## onisite/urls.py
 

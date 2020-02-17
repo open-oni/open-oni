@@ -5,11 +5,11 @@ Unless if you are happy with the out-of-the-box Open ONI look, you will probably
 Quick reference to update static files (CSS, images, etc) after making changes in the docker dev environment:
 
 ```
-docker exec -it openoni-dev manage collectstatic --noinput
+docker-compose exec web manage collectstatic --noinput
 ```
 
-Collected static files are stored in the .static-files directory. You will need
-to compile static assets after making changes to CSS and JS.
+Collected static files are stored in the `/static/compiled/` directory. You
+will need to compile static assets after making changes to CSS and JS.
 
 - [Create a New Theme](#create-a-new-theme)
 - [Customize Your Theme](#customize-your-theme)
@@ -17,11 +17,13 @@ to compile static assets after making changes to CSS and JS.
 - [CSS Customization](#css-customization)
 - [Compile Static Assets](#compile-static-assets)
 
-You may also want to view the documentation on adding plugins like a map and "on this day" sections, found [here](https://github.com/open-oni/open-oni/wiki/Plugins).
+View the [plugin documentation](/docs/customization/plugins.md) for more
+information about available plugins and information about how to include them
+in your application.
 
 ## Create a New Theme
 
-You will want to copy the default them to start your own new theme!
+You will want to copy the default theme to start your own!
 
 ```
 cp -r themes/default themes/<your-theme-name>
@@ -50,7 +52,12 @@ Django is set up with templates like `home.html`.  They are chained together so 
 
 Sometimes, you need to override an entire sub-template.  For example, your About page's content is probably not going to be like anybody else's, so it makes sense to copy `core/templates/about.html` into your own theme at `themes/<your-theme-name>/templates/about.html` and change the text.
 
-Most of the time, though, you only need to change little things about the existing templates.  That's what the `__overrides.html` file is for!  Let's walk through an example.  Let's say you want to change your footer.  You found the existing footer in `core/templates/__base.html` but you should **never edit core** so you need to override it.  Fortunately, the footer is surrounded by a "block."
+Most of the time, though, you only need to change little things about the
+existing templates.  That's what the `__overrides.html` file is for! This file
+sits between `__base.html` and `__l_(layout).html` files, so that you can
+override parts of `__base.html` easily.
+
+Let's walk through an example.  Let's say you want to change your footer.  You found the existing footer in `core/templates/__base.html` but you should **never edit core** so you need to override it.  Fortunately, the footer is surrounded by a "block."
 
 ```python
 {% block footer %}
@@ -103,31 +110,32 @@ Meta tags, title, CSS inclusion, etc
 
 ```
 head_all
+  head_site_meta
+  head_opensearch
   head_page_meta
   head_page_title
   head_page_css
-  head_page_top_js
+  javascript
   head_item_metadata
-  head_opensearch
   head_extra
 ```
 **`<body>` Content**
 
-Navigation and the actual content of a given page
+Navigation, actual content of a given page, and footer
 
 ```
 body_content
   header
-  navbar
-    navbar_classes
-    navbar_home
-    navbar_pos1
-    navbar_pos2
-    navbar_pos3
-    navbar_pos4
-    navbar_pos5
-    navbar_advanced_search
-    navbar_search
+    header_title
+    navbar
+      navbar_home
+      navbar_pos1
+      navbar_pos2
+      navbar_pos3
+      navbar_pos4
+      navbar_pos5
+      navbar_advancedsearch
+      navbar_search
   breadcrumbs
   content
     page_head_container
@@ -135,13 +143,7 @@ body_content
         sub_page_head
     main_content
     subcontent
-```
-
-**Footer and JS includes / code**
-
-```
 footer
-javascript
 ```
 
 ## CSS Customization
@@ -155,7 +157,7 @@ If you wanted to overwrite the `boostrap.min.css` file with your own, you could 
       - vendor
         - bootstrap
           - css
-            - boostrap.min.css
+            - bootstrap.min.css
 ```
 
 This may be useful if you want to compile your own `bootstrap.min.css` using sass or less or the online generator.

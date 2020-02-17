@@ -19,7 +19,7 @@ cp docker-compose.override.yml-example docker-compose.override.yml
 vim docker-compose.override.yml
 ```
 
-Now, boot up the app. Initially, this may take quite some time, but is all goes well in the future it should be fairly rapid:
+Now, boot up the app. Initially, this may take quite some time, but if all goes well in the future it should be fairly rapid:
 
 ```bash
 docker-compose up
@@ -43,7 +43,8 @@ docker-compose down -v --rmi local
 # If you want to truly start fresh, do this instead
 # docker-compose down -v --rmi all
 
-# This ENV directory holds all the cached python libs
+# ENV is the Python virtual environment which persists until deleted or
+# manually reinstalled
 sudo rm ENV/ -rf
 
 # Triple-check your overrides!
@@ -55,18 +56,21 @@ docker-compose logs -f
 ## Overriding URL and ports
 
 If you need to put the app on a custom URL for demoing purposes or something,
-you can set the `APP_URL` environment variable.  You can also customize the
-port with the `HTTPPORT` environment variable.  When you do this, you have to
+you can set the `ONI_BASE_URL` environment variable.  You can also customize the
+port with the `HTTPPORT` environment variable, which will be appended if the
+value is other than `80`.  When you do this, you have to
 make sure you restart the whole stack, as the RAIS container needs to know its
 IIIF root URL in order to supply the right values when it's queried for an
 image's information.
 
 ```bash
 docker-compose down
-export APP_URL=http://192.168.0.5
+export ONI_BASE_URL=http://192.168.0.5
 export HTTPPORT=8080
 docker-compose up
 ```
+
+The above will serve the web app via `http://192.168.0.5:8080`.
 
 Additionally, if you're running a local database and its port conflicts with
 the one docker uses, you can change the local port it exposes via the
