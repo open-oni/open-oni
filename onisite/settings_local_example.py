@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # BASE_URL can NOT include any path elements!
 BASE_URL = os.getenv('ONI_BASE_URL', 'http://localhost')
 url = urllib.parse.urlparse(BASE_URL)
-ALLOWED_HOSTS = [url.netloc]
+ALLOWED_HOSTS = [url.hostname]
 
 if url.scheme == 'https':
     """
@@ -101,11 +101,11 @@ INSTALLED_APPS = (
 
 """
 'From' address on general emails sent by Django:
-If sending email from different server, replace `@' + url.netloc` with host.
+If sending email from different server, replace `@' + url.hostname` with host.
 Space at the end of EMAIL_SUBJECT_PREFIX intentional
 to separate subject from prefix.
 """
-DEFAULT_FROM_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@' + url.netloc
+DEFAULT_FROM_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@' + url.hostname
 EMAIL_SUBJECT_PREFIX = '[YOUR_PROJECT_NAME_ABBREVIATION] '
 
 
