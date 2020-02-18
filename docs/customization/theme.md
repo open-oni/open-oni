@@ -1,4 +1,4 @@
-# Theming
+# Theme Creation, Overrides, and Assets
 
 Unless if you are happy with the out-of-the-box Open ONI look, you will probably want a theme!  Open ONI ships with a default theme (`/themes/default`) that you may want to refer to while you work on your own.
 

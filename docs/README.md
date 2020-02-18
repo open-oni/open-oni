@@ -19,7 +19,7 @@ about upgrading versions, breaking changes, etc
 ## Customization
 
 - [Configuring Your App](/docs/customization/configuration.md)
-- [Creating a Theme](/docs/customization/theme.md)
+- [Theme Creation, Overrides, and Assets](/docs/customization/theme.md)
   - [Compile Assets](/docs/customization/theme.md#compile-static-assets)
 - [Plugins](/docs/customization/plugins.md)
 
