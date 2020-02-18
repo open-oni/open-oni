@@ -20,7 +20,7 @@ about upgrading versions, breaking changes, etc
 
 - [Configuring Your App](/docs/customization/configuration.md)
 - [Creating a Theme](/docs/customization/theme.md)
-  - [Compile Assets](/docs/customization/theme.md##compile-static-assets)
+  - [Compile Assets](/docs/customization/theme.md#compile-static-assets)
 - [Plugins](/docs/customization/plugins.md)
 
 ## Manage Data
