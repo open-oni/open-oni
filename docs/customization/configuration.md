@@ -47,7 +47,7 @@ INSTALLED_APPS = (
 )
 ```
 
-Additional settings are documented in [`onisite/settings_base.py`](https://github.com/open-oni/open-oni/blob/master/onisite/settings_base.py).
+Additional settings are documented in [`onisite/settings_base.py`](/onisite/settings_base.py).
 Most simple installations will not need to override these settings, but they
 are available for advanced users.
 
