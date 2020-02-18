@@ -21,22 +21,21 @@ wiki](https://github.com/open-oni/open-oni/wiki/Sites-Using-Open-ONI) for links
 to the sites' source code.
 
 ## Install
-Open ONI is currently not ready for general production use, but we are closing
-in on a 1.0 release soon. The 1.0 release will include upgrading Django to the
-latest LTS 2.2 release along with migrating to Python 3 and upgrading Solr and
-MariaDB to more recent releases. No major feature changes are planned between
-0.11 and 1.0. Note that 0.11 runs Python 2 and Django 1.11 LTS which goes out of
-support in April 2020.
-
 To evaluate the software, we recommend installing from the [latest Open ONI
 release](https://github.com/open-oni/open-oni/releases/latest).
+
+The 1.0 release includes upgrading Django to the latest LTS 2.2 release along
+with migrating to Python 3 and upgrading Solr and MariaDB to more recent
+releases. Note that release 0.11 and prior run Python 2 and Django 1.11 LTS which goes out of support in April 2020.
 
 If you're interested in more recent changes, check out the `dev` branch.
 
 ## Documentation
-- [Production Install
-Instructions](https://github.com/open-oni/open-oni/tree/master/docs)
-- [The Open ONI Wiki](https://github.com/open-oni/open-oni/wiki)
+- [Installation, Configuration, and Troubleshooting](https://github.com/open-oni/open-oni/tree/master/docs)
+- [Development Standards, General Information](https://github.com/open-oni/open-oni/wiki)
+- [Changelog](/CHANGELOG.md)
+- [Contribute](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
+- [About Open ONI, Project History](https://open-oni.github.io/)
 
 ## Support
 Note that maintainers can only provide a minimal amount of assistance while
@@ -71,9 +70,9 @@ disclosure and patching, and give many thanks and credit for your generous
 assistance.
 
 ## Contribute
-If you are interested in collaborating on the project, please read ["Contribute"
-in our wiki](https://github.com/open-oni/open-oni/wiki/Contribute) for more
-details.
+If you are interested in collaborating on the project, please review
+[CONTRIBUTING.md](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
+for more details.
 
 ## License
 [Licensed](https://github.com/open-oni/open-oni/blob/master/LICENSE) under the

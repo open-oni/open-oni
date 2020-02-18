@@ -89,12 +89,13 @@ INSTALLED_APPS = (
 
     # Humanize and local theme override all below
     'django.contrib.humanize',  # Makes data more human-readable
-#    'themes.YOUR_THEME_NAME',
 
     # Plugins
     # See https://github.com/open-oni?q=plugin for available plugins
 
     # Open ONI
+    # Build on top of the default theme by including your own above themes.default
+    # 'themes.YOUR_THEME_NAME',
     'themes.default',
     'core',
 )

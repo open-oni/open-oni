@@ -19,4 +19,3 @@ cd /opt/openoni/
 source ENV/bin/activate
 ./manage.py setup_index
 ```
-
