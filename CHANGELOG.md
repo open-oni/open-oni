@@ -33,6 +33,9 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Fixed
 - Reindex no longer crashes when indexing pages with no images
 - IIIF APIs no longer crash on pages that don't have images
+- Replace `url.netloc` with `url.hostname` in `settings_local.py` so sites
+  running on a nonstandard port will still work (this wouldn't be typical in
+  production, but could happen for development and staging servers)
 
 ### Added
 
@@ -73,6 +76,8 @@ Markdown Spec](https://github.github.com/gfm/).
       dt = make_aware(dt, settings.TIME_ZONE)
       ```
     - Call the method on your object as `dt.strftime(date_format_string)`
+- Make sure you use replace `url.netloc` with `url.hostname` in your
+  `settings_local.py` if you have problems with hostnames!
 - If you use the reindexer routinely (`./manage.py index` or `./manage.py
   index_pages`), and were reliant on the behavior of deleting the indexed page
   data, you'll want to change your approach to first run `./manage.py
