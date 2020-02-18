@@ -104,7 +104,8 @@ docker-compose -f test-compose.yml -p onitest down -v --rmi local
 
 ### Rebuild static files
 
-This is essential for theme development:
+These include CSS, JS, and images. You will need to run this command when
+developing themes:
 
 ```bash
 docker-compose exec web manage collectstatic --noinput

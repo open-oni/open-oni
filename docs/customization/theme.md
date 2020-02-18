@@ -1,21 +1,15 @@
-# Theme Creation, Overrides, and Assets
+# Theme Creation, Overrides, and Static Files
 
 Unless if you are happy with the out-of-the-box Open ONI look, you will probably want a theme!  Open ONI ships with a default theme (`/themes/default`) that you may want to refer to while you work on your own.
 
-Quick reference to update static files (CSS, images, etc) after making changes in the docker dev environment:
-
-```
-docker-compose exec web manage collectstatic --noinput
-```
-
 Collected static files are stored in the `/static/compiled/` directory. You
-will need to compile static assets after making changes to CSS and JS.
+will need to compile static files after making changes to CSS and JS.
 
 - [Create a New Theme](#create-a-new-theme)
 - [Customize Your Theme](#customize-your-theme)
 - [Common Overrides](#common-overrides)
 - [CSS Customization](#css-customization)
-- [Compile Static Assets](#compile-static-assets)
+- [Compile Static Files](#compile-static-files)
 
 View the [plugin documentation](/docs/customization/plugins.md) for more
 information about available plugins and information about how to include them
@@ -162,9 +156,18 @@ If you wanted to overwrite the `boostrap.min.css` file with your own, you could 
 
 This may be useful if you want to compile your own `bootstrap.min.css` using sass or less or the online generator.
 
-## Compile Static Assets
+## Compile Static Files
 
-Run these commands as a regular user rather than root
+After working on CSS, JavaScript, images, or other static files, you will need
+to compile the files.
+
+If you are using Docker, you can use this command:
+
+```
+docker-compose exec web manage collectstatic --noinput
+```
+
+If you are not using Docker, follow these steps as a regular user (not root):
 
 ```bash
 cd /opt/openoni
@@ -177,7 +180,7 @@ sudo chown -R apache static/compiled/
 sudo chmod -R g+w static/compiled/
 ```
 
-Perform a graceful Apache restart after re-compiling static assets so the app
+Perform a graceful Apache restart after re-compiling static files so the app
 uses the updated static file hash fingerprints in the URLs rendered in
 templates:
 
