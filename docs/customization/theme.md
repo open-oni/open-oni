@@ -1,9 +1,10 @@
 # Theme Creation, Overrides, and Static Files
 
-Unless if you are happy with the out-of-the-box Open ONI look, you will probably want a theme!  Open ONI ships with a default theme (`/themes/default`) that you may want to refer to while you work on your own.
-
-Collected static files are stored in the `/static/compiled/` directory. You
-will need to compile static files after making changes to CSS and JS.
+Unless if you are happy with the out-of-the-box Open ONI look, you will
+probably want a theme!  Open ONI ships with a default theme (`/themes/default`)
+that you may want to refer to while you work on your own. If you have made
+changes to CSS, JS, or images, you will need to
+[compile static files](#compile-static-files).
 
 - [Create a New Theme](#create-a-new-theme)
 - [Customize Your Theme](#customize-your-theme)
@@ -142,7 +143,7 @@ footer
 
 ## CSS Customization
 
-If you wanted to overwrite the `boostrap.min.css` file with your own, you could drop it into:
+If you wanted to overwrite the `bootstrap.min.css` file with your own, you could drop it into:
 
 ```
 - themes
@@ -159,7 +160,8 @@ This may be useful if you want to compile your own `bootstrap.min.css` using sas
 ## Compile Static Files
 
 After working on CSS, JavaScript, images, or other static files, you will need
-to compile the files.
+to compile the files. Collected static files are stored in the
+`/static/compiled/` directory.
 
 If you are using Docker, you can use this command:
 

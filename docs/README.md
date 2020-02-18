@@ -20,7 +20,7 @@ about upgrading versions, breaking changes, etc
 
 - [Configuring Your App](/docs/customization/configuration.md)
 - [Theme Creation, Overrides, and Static Files](/docs/customization/theme.md)
-  - [Compile Assets](/docs/customization/theme.md#compile-static-files)
+  - [Compile Static Files](/docs/customization/theme.md#compile-static-files)
 - [Plugins](/docs/customization/plugins.md)
 
 ## Manage Data
