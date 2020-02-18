@@ -175,9 +175,9 @@ Additional configuration is required for how and to whom Django sends emails:
 
     """
     'From' address on error emails sent to ADMINS and MANAGERS:
-    If sending email from different server, replace `@' + url.netloc` with host.
+    If sending email from different server, replace `@' + url.hostname` with host.
     """
-    #SERVER_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@' + url.netloc
+    #SERVER_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@' + url.hostname
 
     # ADMINS receive 5xx error emails; MANAGERS receive 404 error emails.
     #ADMINS = [
