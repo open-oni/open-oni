@@ -3,7 +3,11 @@
 This documentation focuses on deployment of Open ONI for production on CentOS 7.
 
 Start with the instructions in this document to download the Open ONI files and
-set up the Python environment, then configure the [Services](/docs/install/centos/services/)
+set up the Python environment, then configure the services (
+[Apache](/docs/install/centos/services/apache.md),
+[MariaDB](/docs/install/centos/services/mariadb.md),
+[RAIS](/docs/install/centos/services/rais.md),
+[Solr](/docs/install/centos/services/solr.md))
 which Open ONI relies upon, and finally configure the [Open ONI Django
 App](/docs/install/centos/openoni.md) itself.
 

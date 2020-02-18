@@ -24,11 +24,12 @@ ramifications of doing so. Most users will be fine just letting those stay
 as-is.
 
 That said, overrides are simple - you just redefine a value. For example, you
-could do a simple change to enable TIFFs by putting this line into your
-`onisite/settings_local.py`:
+could change the size of your thumbnails by putting this line into your
+`onisite/settings_local.py` file:
 
 ```python
-USE_TIFF = True
+# How big should thumbnails be?
+THUMBNAIL_WIDTH = 200
 ```
 
 Or you could do something more complex like adding an app to override the

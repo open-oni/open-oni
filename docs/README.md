@@ -31,5 +31,5 @@ about upgrading versions, breaking changes, etc
 ## Advanced
 
 - [Admin Commands Reference](/docs/advanced/admin-commands.md) (in progress)
-- [Docker Commands Quick Reference](/docs/advanced/reference.md)
+- [Docker Commands Quick Reference](/docs/advanced/docker-reference.md)
 - [Solr Schema Setup](/core/fixtures/solr-schema/README.md)

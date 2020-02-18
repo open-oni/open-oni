@@ -5,7 +5,7 @@ The load and purge batch explanations are copied from the
 
 - [Load Batch](#load-batch)
 - [Purge Batch](#purge-batch)
-- [Obtain Batches](#download-batches)
+- [Obtain Batches](#obtain-batches)
 
 If you are using docker, batches should be stored in `data/batches`.
 

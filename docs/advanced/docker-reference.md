@@ -29,27 +29,15 @@ just to the logs you want, which is usually the web service: `docker-compose log
 
 ### Load a Batch
 
-You will need to put NDNP-compliant newspaper batches in the `data/batches`
-directory at the root of the project.  You can either wget a batch from
-Chronicling America like below, or you can put some of our [short sample
-batches](https://github.com/open-oni/sample-data) into the data directory.
-
-Mirroring a batch from Chronicling America is easy, but can take a *lot* of time:
-
-```bash
-cd data
-wget --recursive --no-host-directories --cut-dirs 1 --reject index.html* \
-     --include-directories /data/batches/batch_uuml_thys_ver01/ \
-     https://chroniclingamerica.loc.gov/data/batches/batch_uuml_thys_ver01/
-cd ..
-
-# You have to have the services running in order to ingest
-docker-compose up -d
-```
+If you do not already have a batch ready to load, you can learn about how to
+obtain a batch in the [Load and Purge Batches documentation](/docs/manage-data/batches-load-purge.md#obtain-batches).
 
 Then run our custom batch-loader wrapper:
 
 ```bash
+# You have to have the services running in order to ingest
+docker-compose up -d
+
 docker-compose exec web /load_batch.sh <batch_name>
 ```
 
@@ -194,10 +182,10 @@ docker volume rm volume_name       # delete data volume
 
 ```
 docker images             # list images
-docker rm image_name      # delete an image (need to remove containers, first)
+docker rmi image_name      # delete an image (need to remove containers, first)
 ```
 
-### Stop containers and Docker VM
+### Stop the Open ONI Stack
 
 ```bash
 docker-compose down

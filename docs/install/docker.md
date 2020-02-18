@@ -6,6 +6,9 @@
 - [Reviewing Code](#reviewing-code)
 - [Logs](#logs)
 
+If you are already set up with Docker, you may wish to refer to the
+[Docker Command Quick Reference](/docs/advanced/docker-reference.md) guide.
+
 ## First Time Installation
 
 Install Docker using [instructions on Docker's website](https://www.docker.com/products/docker-desktop).
@@ -71,10 +74,6 @@ docker-compose up
 ```
 
 The above will serve the web app via `http://192.168.0.5:8080`.
-
-Additionally, if you're running a local database and its port conflicts with
-the one docker uses, you can change the local port it exposes via the
-`RDBMSPORT` environment variable.
 
 ## Reviewing Code
 
