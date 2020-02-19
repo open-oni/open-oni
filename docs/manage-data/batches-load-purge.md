@@ -24,6 +24,16 @@ Ensure that your batch location is a directory containing a `data` directory.
 source ENV/bin/activate
 manage.py load_batch /path/to/batch_name
 ```
+
+If you are having trouble viewing images / documents after loading your batch,
+you may want to check your permissions. The following are permissive enough to
+allow reading files for the image server, text, etc:
+
+```
+sudo chmod -R g+rwX
+sudo chmod -R o+rX
+```
+
 With docker, a path is not needed if your batch is in `data/batches`:
 
 ```bash
