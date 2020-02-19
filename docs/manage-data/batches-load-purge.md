@@ -21,12 +21,13 @@ ensure the batch will be completed regardless of your connection.
 Ensure that your batch location is a directory containing a `data` directory.
 
 ```bash
+source ENV/bin/activate
 manage.py load_batch /path/to/batch_name
 ```
 With docker, a path is not needed if your batch is in `data/batches`:
 
 ```bash
-docker-compose exec web /load_batch.sh batch_name 
+docker-compose exec web /load_batch.sh batch_name
 ```
 
 ## Purge Batch
@@ -36,6 +37,7 @@ database, but does not remove titles specific to this batch. It is effective
 even on batches which were only partially loaded.
 
 ```bash
+source ENV/bin/activate
 manage.py purge_batch batch_name
 ```
 
