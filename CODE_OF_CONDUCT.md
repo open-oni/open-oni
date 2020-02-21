@@ -179,7 +179,7 @@ to how to response. Responses may include:
   extended to new Open ONI fora, or otherwise maintained.
 - A request for a public or private apology. The team may, if it chooses, attach
   "strings" to this request: for example, the team may ask a violator to
-  apologize in order to retain his or her membership on a Slack channel.
+  apologize in order to retain their membership on a Slack channel.
 
 Once we've determined our final action, we'll contact the original reporter to
 let them know what action (if any) we'll be taking. We'll take into account
