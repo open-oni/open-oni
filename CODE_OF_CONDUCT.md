@@ -98,10 +98,11 @@ confidential. In some cases we may determine that a public statement will need
 to be made. If that's the case, the identities of all victims and reporters will
 remain confidential unless those individuals instruct us otherwise.
 
-**If you believe anyone is in physical danger, please notify appropriate law
-enforcement first.** If you are unsure what law enforcement agency is
-appropriate, please include this in your report and we will attempt to notify
-them.
+**If you believe anyone is in physical danger, please consider notifying
+appropriate law enforcement first.** If you are unsure whether it is necessary
+or what law enforcement agency is appropriate, please include this in your
+report. The team may consider contacting law enforcement if deemed appropriate
+based on the report.
 
 If you are unsure whether the incident is a violation, or whether the space
 where it happened is covered by this Code of Conduct, we encourage you to still
@@ -156,13 +157,13 @@ whenever possible the committee's deliberations will be recorded and retained
 ### Acting Unilaterally
 If the act is ongoing (such as someone engaging in harassment in Slack), or
 involves a threat to anyone's safety (e.g. threats of violence), any team member
-may act immediately (before reaching consensus) to end the situation. In ongoing
-situations, any team member may at their discretion employ any of the tools
-available to the team, including bans and blocks.
+may act immediately (before consulting other members) to end the situation. In
+ongoing situations, any team member may at their discretion employ any of the
+tools available to the team, including bans and blocks.
 
-If the incident involves physical danger, any member of the team may -- and
-should -- act unilaterally to protect safety. This can include contacting law
-enforcement or other local personnel.
+If the incident involves physical danger, any member of the team may act
+unilaterally to protect safety. This can include contacting law enforcement or
+other local personnel.
 
 In situations where an individual team member acts unilaterally, they must
 report their actions to the team for review within 24 hours.
