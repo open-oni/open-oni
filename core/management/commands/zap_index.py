@@ -7,6 +7,8 @@ from solr import SolrConnection
 
 
 class Command(BaseCommand):
+    help = "Deletes the Solr index in its entirety.  USE WITH CAUTION."
+
     def add_arguments(self, parser):
         # Options
         parser.add_argument(
