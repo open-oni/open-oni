@@ -13,6 +13,7 @@ Community](https://github.com/open-oni/).
   - [Acting Unilaterally](#acting-unilaterally)
   - [Response and Enforcement](#response-and-enforcement)
   - [Transparency](#transparency)
+    - [Public Reports](#public-reports)
 - [Changes](#changes)
 - [License](#license)
 
@@ -179,7 +180,8 @@ unilaterally to protect safety. This can include contacting law enforcement or
 other local personnel.
 
 In situations where an individual team member acts unilaterally, they must
-report their actions to the team for review within 24 hours.
+report their actions to the team for review within 24 hours. These unilateral
+actions will then receive accompanying violation reports.
 
 ### Response and Enforcement
 Once the team has a complete account of the events they will make a decision as
@@ -194,8 +196,8 @@ to how to respond. Responses may include:
   maintain records of all such bans so that they may be reviewed in the future,
   extended to new Open ONI fora, or otherwise maintained.
 - A request for a public or private apology. The team may, if it chooses, attach
-  "strings" to this request: for example, the team may ask a violator to
-  apologize in order to retain their membership on a Slack channel.
+  "strings". For example, the team may ask a violator to apologize in order to
+  retain their membership on a Slack channel.
 
 Once we've determined our final action, we'll contact the original reporter to
 let them know what action (if any) we'll be taking. We'll take into account
@@ -206,14 +208,31 @@ Finally, the team will compile a summary of the situation and may choose to
 release a public report of the incident.
 
 ### Transparency
-The team will release a brief annual transparency report including:
-- The number of violation reports received.
-- The number of each category of response.
-- Links to any public incident reports.
+After the beginning of each new year, the team will publicize the number of
+violation reports received and the team's enforcement decisions for the previous
+year. Any public incident reports will be listed and linked to as well.
+
+Year                  | 2020
+----------------------|-----
+**Violation reports** | To be released early 2021
+No violation occurred |
+Private reprimand     |
+Public reprimand      |
+Imposed vacation      |
+Temporary ban         |
+Permanent ban         |
+**Strings Attached**  |
+Private apology       |
+Public apology        |
+
+#### Public Reports
+- 2020
+  - To be released early 2021
 
 
 ## Changes
-Changes to the Open ONI Community Code of Conduct can be tracked in this file on GitHub at: https://github.com/open-oni/open-oni/blob/dev/CODE_OF_CONDUCT.md
+Changes to the Open ONI Community Code of Conduct can be tracked in this file on
+GitHub at: https://github.com/open-oni/open-oni/blob/dev/CODE_OF_CONDUCT.md
 
 ## License
 Portions of text derived from the [Django Code of
