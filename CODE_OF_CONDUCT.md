@@ -128,9 +128,14 @@ team](https://github.com/orgs/open-oni/teams/community-maintainers)
 acknowledging receipt immediately. If you provide an email address for contact,
 the response will cc all team members, excluding any members who may be reported
 for possible violation, for greater transparency. We promise to acknowledge
-receipt within 24 hours (and will aim for much quicker than that).
+receipt within three business days (and will aim for much quicker than that).
+Our acknowledgement response will include an estimated time for full response
+based on team availability (illness, vacation, conferences, etc) and complexity
+of the report (number of individuals, time span, availability of public
+evidence, etc). Team members will aim to communicate availability through email
+auto-replies and Slack status messages.
 
-The team will immediately meet to review the incident and determine:
+The team will meet to review the incident and determine:
 - What happened.
 - Whether this event constitutes a code of conduct violation.
 - Who the bad actor was.
@@ -148,9 +153,6 @@ complete account of events. This information will be collected in writing, and
 whenever possible the committee's deliberations will be recorded and retained
 (i.e. Slack transcripts, email discussions, recorded voice conversations, etc).
 
-We'll respond within one week to the person who filed the report with either a
-resolution or an explanation of why the situation is not yet resolved.
-
 ### Acting Unilaterally
 If the act is ongoing (such as someone engaging in harassment in Slack), or
 involves a threat to anyone's safety (e.g. threats of violence), any team member
@@ -167,7 +169,7 @@ report their actions to the team for review within 24 hours.
 
 ### Response and Enforcement
 Once the team has a complete account of the events they will make a decision as
-to how to response. Responses may include:
+to how to respond. Responses may include:
 - Nothing (if we determine no violation occurred).
 - A private reprimand from the team to the individual(s) involved.
 - A public reprimand in the space the violation occurred.
