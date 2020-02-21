@@ -6,6 +6,7 @@ Community](https://github.com/open-oni/).
 
 **Contents**
 - [Introduction](#introduction)
+- [Open ONI Community Health Team](#open-oni-community-health-team)
 - [Expected Behavior](#expected-behavior)
 - [Reporting](#reporting)
   - [Acknowledgement](#acknowledgement)
@@ -38,6 +39,18 @@ ability to participate within them.
 
 If you believe someone is violating the code of conduct, please see
 [Reporting](#reporting) below.
+
+## Open ONI Community Health Team
+This is the team of individuals who have volunteered to respond to violation
+reports and enforce this code of conduct. Please contact any and all members
+with code of conduct inquiries and violation reports.
+
+Member Name | Slack Handle | Email Address
+------------|--------------|--------------
+Karin Dalziel | karin | kdalziel2 [at] unl.edu
+Andrew Gearhart | andrewgearhart | amg32 [at] psu.edu
+Ray Henry | Ray Henry | rayh [at] uoregon.edu
+Greg Tunink | techgique | techgique [at] unl.edu
 
 ## Expected Behavior
 - **Be friendly and patient.**
@@ -88,9 +101,8 @@ project](http://web.archive.org/web/20141109123859/http://speakup.io/coc.html).
 
 ## Reporting
 If you believe someone is violating the code of conduct we ask that you report
-it to one or more members of the [Open ONI Community Maintainers
-team](https://github.com/orgs/open-oni/teams/community-maintainers) either via
-email or [Open ONI
+it to one or more members of the Open ONI Community Health Team either via email
+or [Open ONI
 Slack](https://join.slack.com/t/open-oni/shared_invite/enQtMzg5MDg5NjU5MDU2LTA4MmViOTkxZDliZWZmM2FlMGU5ODZjNDU0OWQxYzIzMTY1YmFlMWEzZDFkNDNjZmYxYzUyMmMwZjlkMjU1MGE).
 If you are reporting a violation by one or more of the team members, only the
 other team members will be informed to review and respond to the report. In the
@@ -126,17 +138,16 @@ In your report please include:
 - Any other information you believe we should have.
 
 ### Acknowledgement
-You will receive a message from the [Open ONI Community Maintainers
-team](https://github.com/orgs/open-oni/teams/community-maintainers)
-acknowledging receipt immediately. If you provide an email address for contact,
-the response will cc all team members, excluding any members who may be reported
-for possible violation, for greater transparency. We promise to acknowledge
-receipt within three business days (and will aim for much quicker than that).
-Our acknowledgement response will include an estimated time for full response
-based on team availability (illness, vacation, conferences, etc) and complexity
-of the report (number of individuals, time span, availability of public
-evidence, etc). Team members will aim to communicate availability through email
-auto-replies and Slack status messages.
+You will receive a message from the Open ONI Community Health Team acknowledging
+receipt. If you provide an email address for contact, the response will cc all
+team members, excluding any members who may be reported for possible violation,
+for greater transparency. We promise to acknowledge receipt within three
+business days (and will aim for much quicker than that). Our acknowledgement
+response will include an estimated time for full response based on team
+availability (illness, vacation, conferences, etc) and complexity of the report
+(number of individuals, time span, availability of public evidence, etc). Team
+members will aim to communicate availability through email auto-replies and
+Slack status messages.
 
 The team will meet to review the incident and determine:
 - What happened.
