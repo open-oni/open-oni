@@ -30,6 +30,8 @@ you may want to check your permissions. The following are permissive enough to
 allow reading files for the image server, text, etc:
 
 ```
+cd /path/to/batch_name
+
 sudo chmod -R g+rwX
 sudo chmod -R o+rX
 ```
