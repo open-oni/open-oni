@@ -38,6 +38,10 @@ Markdown Spec](https://github.github.com/gfm/).
   production, but could happen for development and staging servers)
 
 ### Added
+- Documentation previously on wiki and inline code moved into `/docs` directory
+  - Organized into subdirectories and provided links for discoverability
+  - Minimally updated documentation for current docker setup
+  - Added new documentation for common tasks like batch loading and purging
 
 ### Changed
 - Update tablesorter JS library to 2.31.2
@@ -88,6 +92,7 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Contributors
 - Greg Tunink (techgique)
+- Jessica Dussault (jduss4)
 
 ## [v0.13.0] - Open ONI components all using supported versions
 [v0.13.0]: https://github.com/open-oni/open-oni/compare/v0.12.1...v0.13.0
