@@ -29,10 +29,11 @@ the spirit in which it’s intended - a guide to make it easier to enrich all of
 us and the technical communities in which we participate.
 
 This code of conduct applies to all spaces managed by the Open ONI organization.
-This includes [Open ONI Slack](http://bit.ly/openoni-slack-signup), [Open ONI
-GitHub](https://github.com/open-oni/), and any other forums created by the
-project team which the community uses for communication online or in person. In
-addition, violations of this code outside these spaces may affect a person's
+This includes [Open ONI
+Slack](https://join.slack.com/t/open-oni/shared_invite/enQtMzg5MDg5NjU5MDU2LTA4MmViOTkxZDliZWZmM2FlMGU5ODZjNDU0OWQxYzIzMTY1YmFlMWEzZDFkNDNjZmYxYzUyMmMwZjlkMjU1MGE),
+[Open ONI GitHub](https://github.com/open-oni/), and any other forums created by
+the project team which the community uses for communication online or in person.
+In addition, violations of this code outside these spaces may affect a person's
 ability to participate within them.
 
 If you believe someone is violating the code of conduct, please see
@@ -89,11 +90,12 @@ project](http://web.archive.org/web/20141109123859/http://speakup.io/coc.html).
 If you believe someone is violating the code of conduct we ask that you report
 it to one or more members of the [Open ONI Community Maintainers
 team](https://github.com/orgs/open-oni/teams/community-maintainers) either via
-email or [Open ONI Slack](http://bit.ly/openoni-slack-signup). If you are
-reporting a violation by one or more of the team members, only the other team
-members will be informed to review and respond to the report. In the event of
-any conflict of interest a team member must immediately notify the other
-members, and recuse themselves if necessary. All reports will be kept
+email or [Open ONI
+Slack](https://join.slack.com/t/open-oni/shared_invite/enQtMzg5MDg5NjU5MDU2LTA4MmViOTkxZDliZWZmM2FlMGU5ODZjNDU0OWQxYzIzMTY1YmFlMWEzZDFkNDNjZmYxYzUyMmMwZjlkMjU1MGE).
+If you are reporting a violation by one or more of the team members, only the
+other team members will be informed to review and respond to the report. In the
+event of any conflict of interest a team member must immediately notify the
+other members, and recuse themselves if necessary. All reports will be kept
 confidential. In some cases we may determine that a public statement will need
 to be made. If that's the case, the identities of all victims and reporters will
 remain confidential unless those individuals instruct us otherwise.
