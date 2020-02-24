@@ -230,7 +230,7 @@ A typical example might look like this:
 
 You can aggregate custom / overridden MARC XML in a single place and run a
 command like this as often as necessary; titles which already exist will not be
-reimported.  (If you *need* to overwrite a title, there is unfotunately no way
+reimported.  (If you *need* to overwrite a title, there is unfortunately no way
 to do so with administrative commands.)
 
 ## `purge_batch`
