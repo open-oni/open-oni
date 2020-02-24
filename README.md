@@ -5,9 +5,8 @@ web. We aim to enable individual state and library-based newspaper collections
 to more easily provide these core capabilities, as well as develop new common
 features and improvements.
 
-Read ["About Open ONI" in our
-wiki](https://github.com/open-oni/open-oni/wiki/About-Open-ONI) for more
-information about the project's origins.
+Read our [About Open ONI web page](https://open-oni.github.io/about/) for more
+information about the project's origins and history.
 
 ## Open ONI-powered Sites
 Visit sites currently powered by Open ONI:
