@@ -29,6 +29,20 @@ releases. Note that release 0.11 and prior run Python 2 and Django 1.11 LTS whic
 
 If you're interested in more recent changes, check out the `dev` branch.
 
+### Resource Requirements
+
+This is a ballpark estimate of resources we recommend for running Open ONI in
+production. Open ONI is quite capable with minimal processing and memory
+resources.
+
+CPU | Memory | Storage (with TIFFs) | Storage (JP2s only)
+----|--------|----------------------|--------------------
+Modern CPU with two (virtual) cores | 6GB | 1TB per ~25K pages| 1TB per ~100K pages
+
+We share more information on the [Resource
+Usage](https://github.com/open-oni/open-oni/wiki/Resource-Usage) page in our
+wiki, which may further inform your resource allocation.
+
 ### Dependency Roadmap
 
 We expect Open ONI's major components (aside from Bootstrap 3) to be supported
