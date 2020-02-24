@@ -56,6 +56,7 @@ Markdown Spec](https://github.github.com/gfm/).
   `django.utils.datetime_safe`'s `strftime` and provided alias `strftime_safe`
   for Python 2's inability to handle dates prior to 1900. Python 3 handles dates
   from 1000 on consistently.
+- `scripts/` directory with PyMarc test script
 
 ### Migration
 - Update code using `strftime` or `strftime_safe` from `core.utils`
