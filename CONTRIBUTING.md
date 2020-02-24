@@ -35,7 +35,8 @@ to help set up a development environment.
 [gitflow-like](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
 branching strategy, and `master` is meant to always be production-ready. Only
 *major* bug fixes (such as security issues) should be applied directly to the
-`master` branch.
+`master` branch. Also read the following to inform your git use:
+https://drewdevault.com/2019/02/25/Using-git-with-discipline.html
 
 First, fork the [Open ONI repository](https://github.com/open-oni/open-oni) in
 GitHub so you have rights to push code. Then clone it, check out `dev`, create a
