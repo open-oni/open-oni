@@ -51,6 +51,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Page reindexer no longer deletes pages prior to reindexing them, to avoid
   downtime when reindexing large sites
 - Clean up Docker Apache config
+- `robots.txt` disallows `/data/` for all user agents rather than a short list
 
 ### Removed
 - `core/utils/__init__.py`, which overrode `strftime` with
