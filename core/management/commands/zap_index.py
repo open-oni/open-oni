@@ -7,7 +7,11 @@ from solr import SolrConnection
 
 
 class Command(BaseCommand):
-    help = "Deletes the Solr index in its entirety.  USE WITH CAUTION."
+    help = """
+    Deletes the Solr index in its entirety.  USE WITH CAUTION.
+    After running this, your ONI installation WILL NOT FUNCTION without
+    reindexing (e.g., `./manage.py index`)
+    """
 
     def add_arguments(self, parser):
         # Options
