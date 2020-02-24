@@ -77,8 +77,8 @@ Language Notes:
 
 ### Style Guidelines
 
-1. In old code, prefer to use consistent code standards to what's already in the
-   file
+1. In existing files, prefer to stay consistent with code style used by the
+   older code
 1. In new code, use [Django coding
    standards](https://docs.djangoproject.com/en/2.2/internals/contributing/writing-code/coding-style/)
 1. Don't mix style fixes with other changes
