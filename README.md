@@ -21,7 +21,7 @@ to the sites' source code.
 
 ## Install
 To evaluate the software, we recommend installing from the [latest Open ONI
-release](https://github.com/open-oni/open-oni/releases/latest).
+release](https://github.com/open-oni/open-oni/releases).
 
 The 1.0 release includes upgrading Django to the latest LTS 2.2 release along
 with migrating to Python 3 and upgrading Solr and MariaDB to more recent
