@@ -50,6 +50,7 @@ Markdown Spec](https://github.github.com/gfm/).
   - Retain `skiplink` class for backwards-compatibility and customization
 - Page reindexer no longer deletes pages prior to reindexing them, to avoid
   downtime when reindexing large sites
+- `robots.txt` disallows `/data/` for all user agents rather than a short list
 
 ### Removed
 - `core/utils/__init__.py`, which overrode `strftime` with
