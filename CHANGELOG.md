@@ -38,6 +38,13 @@ Markdown Spec](https://github.github.com/gfm/).
   production, but could happen for development and staging servers)
 
 ### Added
+- Documentation previously on wiki and inline code moved into `/docs` directory
+  - Organized into subdirectories and provided links for discoverability
+  - Minimally updated documentation for current docker setup
+  - Added new documentation for common tasks like batch loading and purging
+- CONTRIBUTING.md from "Contribute" and "Development Standards" wiki pages
+  - Release checklist
+- Pull request template
 
 ### Changed
 - Update tablesorter JS library to 2.31.2
@@ -46,6 +53,8 @@ Markdown Spec](https://github.github.com/gfm/).
   - Retain `skiplink` class for backwards-compatibility and customization
 - Page reindexer no longer deletes pages prior to reindexing them, to avoid
   downtime when reindexing large sites
+- Clean up Docker Apache config
+- `robots.txt` disallows `/data/` for all user agents rather than a short list
 
 ### Removed
 - `core/utils/__init__.py`, which overrode `strftime` with
@@ -88,6 +97,7 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Contributors
 - Greg Tunink (techgique)
+- Jessica Dussault (jduss4)
 
 ## [v0.13.0] - Open ONI components all using supported versions
 [v0.13.0]: https://github.com/open-oni/open-oni/compare/v0.12.1...v0.13.0

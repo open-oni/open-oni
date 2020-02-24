@@ -21,12 +21,25 @@ ensure the batch will be completed regardless of your connection.
 Ensure that your batch location is a directory containing a `data` directory.
 
 ```bash
+source ENV/bin/activate
 manage.py load_batch /path/to/batch_name
 ```
+
+If you are having trouble viewing images / documents after loading your batch,
+you may want to check your permissions. The following are permissive enough to
+allow reading files for the image server, text, etc:
+
+```
+cd /path/to/batch_name
+
+sudo chmod -R g+rwX
+sudo chmod -R o+rX
+```
+
 With docker, a path is not needed if your batch is in `data/batches`:
 
 ```bash
-docker-compose exec web /load_batch.sh batch_name 
+docker-compose exec web /load_batch.sh batch_name
 ```
 
 ## Purge Batch
@@ -36,6 +49,7 @@ database, but does not remove titles specific to this batch. It is effective
 even on batches which were only partially loaded.
 
 ```bash
+source ENV/bin/activate
 manage.py purge_batch batch_name
 ```
 
