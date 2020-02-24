@@ -15,6 +15,7 @@ encouragement, issue reporting, questions, or collaboration.
     - [Feature Branches](#feature-branches)
     - [Pull Requests and Merging](#pull-requests-and-merging)
   - [Security](#security)
+  - [Release Checklist](#release-checklist)
 
 ## Develop With Us
 
@@ -130,4 +131,16 @@ Language Notes:
     - Use .gitignore to ensure the true config is not in source control
     - Prefer production config setup via automatic deploys, not manually copying
       files
+
+### Release Checklist
+
+Follow these steps for each Open ONI release:
+
+- Review and merge the release PR into `master`
+- [Create a GitHub release](https://github.com/open-oni/open-oni/releases/new)
+- Update [open-oni.github.io
+  source](https://github.com/open-oni/open-oni.github.io) as necessary
+- Merge the `master` branch back into the `dev` branch
+- Copy the template for unreleased work in `CHANGELOG.md` on the `dev` branch
+- Post an announcement to #general channel on Slack and the ChronAm mailing list
 
