@@ -42,6 +42,9 @@ Markdown Spec](https://github.github.com/gfm/).
   - Organized into subdirectories and provided links for discoverability
   - Minimally updated documentation for current docker setup
   - Added new documentation for common tasks like batch loading and purging
+- CONTRIBUTING.md from "Contribute" and "Development Standards" wiki pages
+  - Release checklist
+- Pull request template
 
 ### Changed
 - Update tablesorter JS library to 2.31.2
