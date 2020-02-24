@@ -25,7 +25,8 @@ release](https://github.com/open-oni/open-oni/releases).
 
 The 1.0 release includes upgrading Django to the latest LTS 2.2 release along
 with migrating to Python 3 and upgrading Solr and MariaDB to more recent
-releases. Note that release 0.11 and prior run Python 2 and Django 1.11 LTS which goes out of support in April 2020.
+releases. Note that release 0.11 and prior run Python 2 and Django 1.11 LTS
+which goes out of support in April 2020.
 
 If you're interested in more recent changes, check out the `dev` branch.
 
@@ -61,8 +62,10 @@ OpenSeadragon | 2.4.1 | Unkown | TBD | https://github.com/openseadragon/opensead
 tablesorter | 2.31.2 | Unknown | TBD | https://github.com/mottie/tablesorter/
 
 ## Documentation
-- [Installation, Configuration, and Troubleshooting](https://github.com/open-oni/open-oni/tree/master/docs)
-- [Development Standards, General Information](https://github.com/open-oni/open-oni/wiki)
+- [Installation, Configuration, and
+  Troubleshooting](https://github.com/open-oni/open-oni/tree/master/docs)
+- [Development Standards, General
+  Information](https://github.com/open-oni/open-oni/wiki)
 - [Changelog](/CHANGELOG.md)
 - [Contribute](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
 - [About Open ONI, Project History](https://open-oni.github.io/)
