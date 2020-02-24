@@ -1,6 +1,5 @@
 - List changes with brief descriptions
-
-Closes issue #
+  - Closes issue #
 
 ## Submitter Checklist
 
