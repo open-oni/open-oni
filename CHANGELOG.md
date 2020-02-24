@@ -41,7 +41,8 @@ Markdown Spec](https://github.github.com/gfm/).
 - Documentation previously on wiki and inline code moved into `/docs` directory
   - Organized into subdirectories and provided links for discoverability
   - Minimally updated documentation for current docker setup
-  - Added new documentation for common tasks like batch loading and purging
+  - Documented all supported management commands, with a particular emphasis on
+    common tasks like batch loading and purging.
 - CONTRIBUTING.md from "Contribute" and "Development Standards" wiki pages
   - Release checklist
 - Pull request template

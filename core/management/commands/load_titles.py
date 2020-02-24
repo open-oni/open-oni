@@ -15,7 +15,10 @@ configure_logging('load_titles_logging.config', 'load_titles.log')
 _logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
-    help = "Load a MARC XML file of title records"
+    help = """
+    Loads titles into Open ONI from a single file or a path containing multiple
+    files.  All files must contain valid MARC XML.
+    """
 
     def add_arguments(self, parser):
         # Positional arguments
