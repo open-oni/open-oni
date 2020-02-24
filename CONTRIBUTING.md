@@ -99,7 +99,6 @@ Language Notes:
 1. Use commit messages that follow the conventions here whenever possible:
    http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 1. Use [semantic versioning](http://semver.org/) for tags
-    - Release notes should include summary of new features and breaking changes
 
 #### Feature Branches
 
@@ -121,7 +120,6 @@ Language Notes:
     - Retain "milestone" commits, representing substantial peices of work
     - Squash minor and personal workflow commits into milestones
 1. Pull requests are subject to review. Someone other than you must merge them
-1. Let CI finish before merging a pull request
 
 ### Security
 
