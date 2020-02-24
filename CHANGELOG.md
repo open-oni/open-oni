@@ -46,6 +46,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - CONTRIBUTING.md from "Contribute" and "Development Standards" wiki pages
   - Release checklist
 - Pull request template
+- Dependency Roadmap and Resource Requirements in README.md
 
 ### Changed
 - Update tablesorter JS library to 2.31.2
