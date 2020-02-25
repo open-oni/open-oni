@@ -27,8 +27,8 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [Unreleased]
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v0.13.0...dev
+## [v1.0.0-rc.1]
+[v1.0.0-rc.1]: https://github.com/open-oni/open-oni/compare/v0.13.0...v1.0.0-rc.1
 
 ### Fixed
 - Reindex no longer crashes when indexing pages with no images
@@ -96,11 +96,11 @@ Markdown Spec](https://github.github.com/gfm/).
   zap_index`.  The new behavior deliberately does *not* delete pages
   implicitly.
 
-### Deprecated
-
 ### Contributors
-- Greg Tunink (techgique)
 - Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Andrew Gearhart (andrewgearhart)
+- Greg Tunink (techgique)
 
 ## [v0.13.0] - Open ONI components all using supported versions
 [v0.13.0]: https://github.com/open-oni/open-oni/compare/v0.12.1...v0.13.0
