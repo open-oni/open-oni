@@ -3,6 +3,10 @@
 We would love any and all contributions to Open ONI, be they words of
 encouragement, issue reporting, questions, or collaboration.
 
+Everyone interacting within the Open ONI community is expected to follow the
+[Open ONI Community Code of
+Conduct](https://github.com/open-oni/open-oni/tree/dev/CODE_OF_CONDUCT.md)
+
 **Contents**
 
 - [Develop With Us](#develop-with-us)
@@ -27,8 +31,9 @@ great ways to get involved without diving into the code.
 For those willing to write code, we adhere to our [development
 standards](#development-standards) below to keep us all on the same page.
 
-You should start by reviewing the [Docker install](/docs/install/docker.md) page
-to help set up a development environment.
+You should start by reviewing the [Docker
+install](https://github.com/open-oni/open-oni/tree/dev/docs/install/docker.md)
+page to help set up a development environment.
 
 ### Workflow
 
