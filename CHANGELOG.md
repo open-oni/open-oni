@@ -33,8 +33,19 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Fixed
 - Reindex no longer crashes when indexing pages with no images
 - IIIF APIs no longer crash on pages that don't have images
+- Replace `url.netloc` with `url.hostname` in `settings_local.py` so sites
+  running on a nonstandard port will still work (this wouldn't be typical in
+  production, but could happen for development and staging servers)
 
 ### Added
+- Documentation previously on wiki and inline code moved into `/docs` directory
+  - Organized into subdirectories and provided links for discoverability
+  - Minimally updated documentation for current docker setup
+  - Documented all supported management commands, with a particular emphasis on
+    common tasks like batch loading and purging.
+- CONTRIBUTING.md from "Contribute" and "Development Standards" wiki pages
+  - Release checklist
+- Pull request template
 
 ### Changed
 - Update tablesorter JS library to 2.31.2
@@ -43,6 +54,8 @@ Markdown Spec](https://github.github.com/gfm/).
   - Retain `skiplink` class for backwards-compatibility and customization
 - Page reindexer no longer deletes pages prior to reindexing them, to avoid
   downtime when reindexing large sites
+- Clean up Docker Apache config
+- `robots.txt` disallows `/data/` for all user agents rather than a short list
 
 ### Removed
 - `core/utils/__init__.py`, which overrode `strftime` with
@@ -73,6 +86,8 @@ Markdown Spec](https://github.github.com/gfm/).
       dt = make_aware(dt, settings.TIME_ZONE)
       ```
     - Call the method on your object as `dt.strftime(date_format_string)`
+- Make sure you use replace `url.netloc` with `url.hostname` in your
+  `settings_local.py` if you have problems with hostnames!
 - If you use the reindexer routinely (`./manage.py index` or `./manage.py
   index_pages`), and were reliant on the behavior of deleting the indexed page
   data, you'll want to change your approach to first run `./manage.py
@@ -83,6 +98,7 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Contributors
 - Greg Tunink (techgique)
+- Jessica Dussault (jduss4)
 
 ## [v0.13.0] - Open ONI components all using supported versions
 [v0.13.0]: https://github.com/open-oni/open-oni/compare/v0.12.1...v0.13.0

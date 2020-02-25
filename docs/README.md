@@ -1,64 +1,36 @@
-# Open ONI Docs
+# Open ONI Documentation
 
-This documentation focuses on deployment of Open ONI for production on CentOS 7.
+This directory contains documentation for installing, customizing, and managing Open ONI.
 
-Start with the instructions in this document to download the Open ONI files and
-set up the Python environment, then configure the [Services](/docs/services/)
-which Open ONI relies upon, and finally configure the [Open ONI Django
-App](/docs/openoni.md) itself.
+## Installation and Updating
 
-**Contents**
+If you are contributing to Open ONI, we recommend that you use Docker for
+development purposes.
 
-Within this document:
-- [Open ONI Files](#open-oni-files)
-- [Python Environment](#python-environment)
+- [CentOS](/docs/install/centos)
+- [Ubuntu](/docs/install/ubuntu.md) (incomplete)
+- [Docker](/docs/install/docker.md)
 
-Separate documents:
-- [Services](/docs/services/)
-    - [Apache](/docs/services/apache.md)
-    - [MariaDB](/docs/services/mariadb.md)
-    - [RAIS](/docs/services/rais.md)
-    - [Solr](/docs/services/solr.md)
-- [Open ONI Django App](/docs/openoni.md)
+When updating, please review the changelog for information and instructions
+about upgrading versions, breaking changes, etc
 
-## Open ONI Files
-Here is an outline of important default file locations for Open ONI:
+- [Update Open ONI](/CHANGELOG.md)
 
-```
-/opt/openoni/ - Open ONI files
-┣━━━ data/batches/ - Newspaper batches
-┣━━━ ENV/ - Python 3 virtual environment
-┣━━━ onisite/plugins/ - Open ONI plugins
-┗━━━ themes/ - Open ONI themes
-```
+## Customization
 
-First, download the [latest release of Open
-ONI](https://github.com/open-oni/open-oni/releases) and extract the files to
-`/opt/openoni/`. This includes config files which will be necessary to configure
-our services.
+- [Configuring Your App](/docs/customization/configuration.md)
+- [Theme Creation, Overrides, and Static Files](/docs/customization/theme.md)
+  - [Compile Static Files](/docs/customization/theme.md#compile-static-files)
+- [Plugins](/docs/customization/plugins.md)
 
-`openoni` is presumed to be a group including all users who will modify ONI
-files, ingest batches, etc. Set this group to have write permissions.
+## Manage Data
 
-```bash
-sudo chgrp -R openoni /opt/openoni
-sudo find /opt/openoni -type d -exec chmod g+ws {} \;
-sudo find /opt/openoni -type f -exec chmod g+w {} \;
-```
+- [Load and Purge batches](/docs/manage-data/batches-load-purge.md)
+- [Custom LCCN and MARC records](/docs/manage-data/custom-lccn-marc.md)
+- [Essays](/docs/manage-data/essays.md)
 
-## Python Environment
-Open ONI requires Python 3, so we install it and create a [virtual
-environment](https://docs.python.org/3.6/library/venv.html) for Open ONI.
+## Advanced
 
-```bash
-sudo yum install python3
-
-cd /opt/openoni/
-python3 -m venv ENV
-source ENV/bin/activate
-
-# Update pip and setuptools
-pip install -U pip
-pip install -U setuptools
-```
-
+- [Admin Commands Reference](/docs/advanced/admin-commands.md) (in progress)
+- [Docker Commands Quick Reference](/docs/advanced/docker-reference.md)
+- [Solr Schema Setup](/core/fixtures/solr-schema/README.md)

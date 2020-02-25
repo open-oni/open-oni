@@ -16,7 +16,11 @@ LOGGER = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = "Load a batch"
+    help = """
+    This command loads the metadata and pages associated with a batch into a
+    database and search index. It may take up to several hours to complete,
+    depending on the batch size and machine.
+    """
 
     def add_arguments(self, parser):
         # Positional arguments

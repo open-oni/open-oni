@@ -15,13 +15,11 @@
     - [URLs](#urls)
     - [Error Emails](#error-emails)
 - [Migrate Database](#migrate-database)
-- [Compile Static Assets](#compile-static-assets)
-- [Load Batches](#load-batches)
 
 ## Dependencies
-- Download the [Open ONI files](/docs/README.md#open-oni-files)
-- Prepare the [Python environment](/docs/README.md#python-environment)
-- Install and configure required [services](/docs/services/)
+- Download the [Open ONI files](/docs/install/centos/README.md#open-oni-files)
+- Prepare the [Python environment](/docs/install/centos/README.md#python-environment)
+- Install and configure required [services](/docs/install/centos/services/)
 
 ## Install
 
@@ -177,9 +175,9 @@ Additional configuration is required for how and to whom Django sends emails:
 
     """
     'From' address on error emails sent to ADMINS and MANAGERS:
-    If sending email from different server, replace `@' + url.netloc` with host.
+    If sending email from different server, replace `@' + url.hostname` with host.
     """
-    #SERVER_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@' + url.netloc
+    #SERVER_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@' + url.hostname
 
     # ADMINS receive 5xx error emails; MANAGERS receive 404 error emails.
     #ADMINS = [
@@ -201,38 +199,3 @@ cd /opt/openoni
 source ENV/bin/activate
 ./manage.py migrate
 ```
-
-## Compile Static Assets
-Run these commands as a regular user rather than root
-
-```bash
-cd /opt/openoni
-source ENV/bin/activate
-
-./manage.py collectstatic -c
-
-# Grant write access for both Apache and group
-sudo chown -R apache static/compiled/
-sudo chmod -R g+w static/compiled/
-```
-
-Perform a graceful Apache restart after re-compiling static assets so the app
-uses the updated static file hash fingerprints in the URLs rendered in
-templates:
-
-```bash
-sudo apachectl graceful
-```
-
-## Load Batches
-Run these commands as a regular user rather than root
-
-```bash
-# Repeat as necessary
-./manage.py load_batch /opt/openoni/data/batches/(batch_name)/
-
-# Run a script with nohup in the background to ingest multiple batches quietly
-# nohup prevents scripts from exiting if one closes the terminal shell
-nohup (command) >> nohup.out
-```
-

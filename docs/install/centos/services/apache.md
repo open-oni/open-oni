@@ -88,4 +88,3 @@ cp /opt/openoni/conf/apache/django.conf /etc/httpd/(path/to/vhost/drop-in-dir)/
 ```
 
 Or copy the contents into your virtual host file.
-
