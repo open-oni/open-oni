@@ -35,4 +35,3 @@ CREATE USER openoni@localhost IDENTIFIED BY 'password';
 
 GRANT ALL PRIVILEGES ON 'openoni%'@'localhost' TO 'openoni'@'localhost';
 ```
-

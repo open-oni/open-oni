@@ -27,6 +27,81 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.0.0-rc.1]
+[v1.0.0-rc.1]: https://github.com/open-oni/open-oni/compare/v0.13.0...v1.0.0-rc.1
+
+### Fixed
+- Reindex no longer crashes when indexing pages with no images
+- IIIF APIs no longer crash on pages that don't have images
+- Replace `url.netloc` with `url.hostname` in `settings_local.py` so sites
+  running on a nonstandard port will still work (this wouldn't be typical in
+  production, but could happen for development and staging servers)
+
+### Added
+- Documentation previously on wiki and inline code moved into `/docs` directory
+  - Organized into subdirectories and provided links for discoverability
+  - Minimally updated documentation for current docker setup
+  - Documented all supported management commands, with a particular emphasis on
+    common tasks like batch loading and purging.
+- CONTRIBUTING.md from "Contribute" and "Development Standards" wiki pages
+  - Release checklist
+- Pull request template
+- Dependency Roadmap and Resource Requirements in README.md
+
+### Changed
+- Update tablesorter JS library to 2.31.2
+- Add Bootstrap classes on skip link for better cross-browser compatibility
+  - Remove simpler CSS rules applied to `skiplink` class
+  - Retain `skiplink` class for backwards-compatibility and customization
+- Page reindexer no longer deletes pages prior to reindexing them, to avoid
+  downtime when reindexing large sites
+- Clean up Docker Apache config
+- `robots.txt` disallows `/data/` for all user agents rather than a short list
+
+### Removed
+- `core/utils/__init__.py`, which overrode `strftime` with
+  `django.utils.datetime_safe`'s `strftime` and provided alias `strftime_safe`
+  for Python 2's inability to handle dates prior to 1900. Python 3 handles dates
+  from 1000 on consistently.
+- `scripts/` directory with PyMarc test script
+
+### Migration
+- Update code using `strftime` or `strftime_safe` from `core.utils`
+  - For DateField model instances, e.g. `issue.date_issued`
+    - Remove any imports from `core.utils`
+    - Change
+      - `strftime(issue.date_issued, date_format_string)` or
+      - `strftime_safe(issue.date_issued, date_format_string)`
+      to
+      - `issue.date_issued.strftime(date_format_string)`
+  - For non-DateField model instance objects
+    - Import `date`, `datetime`, or `time` from `datetime`
+    - Make `datetime` and `time` objects aware of the timezone to avoid warning
+      messages with:
+      ```python
+      from datetime import datetime
+
+      from django.conf import settings
+      from django.utils.timezone import make_aware
+
+      dt = datetime.now()
+      dt = make_aware(dt, settings.TIME_ZONE)
+      ```
+    - Call the method on your object as `dt.strftime(date_format_string)`
+- Make sure you use replace `url.netloc` with `url.hostname` in your
+  `settings_local.py` if you have problems with hostnames!
+- If you use the reindexer routinely (`./manage.py index` or `./manage.py
+  index_pages`), and were reliant on the behavior of deleting the indexed page
+  data, you'll want to change your approach to first run `./manage.py
+  zap_index`.  The new behavior deliberately does *not* delete pages
+  implicitly.
+
+### Contributors
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Andrew Gearhart (andrewgearhart)
+- Greg Tunink (techgique)
+
 ## [v0.13.0] - Open ONI components all using supported versions
 [v0.13.0]: https://github.com/open-oni/open-oni/compare/v0.12.1...v0.13.0
 

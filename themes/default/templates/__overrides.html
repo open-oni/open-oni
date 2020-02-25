@@ -3,52 +3,11 @@
 {% load static %}
 
 {% comment %}
-  This file sits between base and layouts, __l_(layout).html files, so you can
-  override parts of __base.html.
+  To customize your installation, create a new "__overrides.html" file in the
+  appropriate theme location and override blocks of code from "__base.html."
 
-  All of the templates should be building off of this template, so
-  there is no need to alter "__base.html" nor to duplicate it in new themes.
-
-  {{ block.super }} includes the contents of the original / parent block
-
-  To customize the look and feel of your installation, create
-  a new "__overrides.html" file in the appropriate theme
-  (themes/your_theme/templates/__overrides.html) and override blocks of code
-  from "__base.html" as desired. The blocks in __base.html are listed below:
-
-  head_all
-    head_site_meta
-    head_opensearch
-    head_page_meta
-    head_page_title
-    head_page_css
-    javascript
-    head_item_metadata
-    head_extra
-
-  body_content
-    header
-      header_title
-      navbar
-        navbar_home
-        navbar_pos1
-        navbar_pos2
-        navbar_pos3
-        navbar_pos4
-        navbar_pos5
-        navbar_advancedsearch
-        navbar_search
-
-    breadcrumbs
-
-    content
-      page_head_container
-        page_head
-          sub_page_head
-      main_content
-      subcontent
-
-  footer
+  Please see "/docs/customization/theme.md" for information about the
+  available template blocks and overriding recommendations.
 {% endcomment %}
 
 {% block head_site_meta %}

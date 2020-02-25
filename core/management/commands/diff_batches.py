@@ -15,7 +15,13 @@ _logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = "Diff batches by name from a batch list file"
+    help = """
+    Given a file with batch names, shows a list of batches and an indicator of
+    their status relative to the current system's batch list.  If a batch is in the
+    system but not in the file, it is prefixed with a plus `+`.  If a batch is in
+    the system and the file, it is prefixed with a space ` `.  If a batch is not in
+    the system but is listed in the file, it is prefixed with a minus `-`.
+    """
 
     def add_arguments(self, parser):
         # Positional arguments

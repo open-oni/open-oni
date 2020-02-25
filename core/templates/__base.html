@@ -61,7 +61,9 @@
     {% block body_content %}
       <header class="site_header">
         {# Skip link before all other content #}
-        <a class="skiplink" href="#maincontent">Skip to main content</a>
+        <a class="skiplink sr-only sr-only-focusable" href="#maincontent">
+          Skip to main content
+        </a>
 
         {% block header %}
           {% block header_title %}
