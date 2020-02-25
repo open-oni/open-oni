@@ -63,11 +63,10 @@ tablesorter | 2.31.2 | Unknown | TBD | https://github.com/mottie/tablesorter/
 
 ## Documentation
 - [Installation, Configuration, and
-  Troubleshooting](https://github.com/open-oni/open-oni/tree/master/docs)
-- [Development Standards, General
-  Information](https://github.com/open-oni/open-oni/wiki)
-- [Changelog](/CHANGELOG.md)
-- [Contribute](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
+  Troubleshooting](https://github.com/open-oni/open-oni/tree/dev/docs)
+  - [Wiki - Additional Deployment Info](https://github.com/open-oni/open-oni/wiki)
+- [Changelog](https://github.com/open-oni/open-oni/tree/dev/CHANGELOG.md)
+- [Contribute](https://github.com/open-oni/open-oni/tree/dev/CONTRIBUTING.md)
 - [About Open ONI, Project History](https://open-oni.github.io/)
 
 ## Support
@@ -106,8 +105,10 @@ your generous assistance.
 
 ## Contribute
 If you are interested in collaborating on the project, please review
-[CONTRIBUTING.md](https://github.com/open-oni/open-oni/CONTRIBUTING.md)
-for more details.
+[CONTRIBUTING.md](https://github.com/open-oni/open-oni/tree/dev/CONTRIBUTING.md)
+for more details. Everyone interacting within the Open ONI community is expected
+to follow the [Open ONI Community Code of
+Conduct](https://github.com/open-oni/open-oni/tree/dev/CODE_OF_CONDUCT.md)
 
 ## License
 [Licensed](https://github.com/open-oni/open-oni/blob/master/LICENSE) under the
