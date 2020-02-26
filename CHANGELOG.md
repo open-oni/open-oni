@@ -27,6 +27,23 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [Unreleased]
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...dev
+
+### Fixed
+
+### Added
+
+### Changed
+
+### Removed
+
+### Migration
+
+### Deprecated
+
+### Contributors
+
 ## [v1.0.0-rc.1]
 [v1.0.0-rc.1]: https://github.com/open-oni/open-oni/compare/v0.13.0...v1.0.0-rc.1
 
