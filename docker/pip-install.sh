@@ -2,8 +2,8 @@
 
 # Create and activate Python virtual environment
 pip3 install -U pip
-pip install --upgrade virtualenv
 pip install -U setuptools
+pip install -U virtualenv
 virtualenv -p python3 ENV
 source ENV/bin/activate
 
