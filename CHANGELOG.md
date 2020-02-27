@@ -27,23 +27,17 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [Unreleased]
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...dev
+## [v1.0.0-rc.2]
+[v1.0.0-rc.2]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0-rc.2
 
 ### Fixed
 - Fresh docker builds work again
 
-### Added
-
-### Changed
-
-### Removed
-
-### Migration
-
-### Deprecated
-
 ### Contributors
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Andrew Gearhart (andrewgearhart)
+- Greg Tunink (techgique)
 
 ## [v1.0.0-rc.1]
 [v1.0.0-rc.1]: https://github.com/open-oni/open-oni/compare/v0.13.0...v1.0.0-rc.1
