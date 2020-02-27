@@ -31,6 +31,7 @@ Markdown Spec](https://github.github.com/gfm/).
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...dev
 
 ### Fixed
+- Fresh docker builds work again
 
 ### Added
 
