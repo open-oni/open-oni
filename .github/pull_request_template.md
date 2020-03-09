@@ -23,9 +23,10 @@
 
 - [ ] Verify all tests pass
 - [ ] Review changes for behavior, bugs, and compliance with [Development
-  Standards](/CONTRIBUTING.md#development-standards)
+  Standards](https://github.com/open-oni/open-oni/tree/dev/CONTRIBUTING.md#development-standards)
   - Request the submitter make any changes rather than pushing changes yourself.
     Otherwise ask another reviewer to look at any changes you have made.
-- [ ] If a release, follow the [Release Checklist](/CONTRIBUTING.md#release-checklist)
+- [ ] If a release, follow the [Release
+  Checklist](https://github.com/open-oni/open-oni/tree/dev/CONTRIBUTING.md#release-checklist)
 <!-- Markdown renders in unwanted carriage return if this text is continued on
      the next line, so breaking character margin intentionally here -->
