@@ -141,6 +141,7 @@ Language Notes:
 
 Follow these steps for each Open ONI release:
 
+- Ensure `core/version.py` is set to the new version on the release PR
 - Review and merge the release PR into `master`
 - [Create a GitHub release](https://github.com/open-oni/open-oni/releases/new)
 - Update [open-oni.github.io
