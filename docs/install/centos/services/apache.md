@@ -14,7 +14,7 @@
 General installation and configuration is outside the scope of Open ONI
 documentation, but installing the necessary packages is the first step:
 
-`yum install httpd httpd-devel mod_ssl`
+`yum install httpd httpd-devel mod_ssl policycoreutils-python`
 
 ### SELinux Permissions
 SELinux requires Open ONI's file have appropriate file contexts for Apache
