@@ -54,7 +54,13 @@ sudo restorecon -F -R /opt/openoni/ENV/
 mod_wsgi-express module-config
 ```
 
-Add the directives to your Apache server-wide configuration. These are not allowed inside `<VirtualHost>`. They should resemble:
+Add the directives to your Apache server-wide configuration, because they are
+not allowed inside `<VirtualHost>` blocks. Unless you have a custom
+configuration file organization, this should be either
+`/etc/httpd/conf/httpd.conf` or you may separate the directives into their own
+drop-in file in `etc/httpd/conf.d/`, e.g. `mod_wsgi_openoni_py36.conf`.
+
+They should resemble:
 ```ini
 LoadModule wsgi_module "/opt/openoni/ENV/lib64/python3.6/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so"
 WSGIPythonHome "/opt/openoni/ENV"
