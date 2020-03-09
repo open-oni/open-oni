@@ -55,7 +55,7 @@ Open ONI requires Python 3, so we install it and create a [virtual
 environment](https://docs.python.org/3.6/library/venv.html) for Open ONI.
 
 ```bash
-sudo yum install python3
+sudo yum install python3-devel
 
 cd /opt/openoni/
 python3 -m venv ENV
