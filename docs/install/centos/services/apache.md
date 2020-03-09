@@ -69,7 +69,7 @@ WSGIPythonHome "/opt/openoni/ENV"
 mod_wsgi also needs this directive applied server-wide:
 
 ```ini
-WSGISocketPrefix /var/run/mod_wsgi/
+WSGISocketPrefix /run/mod_wsgi/
 ```
 
 ## Configure
