@@ -108,6 +108,15 @@ Markdown Spec](https://github.github.com/gfm/).
   zap_index`.  The new behavior deliberately does *not* delete pages
   implicitly.
 
+### Deprecated
+- `manage.py` admin commands:
+  - `batches`
+  - `commit_index`
+  - `delete_cache`
+  - `link_places`
+  - `purge_etitles`
+  - `reconcile`
+
 ### Contributors
 - Jessica Dussault (jduss4)
 - Jeremy Echols (jechols)
