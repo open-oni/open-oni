@@ -32,8 +32,18 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Fixed
 - Fresh docker builds work again
+- Incorrect and missing packages in CentOS install documentation
+
+### Added
+- Link to RAIS native install documentation
+
+### Changed
+- Release checklist and PR template mention `core/release.py`; use better links
+- Clarify CentOS install Readme organization, mod_wsgi Apache directive
+  placement, service dependencies, MariaDB commands
 
 ### Contributors
+- Michael Carr
 - Jessica Dussault (jduss4)
 - Jeremy Echols (jechols)
 - Andrew Gearhart (andrewgearhart)
