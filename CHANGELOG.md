@@ -27,11 +27,10 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [v1.0.0-rc.2]
-[v1.0.0-rc.2]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0-rc.2
+## [v1.0.0] - Official Public Release
+[v1.0.0]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0
 
 ### Fixed
-- Fresh docker builds work again
 - Incorrect and missing packages in CentOS install documentation
 
 ### Added
@@ -39,11 +38,20 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Changed
 - Release checklist and PR template mention `core/release.py`; use better links
-- Clarify CentOS install Readme organization, mod_wsgi Apache directive
+- Clarify CentOS install Readme organization, `mod_wsgi` Apache directive
   placement, service dependencies, MariaDB commands
 
 ### Contributors
 - Michael Carr
+- Jeremy Echols (jechols)
+
+## [v1.0.0-rc.2]
+[v1.0.0-rc.2]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0-rc.2
+
+### Fixed
+- Fresh docker builds work again
+
+### Contributors
 - Jessica Dussault (jduss4)
 - Jeremy Echols (jechols)
 - Andrew Gearhart (andrewgearhart)
