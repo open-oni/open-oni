@@ -45,10 +45,11 @@ Markdown Spec](https://github.github.com/gfm/).
 Make sure you read *all* Migration notes from whatever release you're running
 through this release!  This final release changes so little that there are no
 notes here, but if you're coming from 0.10, for instance, you really need to
-look at all migratoin notes from 0.11 and on!
+look at all migration notes from 0.11 and on!
 
 ### Contributors
 - Michael Carr
+- Greg Tunink (techgique)
 - Jeremy Echols (jechols)
 
 ## [v1.0.0-rc.2]
