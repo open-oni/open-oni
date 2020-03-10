@@ -2,12 +2,17 @@
 
 **Contents**
 
+- [Dependencies](#dependencies)
 - [Install](#install)
     - [SELinux Permissions](#selinux-permissions)
     - [mod_wsgi](#mod_wsgi)
 - [Configure](#configure)
     - [mod_wsgi Run Directory](#mod_wsgi-run-directory)
     - [Virtual Host Config](#virtual-host-config)
+
+## Dependencies
+- Download the [Open ONI files](/docs/install/centos/README.md#open-oni-files)
+- Prepare the [Python environment](/docs/install/centos/README.md#python-environment)
 
 ## Install
 

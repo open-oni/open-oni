@@ -14,6 +14,7 @@
 ## Docker Install
 
 ### Dependencies
+- Download the [Open ONI files](/docs/install/centos/README.md#open-oni-files)
 
 ```bash
 sudo yum install docker docker-compose
