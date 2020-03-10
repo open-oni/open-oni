@@ -41,6 +41,12 @@ Markdown Spec](https://github.github.com/gfm/).
 - Clarify CentOS install Readme organization, `mod_wsgi` Apache directive
   placement, service dependencies, MariaDB commands
 
+### Migration
+Make sure you read *all* Migration notes from whatever release you're running
+through this release!  This final release changes so little that there are no
+notes here, but if you're coming from 0.10, for instance, you really need to
+look at all migratoin notes from 0.11 and on!
+
 ### Contributors
 - Michael Carr
 - Jeremy Echols (jechols)
