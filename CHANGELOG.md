@@ -32,8 +32,18 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Fixed
 - Fresh docker builds work again
+- Incorrect and missing packages in CentOS install documentation
+
+### Added
+- Link to RAIS native install documentation
+
+### Changed
+- Release checklist and PR template mention `core/release.py`; use better links
+- Clarify CentOS install Readme organization, mod_wsgi Apache directive
+  placement, service dependencies, MariaDB commands
 
 ### Contributors
+- Michael Carr
 - Jessica Dussault (jduss4)
 - Jeremy Echols (jechols)
 - Andrew Gearhart (andrewgearhart)
@@ -107,6 +117,15 @@ Markdown Spec](https://github.github.com/gfm/).
   data, you'll want to change your approach to first run `./manage.py
   zap_index`.  The new behavior deliberately does *not* delete pages
   implicitly.
+
+### Deprecated
+- `manage.py` admin commands:
+  - `batches`
+  - `commit_index`
+  - `delete_cache`
+  - `link_places`
+  - `purge_etitles`
+  - `reconcile`
 
 ### Contributors
 - Jessica Dussault (jduss4)

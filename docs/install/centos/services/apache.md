@@ -2,6 +2,7 @@
 
 **Contents**
 
+- [Dependencies](#dependencies)
 - [Install](#install)
     - [SELinux Permissions](#selinux-permissions)
     - [mod_wsgi](#mod_wsgi)
@@ -9,12 +10,16 @@
     - [mod_wsgi Run Directory](#mod_wsgi-run-directory)
     - [Virtual Host Config](#virtual-host-config)
 
+## Dependencies
+- Download the [Open ONI files](/docs/install/centos/README.md#open-oni-files)
+- Prepare the [Python environment](/docs/install/centos/README.md#python-environment)
+
 ## Install
 
 General installation and configuration is outside the scope of Open ONI
 documentation, but installing the necessary packages is the first step:
 
-`yum install httpd httpd-devel mod_ssl`
+`yum install httpd httpd-devel mod_ssl policycoreutils-python`
 
 ### SELinux Permissions
 SELinux requires Open ONI's file have appropriate file contexts for Apache
@@ -54,7 +59,13 @@ sudo restorecon -F -R /opt/openoni/ENV/
 mod_wsgi-express module-config
 ```
 
-Add the directives to your Apache server-wide configuration. These are not allowed inside `<VirtualHost>`. They should resemble:
+Add the directives to your Apache server-wide configuration, because they are
+not allowed inside `<VirtualHost>` blocks. Unless you have a custom
+configuration file organization, this should be either
+`/etc/httpd/conf/httpd.conf` or you may separate the directives into their own
+drop-in file in `etc/httpd/conf.d/`, e.g. `mod_wsgi_openoni_py36.conf`.
+
+They should resemble:
 ```ini
 LoadModule wsgi_module "/opt/openoni/ENV/lib64/python3.6/site-packages/mod_wsgi/server/mod_wsgi-py36.cpython-36m-x86_64-linux-gnu.so"
 WSGIPythonHome "/opt/openoni/ENV"
@@ -63,7 +74,7 @@ WSGIPythonHome "/opt/openoni/ENV"
 mod_wsgi also needs this directive applied server-wide:
 
 ```ini
-WSGISocketPrefix /var/run/mod_wsgi/
+WSGISocketPrefix /run/mod_wsgi/
 ```
 
 ## Configure
