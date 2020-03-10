@@ -3,27 +3,15 @@
 This documentation focuses on deployment of Open ONI for production on CentOS 7.
 
 Start with the instructions in this document to download the Open ONI files and
-set up the Python environment, then configure the services (
-[Apache](/docs/install/centos/services/apache.md),
-[MariaDB](/docs/install/centos/services/mariadb.md),
-[RAIS](/docs/install/centos/services/rais.md),
-[Solr](/docs/install/centos/services/solr.md))
-which Open ONI relies upon, and finally configure the [Open ONI Django
-App](/docs/install/centos/openoni.md) itself.
+set up the Python environment. Then configure the services Apache, MariaDB,
+RAIS, and Solr which Open ONI relies upon. Finally configure the Open ONI Django
+app itself.
 
 **Contents**
 
-Within this document:
 - [Open ONI Files](#open-oni-files)
 - [Python Environment](#python-environment)
-
-Separate documents:
-- [Services](/docs/install/centos/services/)
-    - [Apache](/docs/install/centos/services/apache.md)
-    - [MariaDB](/docs/install/centos/services/mariadb.md)
-    - [RAIS](/docs/install/centos/services/rais.md)
-    - [Solr](/docs/install/centos/services/solr.md)
-- [Open ONI Django App](/docs/install/centos/openoni.md)
+- [Other Documents](#other-documents)
 
 ## Open ONI Files
 Here is an outline of important default file locations for Open ONI:
@@ -65,3 +53,15 @@ source ENV/bin/activate
 pip install -U pip
 pip install -U setuptools
 ```
+
+## Other Documents
+Now follow the documentation to install the services and Open ONI Django app in
+the order listed here:
+
+- [Services](/docs/install/centos/services/)
+    - [Apache](/docs/install/centos/services/apache.md)
+    - [MariaDB](/docs/install/centos/services/mariadb.md)
+    - [RAIS](/docs/install/centos/services/rais.md)
+    - [Solr](/docs/install/centos/services/solr.md)
+- [Open ONI Django App](/docs/install/centos/openoni.md)
+
