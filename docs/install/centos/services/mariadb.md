@@ -31,7 +31,9 @@ on `openoni%` schema(s)
 ```bash
 CREATE SCHEMA `openoni`;
 
+USE openoni;
+
 CREATE USER openoni@localhost IDENTIFIED BY 'password';
 
-GRANT ALL PRIVILEGES ON 'openoni%'@'localhost' TO 'openoni'@'localhost';
+GRANT ALL PRIVILEGES ON 'openoni'@'localhost' TO 'openoni'@'localhost';
 ```

@@ -2,8 +2,13 @@
 
 **Contents**
 
+- [Dependencies](#dependencies)
 - [Install](#install)
 - [Configure](#configure)
+
+## Dependencies
+- Download the [Open ONI files](/docs/install/centos/README.md#open-oni-files)
+- Prepare the [Python environment](/docs/install/centos/README.md#python-environment)
 
 ## Install
 

@@ -2,17 +2,19 @@
 
 **Contents**
 
-- [Install](#install)
+- [Docker Install](#docker-install)
     - [Dependencies](#dependencies)
     - [Download from GitHub](#download-from-github)
     - [Configure Permissions](#configure-permissions)
     - [Configure Docker Compose](#configure-docker-compose)
         - [Override File](#override-file)
     - [Add Apache Config](#add-apache-config)
+- [Native Install](#native-install)
 
-## Install
+## Docker Install
 
 ### Dependencies
+- Download the [Open ONI files](/docs/install/centos/README.md#open-oni-files)
 
 ```bash
 sudo yum install docker docker-compose
@@ -129,3 +131,9 @@ sudo cp /opt/openoni/conf/apache/rais.conf /etc/httpd/(path/to/vhost/drop-in-dir
 ```
 
 Or copy the contents into your virtual host file.
+
+## Native Install
+Alternatively, you may wish to install RAIS without the use of Docker. RAIS
+provides [native install
+documentation](https://github.com/uoregon-libraries/rais-image-server/wiki/Manual-Setup)
+with a stern disclaimer.

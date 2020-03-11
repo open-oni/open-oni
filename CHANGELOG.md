@@ -27,6 +27,31 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.0.0] - Official Public Release
+[v1.0.0]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0
+
+### Fixed
+- Incorrect and missing packages in CentOS install documentation
+
+### Added
+- Link to RAIS native install documentation
+
+### Changed
+- Release checklist and PR template mention `core/release.py`; use better links
+- Clarify CentOS install Readme organization, `mod_wsgi` Apache directive
+  placement, service dependencies, MariaDB commands
+
+### Migration
+Make sure you read *all* Migration notes from whatever release you're running
+through this release!  This final release changes so little that there are no
+notes here, but if you're coming from 0.10, for instance, you really need to
+look at all migration notes from 0.11 and on!
+
+### Contributors
+- Michael Carr
+- Greg Tunink (techgique)
+- Jeremy Echols (jechols)
+
 ## [v1.0.0-rc.2]
 [v1.0.0-rc.2]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0-rc.2
 
@@ -107,6 +132,15 @@ Markdown Spec](https://github.github.com/gfm/).
   data, you'll want to change your approach to first run `./manage.py
   zap_index`.  The new behavior deliberately does *not* delete pages
   implicitly.
+
+### Deprecated
+- `manage.py` admin commands:
+  - `batches`
+  - `commit_index`
+  - `delete_cache`
+  - `link_places`
+  - `purge_etitles`
+  - `reconcile`
 
 ### Contributors
 - Jessica Dussault (jduss4)
