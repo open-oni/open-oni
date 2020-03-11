@@ -27,11 +27,20 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [v1.0.0-rc.2]
-[v1.0.0-rc.2]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0-rc.2
+## [v1.0.1] - Changelog fixes
+[v1.0.1]: https://github.com/open-oni/open-oni/compare/v1.0.0...v1.0.1
 
 ### Fixed
-- Fresh docker builds work again
+- Minor changelog typos fixed for the 1.0.0 release.  Dang it.
+
+### Contributors
+- Greg Tunink (techgique)
+- Jeremy Echols (jechols)
+
+## [v1.0.0] - Official Public Release
+[v1.0.0]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.2...v1.0.0
+
+### Fixed
 - Incorrect and missing packages in CentOS install documentation
 
 ### Added
@@ -39,11 +48,27 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Changed
 - Release checklist and PR template mention `core/release.py`; use better links
-- Clarify CentOS install Readme organization, mod_wsgi Apache directive
+- Clarify CentOS install Readme organization, `mod_wsgi` Apache directive
   placement, service dependencies, MariaDB commands
+
+### Migration
+Make sure you read *all* Migration notes from whatever release you're running
+through this release!  This final release changes so little that there are no
+notes here, but if you're coming from 0.10, for instance, you really need to
+look at all migration notes from 0.11 and on!
 
 ### Contributors
 - Michael Carr
+- Greg Tunink (techgique)
+- Jeremy Echols (jechols)
+
+## [v1.0.0-rc.2]
+[v1.0.0-rc.2]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0-rc.2
+
+### Fixed
+- Fresh docker builds work again
+
+### Contributors
 - Jessica Dussault (jduss4)
 - Jeremy Echols (jechols)
 - Andrew Gearhart (andrewgearhart)
