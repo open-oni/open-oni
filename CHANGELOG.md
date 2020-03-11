@@ -28,7 +28,7 @@ Markdown Spec](https://github.github.com/gfm/).
 -->
 
 ## [v1.0.0] - Official Public Release
-[v1.0.0]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.1...v1.0.0
+[v1.0.0]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.2...v1.0.0
 
 ### Fixed
 - Incorrect and missing packages in CentOS install documentation
