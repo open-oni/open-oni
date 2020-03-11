@@ -27,6 +27,16 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.0.1] - Changelog fixes
+[v1.0.1]: https://github.com/open-oni/open-oni/compare/v1.0.0...v1.0.1
+
+### Fixed
+- Minor changelog typos fixed for the 1.0.0 release.  Dang it.
+
+### Contributors
+- Greg Tunink (techgique)
+- Jeremy Echols (jechols)
+
 ## [v1.0.0] - Official Public Release
 [v1.0.0]: https://github.com/open-oni/open-oni/compare/v1.0.0-rc.2...v1.0.0
 
