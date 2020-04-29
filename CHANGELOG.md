@@ -30,8 +30,18 @@ Markdown Spec](https://github.github.com/gfm/).
 ## [Unreleased] - Enabled apache mod_ssl
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
 
+### Fixed
+
 ### Added
  - Enabled apache mod_ssl in web image build
+
+### Changed
+
+### Removed
+
+### Migration
+
+### Deprecated
 
 ### Contributors
  - Jim Campbell (lauterman)
