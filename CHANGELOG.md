@@ -27,23 +27,6 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [Unreleased] - Brief description
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
-
-### Fixed
-
-### Added
-
-### Changed
-
-### Removed
-
-### Migration
-
-### Deprecated
-
-### Contributors
-
 ## [Unreleased] - Enabled apache mod_ssl
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
 
