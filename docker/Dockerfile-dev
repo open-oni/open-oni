@@ -21,7 +21,7 @@ RUN apt-get update && \
 # Force apache error logs to stderr
 RUN ln -sf /proc/self/fd/1 /var/log/apache2/error.log
 
-RUN a2enmod cache cache_disk expires rewrite proxy_http
+RUN a2enmod cache cache_disk expires rewrite proxy_http ssl
 RUN mkdir -p /var/cache/httpd/mod_disk_cache
 RUN chown -R www-data:www-data /var/cache/httpd
 RUN a2dissite 000-default.conf

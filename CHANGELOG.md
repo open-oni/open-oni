@@ -27,12 +27,13 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [Unreleased] - Brief description
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.1...dev
+## [Unreleased] - Enabled apache mod_ssl
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
 
 ### Fixed
 
 ### Added
+ - Enabled apache mod_ssl in web image build
 
 ### Changed
 
@@ -43,6 +44,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Deprecated
 
 ### Contributors
+ - Jim Campbell (lauterman)
 
 ## [v1.0.1] - Changelog fixes
 [v1.0.1]: https://github.com/open-oni/open-oni/compare/v1.0.0...v1.0.1
@@ -801,4 +803,3 @@ bugs only discovered when there were multiple pages of batches
 
 This is the official initial release of Open ONI. The changes since forking are
 too numerous to try and describe.
-
