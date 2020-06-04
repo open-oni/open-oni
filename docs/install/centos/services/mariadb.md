@@ -35,5 +35,5 @@ USE openoni;
 
 CREATE USER openoni@localhost IDENTIFIED BY 'password';
 
-GRANT ALL PRIVILEGES ON openoni TO 'openoni'@'localhost';
+GRANT ALL PRIVILEGES ON openoni.* TO 'openoni'@'localhost';
 ```
