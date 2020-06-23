@@ -34,8 +34,10 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Added
  - Enabled apache mod_ssl in web image build
+ - Included codebase as part of Dockerfile build
 
 ### Changed
+ - Moved Dockerfile-dev to Dockerfile to support automated builds
 
 ### Removed
 
@@ -45,6 +47,7 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Contributors
  - Jim Campbell (lauterman)
+ - Andrew Gearhart (andrewgearhart)
 
 ## [v1.0.1] - Changelog fixes
 [v1.0.1]: https://github.com/open-oni/open-oni/compare/v1.0.0...v1.0.1
