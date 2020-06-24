@@ -5,11 +5,6 @@
 
 src=/opt/openoni/docker
 
-# Set source to the read-only ONI source mount for test runs
-if [[ $ONLY_RUN_TESTS == 1 ]]; then
-  src=/usr/local/src/openoni/docker
-fi
-
 mkdir -p /var/local/onidata/batches
 cp $src/pip-install.sh /pip-install.sh
 cp $src/pip-reinstall.sh /pip-reinstall.sh
