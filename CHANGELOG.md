@@ -31,6 +31,7 @@ Markdown Spec](https://github.github.com/gfm/).
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
 
 ### Fixed
+ - Path for entrypoint.sh for CI builds from main repo directory
 
 ### Added
  - Enabled apache mod_ssl in web image build
