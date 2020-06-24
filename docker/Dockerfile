@@ -28,6 +28,7 @@ RUN a2dissite 000-default.conf
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 WORKDIR /opt/openoni
+ADD . /opt/openoni
 
 ADD entrypoint.sh /
 RUN chmod u+x /entrypoint.sh

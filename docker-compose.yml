@@ -30,7 +30,7 @@ services:
   web:
     build:
       context: ./docker
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
     volumes:
       - ./:/opt/openoni:z
     ports:
