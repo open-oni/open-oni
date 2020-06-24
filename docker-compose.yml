@@ -29,8 +29,8 @@ services:
       - ./data/batches:/opt/openoni/data/batches:z
   web:
     build:
-      context: ./docker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./docker/Dockerfile
     volumes:
       - ./:/opt/openoni:z
     ports:

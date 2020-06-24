@@ -20,8 +20,8 @@ services:
       - openoni
   test:
     build:
-      context: ./docker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./docker/Dockerfile
     volumes:
       - ./:/usr/local/src/openoni:ro
       - onisrc:/opt/openoni
