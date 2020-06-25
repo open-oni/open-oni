@@ -41,6 +41,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds
  - Streamlined Test runner scripts
+ - Removed use of volumes in test-compose.yml
 
 ### Removed
 
