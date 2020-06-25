@@ -27,6 +27,15 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.0.2] - Solrpy
+[v1.0.2]: https://github.com/open-oni/open-oni/compare/v1.0.1...v1.0.2
+
+### Fixed
+- Pinned solrpy to 0.99 as newer versions had breaking changes
+
+### Contributors
+- Jeremy Echols (jechols)
+
 ## [v1.0.1] - Changelog fixes
 [v1.0.1]: https://github.com/open-oni/open-oni/compare/v1.0.0...v1.0.1
 
