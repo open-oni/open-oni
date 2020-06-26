@@ -13,7 +13,7 @@
   - [ ] Describe change(s) in appropriate section(s)
   - [ ] List self in Contributors section
 - If a release PR:
-  - [ ] Replace `[Unreleased]` with version and update compare link
+  - [ ] In `CHANGELOG.md`, replace `[Unreleased]` with version and update compare link
   - [ ] Update `core/version.py` with new version
 - [ ] Resolve merge conflicts
 - [ ] @mention individual(s) you would like to review the PR
