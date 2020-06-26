@@ -27,8 +27,8 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [Unreleased] - Enabled apache mod_ssl
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
+## [Unreleased]
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.2...dev
 
 ### Fixed
 
@@ -48,6 +48,15 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
  - Jim Campbell (lauterman)
  - Andrew Gearhart (andrewgearhart)
+
+## [v1.0.2] - Solrpy
+[v1.0.2]: https://github.com/open-oni/open-oni/compare/v1.0.1...v1.0.2
+
+### Fixed
+- Pinned solrpy to 0.9.9 as newer versions had breaking changes
+
+### Contributors
+- Jeremy Echols (jechols)
 
 ## [v1.0.1] - Changelog fixes
 [v1.0.1]: https://github.com/open-oni/open-oni/compare/v1.0.0...v1.0.1
@@ -806,3 +815,4 @@ bugs only discovered when there were multiple pages of batches
 
 This is the official initial release of Open ONI. The changes since forking are
 too numerous to try and describe.
+
