@@ -31,6 +31,7 @@ Markdown Spec](https://github.github.com/gfm/).
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.2...dev
 
 ### Fixed
+- `setup_index` command now reports Solr errors more effectively
 
 ### Added
  - Enabled apache mod_ssl in web image build
@@ -48,6 +49,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
  - Jim Campbell (lauterman)
  - Andrew Gearhart (andrewgearhart)
+ - Jeremy Echols (jechols)
 
 ## [v1.0.2] - Solrpy
 [v1.0.2]: https://github.com/open-oni/open-oni/compare/v1.0.1...v1.0.2
