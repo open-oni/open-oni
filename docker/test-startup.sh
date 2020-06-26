@@ -1,16 +1,4 @@
 #!/bin/bash
-# Create a copy of ONI code with more carefully constructed settings and urls
-# for testing without pulling in custom plugins or themes
-rsync -avq \
-  --exclude="data/*" \
-  --exclude="static/cov/*" \
-  --exclude="onisite/plugins/*" \
-  --exclude="themes/*" \
-  --exclude="log/*" \
-  /usr/local/src/openoni/ /opt/openoni
-cd /opt/openoni
-rsync -avq /usr/local/src/openoni/themes/default/ /opt/openoni/themes/default
-cp /usr/local/src/openoni/themes/__init__.py /opt/openoni/themes/__init__.py
 cp onisite/urls_example.py onisite/urls.py
 
 export DJANGO_SETTINGS_MODULE=onisite.test_settings

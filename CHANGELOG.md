@@ -31,6 +31,8 @@ Markdown Spec](https://github.github.com/gfm/).
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.2...dev
 
 ### Fixed
+ - Path for entrypoint.sh for CI builds from main repo directory
+ - Interim pinned to solrpy 0.9.9 while a fix for 1.x is pending
 
 ### Added
  - Enabled apache mod_ssl in web image build
@@ -38,6 +40,8 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds
+ - Streamlined Test runner scripts
+ - Removed use of volumes in test-compose.yml
 
 ### Removed
 

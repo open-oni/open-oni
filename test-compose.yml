@@ -1,7 +1,4 @@
-version: '2'
-
-volumes:
-  onisrc:
+version: '2.1'
 
 services:
   rdbms:
@@ -20,11 +17,8 @@ services:
       - openoni
   test:
     build:
-      context: ./docker
-      dockerfile: Dockerfile
-    volumes:
-      - ./:/usr/local/src/openoni:ro
-      - onisrc:/opt/openoni
+      context: .
+      dockerfile: ./docker/Dockerfile
     depends_on:
       - rdbms
       - solr

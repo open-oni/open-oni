@@ -1,3 +1,9 @@
 open-oni/
 data
 .git/
+static/cov/
+onisite/plugins/
+themes/
+!themes/default
+!themes/__init__.py
+log/
