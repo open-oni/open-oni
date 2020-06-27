@@ -7,12 +7,9 @@ pip install -U virtualenv
 virtualenv -p python3 ENV
 source ENV/bin/activate
 
-# Install / update Open ONI dependencies
-pip install -U -r requirements.pip
+# Install Open ONI dependencies
+pip install -r requirements.lock
 
 # Miscellaneous
 install -d /opt/openoni/static
 install -d /opt/openoni/.python-eggs
-
-# Update requirements.lock
-pip list --format freeze > requirements.lock
