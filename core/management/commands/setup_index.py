@@ -78,6 +78,8 @@ class Command(BaseCommand):
         with open(fname, 'rb') as f:
             with requests.post(schema_url, data=f) as r:
                 if not self.valid_response(r):
+                    errmsg = r.json()['error']['msg']
+                    _logger.error(f'Error loading fixture file {fname}: {errmsg}')
                     return False
 
         return True
