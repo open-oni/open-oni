@@ -10,8 +10,8 @@ while getopts "cp" opt; do
     p) PERSIST=1 ;;
     ?)
       echo "Usage: test.sh [-c|p]"
-      echo "  -c Clear - Only clear test containers, images, volumes"
-      echo "  -p Persist - Keep containers, images, volumes after tests run"
+      echo "  -c Clear - Only clear Docker test env; don't run tests"
+      echo "  -p Persist - Don't clear Docker test env before or after tests"
       exit 1
       ;;
   esac
@@ -24,8 +24,10 @@ function clear_env {
   rm -rf ENV/
 }
 
-echo "Clearing test environment to start from scratch"
-clear_env
+if [[ ${PERSIST} -eq 0 ]]; then
+  echo "Clearing test environment to start from scratch"
+  clear_env
+fi
 
 if [[ ${CLEAR} -eq 1 ]]; then
   exit 0
