@@ -131,8 +131,9 @@ need, they are as follows.
 ### Setup
 
 `setup_index` **must** be run when the application is first being set up.  It
-tells Solr about all the fields we use, and configures Solr in a way that works
-for Open ONI's needs.  If this is not run, ONI *will not function*.
+verifies that Solr is initialized with the `openoni` core, then tells Solr
+about all the fields we use, and configures Solr in a way that works for Open
+ONI's needs.  If this is not run, ONI *will not function*.
 
 ### Updating
 
