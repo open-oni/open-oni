@@ -32,6 +32,8 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Fixed
 - `setup_index` command now reports Solr errors more effectively
+- RAIS now mounts the entire `data` directory so replacing `data/batches`
+  doesn't cause images to seem lost
 
 ### Added
  - Enabled apache mod_ssl in web image build
