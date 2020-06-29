@@ -28,9 +28,17 @@ RUN a2dissite 000-default.conf
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 WORKDIR /opt/openoni
-ADD . /opt/openoni
+ADD ./core /opt/openoni/core
+ADD ./manage.py /opt/openoni/manage.py
+ADD ./onisite /opt/openoni/onisite
+ADD ./requirements.lock /opt/openoni/requirements.lock
+ADD ./requirements.pip /opt/openoni/requirements.pip
+ADD ./static /opt/openoni/static
+ADD ./themes /opt/openoni/themes
+ADD ./docker /opt/openoni/docker
+RUN mkdir /opt/openoni/log
 
-ADD entrypoint.sh /
+ADD ./docker/entrypoint.sh /
 RUN chmod u+x /entrypoint.sh
 
 RUN echo "/usr/local/bin/manage delete_cache" > /etc/cron.daily/delete_cache

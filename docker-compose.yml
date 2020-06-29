@@ -26,13 +26,23 @@ services:
       - RAIS_TILEPATH=/opt/openoni/data/batches
     volumes:
       # Image files must be available at RAIS_TILEPATH
-      - ./data/batches:/opt/openoni/data/batches:z
+      - oni-data:/opt/openoni/data
   web:
     build:
-      context: ./docker
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./docker/Dockerfile
     volumes:
-      - ./:/opt/openoni:z
+      - oni-data:/opt/openoni/data
+      - oni-env:/opt/openoni/ENV
+      - ./core:/opt/openoni/core
+      - ./manage.py:/opt/openoni/manage.py
+      - ./onisite:/opt/openoni/onisite
+      - ./requirements.lock:/opt/openoni/requirements.lock
+      - ./requirements.pip:/opt/openoni/requirements.pip
+      - ./static:/opt/openoni/static
+      - ./themes:/opt/openoni/themes
+      - ./docker:/opt/openoni/docker
+      - ./log:/opt/openoni/log
     ports:
       - ${HTTPPORT:-80}:80
     depends_on:
@@ -60,3 +70,5 @@ services:
 volumes:
   data-mariadb: {}
   data-solr: {}
+  oni-env: {}
+  oni-data: {}
