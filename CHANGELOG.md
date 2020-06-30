@@ -33,6 +33,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Fixed
 - `setup_index` command now reports Solr errors more effectively
 - Removed various invalid / unnecessary ARIA role specifications
+- Fixed accessibility issues with the global search form
 
 ### Added
  - Enabled apache mod_ssl in web image build
