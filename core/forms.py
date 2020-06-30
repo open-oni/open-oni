@@ -99,6 +99,8 @@ def _titles_states():
 class CityForm(forms.Form):
     city = fields.ChoiceField(choices=[], required=False)
     city.widget.attrs["class"] = "form-control"
+    city.widget.attrs["aria-label"] = "City"
+    city.widget.attrs["id"] = "global_city_id"
 
     def __init__(self, *args, **kwargs):
         super(CityForm, self).__init__(*args, **kwargs)
