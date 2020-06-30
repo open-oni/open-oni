@@ -20,7 +20,7 @@ readonly CLEAR
 readonly PERSIST
 
 function clear_env {
-  docker-compose -f test-compose.yml -p onitest down --rmi=local -v
+  docker-compose -f test-compose.yml -p onitest down --rmi=all -v
   rm -rf ENV/
 }
 
