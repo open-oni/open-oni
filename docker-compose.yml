@@ -19,7 +19,7 @@ services:
       - solr-precreate
       - openoni
   rais:
-    image: uolibraries/rais
+    image: uolibraries/rais:3
     environment:
       - RAIS_IIIFURL=${ONI_IIIF_URL:-http://localhost/images/iiif}
       - RAIS_TILECACHELEN=250
