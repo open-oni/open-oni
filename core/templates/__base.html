@@ -130,7 +130,7 @@
 
                 {% block navbar_search %}
                 <form class="form-inline navbar-form navbar-right" method="get"
-                  action="{% url 'openoni_search_pages_results' %}">
+                  action="{% url 'openoni_search_pages_results' %}" role="search">
                   <div class="form-group">
                     {{ city_form.city }}
                     <input type="hidden" name="rows" id="rows" alt="rows"
