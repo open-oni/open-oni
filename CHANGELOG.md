@@ -53,6 +53,15 @@ Markdown Spec](https://github.github.com/gfm/).
  - Andrew Gearhart (andrewgearhart)
  - Jeremy Echols (jechols)
 
+## [v1.0.3] - Solr startup issues
+[v1.0.3]: https://github.com/open-oni/open-oni/compare/v1.0.2...v1.0.3
+
+### Fixed
+- ONI now properly waits for Solr to start up before initializing it
+
+### Contributors
+- Jeremy Echols (jechols)
+
 ## [v1.0.2] - Solrpy
 [v1.0.2]: https://github.com/open-oni/open-oni/compare/v1.0.1...v1.0.2
 

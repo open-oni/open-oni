@@ -2,6 +2,7 @@ import glob
 import logging
 import os
 import requests
+import time
 from urllib import parse
 
 from django.core.management.base import BaseCommand
@@ -13,6 +14,7 @@ configure_logging('setup_index_logging.config', 'setup_index.log')
 
 _logger = logging.getLogger(__name__)
 fixture_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../fixtures'))
+core_url = settings.SOLR_BASE_URL + '/api/cores/openoni?action=STATUS&indexInfo=false'
 schema_url = settings.SOLR_BASE_URL + '/api/cores/openoni/schema'
 
 # Copy fields are defined here because we have to manually check for dupes; for
@@ -32,6 +34,11 @@ class Command(BaseCommand):
     def handle(self, **options):
         _logger.info('Loading Solr schema fixtures')
 
+        # Wait for SOLR to respond and report that the openoni core is there
+        if not self.wait_for_solr():
+            _logger.error('Exiting...')
+            return
+
         # Schema fixtures must be idempotent!  Nothing here should cause
         # problems if run multiple times.
         schema_fixtures = sorted(glob.glob(os.path.join(fixture_dir, 'solr-schema', '*.json')))
@@ -47,6 +54,36 @@ class Command(BaseCommand):
                 if not self.create_copy_field(definition):
                     _logger.error('Exiting...')
                     return
+
+    def wait_for_solr(self):
+        for x in range(0, 120):
+            if x != 0:
+                time.sleep(1)
+            if x % 5 == 0:
+                _logger.info('Checking Solr connectivity')
+
+            try:
+                with requests.get(core_url, timeout=1.0) as r:
+                    if r.status_code != 200:
+                        if x % 5 == 0:
+                            _logger.info('Solr is not ready; waiting...')
+                        continue
+
+                    status = r.json()['status']['openoni']
+                    if 'uptime' in status:
+                        return True
+
+                    if x % 5 == 0:
+                        _logger.info('Solr is initializing the openoni core; waiting...')
+                    continue
+
+            except requests.exceptions.RequestException:
+                if x % 5 == 0:
+                    _logger.info('Solr is not responding; waiting...')
+                continue
+
+        _logger.error(f'Solr is not ready after {x} seconds; aborting')
+        return False
 
     def get_existing_copy_fields(self):
         with requests.get(schema_url) as r:
