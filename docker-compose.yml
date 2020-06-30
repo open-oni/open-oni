@@ -26,7 +26,7 @@ services:
       - RAIS_TILEPATH=/opt/openoni/data/batches
     volumes:
       # Image files must be available at RAIS_TILEPATH
-      - ./data/batches:/opt/openoni/data/batches:z
+      - ./data:/opt/openoni/data:z
   web:
     build:
       context: ./docker
