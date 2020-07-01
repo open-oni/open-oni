@@ -44,8 +44,11 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Removed
  - Hidden input fields in search forms with search type and row count
+ - Tiny and medium image template tags and methods
 
 ### Migration
+ - Change references to `tiny_image_url` or `medium_image_url`
+  in overrides to `custom_size_image_url(page, size)`
 
 ### Deprecated
 
