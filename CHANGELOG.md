@@ -43,6 +43,7 @@ Markdown Spec](https://github.github.com/gfm/).
  - Moved Dockerfile-dev to Dockerfile to support automated builds
 
 ### Removed
+ - Hidden input fields in search forms with search type and row count
 
 ### Migration
 
@@ -50,6 +51,7 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Contributors
  - Jim Campbell (lauterman)
+ - Jessica Dussault (jduss4)
  - Andrew Gearhart (andrewgearhart)
  - Jeremy Echols (jechols)
 
