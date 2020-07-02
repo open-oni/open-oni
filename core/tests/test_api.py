@@ -9,9 +9,15 @@ class ApiTests(TestCase):
     clients outside of LC.
     """
 
-    fixtures = ['test/countries.json', 'test/titles.json',
-                'test/awardee.json', 'test/batch.json', 'test/issue.json',
-                'test/page.json']
+    fixtures = [
+      'test/awardee.json',
+      'test/batch.json',
+      'test/countries.json',
+      'test/issue.json',
+      'test/page.json',
+      'test/reel.json',
+      'test/titles.json'
+    ]
 
     def test_newspaper_json(self):
         r = self.client.get("/newspapers.json")

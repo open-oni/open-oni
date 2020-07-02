@@ -12,7 +12,11 @@ from core.models import Title
 from core.models import Batch
 
 class BatchLoaderTest(TestCase):
-    fixtures = ['test/countries.json', 'test/titles.json', 'test/languages.json']
+    fixtures = [
+        'test/countries.json',
+        'test/languages.json',
+        'test/titles.json'
+    ]
 
     @classmethod
     def setUpClass(cls):
