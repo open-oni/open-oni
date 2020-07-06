@@ -81,6 +81,7 @@ LOGGING = {
             'filters': ['require_debug_true'],
         }
     },
+    'loggers': {},
     'root': {
         'handlers': ['console'],
         'level': LOG_LEVEL,
