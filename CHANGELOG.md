@@ -35,6 +35,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Removed various invalid / unnecessary ARIA role specifications
 - Fixed poor alternative text on some thumbnails
 - Fixed accessibility issues with the global search form
+- Logging now works as expected
 
 ### Added
  - Enabled apache mod_ssl in web image build

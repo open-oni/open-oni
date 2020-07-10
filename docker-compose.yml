@@ -52,6 +52,7 @@ services:
       - ONI_DEBUG
       - ONI_HSTS_SECONDS
       - ONI_IIIF_URL
+      - ONI_LOG_LEVEL
       - ONI_LOG_SQL
       - ONI_LOG_TO_FILE
       - ONI_SECRET_KEY

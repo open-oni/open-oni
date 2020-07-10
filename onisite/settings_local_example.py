@@ -45,31 +45,64 @@ SOLR_BASE_URL = os.getenv('ONI_SOLR_URL', 'http://solr:8983')
 # Absolute path on disk to the data directory
 STORAGE = os.getenv('ONI_STORAGE_PATH', os.path.join(BASE_DIR, 'data'))
 
+# Log level: start with INFO level; change to DEBUG if insufficient
+LOG_LEVEL = os.getenv('ONI_LOG_LEVEL', 'INFO')
+
+# Set up default logging configuration; this sets up various optional handlers,
+# only enabling the console output by default
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {'()': 'django.utils.log.RequireDebugTrue'},
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} [{levelname}] {module} {process:d} {thread:d} - {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{levelname}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
+            'formatter': 'verbose',
+        },
+        'sql': {
+            'class': 'logging.StreamHandler',
+            'filters': ['require_debug_true'],
+        }
+    },
+    'loggers': {},
+    'root': {
+        'handlers': ['console'],
+        'level': LOG_LEVEL,
+    },
+}
+
 """
 Django logging outputs in Apache logs by default.
 Log to file when Apache logs don't provide info or tracebacks.
 Ensure file is writeable by Apache user with SELinux writeable context:
     chcon -t httpd_sys_rw_content_t /path/to/debug.log
-Start with INFO level; change to DEBUG if insufficient
 """
 if os.getenv('ONI_LOG_TO_FILE', 0) == '1':
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'file': {
-                'level': 'INFO',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
-            },
-        },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'INFO',
-                'propagate': True,
-            },
-        },
+    LOGGING['root']['handlers'].append('file')
+
+# If ONI_LOG_SQL is true, the SQL-logging handler is enabled.  This requires
+# DEBUG to be true, otherwise logs will still be suppressed.
+if os.getenv('ONI_LOG_SQL', 0) == '1':
+    LOGGING['loggers']['django.db.backends'] = {
+        'level': 'DEBUG',
+        'handlers': ['sql'],
     }
 
 
@@ -175,31 +208,6 @@ if DEBUG:
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
-
-    if os.getenv('ONI_LOG_SQL', 0) == '1':
-        LOGGING = {
-            'version': 1,
-            'disable_existing_loggers': False,
-            'filters': {
-                'require_debug_true': {
-                    '()': 'django.utils.log.RequireDebugTrue',
-                }
-            },
-            'handlers': {
-                'console': {
-                    'level': 'DEBUG',
-                    'filters': ['require_debug_true'],
-                    'class': 'logging.StreamHandler',
-                }
-            },
-            'loggers': {
-                'django.db.backends': {
-                    'level': 'DEBUG',
-                    'handlers': ['console'],
-                }
-            }
-        }
-
 
 else:
     """
