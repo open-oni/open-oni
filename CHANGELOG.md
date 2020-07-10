@@ -48,6 +48,11 @@ Markdown Spec](https://github.github.com/gfm/).
  - Hidden input fields in search forms with search type and row count
 
 ### Migration
+- If you need more control over logging settings, and you're not already
+  replacing the settings file, you should look at what was changed with the
+  logging setup and incorporate that into your `settings_local.py` file.  The
+  full changes can be seen in the closed pull request at
+  https://github.com/open-oni/open-oni/pull/547/files.
 
 ### Deprecated
 
