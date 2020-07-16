@@ -44,6 +44,7 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds
+ - Flipped order of reel and issue display on batch info page
 
 ### Removed
  - Hidden input fields in search forms with search type and row count
