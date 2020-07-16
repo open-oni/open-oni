@@ -54,27 +54,6 @@
 </table>
 
 <p>
-<h4>Issues in Batch</h4>
-<br />
-<table class="data table table-striped table-hover">
-<tr>
-    <th>Title</th>
-    <th>Issue Date</th>
-    <th>Number of Pages</th>
-</tr>
-
-{% for issue in issues %}
-<tr class="{% cycle 'lightGray' 'white' %}">
-    <td><a href="{% url 'openoni_title' issue.lccn %}">{{ issue.title }}</a></td>
-    <td><a href="{% url 'openoni_issue_pages' issue.lccn issue.date_issued 1 %}">{{issue.date_issued }}</a></td>
-    <td>{{ issue.page_count }}</td>
-    </tr>
-    {% endfor %}
-</table>
-
-</p>
-
-<p>
   <h4>Reels in Batch</h4>
   <br />
   <table class="data table table-striped table-hover">
@@ -99,6 +78,27 @@
     {% endif %}
     {% endfor %}
   </table>
+</p>
+
+<p>
+<h4>Issues in Batch</h4>
+<br />
+<table class="data table table-striped table-hover">
+<tr>
+    <th>Title</th>
+    <th>Issue Date</th>
+    <th>Number of Pages</th>
+</tr>
+
+{% for issue in issues %}
+<tr class="{% cycle 'lightGray' 'white' %}">
+    <td><a href="{% url 'openoni_title' issue.lccn %}">{{ issue.title }}</a></td>
+    <td><a href="{% url 'openoni_issue_pages' issue.lccn issue.date_issued 1 %}">{{issue.date_issued }}</a></td>
+    <td>{{ issue.page_count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
 </p>
 
 {% endblock %}
