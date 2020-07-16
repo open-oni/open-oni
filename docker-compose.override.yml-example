@@ -19,10 +19,6 @@ services:
       - 3306:3306
 
   rais:
-    # Uncomment this to pin to a specific major release of RAIS rather than
-    # just pulling the latest
-    #image: uolibraries/rais:3
-
     ports:
       # This exposes the RAIS image server locally.  This is rarely necessary,
       # even in development, but can be handy if the Apache rules don't seem to
