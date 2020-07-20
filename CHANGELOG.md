@@ -35,7 +35,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Removed various invalid / unnecessary ARIA role specifications
 - Fixed poor alternative text on some thumbnails
 - Fixed accessibility issues with the global search form
-- Logging now works as expected
+- Logging to `log/debug.log` file in addition to the console
 - Pinned docker-compose users to RAIS 3.x to avoid breakages when 4.x ships
 
 ### Added
