@@ -44,7 +44,7 @@ git checkout master
 ```bash
 # Set SELinux context on files to be mounted in container
 sudo semanage fcontext -a -t container_file_t "/var/local/docker/rais/(?:cap-max|rais-example)\.toml"
-sud restorecon -F -R /var/local/docker/rais
+sudo restorecon -F -R /var/local/docker/rais
 
 sudo semanage fcontext -a -t container_file_t "/opt/openoni/data/batches(/.*)?"
 sudo restorecon -F -R /opt/openoni/data/batches

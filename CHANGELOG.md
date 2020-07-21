@@ -37,6 +37,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Fixed accessibility issues with the global search form
 - Logging now works as expected
 - Pinned docker-compose users to RAIS 3.x to avoid breakages when 4.x ships
+- Typo in CentOS RAIS docs for SELinux file context application command
 
 ### Added
  - Enabled apache mod_ssl in web image build
