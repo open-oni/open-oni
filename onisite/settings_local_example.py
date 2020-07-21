@@ -16,9 +16,9 @@ ALLOWED_HOSTS = [url.hostname]
 
 if url.scheme == 'https':
     """
-    Enable HSTS by setting SECURE_HSTS_SECONDS > 0.
+    Enable HSTS by setting ONI_HSTS_SECONDS > 0.
     Test with a low value (e.g. 300)
-    before setting a high value (e.g. 15552000) for long-term use
+    before setting a high value (e.g. 31536000) for long-term use
     """
     SECURE_HSTS_SECONDS = int(os.getenv('ONI_HSTS_SECONDS', 0))
 
