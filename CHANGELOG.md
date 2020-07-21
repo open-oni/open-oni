@@ -38,6 +38,8 @@ Markdown Spec](https://github.github.com/gfm/).
 - Logging now works as expected
 - Pinned docker-compose users to RAIS 3.x to avoid breakages when 4.x ships
 - Typo in CentOS RAIS docs for SELinux file context application command
+- Mistake in path for local settings copy command and outdated, non-general
+  examples in CentOS OpenONI web app configuration documentation
 
 ### Added
  - Enabled apache mod_ssl in web image build
