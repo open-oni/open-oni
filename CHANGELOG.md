@@ -52,8 +52,8 @@ Markdown Spec](https://github.github.com/gfm/).
      for reference, not duplicating `BASE_DIR`
    - `ONI_IIIF_URL` defaults to `BASE_URL` + `/images/iiif`, like Apache config
    - `ONI_LOG_TO_FILE` places `debug.log` within `LOG_LOCATION` directory
-   - `docs/customization/configuration.md` updated to reflect re-organization
-     with revised descriptions
+   - Updated `docs/customization/configuration.md` to reflect re-organization
+     with revised descriptions and simpler instructions
    - Include resets in `test_settings.py` to keep test output simple
 
 ### Removed

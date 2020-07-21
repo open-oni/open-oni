@@ -16,35 +16,13 @@ cp onisite/settings_local_example.py onisite/settings_local.py
 
 For initial customization, search and update values beginning with `YOUR_`.
 
-Beyond that, overrides are simple - you just redefine a value. Additional
-settings are documented in
-[`onisite/settings_base.py`](/onisite/settings_base.py). Most simple
-installations will not need to override these settings, but they are available
-for advanced users.
+We recommend remaining configuration be set via [environment
+variables](#environment-variables), but additional settings documented in
+[`onisite/settings_base.py`](/onisite/settings_base.py) are available for
+complex deployments. Keep in mind that additional settings file customizations
+could make future Open ONI release upgrades more difficult.
 
-## onisite/urls.py
-
-Copy the example file:
-
-```bash
-cp onisite/urls_example.py onisite/urls.py
-```
-
-For most setups, that's all you need to do!
-
-If you add an app or theme that's more than just UI changes, it's possible
-you'll have to add its routing rules to `onisite/urls.py`. A simple example
-might be adding a state map app which has handlers for displaying itself.
-
-Let's say you're running an ONI site at `http://example.com`. If you add
-something like this to your file, you'd be telling the `statemap` app to handle
-anything under `http://example.com/map`:
-
-```python
-  url('^map/', include("statemap.urls")),
-```
-
-## Environment Variable Configuration
+## Environment Variables
 These settings are most likely to need to be altered across different
 environments, such as development vs. staging vs. production. Environment
 variables are used in a few different files and are provided to reduce the need
@@ -100,4 +78,26 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
  value like `31536000` for long-term use in production
 - `ONI_IIIF_URL` (default = BASE_URL + `/images/iiif`): URL at which ONI
  will serve IIIF images, proxied to the IIIF server by Apache
+
+## `onisite/urls.py`
+
+Copy the example file:
+
+```bash
+cp onisite/urls_example.py onisite/urls.py
+```
+
+For most setups, that's all you need to do!
+
+If you add an app or theme that's more than just UI changes, it's possible
+you'll have to add its routing rules to `onisite/urls.py`. A simple example
+might be adding a state map app which has handlers for displaying itself.
+
+Let's say you're running an ONI site at `http://example.com`. If you add
+something like this to your file, you'd be telling the `statemap` app to handle
+anything under `http://example.com/map`:
+
+```python
+  url('^map/', include("statemap.urls")),
+```
 
