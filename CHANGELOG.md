@@ -41,6 +41,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Added
  - Enabled apache mod_ssl in web image build
  - Included codebase as part of Dockerfile build
+ - `ONI_STORAGE_PATH` env var, missed in previous edits to `docker-compose.yml`
 
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds

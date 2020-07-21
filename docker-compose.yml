@@ -57,6 +57,7 @@ services:
       - ONI_LOG_TO_FILE
       - ONI_SECRET_KEY
       - ONI_SOLR_URL
+      - ONI_STORAGE_PATH
 
 volumes:
   data-mariadb: {}
