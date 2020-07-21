@@ -52,6 +52,7 @@ Markdown Spec](https://github.github.com/gfm/).
    - `ONI_LOG_TO_FILE` places `debug.log` within `LOG_LOCATION` directory
    - `docs/customization/configuration.md` updated to reflect re-organization
      with revised descriptions
+   - Include resets in `test_settings.py` to keep test output simple
 
 ### Removed
  - Hidden input fields in search forms with search type and row count
