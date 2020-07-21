@@ -39,27 +39,27 @@ Markdown Spec](https://github.github.com/gfm/).
 - Pinned docker-compose users to RAIS 3.x to avoid breakages when 4.x ships
 
 ### Added
- - Enabled apache mod_ssl in web image build
- - Included codebase as part of Dockerfile build
- - `ONI_STORAGE_PATH` env var, missed in previous edits to `docker-compose.yml`
+- Enabled apache mod_ssl in web image build
+- Included codebase as part of Dockerfile build
+- `ONI_STORAGE_PATH` env var, missed in previous edits to `docker-compose.yml`
 
 ### Changed
- - Moved Dockerfile-dev to Dockerfile to support automated builds
- - Flipped order of reel and issue display on batch info page
- - The local settings example file has been simplified by moving many settings
+- Moved Dockerfile-dev to Dockerfile to support automated builds
+- Flipped order of reel and issue display on batch info page
+- The local settings example file has been simplified by moving many settings
   controlled by environment variables to `base_settings.py`
-   - Import `settings_base.py` in `settings_local.py` so all settings available
-     for reference, not duplicating `BASE_DIR`
-   - `ONI_IIIF_URL` defaults to `BASE_URL` + `/images/iiif`, like Apache config
-   - `ONI_LOG_TO_FILE` places `debug.log` within `LOG_LOCATION` directory
-   - Updated `docs/customization/configuration.md` to reflect re-organization
-     with revised descriptions and simpler instructions
-   - Include resets in `test_settings.py` to keep test output simple
+  - Import `settings_base.py` in `settings_local.py` so all settings available
+    for reference, not duplicating `BASE_DIR`
+  - `ONI_IIIF_URL` defaults to `BASE_URL` + `/images/iiif`, like Apache config
+  - `ONI_LOG_TO_FILE` places `debug.log` within `LOG_LOCATION` directory
+  - Updated `docs/customization/configuration.md` to reflect re-organization
+    with revised descriptions and simpler instructions
+  - Include resets in `test_settings.py` to keep test output simple
 
 ### Removed
- - Hidden input fields in search forms with search type and row count
- - `RDBMSPORT` and `SOLRPORT`, unused env vars, from `.env.example` and docs
- - Unused `IS_PRODUCTION` setting from `test_settings.py`
+- Hidden input fields in search forms with search type and row count
+- `RDBMSPORT` and `SOLRPORT`, unused env vars, from `.env.example` and docs
+- Unused `IS_PRODUCTION` setting from `test_settings.py`
 
 ### Migration
 - Please remake your `settings_local.py` file by re-copying from
@@ -70,11 +70,11 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Deprecated
 
 ### Contributors
- - Jim Campbell (lauterman)
- - Jessica Dussault (jduss4)
- - Andrew Gearhart (andrewgearhart)
- - Jeremy Echols (jechols)
- - Greg Tunink (techgique)
+- Jim Campbell (lauterman)
+- Jessica Dussault (jduss4)
+- Andrew Gearhart (andrewgearhart)
+- Jeremy Echols (jechols)
+- Greg Tunink (techgique)
 
 ## [v1.0.3] - Solr startup issues
 [v1.0.3]: https://github.com/open-oni/open-oni/compare/v1.0.2...v1.0.3
