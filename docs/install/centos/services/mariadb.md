@@ -18,22 +18,16 @@ Django also requires development libraries from MariaDB
 
 
 ## Schema and Access Control
-
-Create schema `openoni`
-
-Add `openoni` user only connecting from `localhost`
-
-Grant `openoni` user all privileges except `GRANT OPTION`
-on `openoni%` schema(s)
-
 `mysql -u root -p`:
 
 ```bash
+-- Create the database and switch to use it
 CREATE SCHEMA `openoni`;
-
 USE openoni;
 
-CREATE USER openoni@localhost IDENTIFIED BY 'password';
+-- Add a user which can only connect locally
+CREATE USER 'openoni'@localhost IDENTIFIED BY '(passphrase)';
 
-GRANT ALL PRIVILEGES ON openoni.* TO 'openoni'@'localhost';
+-- Grant necessary privileges
+GRANT ALL PRIVILEGES ON `openoni`.* TO 'openoni'@'localhost';
 ```

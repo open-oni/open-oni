@@ -46,6 +46,8 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds
  - Flipped order of reel and issue display on batch info page
+- Update CentOS MariaDB schema / access commands to most robust forms which
+  allow for names with hyphens/underscores and inline comments
 
 ### Removed
  - Hidden input fields in search forms with search type and row count
