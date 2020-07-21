@@ -5,8 +5,9 @@ import urllib
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
 ################################################################
-# ENVIRONMENT SETTINGS
+# DJANGO SETTINGS
 ################################################################
 # BASE_URL can NOT include any path elements!
 BASE_URL = os.getenv('ONI_BASE_URL', 'http://localhost')
@@ -21,94 +22,6 @@ if url.scheme == 'https':
     """
     SECURE_HSTS_SECONDS = int(os.getenv('ONI_HSTS_SECONDS', 0))
 
-DATABASES = {
-    'default': {
-        'ENGINE':   'django.db.backends.mysql',
-        'HOST':     os.getenv('ONI_DB_HOST', 'rdbms'),
-        'PORT':     os.getenv('ONI_DB_PORT', 3306),
-        'NAME':     os.getenv('ONI_DB_NAME', 'openoni'),
-        'USER':     os.getenv('ONI_DB_USER', 'openoni'),
-        'PASSWORD': os.getenv('ONI_DB_PASSWORD', 'openoni'),
-        'OPTIONS': { 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" },
-    }
-}
-
-DEBUG = True if os.getenv('ONI_DEBUG', 0) == '1' else False
-
-# IIIF server public URL endpoint
-IIIF_URL = os.getenv('ONI_IIIF_URL', 'http://localhost/images/iiif')
-
-SECRET_KEY = os.getenv('ONI_SECRET_KEY', 'openoni')
-
-SOLR_BASE_URL = os.getenv('ONI_SOLR_URL', 'http://solr:8983')
-
-# Absolute path on disk to the data directory
-STORAGE = os.getenv('ONI_STORAGE_PATH', os.path.join(BASE_DIR, 'data'))
-
-# Log level: start with INFO level; change to DEBUG if insufficient
-LOG_LEVEL = os.getenv('ONI_LOG_LEVEL', 'INFO')
-
-# Set up default logging configuration; this sets up various optional handlers,
-# only enabling the console output by default
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_true': {'()': 'django.utils.log.RequireDebugTrue'},
-    },
-    'formatters': {
-        'verbose': {
-            'format': '{asctime} [{levelname}] {module} {process:d} {thread:d} - {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '[{levelname}] {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'log', 'debug.log'),
-            'formatter': 'verbose',
-        },
-        'sql': {
-            'class': 'logging.StreamHandler',
-            'filters': ['require_debug_true'],
-        }
-    },
-    'loggers': {},
-    'root': {
-        'handlers': ['console'],
-        'level': LOG_LEVEL,
-    },
-}
-
-"""
-Django logging outputs in Apache logs by default.
-Log to file when Apache logs don't provide info or tracebacks.
-Ensure file is writeable by Apache user with SELinux writeable context:
-    chcon -t httpd_sys_rw_content_t /path/to/debug.log
-"""
-if os.getenv('ONI_LOG_TO_FILE', 0) == '1':
-    LOGGING['root']['handlers'].append('file')
-
-# If ONI_LOG_SQL is true, the SQL-logging handler is enabled.  This requires
-# DEBUG to be true, otherwise logs will still be suppressed.
-if os.getenv('ONI_LOG_SQL', 0) == '1':
-    LOGGING['loggers']['django.db.backends'] = {
-        'level': 'DEBUG',
-        'handlers': ['sql'],
-    }
-
-
-################################################################
-# DJANGO SETTINGS
-################################################################
 # Keep database connections open until idle for this many seconds
 CONN_MAX_AGE = 30
 
@@ -127,7 +40,7 @@ INSTALLED_APPS = (
     # See https://github.com/open-oni?q=plugin for available plugins
 
     # Open ONI
-    # Build on top of the default theme by including your own above themes.default
+    # Extend the default theme by including your own above themes.default
     # 'themes.YOUR_THEME_NAME',
     'themes.default',
     'core',
@@ -146,6 +59,10 @@ EMAIL_SUBJECT_PREFIX = '[YOUR_PROJECT_NAME_ABBREVIATION] '
 ################################################################
 # OPEN-ONI SETTINGS
 ################################################################
+# IIIF server public URL endpoint
+# Docker compose Apache config defines proxy as 'BASE_URL + /images/iiif'
+IIIF_URL = os.getenv('ONI_IIIF_URL', BASE_URL + '/images/iiif')
+
 """
 SITE_TITLE that will be used for display purposes throughout app.
 PROJECT_NAME may be the same as SITE_TITLE but can be used for longer
@@ -155,10 +72,6 @@ for introduction / about / further information / etc
 """
 SITE_TITLE = 'YOUR_SHORT_PROJECT_NAME'
 PROJECT_NAME = 'YOUR_LONG_PROJECT_NAME'
-
-# Relative path from core and theme apps to subdirectory with essay templates.
-# For example: 'essays' will find files in themes/*/templates/essays
-ESSAY_TEMPLATES = 'essays'
 
 """
 Use below only if LoC is down and MARC requests fail.
@@ -178,63 +91,4 @@ Open ONI will return a 'Server Too Busy' response. If unsure, leave at default.
 Requires core.middleware.TooBusyMiddleware in MIDDLEWARE.
 """
 TOO_BUSY_LOAD_AVERAGE = 64
-
-
-if DEBUG:
-    """
-    DEBUG mode (not production) disables Django cache, sends emails to console,
-    and adds middleware that disables all client-side caching.
-    SQL logging is optional in DEBUG mode with env var ONI_LOG_SQL.
-    Note that SQL logging will override logging to a file with ONI_LOG_TO_FILE.
-    """
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache'
-        }
-    }
-
-    # Output emails to console
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
-    MIDDLEWARE = (
-        'django.middleware.security.SecurityMiddleware',
-        'core.middleware.DisableClientSideCachingMiddleware',         # Open ONI
-        'core.middleware.TooBusyMiddleware',                          # Open ONI
-        'django.middleware.http.ConditionalGetMiddleware',            # Open ONI
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
-
-else:
-    """
-    Production mode (DEBUG is off) uses filesystem cache, adds middleware for
-    optional error reporting emails, and fingerprints static files
-    """
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-            'LOCATION': '/var/tmp/django_cache',
-            'TIMEOUT': 60 * 60 * 24 * 7 * 8  # Eight weeks
-        }
-    }
-
-    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
-    MIDDLEWARE = (
-        'django.middleware.security.SecurityMiddleware',
-        'core.middleware.TooBusyMiddleware',                          # Open ONI
-        'django.middleware.http.ConditionalGetMiddleware',            # Open ONI
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
-
-    # Fingerprint compiled static files with MD5 hash of contents
-    # Store hashes in STATIC_ROOT directory as staticfiles.json
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 

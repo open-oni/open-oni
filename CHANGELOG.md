@@ -45,16 +45,21 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds
  - Flipped order of reel and issue display on batch info page
+ - The local settings example file has been simplified by moving many settings
+  controlled by environment variables to `base_settings.py`
+   - `ONI_IIIF_URL` defaults to `BASE_URL` + `/images/iiif`, like Apache config
+   - `ONI_LOG_TO_FILE` places `debug.log` within `LOG_LOCATION` directory
+   - `docs/customization/configuration.md` updated to reflect re-organization
+     with revised descriptions
 
 ### Removed
  - Hidden input fields in search forms with search type and row count
 
 ### Migration
-- If you need more control over logging settings, and you're not already
-  replacing the settings file, you should look at what was changed with the
-  logging setup and incorporate that into your `settings_local.py` file.  The
-  full changes can be seen in the closed pull request at
-  https://github.com/open-oni/open-oni/pull/547/files.
+- Please remake your `settings_local.py` file by re-copying from
+  `settings_local_example.py`. Simplification of the settings file and recent
+  logging config improvements will be incorporated into your site most easily
+  this way
 
 ### Deprecated
 
@@ -63,6 +68,7 @@ Markdown Spec](https://github.github.com/gfm/).
  - Jessica Dussault (jduss4)
  - Andrew Gearhart (andrewgearhart)
  - Jeremy Echols (jechols)
+ - Greg Tunink (techgique)
 
 ## [v1.0.3] - Solr startup issues
 [v1.0.3]: https://github.com/open-oni/open-oni/compare/v1.0.2...v1.0.3

@@ -1,55 +1,26 @@
 # Configuring Your App
 
-## `settings_local.py`
+## `onisite/settings_local.py`
 
-Unlike a vanilla django installation, our `onisite/settings.py` is not where
-all settings are stored. This file actually combines django's defaults
-(`onisite/django_defaults.py`), the Open ONI defaults
+Unlike a vanilla Django installation, our `onisite/settings.py` is not where
+all settings are stored. This file actually imports Django's defaults
+(`onisite/django_defaults.py`), the Open ONI general configuration
 (`onisite/settings_base.py`), and your local configuration
 (`onisite/settings_local.py`).
 
-Basic site customizations can be done by creating `onisite/settings_local.py`
-in the same location you find `onisite/settings_base.py`, and overriding
-values. The easiest option is to copy the example file:
+First, copy the local settings example file to the filename used:
 
 ```bash
 cp onisite/settings_local_example.py onisite/settings_local.py
 ```
 
-Then adjust settings, particularly those starting with `YOUR`.
+For initial customization, search and update values beginning with `YOUR_`.
 
-There are many settings in the example file which are based on environment
-variables and/or other settings. Only change these if you understand the
-ramifications of doing so. Most users will be fine just letting those stay
-as-is.
-
-That said, overrides are simple - you just redefine a value. For example, you
-could change the size of your thumbnails by putting this line into your
-`onisite/settings_local.py` file:
-
-```python
-# How big should thumbnails be?
-THUMBNAIL_WIDTH = 200
-```
-
-Or you could do something more complex like adding an app to override the
-default theme:
-
-```python
-# Add "mytheme" app before core so it takes precedence
-INSTALLED_APPS = (
-  'django.contrib.humanize',
-  'django.contrib.staticfiles',
-
-  'themes.mytheme',
-  'themes.default',
-  'core',
-)
-```
-
-Additional settings are documented in [`onisite/settings_base.py`](/onisite/settings_base.py).
-Most simple installations will not need to override these settings, but they
-are available for advanced users.
+Beyond that, overrides are simple - you just redefine a value. Additional
+settings are documented in
+[`onisite/settings_base.py`](/onisite/settings_base.py). Most simple
+installations will not need to override these settings, but they are available
+for advanced users.
 
 ## onisite/urls.py
 
@@ -73,32 +44,39 @@ anything under `http://example.com/map`:
   url('^map/', include("statemap.urls")),
 ```
 
-## Environment Configuration
+## Environment Variable Configuration
+These settings are most likely to need to be altered across different
+environments, such as development vs. staging vs. production. Environment
+variables are used in a few different files and are provided to reduce the need
+to customize settings files directly.
 
-If you start with the supplied `settings_local_example.py` for your site, you
-will have a variety of environment-specified settings, allowing you to
-customize the site using simple environment variables. If you're using
-docker-compose, you can also opt to configure these values via a
-`docker-compose.override.yml` or an `.env` file. (You can copy `.env.example`
-to `.env` and alter `.env` as necessary)
+### `docker-compose.yml`
+Note many settings such as database credentials and URLs shouldn't be changed
+for the default docker-compose setup.
 
-The environment-driven settings are meant to be the ones most likely to need to
-be altered across different environments, such as development vs. staging vs.
-production.
+If you're using docker-compose, you can also opt to configure these
+values via a `docker-compose.override.yml` or `.env` file. You can copy
+`.env.example` to `.env` and alter `.env` as necessary.
 
-The current list of settings you'll need to understand (as of v0.11), and an
-explanation, follows:
-
+- `APACHE_LOG_LEVEL` (default = `warn`): Log level for Apache - values beyond
+ `warn` tend to produce a lot of extraneous log entries.
 - `HTTPPORT` (default = `80`): The website's HTTP port exposed on the host
- machine
-- `ONI_BASE_URL` (default = `http://localhost`): This must be the URL which
- reaches the ONI site. For development this is usually kept at the default.
- For production, it could be something like `https://oregonnews.uoregon.edu`.
- If your HTTPPORT isn't the default (80 for `http`, 443 for `https`), you need
- to include that here, e.g., `http://demo.example.org:8080`)
+ machine.
+
+### `onisite/settings_base.py`
+- `ONI_DB_HOST` (default = `rdbms`): Hostname for the MariaDB server. If using
+ docker-compose, this *and all other database settings* should remain
+ unchanged unless you know what you're doing!
+- `ONI_DB_PORT` (default = `3306`): Database port, almost always 3306.
+- `ONI_DB_NAME` (default = `openoni`): Database name.
+- `ONI_DB_USER` (default = `openoni`): Database username.
+- `ONI_DB_PASSWORD` (default = `openoni`): Database user's password.
 - `ONI_DEBUG` (default = `1`): If set to 1, the site is put in debug mode,
  which should **never** be used for a live site. Various development-friendly
- setttings are configured from this.
+ setttings are enabled based on this.
+- `ONI_LOG_LEVEL` (default = `INFO`): Sets [Django's logging
+ level](https://docs.djangoproject.com/en/2.2/topics/logging/#loggers). `INFO`
+ as the default leans toward logging more information
 - `ONI_LOG_SQL` (default = `0`): If set to 1, more logs than you ever wanted
  will be printed out. Useful for debugging what ONI is doing with the
  database.
@@ -113,18 +91,18 @@ explanation, follows:
 - `SOLRPORT` (default = `8983`): The port which is exposed to the docker host
  for accessing Solr locally. In production you do *not* want this set to
  anything exposed to the outside world!
+- `ONI_SOLR_URL` (default = `http://solr:8983`): Solr server base URL
+- `ONI_STORAGE_PATH` (default = `(ONI base dir path)/data`): Path to batch storage
 
-Some settings exist which you generally shouldn't need to change for a default
-docker-compose setup, but should still understand:
+### `onisite/settings_local.py`
+- `ONI_BASE_URL` (default = `http://localhost`): This must be the URL which
+ reaches the ONI site. For development this is usually kept at the default.
+ For production, it could be something like `https://oregonnews.uoregon.edu`.
+ If your docker compose HTTPPORT isn't the default `80` for http, you need to
+ include that here, e.g. `http://demo.example.org:8080`.
+- `ONI_HSTS_SECONDS` (default = `0`): Enable HSTS cookies for HTTPS security if
+ greater than `0`. Suggest testing with a low value like `300` and a higher
+ value like `31536000` for long-term use in production
+- `ONI_IIIF_URL` (default = BASE_URL + `/images/iiif`): URL at which ONI
+ will serve IIIF images, proxied to the IIIF server by Apache
 
-- `APACHE_LOG_LEVEL` (default = `warn`): Log level for Apache. Values lower
- than `warn` tend to produce a lot of chatter.
-- `ONI_DB_HOST` (default = `rdbms`): Hostname for the MariaDB server. If using
- docker-compose, this *and all other database settings* should remain
- unchanged unless you know what you're doing!
-- `ONI_DB_PORT` (default = `3306`): Database port, almost always 3306.
-- `ONI_DB_NAME` (default = `openoni`): Database name.
-- `ONI_DB_USER` (default = `openoni`): Database username.
-- `ONI_DB_PASSWORD` (default = `openoni`): Database user's password.
-- `ONI_SOLR_URL` (default = `http://solr:8983/solr/openoni`)
-- `ONI_STORAGE_PATH` (default = `/var/local/openoni-data`)
