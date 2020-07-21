@@ -56,6 +56,7 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Removed
  - Hidden input fields in search forms with search type and row count
  - `RDBMSPORT` and `SOLRPORT`, unused env vars, from `.env.example` and docs
+ - Unused `IS_PRODUCTION` setting from `test_settings.py`
 
 ### Migration
 - Please remake your `settings_local.py` file by re-copying from

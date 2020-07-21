@@ -14,7 +14,6 @@ TEMP_TEST_DATA = os.path.join(STORAGE, 'temp_test_data')
 STORAGE_URL = '/data/'
 TITLE_DISPLAY_MEDIUM = False
 TOO_BUSY_LOAD_AVERAGE = 64
-IS_PRODUCTION = False
 SOLR_BASE_URL = 'http://solr:8983'
 
 # These are explicitly overridden in order to verify the JSON is using the
