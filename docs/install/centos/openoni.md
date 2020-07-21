@@ -55,7 +55,7 @@ ln -s /var/local/newspapers data/batches
 
 ### Local Settings
 ```bash
-cp settings_local_example.py settings_local.py
+cp onisite/settings_local_example.py onisite/settings_local.py
 ```
 
 Follow instructions within for the appropriate deployment environment
