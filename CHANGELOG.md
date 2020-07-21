@@ -1,7 +1,7 @@
 # Open ONI Changelog
 All notable changes to Open ONI will be documented in this file.
 
-Starting from Open ONI v0.11, The format is based on [Keep a
+Starting from Open ONI v0.11, the format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
