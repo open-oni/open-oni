@@ -86,11 +86,6 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
  ONI this is currently of minimal importance since we have no web-based
  authentication or administration commands. However, it's good practice to
  set this to a highly random string in case that changes in the future.
-- `RDBMSPORT` (default = `3306`): The port which is exposed to the docker host
- for accessing MariaDB locally.
-- `SOLRPORT` (default = `8983`): The port which is exposed to the docker host
- for accessing Solr locally. In production you do *not* want this set to
- anything exposed to the outside world!
 - `ONI_SOLR_URL` (default = `http://solr:8983`): Solr server base URL
 - `ONI_STORAGE_PATH` (default = `(ONI base dir path)/data`): Path to batch storage
 
