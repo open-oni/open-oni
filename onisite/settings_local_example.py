@@ -1,9 +1,10 @@
 import os
 import urllib
 
-# For initial customization, search and update values beginning with 'YOUR_'
+from .settings_base import *
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Copy to settings_local.py, update YOUR_ values, and follow our documentation:
+# https://github.com/open-oni/open-oni/blob/dev/docs/customization/configuration.md
 
 
 ################################################################

@@ -48,6 +48,8 @@ Markdown Spec](https://github.github.com/gfm/).
  - Flipped order of reel and issue display on batch info page
  - The local settings example file has been simplified by moving many settings
   controlled by environment variables to `base_settings.py`
+   - Import `settings_base.py` in `settings_local.py` so all settings available
+     for reference, not duplicating `BASE_DIR`
    - `ONI_IIIF_URL` defaults to `BASE_URL` + `/images/iiif`, like Apache config
    - `ONI_LOG_TO_FILE` places `debug.log` within `LOG_LOCATION` directory
    - `docs/customization/configuration.md` updated to reflect re-organization
