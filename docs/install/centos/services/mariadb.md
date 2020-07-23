@@ -26,7 +26,8 @@ CREATE SCHEMA `openoni`;
 USE openoni;
 
 -- Add a user which can only connect locally
-CREATE USER 'openoni'@localhost IDENTIFIED BY '(passphrase)';
+-- Replace passphrase with a randomly generated string, keep in single quotes
+CREATE USER 'openoni'@localhost IDENTIFIED BY 'passphrase';
 
 -- Grant necessary privileges
 GRANT ALL PRIVILEGES ON `openoni`.* TO 'openoni'@'localhost';
