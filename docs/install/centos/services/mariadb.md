@@ -20,7 +20,7 @@ Django also requires development libraries from MariaDB
 ## Schema and Access Control
 `mysql -u root -p`:
 
-```bash
+```sql
 -- Create the database and switch to use it
 CREATE SCHEMA `openoni`;
 USE openoni;
