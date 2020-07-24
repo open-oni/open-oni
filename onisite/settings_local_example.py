@@ -92,4 +92,3 @@ Open ONI will return a 'Server Too Busy' response. If unsure, leave at default.
 Requires core.middleware.TooBusyMiddleware in MIDDLEWARE.
 """
 TOO_BUSY_LOAD_AVERAGE = 64
-

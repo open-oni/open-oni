@@ -269,4 +269,3 @@ else:
     # Fingerprint compiled static files with MD5 hash of contents
     # Store hashes in STATIC_ROOT directory as staticfiles.json
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-
