@@ -7,7 +7,7 @@ to docker and Open ONI.
 - [Manage Data](#manage-data)
 - [Run Commands from Containers](#run-commands-from-containers)
 - [Django Reference](#django-reference)
-- [Manage Containers, Volumes, and Imges](#manage-containers-volumes-and-images)
+- [Manage Containers, Volumes, and Images](#manage-containers-volumes-and-images)
 
 ## Rebuild Dev Containers
 

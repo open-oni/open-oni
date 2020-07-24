@@ -1,7 +1,7 @@
 # Open ONI Changelog
 All notable changes to Open ONI will be documented in this file.
 
-Starting from Open ONI v0.11, The format is based on [Keep a
+Starting from Open ONI v0.11, the format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -37,6 +37,9 @@ Markdown Spec](https://github.github.com/gfm/).
 - Fixed accessibility issues with the global search form
 - Logging now works as expected
 - Pinned docker-compose users to RAIS 3.x to avoid breakages when 4.x ships
+- Typo in CentOS RAIS docs for SELinux file context application command
+- Mistake in path for local settings copy command and outdated, non-general
+  examples in CentOS OpenONI web app configuration documentation
 
 ### Added
  - Enabled apache mod_ssl in web image build
@@ -45,6 +48,8 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds
  - Flipped order of reel and issue display on batch info page
+- Update CentOS MariaDB schema / access commands to most robust forms which
+  allow for names with hyphens/underscores and inline comments
 
 ### Removed
  - Hidden input fields in search forms with search type and row count
