@@ -123,9 +123,9 @@ class TitleLoaderTests(TestCase):
     def test_marc_html(self):
         t = Title.objects.get(lccn='sn83030846')
         html = t.marc.html
-        self.assertTrue(b'<td>00000cas a22000007a 4500</td>' in html)
-        self.assertTrue(b'<td>9688987</td>' in html)
-        self.assertTrue(b'<span class="marc-subfield-value">NPU</span>' in html)
+        self.assertTrue('<td>00000cas a22000007a 4500</td>' in html)
+        self.assertTrue('<td>9688987</td>' in html)
+        self.assertTrue('<span class="marc-subfield-value">NPU</span>' in html)
 
     def test_language(self):
         t = Title.objects.get(lccn='sn83030846')
