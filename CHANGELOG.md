@@ -27,6 +27,15 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.0.4] - MARC Display
+[v1.0.4]: https://github.com/open-oni/open-oni/compare/v1.0.3...v1.0.4
+
+### Fixed
+- The pages for displaying MARC data no longer show a confusing string full of things like `\n`
+
+### Contributors
+- Jeremy Echols (jechols)
+
 ## [v1.0.3] - Solr startup issues
 [v1.0.3]: https://github.com/open-oni/open-oni/compare/v1.0.2...v1.0.3
 
