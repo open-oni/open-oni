@@ -28,7 +28,7 @@ Markdown Spec](https://github.github.com/gfm/).
 -->
 
 ## [Unreleased]
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.2...dev
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.4...dev
 
 ### Fixed
 - `setup_index` command now reports Solr errors more effectively
@@ -68,6 +68,15 @@ Markdown Spec](https://github.github.com/gfm/).
  - Jessica Dussault (jduss4)
  - Andrew Gearhart (andrewgearhart)
  - Jeremy Echols (jechols)
+
+## [v1.0.4] - MARC Display
+[v1.0.4]: https://github.com/open-oni/open-oni/compare/v1.0.3...v1.0.4
+
+### Fixed
+- The pages for displaying MARC data no longer show a confusing string full of things like `\n`
+
+### Contributors
+- Jeremy Echols (jechols)
 
 ## [v1.0.3] - Solr startup issues
 [v1.0.3]: https://github.com/open-oni/open-oni/compare/v1.0.2...v1.0.3
