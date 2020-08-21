@@ -2,9 +2,9 @@ import re
 import math
 import logging
 import datetime
+import pysolr
 from urllib.parse import urlencode, unquote
 
-from solr import SolrConnection
 from django import urls
 from django.core.paginator import Paginator, Page
 from django.db import connection, reset_queries
@@ -20,11 +20,10 @@ _log = logging.getLogger(__name__)
 
 PROX_DISTANCE_DEFAULT = 5
 
-# Incorporated from this thread
-# http://groups.google.com/group/solrpy/browse_thread/thread/f4437b885ecb0037?pli=1
-
-
 ESCAPE_CHARS_RE = re.compile(r'(?<!\\)(?P<char>[&|+\-!(){}[\]^"~*?:])')
+
+def conn():
+    return pysolr.Solr(settings.SOLR)
 
 def page_count():
     solr = SolrConnection(settings.SOLR)
@@ -560,11 +559,10 @@ def index_titles(since=None):
     records that have been created since that time will be indexed.
     """
     cursor = connection.cursor()
-    solr = SolrConnection(settings.SOLR)
     if since:
         cursor.execute("SELECT lccn FROM core_title WHERE created >= '%s'" % since)
     else:
-        solr.delete_query('type:title')
+        conn().delete_query('type:title')
         cursor.execute("SELECT lccn FROM core_title")
 
     count = 0
@@ -573,20 +571,18 @@ def index_titles(since=None):
         if row == None:
             break
         title = models.Title.objects.get(lccn=row[0])
-        index_title(title, solr)
+        index_title(title)
         count += 1
         if count % 100 == 0:
             _log.info("indexed %s titles" % count)
             reset_queries()
-            solr.commit()
-    solr.commit()
+            conn().commit()
+    conn().commit()
 
-def index_title(title, solr=None):
-    if solr==None:
-        solr = SolrConnection(settings.SOLR)
+def index_title(title):
     _log.info("indexing title: lccn=%s" % title.lccn)
     try:
-        solr.add(**title.solr_doc)
+        conn().add(title.solr_doc)
     except Exception as e:
         _log.exception(e)
 
