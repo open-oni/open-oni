@@ -3,8 +3,7 @@ import optparse
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
-from solr import SolrConnection
-
+from core import solr_index
 
 class Command(BaseCommand):
     help = """
@@ -20,9 +19,9 @@ class Command(BaseCommand):
             help='remove all documents, or only documents related to a particular batch from the solr index')
 
     def handle(self, **options):
-        solr = SolrConnection(settings.SOLR)
+        solr = solr_index.conn()
         if options['batch']:
-            solr.delete_query('batch: %s' % options['batch'])
+            solr.delete(q='batch: %s' % options['batch'])
         else:
-            solr.delete_query('id:[* TO *]')
+            solr.delete(q='*:*')
         solr.commit()
