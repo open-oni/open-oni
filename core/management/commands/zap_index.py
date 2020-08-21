@@ -12,16 +12,7 @@ class Command(BaseCommand):
     reindexing (e.g., `./manage.py index`)
     """
 
-    def add_arguments(self, parser):
-        # Options
-        parser.add_argument(
-            '--batch', action='store_true', default=False, dest='batch',
-            help='remove all documents, or only documents related to a particular batch from the solr index')
-
     def handle(self, **options):
         solr = solr_index.conn()
-        if options['batch']:
-            solr.delete(q='batch: %s' % options['batch'])
-        else:
-            solr.delete(q='*:*')
+        solr.delete(q='*:*')
         solr.commit()
