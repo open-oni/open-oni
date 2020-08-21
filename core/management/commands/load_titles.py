@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from core import title_loader
-from core.solr_index import index_titles
+from core import solr_index
 from core.models import Title
 from core.management.commands import configure_logging
 
@@ -51,7 +51,7 @@ class Command(BaseCommand):
         if not skip_index:
             # need to index any titles that we just created
             _logger.info("indexing new titles")
-            index_titles(since=self.xml_start)
+            solr_index.index_titles(since=self.xml_start)
         
         return results
 
