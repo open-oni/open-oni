@@ -562,7 +562,7 @@ def index_titles(since=None):
     if since:
         cursor.execute("SELECT lccn FROM core_title WHERE created >= '%s'" % since)
     else:
-        conn().delete_query('type:title')
+        conn().delete(q='type:title')
         cursor.execute("SELECT lccn FROM core_title")
 
     count = 0
@@ -587,16 +587,13 @@ def index_title(title):
         _log.exception(e)
 
 def delete_title(title):
-    solr = SolrConnection(settings.SOLR)
-    q = '+type:title +id:%s' % title.solr_doc['id']
-    r = solr.delete_query(q)
+    r = conn().delete(q='+type:title +id:%s' % title.solr_doc['id'])
     _log.info("deleted title %s from the index" % title)
 
 def index_pages():
     """index all the pages that are modeled in the database
     """
     _log = logging.getLogger(__name__)
-    solr = SolrConnection(settings.SOLR)
     cursor = connection.cursor()
     cursor.execute("SELECT id FROM core_page WHERE ocr_filename IS NOT NULL AND ocr_filename <> ''")
     count = 0
@@ -606,11 +603,11 @@ def index_pages():
             break
         page = models.Page.objects.get(id=row[0])
         _log.info("[%s] indexing page: %s" % (count, page.url))
-        solr.add(**page.solr_doc)
+        conn().add(page.solr_doc)
         count += 1
         if count % 100 == 0:
             reset_queries()
-    solr.commit()
+    conn().commit()
 
 def word_matches_for_page(page_id, words):
     """
@@ -642,10 +639,6 @@ def word_matches_for_page(page_id, words):
             for context in response.highlighting[page_id][ocr]:
                 words.update(find_words(context))
     return list(words)
-
-def commit():
-    solr = SolrConnection(settings.SOLR)
-    solr.commit()
 
 def _get_sort(sort, in_pages=False):
     sort_field = sort_order = None
