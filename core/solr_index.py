@@ -26,8 +26,7 @@ def conn():
     return pysolr.Solr(settings.SOLR)
 
 def page_count():
-    solr = SolrConnection(settings.SOLR)
-    return solr.query('type:page', fields=['id']).numFound
+    return len(conn().search(q='type:page', fl='id'))
 
 def _solr_escape(value):
     """
@@ -46,8 +45,7 @@ def _sort_facets_asc(solr_facets, field):
     return sorted(items, key = lambda item: int(item[1]), reverse = True)
 
 def title_count():
-    solr = SolrConnection(settings.SOLR)
-    return solr.query('type:title', fields=['id']).numFound
+    return len(conn().search(q='type:title', fl='id'))
 
 # TODO: use solr.SolrPaginator and update or remove SolrPaginator
 
@@ -93,9 +91,7 @@ class SolrPaginator(Paginator):
     def _get_count(self):
         "Returns the total number of objects, across all pages."
         if not hasattr(self, '_count'):
-            solr = SolrConnection(settings.SOLR) # TODO: maybe keep connection around?
-            solr_response = solr.query(self._q, fields=['id'])
-            self._count = int(solr_response.results.numFound)
+            self._count = len(conn().search(self._q, fl='id'))
         return self._count
     count = property(_get_count)
 
@@ -286,7 +282,7 @@ class SolrTitlesPaginator(Paginator):
 
         # set up some bits that the Paginator expects to be able to use
         Paginator.__init__(self, results, per_page=rows, orphans=0)
-        self._count = int(solr_response.results.numFound)
+        self._count = len(solr_response)
         self._num_pages = None
         self._cur_page = page
         self.state_facets = _sort_facets_asc(solr_response.facet_counts, 'state')
