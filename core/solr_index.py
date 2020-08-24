@@ -47,8 +47,6 @@ def _sort_facets_asc(solr_facets, field):
 def title_count():
     return len(conn().search(q='type:title', fl='id'))
 
-# TODO: use solr.SolrPaginator and update or remove SolrPaginator
-
 class SolrPaginator(Paginator):
     """
     SolrPaginator takes a QueryDict object, builds and executes a solr query for
@@ -247,9 +245,6 @@ class SolrPaginator(Paginator):
             proxdistance = d.get('proxdistance', PROX_DISTANCE_DEFAULT)
             parts.append(d['proxtext'])
         return parts
-
-
-# TODO: remove/update this in light of solr.SolrPaginator
 
 class SolrTitlesPaginator(Paginator):
     """
