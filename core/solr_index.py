@@ -684,14 +684,3 @@ def _solrize_date(date, date_type=''):
             if y and m and d:
                 solr_date = y+m+d
     return solr_date
-
-def similar_pages(page):
-    solr = SolrConnection(settings.SOLR)
-    d = page.issue.date_issued
-    year, month, day = '{0:02d}'.format(d.year), '{0:02d}'.format(d.month), '{0:02d}'.format(d.day) 
-    date = ''.join(map(str, (year, month, day)))
-
-    query = '+type:page AND date:%s AND %s AND NOT(lccn:%s)' % (date, query_join([p.city for p in page.issue.title.places.all()], 'city'), page.issue.title.lccn)
-    response = solr.query(query, rows=25)
-    results = response.results
-    return [utils.get_page(**kwargs) for kwargs in [urls.resolve(r['id']).kwargs for r in results]]
