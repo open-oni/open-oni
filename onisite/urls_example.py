@@ -3,7 +3,8 @@
 #
 # NOTE: DO NOT try to change the URLs which resolve to pages and titles.
 # These are currently set up in ONI in a way that, if changed, can cause the
-# application to be unable to find any of your OCR data!
+# application to be unable to find any of your OCR data!  (For details, see
+# https://github.com/open-oni/open-oni/issues/556)
 from django.conf.urls import url, include
 
 # Django documentation recommends always using raw string syntax: r''
