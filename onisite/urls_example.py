@@ -1,5 +1,9 @@
 # Copy this to urls.py.  Most sites can leave this as-is.  If you have custom
 # apps which need routing, modify this file to include those urlconfs.
+#
+# NOTE: DO NOT try to change the URLs which resolve to pages and titles.
+# These are currently set up in ONI in a way that, if changed, can cause the
+# application to be unable to find any of your OCR data!
 from django.conf.urls import url, include
 
 # Django documentation recommends always using raw string syntax: r''
