@@ -140,24 +140,24 @@ class SolrPaginator(Paginator):
         number = self.validate_number(number)
 
         # figure out the solr query and execute it
-        solr = SolrConnection(settings.SOLR) # TODO: maybe keep connection around?
         start = self.per_page * (number - 1)
-        params = {"hl.snippets": 100, # TODO: make this unlimited
-            "hl.requireFieldMatch": 'true', # limits highlighting slop
-            "hl.maxAnalyzedChars": '102400', # increased from default 51200
-            }
+        params = {
+            'fl': 'id,title,date,month,day,sequence,edition_label,section_label',
+            'hl': 'true',
+            'hl.snippets': 100, # TODO: make this unlimited
+            'hl.requireFieldMatch': 'true', # limits highlighting slop
+            'hl.maxAnalyzedChars': '102400', # increased from default 51200
+            'hl.fl': ','.join(self._ocr_list),
+            'rows': self.per_page,
+            'start': start,
+        }
         params.update(self.facet_params)
+
         sort_field, sort_order = _get_sort(self.query.get('sort'), in_pages=True)
-        solr_response = solr.query(self._q,
-                                   fields=['id', 'title', 'date', 'month', 'day',
-                                           'sequence', 'edition_label', 
-                                           'section_label'],
-                                   highlight=self._ocr_list,
-                                   rows=self.per_page,
-                                   sort=sort_field,
-                                   sort_order=sort_order,
-                                   start=start,
-                                   **params)
+        if sort_field and sort_order:
+            params['sort'] = '%s %s' % (sort_field, sort_order)
+
+        solr_response = conn().search(self._q, **params)
         solr_facets = solr_response.facet_counts
         # sort states by number of hits per state (desc)
         facets = {
@@ -493,18 +493,18 @@ def page_search(d):
     gap = max(1, int(math.ceil((year2 - year1)//10)))
 
     # increment year range end by 1 to be inclusive
-    facet_params = {'facet': 'true','facet_field': [
+    facet_params = {'facet': 'true','facet.field': [
                     'city',
                     'county',
                     'frequency',
                     'language',
                     'state', 
                     ],
-                    'facet_range':'year',
-                    'f_year_facet_range_start': year1,
-                    'f_year_facet_range_end': year2+1,
-                    'f_year_facet_range_gap': gap,
-                    'facet_mincount': 1
+                    'facet.range':'year',
+                    'f.year.facet.range.start': year1,
+                    'f.year.facet.range.end': year2+1,
+                    'f.year.facet.range.gap': gap,
+                    'facet.mincount': 1
                     }
     return ' '.join(q), facet_params
 
