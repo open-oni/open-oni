@@ -158,8 +158,9 @@ class SolrPaginator(Paginator):
             params['sort'] = '%s %s' % (sort_field, sort_order)
 
         solr_response = conn().search(self._q, **params)
-        solr_facets = solr_response.facet_counts
-        # sort states by number of hits per state (desc)
+
+        # Gather facet data from the solr response
+        solr_facets = solr_response.facets
         facets = {
             'city': _sort_facets_asc(solr_facets, 'city'),
             'county': _sort_facets_asc(solr_facets, 'county'),
