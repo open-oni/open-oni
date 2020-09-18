@@ -41,7 +41,10 @@ def _solr_escape(value):
     return ESCAPE_CHARS_RE.sub(r'\\\g<char>', value)
 
 def _sort_facets_asc(solr_facets, field):
-    items = list(solr_facets.get('facet_fields')[field].items())
+    raw = solr_facets.get('facet_fields')[field]
+    items = []
+    for i in range(0, len(raw), 2):
+        items.append((raw[i], raw[i + 1]))
     return sorted(items, key = lambda item: int(item[1]), reverse = True)
 
 def title_count():
