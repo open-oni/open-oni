@@ -179,7 +179,7 @@ class SolrPaginator(Paginator):
         }
         # sort by year (desc)
         facets['year'] = _sorted_facet_counts(solr_facets['facet_ranges']['year'], 'counts')
-        facet_gap = self.facet_params['f_year_facet_range_gap']
+        facet_gap = self.facet_params['f.year.facet.range.gap']
         if facet_gap > 1:
             facets['year'] = [('%s-%d' % (y[0], int(y[0])+facet_gap-1), y[1]) 
                               for y in facets['year']]
