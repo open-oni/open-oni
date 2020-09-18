@@ -184,7 +184,7 @@ class SolrPaginator(Paginator):
             facets['year'] = [('%s-%d' % (y[0], int(y[0])+facet_gap-1), y[1]) 
                               for y in facets['year']]
         pages = []
-        for result in solr_response.results:
+        for result in solr_response.docs:
             page = models.Page.lookup(result['id'])
             if not page:
                 continue
