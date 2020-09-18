@@ -156,12 +156,6 @@ urlpatterns = [
     url(r'^search/pages/results/(?P<view_type>list)/$', search.search_pages_results,
         name='openoni_search_pages_results_list'),
 
-    url('search/titles/opensearch.xml', search.search_titles_opensearch,
-        name='openoni_search_titles_opensearch'),
-    url(r'^search/titles/$', search.search_titles,
-        name='openoni_search_titles'),
-    url(r'^search/titles/results/$', directory.search_titles_results,
-        name='openoni_search_titles_results'),
     url(r'^suggest/titles/$', search.suggest_titles,
         name='openoni_suggest_titles'),
 

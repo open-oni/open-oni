@@ -139,28 +139,6 @@ def search_advanced(request):
 
 
 @cache_page(settings.DEFAULT_TTL_SECONDS)
-def search_titles(request):
-    # title form
-    browse_val = [chr(n) for n in range(65, 91)]
-    browse_val.extend([str(i) for i in range(10)])
-    titles_form = forms.SearchTitlesForm()
-    title_count = models.Title.objects.all().count()
-
-    # general advanced search
-    crumbs = list(settings.BASE_CRUMBS)
-    template = "search/titles.html"
-    page_title = 'Search Titles'
-    return render(request, template, locals())
-
-
-@cache_page(settings.DEFAULT_TTL_SECONDS)
-def search_titles_opensearch(request):
-    host = request.get_host()
-    return render(request, 'search/search_titles_opensearch.xml', locals(),
-                  content_type='application/opensearchdescription+xml')
-
-
-@cache_page(settings.DEFAULT_TTL_SECONDS)
 def search_pages_opensearch(request):
     host = request.get_host()
     return render(request, 'search/search_pages_opensearch.xml', locals(),
