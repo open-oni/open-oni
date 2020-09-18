@@ -40,8 +40,13 @@ def _solr_escape(value):
     """
     return ESCAPE_CHARS_RE.sub(r'\\\g<char>', value)
 
-def _sort_facets_asc(solr_facets, field):
-    raw = solr_facets.get('facet_fields')[field]
+def _sorted_facet_counts(solr_counts, field):
+    """
+    Convert the raw solr facet data (counts, ranges, etc.) from a flat array
+    into a two-dimensional list sorted by the number of hits.  The result will
+    look something like this: (('field1', count1), 'field2', count2, ...)
+    """
+    raw = solr_counts.get(field, ())
     items = []
     for i in range(0, len(raw), 2):
         items.append((raw[i], raw[i + 1]))
@@ -164,16 +169,16 @@ class SolrPaginator(Paginator):
 
         # Gather facet data from the solr response
         solr_facets = solr_response.facets
+        field_counts = solr_facets.get('facet_fields')
         facets = {
-            'city': _sort_facets_asc(solr_facets, 'city'),
-            'county': _sort_facets_asc(solr_facets, 'county'),
-            'frequency': _sort_facets_asc(solr_facets, 'frequency'),
-            'language': _sort_facets_asc(solr_facets, 'language'),
-            'state': _sort_facets_asc(solr_facets, 'state'),
+            'city': _sorted_facet_counts(field_counts, 'city'),
+            'county': _sorted_facet_counts(field_counts, 'county'),
+            'frequency': _sorted_facet_counts(field_counts, 'frequency'),
+            'language': _sorted_facet_counts(field_counts, 'language'),
+            'state': _sorted_facet_counts(field_counts, 'state'),
         }
         # sort by year (desc)
-        facets['year'] = sorted(list(solr_facets['facet_ranges']['year']['counts'].items()),
-                                key = lambda k: k[0], reverse = True)
+        facets['year'] = _sorted_facet_counts(solr_facets['facet_ranges']['year'], 'counts')
         facet_gap = self.facet_params['f_year_facet_range_gap']
         if facet_gap > 1:
             facets['year'] = [('%s-%d' % (y[0], int(y[0])+facet_gap-1), y[1]) 
