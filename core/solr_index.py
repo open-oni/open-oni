@@ -479,8 +479,6 @@ def word_matches_for_page(page_id, words):
     page. So if you pass in 'manufacturer' you can get back a list like
     ['Manufacturer', 'manufacturers', 'MANUFACTURER'] etc ...
     """
-    solr = SolrConnection(settings.SOLR)
-
     # Make sure page_id is of type str, else the following string
     # operation may result in a UnicodeDecodeError. For example, see
     # ticket #493
@@ -491,8 +489,16 @@ def word_matches_for_page(page_id, words):
     ocr_list.extend(['ocr_%s' % l for l in settings.SOLR_LANGUAGES])
     ocrs = ' OR '.join([query_join(words, o) for o in ocr_list])
     q = 'id:%s AND (%s)' % (page_id, ocrs)
-    params = {"hl.snippets": 100, "hl.requireFieldMatch": 'true', "hl.maxAnalyzedChars": '102400'}
-    response = solr.query(q, fields=['id'], highlight=ocr_list, **params)
+
+    params = {
+        'fl': 'id',
+        'hl': 'true',
+        'hl.snippets': 100,
+        'hl.requireFieldMatch': 'true',
+        'hl.maxAnalyzedChars': '102400',
+        'hl.fl': ','.join(ocr_list),
+    }
+    response = conn().search(q, **params)
 
     if page_id not in response.highlighting:
         return []
