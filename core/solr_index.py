@@ -26,7 +26,7 @@ def conn():
     return pysolr.Solr(settings.SOLR)
 
 def page_count():
-    return len(conn().search(q='type:page', fl='id'))
+    return conn().search(q='type:page', rows=0).hits
 
 def _solr_escape(value):
     """
@@ -53,7 +53,7 @@ def _sorted_facet_counts(solr_counts, field):
     return sorted(items, key = lambda item: int(item[1]), reverse = True)
 
 def title_count():
-    return len(conn().search(q='type:title', fl='id'))
+    return conn().search(q='type:title', rows=0).hits
 
 class SolrPaginator(Paginator):
     """
@@ -97,7 +97,7 @@ class SolrPaginator(Paginator):
     def _get_count(self):
         "Returns the total number of objects, across all pages."
         if not hasattr(self, '_count'):
-            self._count = len(conn().search(self._q, fl='id'))
+            self._count = conn().search(self._q, rows=0).hits
         return self._count
     count = property(_get_count)
 
