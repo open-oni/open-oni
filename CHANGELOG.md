@@ -40,6 +40,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Typo in CentOS RAIS docs for SELinux file context application command
 - Mistake in path for local settings copy command and outdated, non-general
   examples in CentOS OpenONI web app configuration documentation
+- Replaced solrpy with pysolr due to security risks
 
 ### Added
  - Enabled apache mod_ssl in web image build
