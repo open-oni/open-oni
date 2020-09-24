@@ -11,6 +11,11 @@ If you are already set up with Docker, you may wish to refer to the
 
 ## First Time Installation
 
+### IMPORTANT INFORMATION FOR WINDOWS USERS
+If you have git setup to use `CRLF` but commit `LF` (this is the default) and you are going to use docker-desktop you will run into
+the problem that the start scripts no longer work. You will see error messages like `web_1    | /bin/sh: /entrypoint.sh: /bin/bash^M: bad interpreter: No such file or directory`. To fix, you need to force Git to use `LF` in your working directory by running `git config core.autocrlf false`
+This will only affect this repository (add `--global` if you want it to be the default for all your Git repositories).
+
 Install Docker using [instructions on Docker's website](https://www.docker.com/products/docker-desktop).
 
 For typical development, clone the `dev` branch, then copy and modify the
