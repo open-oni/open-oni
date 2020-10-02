@@ -27,6 +27,9 @@ cp docker-compose.override.yml-example docker-compose.override.yml
 vim docker-compose.override.yml
 ```
 
+Next you may customize your [environment configuration](/docs/customization/configuration.md#environment-configuration) if you choose, but it should work
+regardless of this customization.
+
 Now, boot up the app. Initially, this may take quite some time, but if all goes well in the future it should be fairly rapid:
 
 ```bash
