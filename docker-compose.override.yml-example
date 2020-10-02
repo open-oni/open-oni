@@ -15,27 +15,27 @@ services:
     # This override exposes MariaDB to your host so you can locally run mysql
     # commands.  Don't use this unless you really want the docker *host* to
     # expose MariaDB!  This is generally not desirable in production.
-    ports:
-      - 3306:3306
+    #ports:
+    #  - 3306:3306
 
-  rais:
-    ports:
+  #rais:
+  #  ports:
       # This exposes the RAIS image server locally.  This is rarely necessary,
       # even in development, but can be handy if the Apache rules don't seem to
       # be passing /images/iiif to the RAIS server.  URLs will be very complex,
       # however, e.g.,
       # http://localhost:12415/images/iiif/batch_dlc_manyyears_ver01%2Fdata%2Fsn83045462%2F00280654139%2F1859022101%2F0007.jp2/info.json
-      - 12415:12415
+      #- 12415:12415
 
       # The RAIS administrative view, for seeing things like server information
       # and stats, e.g., http://localhost:12416/admin/stats.json
-      - 12416:12416
+      #- 12416:12416
 
   # Solr override to reach the web UI locally, e.g.,
   # http://localhost:8983/solr/
   #
   # As with other overrrides, we *strongly* recommended not to do this in a
   # production environment.
-  solr:
-    ports:
-      - 8983:8983
+  #solr:
+    #ports:
+      #- 8983:8983
