@@ -451,7 +451,7 @@ def index_title(title):
         _log.exception(e)
 
 def delete_title(title):
-    r = conn().delete(q='+type:title +id:%s' % title.solr_doc['id'])
+    conn().delete(q='+type:title +id:%s' % title.solr_doc['id'])
     _log.info("deleted title %s from the index" % title)
 
 def index_pages():
