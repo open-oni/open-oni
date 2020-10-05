@@ -422,11 +422,13 @@ def index_titles(since=None):
     if you pass in a datetime object as the since parameter only title
     records that have been created since that time will be indexed.
     """
+    solr = conn()
+
     cursor = connection.cursor()
     if since:
         cursor.execute("SELECT lccn FROM core_title WHERE created >= '%s'" % since)
     else:
-        conn().delete(q='type:title')
+        solr.delete(q='type:title')
         cursor.execute("SELECT lccn FROM core_title")
 
     count = 0
@@ -435,18 +437,18 @@ def index_titles(since=None):
         if row == None:
             break
         title = models.Title.objects.get(lccn=row[0])
-        index_title(title)
+        index_title(solr, title)
         count += 1
         if count % 100 == 0:
             _log.info("indexed %s titles" % count)
             reset_queries()
-            conn().commit()
-    conn().commit()
+            solr.commit()
+    solr.commit()
 
-def index_title(title):
+def index_title(solr, title):
     _log.info("indexing title: lccn=%s" % title.lccn)
     try:
-        conn().add(title.solr_doc)
+        solr.add(title.solr_doc)
     except Exception as e:
         _log.exception(e)
 
@@ -461,17 +463,18 @@ def index_pages():
     cursor = connection.cursor()
     cursor.execute("SELECT id FROM core_page WHERE ocr_filename IS NOT NULL AND ocr_filename <> ''")
     count = 0
+    solr = conn()
     while True:
         row = cursor.fetchone()
         if row == None:
             break
         page = models.Page.objects.get(id=row[0])
         _log.info("[%s] indexing page: %s" % (count, page.url))
-        conn().add(page.solr_doc)
+        solr.add(page.solr_doc)
         count += 1
         if count % 100 == 0:
             reset_queries()
-    conn().commit()
+    solr.commit()
 
 def word_matches_for_page(page_id, words):
     """
