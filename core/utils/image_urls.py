@@ -1,13 +1,8 @@
-from deprecated import deprecated
 from django.conf import settings
 from django.utils.http import urlquote
 
 def thumb_image_url(page):
     return resize_url(page, settings.THUMBNAIL_WIDTH)
-
-@deprecated("Use resize_url with size instead of medium_image_url")
-def medium_image_url(page):
-    return resize_url(page, 550)
 
 def resize_url(page, size):
     return  "%s/full/%d,/0/default.jpg" % (page_iiif_info_url(page), size)

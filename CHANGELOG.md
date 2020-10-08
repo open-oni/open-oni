@@ -38,12 +38,17 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Added
  - Enabled apache mod_ssl in web image build
  - Included codebase as part of Dockerfile build
+ - Reel test fixture
+ - Tests for image_urls methods
+ - image_url template tag
 
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds
+ - References to test fixtures
 
 ### Removed
  - Hidden input fields in search forms with search type and row count
+ - Unused image template tags in favor of generic image_url tag
 
 ### Migration
 
