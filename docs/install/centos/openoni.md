@@ -54,35 +54,32 @@ ln -s /var/local/newspapers data/batches
 
 ### Local Settings
 ```bash
-cp settings_local_example.py settings_local.py
+cp onisite/settings_local_example.py onisite/settings_local.py
 ```
 
 Follow instructions within for the appropriate deployment environment
 
 #### Theme and Plugins
-Add the theme and plugins it incorporates to `INSTALLED_APPS`:
+Add your theme and plugin customizations to `INSTALLED_APPS`:
 
 ```py
-# List of configuration classes / app packages in order of priority (i.e., the
-# first item in the list has final say when collisions occur)
+# List of configuration classes / app packages in order of priority high to low.
+# The first item in the list has final say when collisions occur.
 INSTALLED_APPS = (
     # Default
-#    'django.contrib.admin',
-#    'django.contrib.auth',
-#    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Humanize and local theme override all below
+    'django.contrib.humanize',  # Makes data more human-readable
+
     # Plugins
     # See https://github.com/open-oni?q=plugin for available plugins
-    'onisite.plugins.calendar',
-    'onisite.plugins.featured_content',
-    'onisite.plugins.map',
 
     # Open ONI
-    'django.contrib.humanize',  # Added to make data more human-readable
-    'themes.nebraska',
+    # Extend the default theme by including your own above themes.default
+    # 'themes.YOUR_THEME_NAME',
     'themes.default',
     'core',
 )
@@ -92,13 +89,8 @@ INSTALLED_APPS = (
 Set the title and project name text for the website
 
 ```py
-# SITE_TITLE that will be used for display purposes throughout app
-# PROJECT_NAME may be the same as SITE_TITLE but can be used
-# for longer descriptions that will only show up occasionally
-# Example 'Open ONI' for most headers, 'Open Online Newspapers Initiative'
-# for introduction / about / further information / etc
-SITE_TITLE = "Nebraska Newspapers"
-PROJECT_NAME = "Nebraska Newspapers"
+SITE_TITLE = "YOUR_SHORT_PROJECT_NAME"
+PROJECT_NAME = "YOUR_LONG_PROJECT_NAME"
 ```
 
 ### Logging

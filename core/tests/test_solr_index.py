@@ -2,19 +2,26 @@ from django.test import TestCase
 from django.conf import settings
 from django.http import QueryDict as Q
 from django.utils import timezone
-from solr import SolrConnection
 
 from core import solr_index as si
-
 
 class SolrIndexTests(TestCase):
     """
     Exercise some search form -> solr query translations
     """
 
-    fixtures = ['test/countries.json', 'test/titles.json', 'test/ocr.json',
-                'test/awardee.json', 'test/batch.json', 'test/issue.json',
-                'test/page.json', 'test/ethnicities.json', 'test/languages.json']
+    fixtures = [
+        'test/awardee.json',
+        'test/batch.json',
+        'test/countries.json',
+        'test/ethnicities.json',
+        'test/issue.json',
+        'test/languages.json',
+        'test/ocr.json',
+        'test/page.json',
+        'test/reel.json',
+        'test/titles.json'
+    ]
     ocr_langs = ['ocr_%s' %l for l in settings.SOLR_LANGUAGES]
 
 
@@ -50,8 +57,8 @@ class SolrIndexTests(TestCase):
 
     # index_pages
     def test_index_pages(self):
-        solr = SolrConnection(settings.SOLR)
-        solr.delete_query('type:page')
+        solr = si.conn()
+        solr.delete(q='type:page')
         solr.commit()
         self.assertEqual(si.page_count(), 0)
         si.index_pages()
@@ -173,25 +180,3 @@ class SolrIndexTests(TestCase):
         self.assertEqual(si._solr_escape('New+York'), 'New\+York')
         self.assertEqual(si._solr_escape('New\York'), 'New\\York')
         # TODO add more tests for escaping
-
-
-    # title_count
-
-    # TODO the below is pulling titles from my development environment
-    # commenting out until test and development db issue resolved
-
-    # def test_title_count(self):
-    #     self.assertEqual(si.title_count(), 3)
-
-
-    # title_search
-
-    def test_title_search(self):
-        self.assertEqual(
-            si.title_search(Q('terms=bloody'))[0], 
-            '+type:title +(title:"bloody" OR essay:"bloody" OR note:"bloody" OR edition:"bloody" OR place_of_publication:"bloody" OR url:"bloody" OR publisher:"bloody")')
-        self.assertEqual(len(si.title_search(Q('state=New+York'))), 2)
-
-    def test_ethnicity_query(self):
-        self.assertEqual(si.title_search(Q('ethnicity=Anabaptist'))[0], 
-                '+type:title +(subject:"Anabaptist" OR subject:"Amish" OR subject:"Amish Mennonites" OR subject:"Mennonites" OR subject:"Pennsylvania Dutch" OR subject:"Pennsylvania Dutch.")')

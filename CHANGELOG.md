@@ -1,7 +1,7 @@
 # Open ONI Changelog
 All notable changes to Open ONI will be documented in this file.
 
-Starting from Open ONI v0.11, The format is based on [Keep a
+Starting from Open ONI v0.11, the format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -28,7 +28,7 @@ Markdown Spec](https://github.github.com/gfm/).
 -->
 
 ## [Unreleased]
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.2...dev
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.4...dev
 
 ### Fixed
 - `setup_index` command now reports Solr errors more effectively
@@ -37,14 +37,27 @@ Markdown Spec](https://github.github.com/gfm/).
 - Fixed accessibility issues with the global search form
 - Logging to `log/debug.log` file in addition to the console
 - Pinned docker-compose users to RAIS 3.x to avoid breakages when 4.x ships
+- Typo in CentOS RAIS docs for SELinux file context application command
+- Mistake in path for local settings copy command and outdated, non-general
+  examples in CentOS OpenONI web app configuration documentation
+- Replaced solrpy with pysolr due to security risks and more active development
+  in pysolr
+- The test environment is now properly isolated from the local environment
+  (specifically the `ENV` directory, i.e., the Python virtual environment)
 
 ### Added
 - Enabled apache mod_ssl in web image build
 - Included codebase as part of Dockerfile build
+- Reel test fixture
+- Tests for image_urls methods
+- image_url template tag
 
 ### Changed
 - Moved Dockerfile-dev to Dockerfile to support automated builds
+- References to test fixtures
 - Flipped order of reel and issue display on batch info page
+- Update CentOS MariaDB schema / access commands to most robust forms which
+  allow for names with hyphens/underscores and inline comments
 - The local settings example file has been simplified by moving many settings
   controlled by environment variables to `base_settings.py`
   - Import `settings_base.py` in `settings_local.py` so all settings available
@@ -57,6 +70,7 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Removed
 - Hidden input fields in search forms with search type and row count
+- Unused image template tags in favor of generic image_url tag
 - `RDBMSPORT` and `SOLRPORT`, unused env vars, from `.env.example` and docs
 - Unused `IS_PRODUCTION` setting from `test_settings.py`
 - Django error/404 email alert config in CentOS OpenONI web app documentation
@@ -77,6 +91,15 @@ Markdown Spec](https://github.github.com/gfm/).
 - Andrew Gearhart (andrewgearhart)
 - Jeremy Echols (jechols)
 - Greg Tunink (techgique)
+
+## [v1.0.4] - MARC Display
+[v1.0.4]: https://github.com/open-oni/open-oni/compare/v1.0.3...v1.0.4
+
+### Fixed
+- The pages for displaying MARC data no longer show a confusing string full of things like `\n`
+
+### Contributors
+- Jeremy Echols (jechols)
 
 ## [v1.0.3] - Solr startup issues
 [v1.0.3]: https://github.com/open-oni/open-oni/compare/v1.0.2...v1.0.3
