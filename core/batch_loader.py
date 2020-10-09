@@ -14,13 +14,11 @@ import simplejson as json
 
 from lxml import etree
 from PIL import Image
-from solr import SolrConnection
 
 from django.core import management
 from django.db import reset_queries
 from django.db.models import Q
 from django.conf import settings
-from django.core import management
 from django.utils import timezone
 
 from core import models
@@ -28,6 +26,7 @@ from core.utils.utils import set_fulltext_range
 from core.models import Batch, Issue, Title, Awardee, Page, OCR
 from core.models import LoadBatchEvent
 from core.ocr_extractor import ocr_extractor
+from core import solr_index
 
 # some xml namespaces used in batch metadata
 ns = {
@@ -63,7 +62,7 @@ class BatchLoader(object):
         """
         self.PROCESS_OCR = process_ocr
         if self.PROCESS_OCR:
-            self.solr = SolrConnection(settings.SOLR)
+            self.solr = solr_index.conn()
         self.PROCESS_COORDINATES = process_coordinates
 
     def _find_batch_file(self, batch):
@@ -438,7 +437,7 @@ class BatchLoader(object):
         page.ocr = ocr
         if index:
             _logger.debug("indexing ocr for: %s" % page.url)
-            self.solr.add(**page.solr_doc)
+            self.solr.add(page.solr_doc)
             page.indexed = True
         page.save()
 
@@ -521,7 +520,7 @@ class BatchLoader(object):
             issue.delete()
         batch.delete()
         if self.PROCESS_OCR:
-            self.solr.delete_query('batch:"%s"' % batch_name)
+            self.solr.delete(q='batch:"%s"' % batch_name)
             self.solr.commit()
 
 class BatchLoaderException(RuntimeError):

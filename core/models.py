@@ -480,7 +480,7 @@ class MARC(models.Model):
                 else:
                     value.text = ' '.join(textwrap.wrap(subfield.text, 45))
 
-        return etree.tostring(table, pretty_print=True)
+        return etree.tostring(table, pretty_print=True).decode("utf-8")
 
     @property
     def url(self):
