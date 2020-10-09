@@ -45,6 +45,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - The test environment is now properly isolated from the local environment
   (specifically the `ENV` directory, i.e., the Python virtual environment)
 - Install Python dependencies from `requirements.lock` for reproducible builds
+  every time the web container starts; create virtual environment if not present
 
 ### Added
 - Enabled apache mod_ssl in web image build
@@ -52,6 +53,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Reel test fixture
 - Tests for image_urls methods
 - image_url template tag
+- Add script to update Python dependencies in `requirements.lock`
 
 ### Changed
 - Moved Dockerfile-dev to Dockerfile to support automated builds
