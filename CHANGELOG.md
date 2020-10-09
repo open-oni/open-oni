@@ -48,15 +48,20 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Added
  - Enabled apache mod_ssl in web image build
  - Included codebase as part of Dockerfile build
+ - Reel test fixture
+ - Tests for image_urls methods
+ - image_url template tag
 
 ### Changed
  - Moved Dockerfile-dev to Dockerfile to support automated builds
+ - References to test fixtures
  - Flipped order of reel and issue display on batch info page
 - Update CentOS MariaDB schema / access commands to most robust forms which
   allow for names with hyphens/underscores and inline comments
 
 ### Removed
  - Hidden input fields in search forms with search type and row count
+ - Unused image template tags in favor of generic image_url tag
 
 ### Migration
 - If you need more control over logging settings, and you're not already

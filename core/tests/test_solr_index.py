@@ -10,9 +10,18 @@ class SolrIndexTests(TestCase):
     Exercise some search form -> solr query translations
     """
 
-    fixtures = ['test/countries.json', 'test/titles.json', 'test/ocr.json',
-                'test/awardee.json', 'test/batch.json', 'test/issue.json',
-                'test/page.json', 'test/ethnicities.json', 'test/languages.json']
+    fixtures = [
+        'test/awardee.json',
+        'test/batch.json',
+        'test/countries.json',
+        'test/ethnicities.json',
+        'test/issue.json',
+        'test/languages.json',
+        'test/ocr.json',
+        'test/page.json',
+        'test/reel.json',
+        'test/titles.json'
+    ]
     ocr_langs = ['ocr_%s' %l for l in settings.SOLR_LANGUAGES]
 
 

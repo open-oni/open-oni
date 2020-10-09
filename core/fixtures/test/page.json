@@ -1,14 +1,5 @@
 [
   {
-    "pk": 5551212,
-    "model": "core.reel",
-    "fields": {
-      "number": 5551212,
-      "batch": "batch_curiv_ahwahnee_ver01",
-      "created": "2009-03-26T20:59:28+00:00"
-    }
-  },
-  {
     "pk": 1, 
     "model": "core.page", 
     "fields": {
