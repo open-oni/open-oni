@@ -9,7 +9,3 @@ source ENV/bin/activate
 
 # Install Open ONI dependencies
 pip install -r requirements.lock
-
-# Miscellaneous
-install -d /opt/openoni/static
-install -d /opt/openoni/.python-eggs
