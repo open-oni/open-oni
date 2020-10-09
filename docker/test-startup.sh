@@ -7,6 +7,7 @@ rsync -avq \
   --exclude="onisite/plugins/*" \
   --exclude="themes/*" \
   --exclude="log/*" \
+  --exclude="ENV/*" \
   /usr/local/src/openoni/ /opt/openoni
 cd /opt/openoni
 rsync -avq /usr/local/src/openoni/themes/default/ /opt/openoni/themes/default

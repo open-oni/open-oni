@@ -42,6 +42,8 @@ Markdown Spec](https://github.github.com/gfm/).
   examples in CentOS OpenONI web app configuration documentation
 - Replaced solrpy with pysolr due to security risks and more active development
   in pysolr
+- The test environment is now properly isolated from the local environment
+  (specifically the `ENV` directory, i.e., the Python virtual environment)
 
 ### Added
  - Enabled apache mod_ssl in web image build
