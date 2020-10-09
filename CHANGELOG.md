@@ -44,6 +44,7 @@ Markdown Spec](https://github.github.com/gfm/).
   in pysolr
 - The test environment is now properly isolated from the local environment
   (specifically the `ENV` directory, i.e., the Python virtual environment)
+- Install Python dependencies from `requirements.lock` for reproducible builds
 
 ### Added
 - Enabled apache mod_ssl in web image build
