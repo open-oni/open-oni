@@ -35,7 +35,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Removed various invalid / unnecessary ARIA role specifications
 - Fixed poor alternative text on some thumbnails
 - Fixed accessibility issues with the global search form
-- Logging now works as expected
+- Logging to `log/debug.log` file in addition to the console
 - Pinned docker-compose users to RAIS 3.x to avoid breakages when 4.x ships
 - Typo in CentOS RAIS docs for SELinux file context application command
 - Mistake in path for local settings copy command and outdated, non-general
@@ -46,37 +46,51 @@ Markdown Spec](https://github.github.com/gfm/).
   (specifically the `ENV` directory, i.e., the Python virtual environment)
 
 ### Added
- - Enabled apache mod_ssl in web image build
- - Included codebase as part of Dockerfile build
- - Reel test fixture
- - Tests for image_urls methods
- - image_url template tag
+- Enabled apache mod_ssl in web image build
+- Included codebase as part of Dockerfile build
+- Reel test fixture
+- Tests for image_urls methods
+- image_url template tag
 
 ### Changed
- - Moved Dockerfile-dev to Dockerfile to support automated builds
- - References to test fixtures
- - Flipped order of reel and issue display on batch info page
+- Moved Dockerfile-dev to Dockerfile to support automated builds
+- References to test fixtures
+- Flipped order of reel and issue display on batch info page
 - Update CentOS MariaDB schema / access commands to most robust forms which
   allow for names with hyphens/underscores and inline comments
+- The local settings example file has been simplified by moving many settings
+  controlled by environment variables to `base_settings.py`
+  - Import `settings_base.py` in `settings_local.py` so all settings available
+    for reference, not duplicating `BASE_DIR`
+  - `ONI_IIIF_URL` defaults to `BASE_URL` + `/images/iiif`, like Apache config
+  - `ONI_LOG_TO_FILE` places `debug.log` within `LOG_LOCATION` directory
+  - Updated `docs/customization/configuration.md` to reflect re-organization
+    with revised descriptions and simpler instructions
+  - Include resets in `test_settings.py` to keep test output simple
 
 ### Removed
- - Hidden input fields in search forms with search type and row count
- - Unused image template tags in favor of generic image_url tag
+- Hidden input fields in search forms with search type and row count
+- Unused image template tags in favor of generic image_url tag
+- `RDBMSPORT` and `SOLRPORT`, unused env vars, from `.env.example` and docs
+- Unused `IS_PRODUCTION` setting from `test_settings.py`
+- Django error/404 email alert config in CentOS OpenONI web app documentation
+  - Maintaining with latest settings files would be way more complicated for
+    minimal benefit based upon spammy results from trial in production
 
 ### Migration
-- If you need more control over logging settings, and you're not already
-  replacing the settings file, you should look at what was changed with the
-  logging setup and incorporate that into your `settings_local.py` file.  The
-  full changes can be seen in the closed pull request at
-  https://github.com/open-oni/open-oni/pull/547/files.
+- Please remake your `settings_local.py` file by re-copying from
+  `settings_local_example.py`. Simplification of the settings file and recent
+  logging config improvements will be incorporated into your site most easily
+  this way
 
 ### Deprecated
 
 ### Contributors
- - Jim Campbell (lauterman)
- - Jessica Dussault (jduss4)
- - Andrew Gearhart (andrewgearhart)
- - Jeremy Echols (jechols)
+- Jim Campbell (lauterman)
+- Jessica Dussault (jduss4)
+- Andrew Gearhart (andrewgearhart)
+- Jeremy Echols (jechols)
+- Greg Tunink (techgique)
 
 ## [v1.0.4] - MARC Display
 [v1.0.4]: https://github.com/open-oni/open-oni/compare/v1.0.3...v1.0.4
