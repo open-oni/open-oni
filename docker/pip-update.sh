@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Activate the Python virtual environment
 source ENV/bin/activate
 
 # Update dependencies
