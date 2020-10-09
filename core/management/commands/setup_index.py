@@ -8,7 +8,6 @@ from urllib import parse
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from core.management.commands import configure_logging
-from solr import SolrConnection
 
 configure_logging('setup_index_logging.config', 'setup_index.log')
 

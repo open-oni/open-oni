@@ -12,6 +12,7 @@ Pillow==6.2.1
 pip==19.3.1
 pymarc==3.2.0
 pyparsing==2.4.5
+pysolr==3.9.0
 python-mimeparse==1.6.0
 pytz==2019.3
 rdflib==4.2.2
@@ -20,7 +21,6 @@ rfc3339==6.2
 setuptools==42.0.2
 simplejson==3.17.0
 six==1.13.0
-solrpy==0.9.9
 sqlparse==0.3.0
 urllib3==1.25.7
 wheel==0.33.6

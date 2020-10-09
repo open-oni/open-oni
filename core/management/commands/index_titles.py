@@ -3,7 +3,7 @@ import logging
 from django.core.management.base import BaseCommand
     
 from core.management.commands import configure_logging
-from core.solr_index import index_titles
+from core import solr_index
 
 configure_logging("index_titles_logging.config", "index_titles.log")
 
@@ -18,6 +18,6 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         _logger.info("indexing titles")
-        index_titles()
+        solr_index.index_titles()
         _logger.info("finished indexing titles")
 
