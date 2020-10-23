@@ -3,6 +3,7 @@ Django>=2.2,<2.3
 feedparser
 lxml
 mysqlclient
+pip
 Pillow
 pymarc
 pysolr

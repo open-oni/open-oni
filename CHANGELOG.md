@@ -36,6 +36,13 @@ Markdown Spec](https://github.github.com/gfm/).
 - Replaced solrpy with pysolr due to security risks and more active development
   in pysolr
 
+### Added
+- Documentation for handling Python dependencies beyond initial install
+- `pip` itself added to `requirements.pip` so it is updated by default as well
+
+### Changed
+- Python dependencies updated to latest tested versions
+
 ### Contributors
 - Jeremy Echols (jechols)
 - Greg Tunink (techgique)
