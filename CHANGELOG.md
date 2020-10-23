@@ -42,6 +42,17 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Changed
 - Python dependencies updated to latest tested versions
+- Renamed production branch from `master` to `main`
+
+### Migration
+- Run these commands to update a cloned git repo for use of `main`:
+  ```bash
+  git pull origin main
+  git checkout main
+  git branch -D master
+  git remote prune origin
+  git remote set-head origin -a
+  ```
 
 ### Contributors
 - Jeremy Echols (jechols)
