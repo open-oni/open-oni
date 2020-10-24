@@ -103,7 +103,7 @@ def batch(request, batch_name):
         reels.append({'number': reel.number,
                       'titles': reel.titles(),
                       'title_range': _title_range(reel),
-                      'page_count': reel.pages.count})
+                      'page_count': reel.pages.count })
     page_title = 'Batch: %s' % batch.name
 
     return render(request, 'reports/batch.html', locals())
