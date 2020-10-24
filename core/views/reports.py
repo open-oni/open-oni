@@ -94,7 +94,8 @@ def batch(request, batch_name):
         issues.append({'lccn': issue.title.lccn,
                        'title': issue.title.name,
                        'date_issued': issue.date_issued,
-                       'page_count': page_count })
+                       'page_count': page_count,
+                       'edition': issue.edition})
 
     reels = []
     for reel in batch.reels.all():
@@ -102,7 +103,7 @@ def batch(request, batch_name):
         reels.append({'number': reel.number,
                       'titles': reel.titles(),
                       'title_range': _title_range(reel),
-                      'page_count': reel.pages.count })
+                      'page_count': reel.pages.count})
     page_title = 'Batch: %s' % batch.name
 
     return render(request, 'reports/batch.html', locals())
