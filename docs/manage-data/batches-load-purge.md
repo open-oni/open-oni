@@ -46,7 +46,8 @@ docker-compose exec web /load_batch.sh batch_name
 
 This command removes pages associated with a batch from the search index and
 database, but does not remove titles specific to this batch. It is effective
-even on batches which were only partially loaded.
+even on batches which were only partially loaded. It is recommended to restart
+the web server after purging a batch to clear the residual cache.
 
 ```bash
 source ENV/bin/activate
