@@ -147,6 +147,11 @@
                 aria-hidden="true"></span>
               <a id="clip" href="#" target="print">Clip/Print Image</a>
             </span>
+          <span class="control">
+            <span class="glyphicon glyphicon-share"
+                  aria-hidden="true"></span>
+            <a id="share" href="{% url 'openoni_page' title.lccn issue.date_issued issue.edition page.sequence %}">Share</a>
+          </span>
           {% endif %}
         </span>{# /other_controls #}
       </div>{# /imageViewer_nav #}
