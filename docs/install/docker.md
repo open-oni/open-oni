@@ -19,7 +19,7 @@ This will only affect this repository (add `--global` if you want it to be the d
 ## First Time Installation
 Install Docker using [instructions on Docker's website](https://www.docker.com/products/docker-desktop).
 
-For deploy to a production environment, check out the `master` branch by running
+For deploying to a production environment, check out the `master` branch by running
 ```bash
 git clone https://github.com/open-oni/open-oni.git
 git checkout master
@@ -32,7 +32,7 @@ git checkout dev
 ```
 
 Next you may customize your application's by changing the [configuration](/docs/customization/configuration.md#configuring-your-app).
-This is completely optional as by default the docker-compose version of open-oni works without any changes.
+This is completely optional as by default the docker-compose version of Open ONI works without any changes.
 
 Now, boot up the app. Initially, this may take quite some time, but if all goes well in the future it should be fairly rapid:
 
@@ -51,9 +51,9 @@ background without following logs: `docker-compose up -d`.
 When services are running in the background, logs are always available via
 `docker-compose logs` or `docker-compose logs [service name, such as "web"]`
 
-# Development
-This section contains information for those wishing to do development work on open-oni. 
-If you plan to just deploy open-oni you can stop here and read the remaining documentation in the [Documentation](/docs/README.md) section.
+## Development
+This section contains information for those wishing to do development work on Open ONI. 
+If you plan to just deploy Open ONI you can stop here and read the remaining documentation in the [Documentation](/docs/README.md) section.
 
 ## Erase and Start Fresh
 

@@ -1,9 +1,7 @@
 # Configuring Your App
 
-## `onisite/settings_local.py`
-=======
-Below details all of the information regarding configuring and customizing your instance of open-oni.
-By default the docker compose version of open-oni works without any needed overrides or configuration changes.
+Below details all of the information regarding configuring and customizing your instance of Open ONI.
+By default the docker compose version of Open ONI works without any needed overrides or configuration changes.
 You should read it carefully and fully understand what and why you are making the changes.
 Failure to do so will cause problems. 
 
