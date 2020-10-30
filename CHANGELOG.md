@@ -44,6 +44,7 @@ Markdown Spec](https://github.github.com/gfm/).
   in pysolr
 - The test environment is now properly isolated from the local environment
   (specifically the `ENV` directory, i.e., the Python virtual environment)
+- URLs/objects built with a static number `1` rather than edition number
 
 ### Added
 - Enabled apache mod_ssl in web image build
@@ -91,6 +92,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Andrew Gearhart (andrewgearhart)
 - Jeremy Echols (jechols)
 - Greg Tunink (techgique)
+- John Konderla (businessFawn)
 
 ## [v1.0.4] - MARC Display
 [v1.0.4]: https://github.com/open-oni/open-oni/compare/v1.0.3...v1.0.4
