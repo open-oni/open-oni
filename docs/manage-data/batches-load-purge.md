@@ -42,11 +42,17 @@ With docker, a path is not needed if your batch is in `data/batches`:
 docker-compose exec web /load_batch.sh batch_name
 ```
 
+After ingesting a batch that replaces existing content it is recommended 
+to restart the web server to clear caches and serve the most up to date 
+data. 
+
 ## Purge Batch
 
 This command removes pages associated with a batch from the search index and
 database, but does not remove titles specific to this batch. It is effective
-even on batches which were only partially loaded.
+even on batches which were only partially loaded. Data that was purged may
+continue to serve from the cache. It is recommended to restart
+the web server after purging a batch to clear the residual cache.
 
 ```bash
 source ENV/bin/activate
