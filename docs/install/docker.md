@@ -19,10 +19,10 @@ This will only affect this repository (add `--global` if you want it to be the d
 ## First Time Installation
 Install Docker using [instructions on Docker's website](https://www.docker.com/products/docker-desktop).
 
-For deploying to a production environment, check out the `master` branch by running
+For deploying to a production environment, check out the `main` branch by running
 ```bash
 git clone https://github.com/open-oni/open-oni.git
-git checkout master
+git checkout main
 ```
 
 For typical development, clone the `dev` branch by running
