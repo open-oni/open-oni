@@ -31,7 +31,7 @@ git clone https://github.com/open-oni/open-oni.git
 git checkout dev
 ```
 
-Next you may customize your application's by changing the [configuration](/docs/customization/configuration.md#configuring-your-app).
+Next you may customize your application by changing the [configuration](/docs/customization/configuration.md#configuring-your-app).
 This is completely optional as by default the docker-compose version of Open ONI works without any changes.
 
 Now, boot up the app. Initially, this may take quite some time, but if all goes well in the future it should be fairly rapid:
