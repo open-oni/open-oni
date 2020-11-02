@@ -54,6 +54,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - image_url template tag
 
 ### Changed
+- Updated Open ONI configuration documentation
 - Moved Dockerfile-dev to Dockerfile to support automated builds
 - References to test fixtures
 - Flipped order of reel and issue display on batch info page
@@ -93,6 +94,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Jeremy Echols (jechols)
 - Greg Tunink (techgique)
 - John Konderla (businessFawn)
+- John Scancella (jscancella)
 
 ## [v1.0.4] - MARC Display
 [v1.0.4]: https://github.com/open-oni/open-oni/compare/v1.0.3...v1.0.4

@@ -1,5 +1,17 @@
 # Configuring Your App
 
+Below details all of the information regarding configuring and customizing your instance of Open ONI.
+By default the docker compose version of Open ONI works without any needed overrides or configuration changes.
+You should read it carefully and fully understand what and why you are making the changes.
+Failure to do so will cause problems. 
+
+- [settings_local.py](#onisitesettings_localpy)
+- [Environment Variables](#environment-variables)
+- [docker-compose.yml](#docker-composeyml)
+- [onisite/settings_base.py](#onisitesettings_basepy)
+- [onisite/settings_local.py](#onisitesettings_localpy-1)
+- [onisite/urls.py](#onisiteurlspy)
+
 ## `onisite/settings_local.py`
 
 Unlike a vanilla Django installation, our `onisite/settings.py` is not where
@@ -100,4 +112,3 @@ anything under `http://example.com/map`:
 ```python
   url('^map/', include("statemap.urls")),
 ```
-

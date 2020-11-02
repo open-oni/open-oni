@@ -1,26 +1,38 @@
 # Docker Installation
 
+- [Note about Windows and Git configuration](#note-about-windows-and-git-configuration)
 - [First Time Installation](#first-time-installation)
-- [Erase and Start Fresh](#erase-and-start-fresh)
-- [Overriding URL and Ports](#overriding-url-and-ports)
-- [Reviewing Code](#reviewing-code)
 - [Logs](#logs)
+- [Development](#development)
+  - [Erase and Start Fresh](#erase-and-start-fresh)
+  - [Reviewing Code](#reviewing-code)
+
 
 If you are already set up with Docker, you may wish to refer to the
 [Docker Command Quick Reference](/docs/advanced/docker-reference.md) guide.
 
-## First Time Installation
+## Note about Windows and Git configuration
+If you have git setup to use `CRLF` but commit `LF` (this is the default) and you are going to use docker-desktop you will run into
+the problem that the start scripts no longer work. You will see error messages like `web_1    | /bin/sh: /entrypoint.sh: /bin/bash^M: bad interpreter: No such file or directory`. To fix, you need to force Git to use `LF` in your working directory by running `git config core.autocrlf false`
+This will only affect this repository (add `--global` if you want it to be the default for all your Git repositories).
 
+## First Time Installation
 Install Docker using [instructions on Docker's website](https://www.docker.com/products/docker-desktop).
 
-For typical development, clone the `dev` branch, then copy and modify the
-
-overrides:
-
+For deploying to a production environment, check out the `main` branch by running
 ```bash
-cp docker-compose.override.yml-example docker-compose.override.yml
-vim docker-compose.override.yml
+git clone https://github.com/open-oni/open-oni.git
+git checkout main
 ```
+
+For typical development, clone the `dev` branch by running
+```bash
+git clone https://github.com/open-oni/open-oni.git
+git checkout dev
+```
+
+Next you may customize your application by changing the [configuration](/docs/customization/configuration.md#configuring-your-app).
+This is completely optional as by default the docker-compose version of Open ONI works without any changes.
 
 Now, boot up the app. Initially, this may take quite some time, but if all goes well in the future it should be fairly rapid:
 
@@ -28,11 +40,20 @@ Now, boot up the app. Initially, this may take quite some time, but if all goes 
 docker-compose up
 ```
 
-If you did not change the default application location, you should be able to see the app running at `localhost`.
+If you did not change the default application location, you should be able to see the app running at [localhost](http://localhost).
 
-*You really should read and edit the override - it's mostly there to show what
-you **can** do, not necessarily what you **should** do.  The mysql config is
-good, but pinning to an old version of RAIS is probably not what you want.*
+## Logs
+
+If you only care about watching the web service's apache logs, this may be more
+useful: `docker-compose up web`.  And if you want the services to run in the
+background without following logs: `docker-compose up -d`.
+
+When services are running in the background, logs are always available via
+`docker-compose logs` or `docker-compose logs [service name, such as "web"]`
+
+## Development
+This section contains information for those wishing to do development work on Open ONI. 
+If you plan to just deploy Open ONI you can stop here and read the remaining documentation in the [Documentation](/docs/README.md) section.
 
 ## Erase and Start Fresh
 
@@ -55,25 +76,6 @@ vim docker-compose.override.yml
 docker-compose up -d
 docker-compose logs -f
 ```
-
-## Overriding URL and ports
-
-If you need to put the app on a custom URL for demoing purposes or something,
-you can set the `ONI_BASE_URL` environment variable.  You can also customize the
-port with the `HTTPPORT` environment variable, which will be appended if the
-value is other than `80`.  When you do this, you have to
-make sure you restart the whole stack, as the RAIS container needs to know its
-IIIF root URL in order to supply the right values when it's queried for an
-image's information.
-
-```bash
-docker-compose down
-export ONI_BASE_URL=http://192.168.0.5
-export HTTPPORT=8080
-docker-compose up
-```
-
-The above will serve the web app via `http://192.168.0.5:8080`.
 
 ## Reviewing Code
 
@@ -98,12 +100,3 @@ The `build` step may not seem necessary if you've built the ONI image recently,
 but it can be *critical* when testing some PRs.  Sometimes we change packages
 at the OS level, and failing to rebuild the image will mean testing against an
 obsolete setup!
-
-## Logs
-
-If you only care about watching the web service's apache logs, this may be more
-useful: `docker-compose up web`.  And if you want the services to run in the
-background without following logs: `docker-compose up -d`.
-
-When services are running in the background, logs are always available via
-`docker-compose logs` or `docker-compose logs [service name, such as "web"]`
