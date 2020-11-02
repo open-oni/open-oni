@@ -94,7 +94,8 @@ def batch(request, batch_name):
         issues.append({'lccn': issue.title.lccn,
                        'title': issue.title.name,
                        'date_issued': issue.date_issued,
-                       'page_count': page_count })
+                       'page_count': page_count,
+                       'edition': issue.edition})
 
     reels = []
     for reel in batch.reels.all():

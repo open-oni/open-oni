@@ -93,7 +93,7 @@
     {% for issue in issues %}
     <tr class="{% cycle 'lightGray' 'white' %}">
       <td><a href="{% url 'openoni_title' issue.lccn %}">{{ issue.title }}</a></td>
-      <td><a href="{% url 'openoni_issue_pages' issue.lccn issue.date_issued 1 %}">{{issue.date_issued }}</a></td>
+      <td><a href="{% url 'openoni_issue_pages' issue.lccn issue.date_issued issue.edition %}">{{issue.date_issued }}</a></td>
       <td>{{ issue.page_count }}</td>
     </tr>
     {% endfor %}

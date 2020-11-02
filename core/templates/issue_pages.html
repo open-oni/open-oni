@@ -76,7 +76,7 @@
                           Issue Notes:
                           {{page_info.issue.noteAboutReproduction.text}}.
                         {% endif %}
-                        {% url 'openoni_issue_pages' title.lccn page_info.issue.date_issued 1 as url %}
+                        {% url 'openoni_issue_pages' title.lccn page_info.issue.date_issued page_info.issue.edition as url %}
                         <p><a href="{{url}}">View Issue</a></p>
                       </div>
                     {% endif %}

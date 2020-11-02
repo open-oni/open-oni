@@ -44,6 +44,7 @@ Markdown Spec](https://github.github.com/gfm/).
   in pysolr
 - The test environment is now properly isolated from the local environment
   (specifically the `ENV` directory, i.e., the Python virtual environment)
+- URLs/objects built with a static number `1` rather than edition number
 
 ### Added
 - Enabled apache mod_ssl in web image build
@@ -53,7 +54,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - image_url template tag
 
 ### Changed
-- Updated Open ONI documentation
+- Updated Open ONI configuration documentation
 - Moved Dockerfile-dev to Dockerfile to support automated builds
 - References to test fixtures
 - Flipped order of reel and issue display on batch info page
@@ -92,6 +93,7 @@ Markdown Spec](https://github.github.com/gfm/).
 - Andrew Gearhart (andrewgearhart)
 - Jeremy Echols (jechols)
 - Greg Tunink (techgique)
+- John Konderla (businessFawn)
 - John Scancella (jscancella)
 
 ## [v1.0.4] - MARC Display
