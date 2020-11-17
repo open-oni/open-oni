@@ -4,8 +4,9 @@ This directory contains documentation for installing, customizing, and managing 
 
 ## Installation and Updating
 
-If you are contributing to Open ONI, we recommend that you use Docker for
-development purposes.
+CentOS instructions are intended for production deployment. If you are
+contributing to Open ONI, we recommend that you use Docker for development
+purposes.
 
 - [CentOS](/docs/install/centos)
 - [Ubuntu](/docs/install/ubuntu.md) (incomplete)

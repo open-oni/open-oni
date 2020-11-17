@@ -41,6 +41,29 @@ source ENV/bin/activate
 pip install -r requirements.lock
 ```
 
+This will install the versions of Python dependencies last tested by Open ONI
+maintainers, but it is likely that dependencies such as Django have released
+newer versions. We do not plan to make Open ONI releases based on dependency
+releases outside of severe security vulnerabilities or breaking changes. We may
+mention dependency releases such as Django updates in the #general channel of
+our Slack workspace.
+
+We encourage you to review `requirements.pip` which [controls the versions pip
+may install](https://pip.pypa.io/en/stable/user_guide/#requirements-files) and
+make a plan to update your dependencies and test regularly for security
+maintenance.
+
+Update Python dependencies based on `requirements.pip`:
+
+```bash
+cd /opt/openoni/
+source ENV/bin/activate
+pip install -U -r requirements.pip
+
+# Update requirements.lock for repeatable installs
+pip freeze > requirements.lock
+```
+
 ### Newspaper Data Symlink
 If you wish to symlink Open ONI's batches directory to another path, e.g.
 `/var/local/newspapers`, run these commands
