@@ -12,6 +12,8 @@ Markdown Spec](https://github.github.com/gfm/).
 ## [Unreleased] - Brief description
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
 
+### Security
+
 ### Fixed
 
 ### Added
@@ -26,6 +28,35 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Contributors
 -->
+
+## [v1.0.5] - Switch solrpy to pysolr
+[v1.0.5]: https://github.com/open-oni/open-oni/compare/v1.0.4...v1.0.5
+
+### Security
+- Replaced solrpy with pysolr due to security risks and more active development
+  in pysolr
+
+### Added
+- Documentation for handling Python dependencies beyond initial install
+- `pip` itself added to `requirements.pip` so it is updated by default as well
+
+### Changed
+- Python dependencies updated to latest tested versions
+- Renamed production branch from `master` to `main`
+
+### Migration
+- Run these commands to update a cloned git repo for use of `main`:
+  ```bash
+  git pull origin main
+  git checkout main
+  git branch -D master
+  git remote prune origin
+  git remote set-head origin -a
+  ```
+
+### Contributors
+- Jeremy Echols (jechols)
+- Greg Tunink (techgique)
 
 ## [v1.0.4] - MARC Display
 [v1.0.4]: https://github.com/open-oni/open-oni/compare/v1.0.3...v1.0.4

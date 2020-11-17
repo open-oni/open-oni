@@ -39,9 +39,9 @@ page to help set up a development environment.
 
 **Important**: All features should be based on the `dev` branch! We use a loose
 [gitflow-like](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
-branching strategy, and `master` is meant to always be production-ready. Only
+branching strategy, and `main` is meant to always be production-ready. Only
 *major* bug fixes (such as security issues) should be applied directly to the
-`master` branch. Also read the following to inform your git use:
+`main` branch. Also read the following to inform your git use:
 https://drewdevault.com/2019/02/25/Using-git-with-discipline.html
 
 First, fork the [Open ONI repository](https://github.com/open-oni/open-oni) in
@@ -57,7 +57,7 @@ git checkout -b feature/my-awesome-oni-thing
 
 When you're ready, push up your code and
 [submit a pull request](https://github.com/open-oni/open-oni/pulls).
-**Make sure** the pull request is against the `dev` branch, *not* `master`.
+**Make sure** the pull request is against the `dev` branch, *not* `main`.
 
 ### Testing
 
@@ -117,7 +117,7 @@ Language Notes:
       first
 1. Send pull requests to merge features to `dev`
 1. Delete branches when they are fully merged and no longer needed
-1. Developers will collaborate to merge additions to `dev` into `master` for
+1. Developers will collaborate to merge additions to `dev` into `main` for
    releases
 
 #### Pull Requests and Merging
@@ -142,11 +142,11 @@ Language Notes:
 Follow these steps for each Open ONI release:
 
 - Ensure `core/version.py` is set to the new version on the release PR
-- Review and merge the release PR into `master`
+- Review and merge the release PR into `main`
 - [Create a GitHub release](https://github.com/open-oni/open-oni/releases/new)
 - Update [open-oni.github.io
   source](https://github.com/open-oni/open-oni.github.io) as necessary
-- Merge the `master` branch back into the `dev` branch
+- Merge the `main` branch back into the `dev` branch
 - Copy the template for unreleased work in `CHANGELOG.md` on the `dev` branch
 - Post an announcement to #general channel on Slack and the [Chronam Users
   mailing list](https://listserv.loc.gov/cgi-bin/wa?A0=CHRONAM-USERS)

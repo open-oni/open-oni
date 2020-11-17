@@ -7,10 +7,9 @@ from django.conf import settings
 from django.db import connection
 from django.core.management.base import BaseCommand, CommandError
 
-from solr import SolrConnection
-
 from core.batch_loader import BatchLoader, BatchLoaderException
 from core.management.commands import configure_logging
+from core import solr_index
 
 configure_logging('purge_batches_logging.config',
                   'purge_batch_%s.log' % os.getpid())
@@ -41,7 +40,7 @@ class Command(BaseCommand):
             loader.purge_batch(batch_name)
             if options['optimize']:
                 log.info("optimizing solr")
-                solr = SolrConnection(settings.SOLR)
+                solr = solr_index.conn()
                 solr.optimize()
                 log.info("optimizing MySQL OCR table")
                 cursor = connection.cursor()

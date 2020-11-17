@@ -44,4 +44,4 @@ class Command(BaseCommand):
                     _log.info("purging %s [%s]" % (title, title.lccn))
                     title.delete()
         if not options['pretend']:
-            solr_index.commit()
+            solr_index.conn().commit()
