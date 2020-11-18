@@ -12,6 +12,8 @@ Markdown Spec](https://github.github.com/gfm/).
 ## [Unreleased] - Brief description
 [Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
 
+### Security
+
 ### Fixed
 
 ### Added
@@ -28,7 +30,9 @@ Markdown Spec](https://github.github.com/gfm/).
 -->
 
 ## [Unreleased]
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.4...dev
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.5...dev
+
+### Security
 
 ### Fixed
 - `setup_index` command now reports Solr errors more effectively
@@ -40,10 +44,9 @@ Markdown Spec](https://github.github.com/gfm/).
 - Typo in CentOS RAIS docs for SELinux file context application command
 - Mistake in path for local settings copy command and outdated, non-general
   examples in CentOS OpenONI web app configuration documentation
-- Replaced solrpy with pysolr due to security risks and more active development
-  in pysolr
 - The test environment is now properly isolated from the local environment
   (specifically the `ENV` directory, i.e., the Python virtual environment)
+- URLs/objects built with a static number `1` rather than edition number
 - Install Python dependencies from `requirements.lock` for reproducible builds
   every time the web container starts; create virtual environment if not present
 
@@ -70,6 +73,7 @@ Markdown Spec](https://github.github.com/gfm/).
   - Updated `docs/customization/configuration.md` to reflect re-organization
     with revised descriptions and simpler instructions
   - Include resets in `test_settings.py` to keep test output simple
+- Updated Open ONI configuration documentation
 
 ### Removed
 - Hidden input fields in search forms with search type and row count
@@ -91,7 +95,38 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 - Jim Campbell (lauterman)
 - Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
 - Andrew Gearhart (andrewgearhart)
+- John Konderla (businessFawn)
+- John Scancella (jscancella)
+- Greg Tunink (techgique)
+
+## [v1.0.5] - Switch solrpy to pysolr
+[v1.0.5]: https://github.com/open-oni/open-oni/compare/v1.0.4...v1.0.5
+
+### Security
+- Replaced solrpy with pysolr due to security risks and more active development
+  in pysolr
+
+### Added
+- Documentation for handling Python dependencies beyond initial install
+- `pip` itself added to `requirements.pip` so it is updated by default as well
+
+### Changed
+- Python dependencies updated to latest tested versions
+- Renamed production branch from `master` to `main`
+
+### Migration
+- Run these commands to update a cloned git repo for use of `main`:
+  ```bash
+  git pull origin main
+  git checkout main
+  git branch -D master
+  git remote prune origin
+  git remote set-head origin -a
+  ```
+
+### Contributors
 - Jeremy Echols (jechols)
 - Greg Tunink (techgique)
 

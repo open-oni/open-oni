@@ -78,7 +78,7 @@ PROJECT_NAME = 'YOUR_LONG_PROJECT_NAME'
 Use below only if LoC is down and MARC requests fail.
 We've mirrored a *lot* of MARC records on GitHub for use with
 """
-#MARC_RETRIEVAL_URLFORMAT = 'https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml'
+#MARC_RETRIEVAL_URLFORMAT = 'https://raw.githubusercontent.com/open-oni/marc-mirror/main/marc/%s/marc.xml'
 """
 To serve locally, clone open-oni/marc-mirror repository
 to static/compiled/marc and use setting below.

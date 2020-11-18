@@ -7,4 +7,4 @@ source ENV/bin/activate
 pip install -U -r requirements.pip
 
 # Update requirements.lock
-pip list --format freeze > requirements.lock
+pip freeze > requirements.lock

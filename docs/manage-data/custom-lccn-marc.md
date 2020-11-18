@@ -23,7 +23,7 @@ For example, Open ONI has a [repository with mirrored MARC records](https://gith
 You can use that repository by changing your settings to:
 
 ```
-MARC_RETRIEVAL_URLFORMAT = "https://raw.githubusercontent.com/open-oni/marc-mirror/master/marc/%s/marc.xml"
+MARC_RETRIEVAL_URLFORMAT = "https://raw.githubusercontent.com/open-oni/marc-mirror/main/marc/%s/marc.xml"
 ```
 
 Similarly, you could create your own MARC records and point your Open ONI

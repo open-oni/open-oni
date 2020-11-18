@@ -5,10 +5,10 @@ Django==2.2.16
 feedparser==6.0.1
 idna==2.10
 isodate==0.6.0
-lxml==4.5.2
+lxml==4.6.1
 mysqlclient==2.0.1
-Pillow==7.2.0
-pip==20.2.3
+Pillow==8.0.1
+pip==20.2.4
 pymarc==4.0.0
 pyparsing==2.4.7
 pysolr==3.9.0
@@ -17,11 +17,11 @@ pytz==2020.1
 rdflib==5.0.0
 requests==2.24.0
 rfc3339==6.2
-setuptools==50.3.0
+setuptools==50.3.2
 sgmllib3k==1.0.0
 simplejson==3.17.2
 six==1.15.0
 sqlparse==0.4.1
-urllib3==1.25.10
+urllib3==1.25.11
 wheel==0.35.1
 worldcat==0.3.6
