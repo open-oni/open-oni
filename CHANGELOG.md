@@ -47,8 +47,13 @@ Markdown Spec](https://github.github.com/gfm/).
 - The test environment is now properly isolated from the local environment
   (specifically the `ENV` directory, i.e., the Python virtual environment)
 - URLs/objects built with a static number `1` rather than edition number
-- Install Python dependencies from `requirements.lock` for reproducible builds
-  every time the web container starts; create virtual environment if not present
+- Make Docker builds more reproducible
+  - Install Python dependencies from `requirements.lock` every time the web
+    container starts; create virtual environment if not present
+  - Switch to Python 3 included `venv` from `virtualenv` for virtual environment
+  - Don't install latest versions of `pip` and `setuptools` from PyPI before
+    creating virtual environment
+  - Skip creating wheels of packages that don't provide them on PyPI
 
 ### Added
 - Enabled apache mod_ssl in web image build
