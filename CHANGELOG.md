@@ -54,6 +54,8 @@ Markdown Spec](https://github.github.com/gfm/).
   - Don't install latest versions of `pip` and `setuptools` from PyPI before
     creating virtual environment
   - Skip creating wheels of packages that don't provide them on PyPI
+  - Copy `pip-update.sh` into the web container for use in changing / updating
+    Python dependencies and update `docs/advanced/docker-reference.md`
 
 ### Added
 - Enabled apache mod_ssl in web image build
