@@ -10,10 +10,8 @@ verify_config() {
     cp onisite/urls_example.py onisite/urls.py
   fi
 
-  # Prepare the ENV dir if necessary
-  if [ ! -d /opt/openoni/ENV/lib ]; then
-    /pip-install.sh
-  fi
+  # Install Python dependencies
+  /pip-install.sh
 }
 
 setup_database() {

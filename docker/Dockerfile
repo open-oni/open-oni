@@ -15,7 +15,7 @@ RUN apt-get update && \
   curl \
   rsync \
   python3-dev \
-  python3-pip && \
+  python3-venv && \
   apt-get -y install --no-install-recommends libapache2-mod-wsgi-py3
 
 # Force apache error logs to stderr

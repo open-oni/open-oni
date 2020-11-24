@@ -47,6 +47,15 @@ Markdown Spec](https://github.github.com/gfm/).
 - The test environment is now properly isolated from the local environment
   (specifically the `ENV` directory, i.e., the Python virtual environment)
 - URLs/objects built with a static number `1` rather than edition number
+- Make Docker builds more reproducible
+  - Install Python dependencies from `requirements.lock` every time the web
+    container starts; create virtual environment if not present
+  - Switch to Python 3 included `venv` from `virtualenv` for virtual environment
+  - Don't install latest versions of `pip` and `setuptools` from PyPI before
+    creating virtual environment
+  - Skip creating wheels of packages that don't provide them on PyPI
+  - Copy `pip-update.sh` into the web container for use in changing / updating
+    Python dependencies and update `docs/advanced/docker-reference.md`
 
 ### Added
 - Enabled apache mod_ssl in web image build
@@ -54,9 +63,9 @@ Markdown Spec](https://github.github.com/gfm/).
 - Reel test fixture
 - Tests for image_urls methods
 - image_url template tag
+- Add script to update Python dependencies in `requirements.lock`
 
 ### Changed
-- Updated Open ONI configuration documentation
 - Moved Dockerfile-dev to Dockerfile to support automated builds
 - References to test fixtures
 - Flipped order of reel and issue display on batch info page
@@ -71,6 +80,7 @@ Markdown Spec](https://github.github.com/gfm/).
   - Updated `docs/customization/configuration.md` to reflect re-organization
     with revised descriptions and simpler instructions
   - Include resets in `test_settings.py` to keep test output simple
+- Updated Open ONI configuration documentation
 
 ### Removed
 - Hidden input fields in search forms with search type and row count
