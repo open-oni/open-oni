@@ -617,10 +617,12 @@ class Issue(models.Model):
 
     @property
     def copyright_link(self):
-        public_domain_date = datetime.date(1923,1,1)
+        # Starting recently, PD is a rolling date.  Each January 1st, it
+        # changes to 96 years prior to the current year.
+        public_domain_date = datetime.date(datetime.date.today().year - 96, 12, 31)
         public_domain_uri = 'http://creativecommons.org/publicdomain/mark/1.0/'
         public_domain_text = 'Public Domain Mark 1.0'
-        if self.date_issued < public_domain_date:
+        if self.date_issued <= public_domain_date:
             # A lot of times the PD record isn't in people's databases, so we
             # hack a PD record into the db on the fly
             copyright = Copyright.objects.filter(uri=public_domain_uri)
