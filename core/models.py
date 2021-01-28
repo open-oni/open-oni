@@ -618,11 +618,19 @@ class Issue(models.Model):
     @property
     def copyright_link(self):
         public_domain_date = datetime.date(1923,1,1)
-        public_domain_uri = "http://creativecommons.org/publicdomain/mark/1.0/"
+        public_domain_uri = 'http://creativecommons.org/publicdomain/mark/1.0/'
+        public_domain_text = 'Public Domain Mark 1.0'
+        if self.date_issued < public_domain_date:
+            # A lot of times the PD record isn't in people's databases, so we
+            # hack a PD record into the db on the fly
+            copyright = Copyright.objects.filter(uri=public_domain_uri)
+            if copyright.count() == 0:
+                c = Copyright(uri = public_domain_uri, label = public_domain_text)
+                c.save()
+                copyright = [c]
+            return copyright[0]
+
         try:
-            if self.date_issued < public_domain_date:
-                copyright = Copyright.objects.filter(uri=public_domain_uri)
-                return copyright[0]
             maps = LccnDateCopyright.objects.filter(lccn = self.title.lccn).filter(start_date__lt=self.date_issued).filter(end_date__gt=self.date_issued)
             if maps.exists():
                 return maps[0].copyright
