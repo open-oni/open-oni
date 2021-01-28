@@ -56,6 +56,8 @@ Markdown Spec](https://github.github.com/gfm/).
   - Skip creating wheels of packages that don't provide them on PyPI
   - Copy `pip-update.sh` into the web container for use in changing / updating
     Python dependencies and update `docs/advanced/docker-reference.md`
+- Public Domain rights statement now shows up under qualifying images (i.e.,
+  anything over 96 years ago)
 
 ### Added
 - Enabled apache mod_ssl in web image build
