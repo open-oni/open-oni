@@ -81,6 +81,7 @@ Markdown Spec](https://github.github.com/gfm/).
     with revised descriptions and simpler instructions
   - Include resets in `test_settings.py` to keep test output simple
 - Updated Open ONI configuration documentation
+- Docker configuration now uses RAIS 4.x instead of 3.x
 
 ### Removed
 - Hidden input fields in search forms with search type and row count
@@ -96,6 +97,10 @@ Markdown Spec](https://github.github.com/gfm/).
   `settings_local_example.py`. Simplification of the settings file and recent
   logging config improvements will be incorporated into your site most easily
   this way
+- If you pinned a specific version of RAIS in your
+  `docker-compose.override.yml`, make sure you either undo that or set up the
+  appropriate environment, as RAIS 3 uses a slightly different configuration
+  from RAIS 4.
 
 ### Deprecated
 
