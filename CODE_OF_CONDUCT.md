@@ -214,7 +214,7 @@ year. Any public incident reports will be listed and linked to as well.
 
 Year                  | 2020
 ----------------------|-----
-**Violation reports** | To be released early 2021
+**Violation reports** |    0
 No violation occurred |
 Private reprimand     |
 Public reprimand      |
@@ -227,7 +227,7 @@ Public apology        |
 
 #### Public Reports
 - 2020
-  - To be released early 2021
+  - None
 
 
 ## Changes
