@@ -10,9 +10,8 @@
     be valid and it should be documented in detail in
     `docs/advanced/admin-commands.md`
 - Copy the changelog entry file template in `changelogs/` to a new file in the
-  same directory following the `YYYY-MM-DD-name[-#].md` pattern with the day's
-  date, your preferred name, and an optional sequential number if you have
-  submitted more than one PR that day
+  same directory named following the `YYYY-MM-DD-branch_name.md` pattern with
+  the day's date and your branch name
   - [ ] Describe change(s) in appropriate section(s)
   - [ ] List self in Contributors section
 - If a release PR:
