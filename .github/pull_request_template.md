@@ -9,7 +9,7 @@
   - [ ] If a `manage.py` command is added, deleted, or modified its help text must
     be valid and it should be documented in detail in
     `docs/advanced/admin-commands.md`
-- Copy the changelog entry file template in `changeslogs/` to a new file in the
+- Copy the changelog entry file template in `changelogs/` to a new file in the
   same directory following the `YYYY-MM-DD-name[-#].md` pattern with the day's
   date, your preferred name, and an optional sequential number if you have
   submitted more than one PR that day
