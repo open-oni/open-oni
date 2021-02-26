@@ -147,7 +147,8 @@ Follow these steps for each Open ONI release:
 - Update [open-oni.github.io
   source](https://github.com/open-oni/open-oni.github.io) as necessary
 - Merge the `main` branch back into the `dev` branch
-- Copy the template for unreleased work in `CHANGELOG.md` on the `dev` branch
+- Copy the template for unreleased work in `CHANGELOG.md` and add a template
+  changelog entry file at `changelogs/YYYY-MM-DD-branch_name.md` on `dev`
 - Post an announcement to #general channel on Slack and the [Chronam Users
   mailing list](https://listserv.loc.gov/cgi-bin/wa?A0=CHRONAM-USERS)
 
