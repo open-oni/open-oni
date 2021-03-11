@@ -1,5 +1,5 @@
 ### Security
-- jQuery updated to 3.5.0, which fixes an HTML parsing vulnerability
+- jQuery updated to 3.6.0, including 3.5.0 fix for HTML parsing vulnerability
 
 ### Migration
 - If using jQuery to handle HTML in the DOM, review the [3.5.0 upgrade

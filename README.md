@@ -56,7 +56,7 @@ Python | 3.6 | 2021-12 | TBD | https://www.python.org/dev/peps/pep-0494/#lifespa
 Django | 2.2 LTS | 2022-04 | 3.2 LTS, 2021-04 | https://www.djangoproject.com/download/#supported-versions
 MariaDB | 10.4 | 2024-06 | TBD | https://mariadb.com/kb/en/mariadb-server/
 Solr | 8.x | Approx 2022, based on ~18mo major release cycle | TBD | https://lucene.apache.org/solr/downloads.html#about-versions-and-support
-jQuery | 3.5.0 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
+jQuery | 3.6.0 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
 Bootstrap | 3.4.1 | 2019-07-24 | TBD | https://github.com/twbs/release
 OpenSeadragon | 2.4.1 | Unknown | TBD | https://github.com/openseadragon/openseadragon
 tablesorter | 2.31.2 | Unknown | TBD | https://github.com/mottie/tablesorter/
