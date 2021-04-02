@@ -30,7 +30,7 @@ Markdown Spec](https://github.github.com/gfm/).
 -->
 
 ## [Unreleased]
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.5...dev
+[Unreleased]: https://github.com/open-oni/open-oni/compare/v1.0.6...dev
 
 ### Security
 
@@ -84,7 +84,6 @@ Markdown Spec](https://github.github.com/gfm/).
     with revised descriptions and simpler instructions
   - Include resets in `test_settings.py` to keep test output simple
 - Updated Open ONI configuration documentation
-- Docker configuration now uses RAIS 4.x instead of 3.x
 
 ### Removed
 - Hidden input fields in search forms with search type and row count
@@ -100,10 +99,6 @@ Markdown Spec](https://github.github.com/gfm/).
   `settings_local_example.py`. Simplification of the settings file and recent
   logging config improvements will be incorporated into your site most easily
   this way
-- If you pinned a specific version of RAIS in your
-  `docker-compose.override.yml`, make sure you either undo that or set up the
-  appropriate environment, as RAIS 3 uses a slightly different configuration
-  from RAIS 4.
 
 ### Deprecated
 
@@ -115,6 +110,23 @@ Markdown Spec](https://github.github.com/gfm/).
 - John Konderla (businessFawn)
 - John Scancella (jscancella)
 - Greg Tunink (techgique)
+
+## [v1.0.6] - Fix configuration for IIIF server
+[v1.0.6]: https://github.com/open-oni/open-oni/compare/v1.0.5...v1.0.6
+
+### Changed
+- For docker-compose setups: pinned to RAIS 4 and updated configuration for
+  that version
+
+### Migration
+- For docker-compose setups: if you pinned to RAIS 3 in
+  `docker-compose.override.yml`, make sure you either pin to 4 or else add the
+  appropriate environment variables for RAIS 3.  ONI now uses an environment
+  configuration that's suitable for 4, but will cause RAIS 3 not to serve
+  images properly.
+
+### Contributors
+- Jeremy Echols (jechols)
 
 ## [v1.0.5] - Switch solrpy to pysolr
 [v1.0.5]: https://github.com/open-oni/open-oni/compare/v1.0.4...v1.0.5
