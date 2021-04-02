@@ -29,6 +29,12 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.0.5] - Fix configuration for IIIF server
+[v1.0.6]: https://github.com/open-oni/open-oni/compare/v1.0.5...v1.0.6
+
+### Changed
+- Pinned to RAIS 4 for local development and updated configuration for that version
+
 ## [v1.0.5] - Switch solrpy to pysolr
 [v1.0.5]: https://github.com/open-oni/open-oni/compare/v1.0.4...v1.0.5
 

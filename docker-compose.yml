@@ -19,9 +19,10 @@ services:
       - solr-precreate
       - openoni
   rais:
-    image: uolibraries/rais
+    image: uolibraries/rais:4
     environment:
-      - RAIS_IIIFURL=${ONI_IIIF_URL:-http://localhost/images/iiif}
+      - RAIS_IIIFWEBPATH=/images/iiif
+      - RAIS_IIIFBASEURL=${ONI_BASE_URL:-http://localhost}
       - RAIS_TILECACHELEN=250
       - RAIS_TILEPATH=/opt/openoni/data/batches
     volumes:
