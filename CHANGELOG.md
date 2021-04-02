@@ -29,11 +29,22 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
-## [v1.0.5] - Fix configuration for IIIF server
+## [v1.0.6] - Fix configuration for IIIF server
 [v1.0.6]: https://github.com/open-oni/open-oni/compare/v1.0.5...v1.0.6
 
 ### Changed
-- Pinned to RAIS 4 for local development and updated configuration for that version
+- For docker-compose setups: pinned to RAIS 4 and updated configuration for
+  that version
+
+### Migration
+- For docker-compose setups: if you pinned to RAIS 3 in
+  `docker-compose.override.yml`, make sure you either pin to 4 or else add the
+  appropriate environment variables for RAIS 3.  ONI now uses an environment
+  configuration that's suitable for 4, but will cause RAIS 3 not to serve
+  images properly.
+
+### Contributors
+- Jeremy Echols (jechols)
 
 ## [v1.0.5] - Switch solrpy to pysolr
 [v1.0.5]: https://github.com/open-oni/open-oni/compare/v1.0.4...v1.0.5
