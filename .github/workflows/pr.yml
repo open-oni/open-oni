@@ -1,0 +1,19 @@
+name: "Pull Request Checks"
+on:
+  # Allow triggering runs on arbitrary branches
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  run_tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests
+        run: docker-compose -f test-compose.yml -p onitest up test
+      
