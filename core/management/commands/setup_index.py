@@ -11,10 +11,16 @@ from core.management.commands import configure_logging
 
 configure_logging('setup_index_logging.config', 'setup_index.log')
 
+
 _logger = logging.getLogger(__name__)
 fixture_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../fixtures'))
-core_url = settings.SOLR_BASE_URL + '/api/cores/openoni?action=STATUS&indexInfo=false'
-schema_url = settings.SOLR_BASE_URL + '/api/cores/openoni/schema'
+if settings.SOLR_CLOUD:
+    core_url = settings.SOLR_BASE_URL + '/api/collections/openoni?action=STATUS&indexInfo=true'
+    schema_url = settings.SOLR_BASE_URL + '/api/collections/openoni/schema'
+else:
+    core_url = settings.SOLR_BASE_URL + '/api/cores/openoni?action=STATUS&indexInfo=true'
+    schema_url = settings.SOLR_BASE_URL + '/api/cores/openoni/schema'
+
 
 # Copy fields are defined here because we have to manually check for dupes; for
 # some reason Solr doesn't do this for us, and will in fact allow dozens of the
@@ -68,9 +74,15 @@ class Command(BaseCommand):
                             _logger.info('Solr is not ready; waiting...')
                         continue
 
-                    status = r.json()['status']['openoni']
-                    if 'uptime' in status:
+
+
+                    if settings.SOLR_CLOUD:
+                      if len(r.json().get('cluster', {}).get('live_nodes', [])) > 0:
                         return True
+                    else:
+                      status = r.json().get('status', {}).get('openoni', {})
+                      if 'uptime' in status:
+                          return True
 
                     if x % 5 == 0:
                         _logger.info('Solr is initializing the openoni core; waiting...')
@@ -166,3 +178,4 @@ class Command(BaseCommand):
 
         _logger.error(f"Unable to add field '{name}': " + ', '.join(errors))
         return False
+

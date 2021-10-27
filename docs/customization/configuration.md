@@ -90,6 +90,7 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
  value like `31536000` for long-term use in production
 - `ONI_IIIF_URL` (default = BASE_URL + `/images/iiif`): URL at which ONI
  will serve IIIF images, proxied to the IIIF server by Apache
+- `SOLR_CLOUD` (default = False): Set to True if running solr in cloud mode
 
 ## `onisite/urls.py`
 
