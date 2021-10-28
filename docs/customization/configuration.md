@@ -78,6 +78,7 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
  set this to a highly random string in case that changes in the future.
 - `ONI_SOLR_URL` (default = `http://solr:8983`): Solr server base URL
 - `ONI_STORAGE_PATH` (default = `(ONI base dir path)/data`): Path to batch storage
+- `SOLR_CLOUD` (default = False): Set to True if running solr in cloud mode
 
 ### `onisite/settings_local.py`
 - `ONI_BASE_URL` (default = `http://localhost`): This must be the URL which
@@ -90,7 +91,7 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
  value like `31536000` for long-term use in production
 - `ONI_IIIF_URL` (default = BASE_URL + `/images/iiif`): URL at which ONI
  will serve IIIF images, proxied to the IIIF server by Apache
-- `SOLR_CLOUD` (default = False): Set to True if running solr in cloud mode
+
 
 ## `onisite/urls.py`
 
