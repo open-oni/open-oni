@@ -92,7 +92,6 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
 - `ONI_IIIF_URL` (default = BASE_URL + `/images/iiif`): URL at which ONI
  will serve IIIF images, proxied to the IIIF server by Apache
 
-
 ## `onisite/urls.py`
 
 Copy the example file:
