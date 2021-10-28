@@ -207,7 +207,7 @@ SECRET_KEY = os.getenv('ONI_SECRET_KEY', 'openoni')
 
 SOLR_BASE_URL = os.getenv('ONI_SOLR_URL', 'http://solr:8983')
 
-SOLR_CLOUD = False
+SOLR_CLOUD = os.getenv('ONI_SOLR_CLOUD', False)
 
 ## Absolute path on disk to the data directory
 STORAGE = os.getenv('ONI_STORAGE_PATH', os.path.join(BASE_DIR, 'data'))
