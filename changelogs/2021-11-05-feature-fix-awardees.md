@@ -4,4 +4,4 @@
 
 ### Contributors
 
-andrewgearhart
+* andrewgearhart
