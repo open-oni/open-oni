@@ -76,9 +76,9 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
  ONI this is currently of minimal importance since we have no web-based
  authentication or administration commands. However, it's good practice to
  set this to a highly random string in case that changes in the future.
+- `ONI_SOLR_CLOUD` (default = 0): Set to 1 if running solr in cloud mode
 - `ONI_SOLR_URL` (default = `http://solr:8983`): Solr server base URL
 - `ONI_STORAGE_PATH` (default = `(ONI base dir path)/data`): Path to batch storage
-- `ONI_SOLR_CLOUD` (default = 0): Set to 1 if running solr in cloud mode
 
 ### `onisite/settings_local.py`
 - `ONI_BASE_URL` (default = `http://localhost`): This must be the URL which
