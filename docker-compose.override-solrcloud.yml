@@ -1,0 +1,60 @@
+# This is an example of overriding the core docker setup.  Copy this to
+# `docker-compose.override.yml` and tweak it however you need for your dev
+# environment.
+#
+# Please don't just copy this and use all these values as-is.  They're truly
+# meant strictly to illustrate what you can do with docker-compose!
+version: '2.1'
+services:
+  # In this example, we are overriding the docker mysql config to use the more
+  # dev-friendly setup (lower RAM usage, for instance).
+  rdbms:
+    volumes:
+      - ./docker/mysql/:/etc/mysql/conf.d:Z
+
+    # This override exposes MariaDB to your host so you can locally run mysql
+    # commands.  Don't use this unless you really want the docker *host* to
+    # expose MariaDB!  This is generally not desirable in production.
+    ports:
+      - 3306:3306
+
+  rais:
+    ports:
+      # This exposes the RAIS image server locally.  This is rarely necessary,
+      # even in development, but can be handy if the Apache rules don't seem to
+      # be passing /images/iiif to the RAIS server.  URLs will be very complex,
+      # however, e.g.,
+      # http://localhost:12415/images/iiif/batch_dlc_manyyears_ver01%2Fdata%2Fsn83045462%2F00280654139%2F1859022101%2F0007.jp2/info.json
+      - 12415:12415
+
+      # The RAIS administrative view, for seeing things like server information
+      # and stats, e.g., http://localhost:12416/admin/stats.json
+      - 12416:12416
+
+  # Solr override to reach the web UI locally, e.g.,
+  # http://localhost:8983/solr/
+  #
+  # As with other overrrides, we *strongly* recommended not to do this in a
+  # production environment.
+  # solr:
+  #   ports:
+  #     - 8983:8983
+
+  # EXAMPLE: Solr Cloud (Zookeeper) Changes
+  web:
+    environment:
+      - ONI_SOLR_CLOUD=1
+  solr:
+    ports:
+      - "9983:9983"
+      - "8983:8983"
+    command: [
+      "solr-foreground",
+      "-DzkRun"
+    ]
+    # entrypoint:
+    #   - docker-entrypoint.sh
+    #   - solr
+    #   - start
+    #   - -c
+    #   - -f

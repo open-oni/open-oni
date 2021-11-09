@@ -7,6 +7,7 @@ from urllib import parse
 
 from django.core.management.base import BaseCommand
 from django.conf import settings
+from requests.api import get
 from core.management.commands import configure_logging
 
 configure_logging('setup_index_logging.config', 'setup_index.log')
@@ -15,9 +16,11 @@ _logger = logging.getLogger(__name__)
 fixture_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../fixtures'))
 if settings.SOLR_CLOUD:
     core_url = settings.SOLR_BASE_URL + '/api/collections/openoni?action=STATUS&indexInfo=false'
+    check_url = settings.SOLR_BASE_URL + '/solr/admin/collections?action=LIST'
     schema_url = settings.SOLR_BASE_URL + '/api/collections/openoni/schema'
 else:
     core_url = settings.SOLR_BASE_URL + '/api/cores/openoni?action=STATUS&indexInfo=false'
+    check_url = core_url
     schema_url = settings.SOLR_BASE_URL + '/api/cores/openoni/schema'
 
 # Copy fields are defined here because we have to manually check for dupes; for
@@ -66,19 +69,35 @@ class Command(BaseCommand):
                 _logger.info('Checking Solr connectivity')
 
             try:
-                with requests.get(core_url, timeout=1.0) as r:
+                with requests.get(check_url, timeout=1.0) as r:
                     if r.status_code != 200:
                         if x % 5 == 0:
                             _logger.info('Solr is not ready; waiting...')
                         continue
 
                     if settings.SOLR_CLOUD:
-                        if len(r.json().get('cluster', {}).get('live_nodes', [])) > 0:
+                        cluster_check = requests.get(core_url)
+                        _logger.info('solr_cloud is true - checking the cluster')
+                        cluster_check_len = len(cluster_check.json().get('cluster', {}).get('live_nodes', []))
+                        if cluster_check_len > 0:
+                          _logger.info('Cluster check is good.')
                           return True
+                        else:
+                          _logger.warn(f'Cluster check failed. Number of openoni cores is: {cluster_check_len}.')
+                          _logger.info('Creating openoni Collection')
+                          params = {
+                          "action": "CREATE",
+                          "name": "openoni",
+                          "numShards": 1,
+                          "replicationFactor": 1,
+                          "maxShardsPerNode": 1,
+                          "collection.configName": "_default"
+                          }
+                          requests.get(settings.SOLR_BASE_URL + '/solr/admin/collections', params=params)
                     else:
                         status = r.json().get('status', {}).get('openoni', {})
                         if 'uptime' in status:
-                            return True
+                          return True
 
                     if x % 5 == 0:
                         _logger.info('Solr is initializing the openoni core; waiting...')
