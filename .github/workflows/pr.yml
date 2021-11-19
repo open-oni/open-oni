@@ -6,6 +6,21 @@ on:
     branches:
       - main
       - dev
+    # Ignore things like changelogs and documentation, as
+    # there is currently no linting or similar done on them.
+    paths-ignore:
+      - "**.md"
+      - "changelogs/**"
+      - ".github/**"
+      # This runs the workflow for updates made to it
+      # so that we know it still works as expected.
+      - "!.github/workflows/pr.yml"
+      - "**/.gitignore"
+      - "LICENSE"
+      # Current only env.example, but anticipate further instances
+      - "**.example"
+      # Automatically exclude any further examples (same as above)
+      - "**.yml-example"
 
 jobs:
   run_tests:
@@ -17,4 +32,3 @@ jobs:
 
       - name: Run tests
         run: docker-compose -f test-compose.yml -p onitest up test
-      
