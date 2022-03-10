@@ -5,6 +5,16 @@ web. We aim to enable individual state and library-based newspaper collections
 to more easily provide these core capabilities, as well as develop new common
 features and improvements.
 
+Open ONI requires newspaper data to be provided in specific formats which
+comprise a
+["batch"](https://github.com/open-oni/open-oni/wiki/Create-Your-Own-Batch) and
+does not currently provide tools to prepare such data. However, the [University
+of Oregon and University of Nebraska-Lincoln were awarded a National Endowment
+for the Humanities grant](https://library.uoregon.edu/node/7671) to develop
+software and features to assist with batch creation, enable issue editing, and
+update the front end framework alongside an accessibility / user experience
+audit.
+
 Read our [About Open ONI web page](https://open-oni.github.io/about/) for more
 information about the project's origins and history.
 
@@ -12,8 +22,9 @@ information about the project's origins and history.
 Visit sites currently powered by Open ONI:
 
 - [Historic Oregon Newspapers](https://oregonnews.uoregon.edu/)
-- [Pennsylvania Newspaper Archive](http://panewsarchive.psu.edu/)
 - [Nebraska Newspapers](https://nebnewspapers.unl.edu/)
+- [North Carolina Newspapers](https://www.digitalnc.org/collections/newspapers/)
+- [Pennsylvania Newspaper Archive](https://panewsarchive.psu.edu/)
 
 View ["Sites using Open ONI" in our
 wiki](https://github.com/open-oni/open-oni/wiki/Sites-Using-Open-ONI) for links
