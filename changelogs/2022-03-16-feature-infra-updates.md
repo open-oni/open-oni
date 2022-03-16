@@ -15,6 +15,7 @@
       to collation `utf8mb4_general_ci`
     - Remove unused config file variables
 - Update OpenSeadragon to 2.4.2
+- Update tablesorter to 2.31.3
 - Update Dependency Roadmap
 
 ### Removed
