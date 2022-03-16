@@ -40,7 +40,6 @@ Markdown Spec](https://github.github.com/gfm/).
 - Fixed poor alternative text on some thumbnails
 - Fixed accessibility issues with the global search form
 - Logging to `log/debug.log` file in addition to the console
-- Pinned docker-compose users to RAIS 3.x to avoid breakages when 4.x ships
 - Typo in CentOS RAIS docs for SELinux file context application command
 - Mistake in path for local settings copy command and outdated, non-general
   examples in CentOS OpenONI web app configuration documentation

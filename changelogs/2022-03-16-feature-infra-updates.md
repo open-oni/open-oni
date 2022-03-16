@@ -14,6 +14,7 @@
       charset collation mismatch error when `utf8(mb3)` charset oddly defaults
       to collation `utf8mb4_general_ci`
     - Remove unused config file variables
+- Update Dependency Roadmap
 
 ### Removed
 
