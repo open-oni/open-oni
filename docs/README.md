@@ -27,6 +27,7 @@ about upgrading versions, breaking changes, etc
 ## Manage Data
 
 - [Load and Purge batches](/docs/manage-data/batches-load-purge.md)
+  - [Batch Loading Outline](/docs/manage-data/batch-loading-outline.md)
 - [Custom LCCN and MARC records](/docs/manage-data/custom-lccn-marc.md)
 - [Essays](/docs/manage-data/essays.md)
 

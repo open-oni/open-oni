@@ -12,23 +12,32 @@ information about the project's origins and history.
 Visit sites currently powered by Open ONI:
 
 - [Historic Oregon Newspapers](https://oregonnews.uoregon.edu/)
-- [Pennsylvania Newspaper Archive](http://panewsarchive.psu.edu/)
 - [Nebraska Newspapers](https://nebnewspapers.unl.edu/)
+- [North Carolina Newspapers](https://www.digitalnc.org/collections/newspapers/)
+- [Pennsylvania Newspaper Archive](https://panewsarchive.psu.edu/)
 
 View ["Sites using Open ONI" in our
 wiki](https://github.com/open-oni/open-oni/wiki/Sites-Using-Open-ONI) for links
 to the sites' source code.
 
 ## Install
-To evaluate the software, we recommend installing from the [latest Open ONI
-release](https://github.com/open-oni/open-oni/releases).
+Open ONI requires newspaper data in specific files and formats which comprise a
+"batch". We provide [small sample
+batches](https://github.com/open-oni/sample-data) for testing and [documentation
+on how to create a
+batch](https://github.com/open-oni/open-oni/wiki/Create-Your-Own-Batch). The
+Library of Congress also provides [Chronicling America newspapers as
+batches](https://chroniclingamerica.loc.gov/batches/).
 
-The 1.0 release includes upgrading Django to the latest LTS 2.2 release along
-with migrating to Python 3 and upgrading Solr and MariaDB to more recent
-releases. Note that release 0.11 and prior run Python 2 and Django 1.11 LTS
-which goes out of support in April 2020.
+Open ONI does not currently provide tools to create batches, but the [University
+of Oregon and University of Nebraska-Lincoln were awarded a National Endowment
+for the Humanities grant](https://library.uoregon.edu/node/7671) to develop
+software and features to assist with batch creation, enable issue editing, and
+update the Open ONI front end framework alongside an accessibility / user
+experience audit.
 
-If you're interested in more recent changes, check out the `dev` branch.
+To evaluate the software, we recommend downloading the [latest Open ONI
+release](https://github.com/open-oni/open-oni/releases) and following [installation documentation](https://github.com/open-oni/open-oni/tree/main/docs#installation-and-updating). If you're interested in more recent changes, check out the `dev` branch.
 
 ### Resource Requirements
 
