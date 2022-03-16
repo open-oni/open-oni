@@ -63,7 +63,7 @@ Component | Version | Supported Until | Next Target Release | Documentation
 ----------|---------|-----------------|---------------------|--------------
 Python | 3.8 | 2024-10 | 3.10 | https://peps.python.org/pep-0569/#lifespan
 Django | 2.2 LTS | 2022-04 | 3.2 LTS, 2021-04 | https://www.djangoproject.com/download/#supported-versions
-MariaDB | 10.4 | 2024-06 | TBD | https://mariadb.com/kb/en/mariadb-server/
+MariaDB | 10.6 | 2026-07-06 | Next LTS in ~2 years | https://mariadb.org/about/#maintenance-policy
 Solr | 8.x | Approx 2022, based on ~18mo major release cycle | TBD | https://lucene.apache.org/solr/downloads.html#about-versions-and-support
 jQuery | 3.6.0 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
 Bootstrap | 3.4.1 | 2019-07-24 | TBD | https://github.com/twbs/release
