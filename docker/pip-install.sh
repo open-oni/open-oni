@@ -9,6 +9,7 @@ fi
 source ENV/bin/activate
 
 # Install Open ONI dependencies
-# --no-cache-dir disables building local wheels as packages are installed
-# Building wheels provides no benefit when isolated within virtual environment
-pip install --no-cache-dir -r requirements.lock
+# --no-cache-dir no longer disables building wheels in local cache,
+# so install wheel package to prevent bdist_wheel errors
+pip install wheel
+pip install -r requirements.lock

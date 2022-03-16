@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
