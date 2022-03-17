@@ -48,17 +48,17 @@ releases outside of severe security vulnerabilities or breaking changes. We may
 mention dependency releases such as Django updates in the #general channel of
 our Slack workspace.
 
-We encourage you to review `requirements.pip` which [controls the versions pip
+We encourage you to review `requirements.txt` which [controls the versions pip
 may install](https://pip.pypa.io/en/stable/user_guide/#requirements-files) and
 make a plan to update your dependencies and test regularly for security
 maintenance.
 
-Update Python dependencies based on `requirements.pip`:
+Update Python dependencies based on `requirements.txt`:
 
 ```bash
 cd /opt/openoni/
 source ENV/bin/activate
-pip install -U -r requirements.pip
+pip install -U -r requirements.txt
 
 # Update requirements.lock for repeatable installs
 pip freeze > requirements.lock

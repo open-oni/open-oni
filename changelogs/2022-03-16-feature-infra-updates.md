@@ -17,6 +17,7 @@
 - Update OpenSeadragon to 2.4.2
 - Update tablesorter to 2.31.3
 - Update Dependency Roadmap
+- Rename `requirements.pip` to `requirements.txt`
 
 ### Removed
 
@@ -29,6 +30,9 @@
     https://docs.djangoproject.com/en/3.2/ref/databases/#creating-your-database
     - TL;DR use `utf8_general_ci` rather than `utf8_unicode_ci` unless you
       require German multi-character comparison to match German DIN-1 ordering
+- If you use any deployment scripts or CI/CD that interact with
+  `requirements.pip`, note that this file has been renamed to `requirements.txt`
+  to function with GitHub's dependency graph security scanning
 
 ### Deprecated
 
