@@ -1,0 +1,34 @@
+name: "Pull Request Checks"
+on:
+  # Allow triggering runs on arbitrary branches
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+      - dev
+    # Ignore things like changelogs and documentation, as
+    # there is currently no linting or similar done on them.
+    paths-ignore:
+      - "**.md"
+      - "changelogs/**"
+      - ".github/**"
+      # This runs the workflow for updates made to it
+      # so that we know it still works as expected.
+      - "!.github/workflows/pr.yml"
+      - "**/.gitignore"
+      - "LICENSE"
+      # Current only env.example, but anticipate further instances
+      - "**.example"
+      # Automatically exclude any further examples (same as above)
+      - "**.yml-example"
+
+jobs:
+  run_tests:
+    timeout-minutes: 20
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests
+        run: docker-compose -f test-compose.yml -p onitest up test
