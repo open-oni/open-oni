@@ -62,7 +62,7 @@ likely upgrade Open ONI's components between major releases again.
 Component | Version | Supported Until | Next Target Release | Documentation
 ----------|---------|-----------------|---------------------|--------------
 Python | 3.8 | 2024-10 | 3.10 | https://peps.python.org/pep-0569/#lifespan
-Django | 2.2 LTS | 2022-04 | 3.2 LTS, 2021-04 | https://www.djangoproject.com/download/#supported-versions
+Django | 3.2 LTS | 2024-04 | 4.2 LTS, 2023-04 | https://www.djangoproject.com/download/#supported-versions
 MariaDB | 10.6 | 2026-07-06 | Next LTS in ~2 years | https://mariadb.org/about/#maintenance-policy
 Solr | 8.x | Approx 2022, based on ~18mo major release cycle | TBD | https://lucene.apache.org/solr/downloads.html#about-versions-and-support
 RAIS | 4.x | Unknown | TBD | https://github.com/uoregon-libraries/rais-image-server

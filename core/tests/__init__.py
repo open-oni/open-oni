@@ -1,4 +1,6 @@
-import logging
 from django.conf import settings
+from pathlib import Path
 
-logging.basicConfig(filename=settings.LOG_LOCATION + "test.log", level=logging.DEBUG)
+import logging
+
+logging.basicConfig(filename=Path(settings.LOG_LOCATION) / "test.log", level=logging.DEBUG)

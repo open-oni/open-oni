@@ -1,8 +1,9 @@
+asgiref==3.5.0
 certifi==2020.6.20
 chardet==3.0.4
 charset-normalizer==2.0.12
 coverage==6.3.2
-Django==2.2.27
+Django==3.2.12
 feedparser==6.0.8
 idna==2.10
 isodate==0.6.0

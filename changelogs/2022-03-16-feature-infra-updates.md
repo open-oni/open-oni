@@ -18,6 +18,9 @@
 - Update tablesorter to 2.31.3
 - Update Dependency Roadmap
 - Rename `requirements.pip` to `requirements.txt`
+- Update Django to 3.2
+  - https://docs.djangoproject.com/en/3.2/releases/3.2/
+  - https://docs.djangoproject.com/en/3.2/internals/deprecation/
 
 ### Removed
 
@@ -33,6 +36,19 @@
 - If you use any deployment scripts or CI/CD that interact with
   `requirements.pip`, note that this file has been renamed to `requirements.txt`
   to function with GitHub's dependency graph security scanning
+- Django 3.2 changes
+  - Update theme template tags from `{% load static from staticfiles %}` to
+    `{% load static %}` if not already done. This was deprecated in Django 2.2
+    and is now removed.
+  - Update any path building in settings files using `BASE_DIR`, `LOG_LOCATION`,
+    `STATIC_ROOT`, and `STORAGE` to use Path syntax, e.g.
+    `BASE_DIR / 'subdir1' / 'subdir2'`
+    - Code working with these paths outside settings files like
+      `os.path.join(settings.LOG_LOCATION, 'subdir')` must be updated by adding
+      import line `from pathlib import Path` and changing code to
+      `Path(settings.LOG_LOCATION) / 'subdir'`; `import os` may then be removed
+      - Other corresponding code changes:
+        https://docs.python.org/3/library/pathlib.html#correspondence-to-tools-in-the-os-module
 
 ### Deprecated
 
