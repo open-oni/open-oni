@@ -21,6 +21,8 @@
 - Update Django to 3.2
   - https://docs.djangoproject.com/en/3.2/releases/3.2/
   - https://docs.djangoproject.com/en/3.2/internals/deprecation/
+    - Update `urls.py`, example files, and documentation to no longer use
+      deprecated `django.conf.urls`
 
 ### Removed
 
@@ -49,6 +51,10 @@
       `Path(settings.LOG_LOCATION) / 'subdir'`; `import os` may then be removed
       - Other corresponding code changes:
         https://docs.python.org/3/library/pathlib.html#correspondence-to-tools-in-the-os-module
+  - Update `urls.py` files to use
+    `from django.urls import include, path, re_path` rather than
+    `from django.conf.urls import url, include`. Then search and replace `url(`
+    to `re_path(`, though non-regex patterns should use just `path(`
 
 ### Deprecated
 

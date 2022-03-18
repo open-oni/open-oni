@@ -110,5 +110,5 @@ something like this to your file, you'd be telling the `statemap` app to handle
 anything under `http://example.com/map`:
 
 ```python
-  url('^map/', include("statemap.urls")),
+  re_path('^map/', include("statemap.urls")),
 ```
