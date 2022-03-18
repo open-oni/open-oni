@@ -1,9 +1,3 @@
-### Security
-
-### Fixed
-
-### Added
-
 ### Changed
 - Switch ONI Docker image base to Ubuntu Focal LTS for Python 3.8
   - Change pip-install.sh to install wheel package to prevent bdist_wheel errors
@@ -25,6 +19,7 @@
       deprecated `django.conf.urls`
 
 ### Removed
+- Deprecated `default_app_config` line in `core/__init__.py`
 
 ### Migration
 - If upgrading to MariaDB 10.6.1+, be aware of `utf8` character set default
@@ -55,8 +50,7 @@
     `from django.urls import include, path, re_path` rather than
     `from django.conf.urls import url, include`. Then search and replace `url(`
     to `re_path(`, though non-regex patterns should use just `path(`
-
-### Deprecated
+  - Remove `default_app_config` lines in all apps' `__init__.py` files
 
 ### Contributors
 - techgique
