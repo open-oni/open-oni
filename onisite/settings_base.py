@@ -5,6 +5,13 @@ from .django_defaults import *
 ################################################################
 # DJANGO CUSTOMIZATIONS
 ################################################################
+# https://docs.djangoproject.com/en/3.2/releases/3.2/#customizing-type-of-auto-created-primary-keys
+# Maintain past default setting to avoid extra migrations
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+# Our URLs are within the onisite app
+ROOT_URLCONF = 'onisite.urls'
+
 # Enable browser XSS protection, MIME-type sniff prevention headers,
 # and disable framing / embedding
 SECURE_BROWSER_XSS_FILTER = True
@@ -15,7 +22,8 @@ X_FRAME_OPTIONS = 'DENY'
 SITE_ID = 1
 
 # Directory path to static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'compiled')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'compiled')
+STATIC_ROOT = BASE_DIR / 'static' / 'compiled'
 
 # Template configuration (1.8+)
 TEMPLATES = [
@@ -28,7 +36,8 @@ TEMPLATES = [
 
         # Template-containing directories
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
+#            os.path.join(BASE_DIR, 'templates'),
+            BASE_DIR / 'templates',
         ],
 
         'OPTIONS': {
@@ -54,6 +63,9 @@ TEMPLATES = [
     },
 ]
 
+# Our application is within the onisite app
+WSGI_APPLICATION = 'onisite.wsgi.application'
+
 
 ################################################################
 # DEFAULT OPEN-ONI SETTINGS
@@ -72,7 +84,8 @@ BASE_CRUMBS = [{'label':'Home', 'href': '/'}]
 ESSAY_TEMPLATES = 'essays'
 
 # Batch, title management, log directory path
-LOG_LOCATION = os.path.join(BASE_DIR, 'log', '')
+#LOG_LOCATION = os.path.join(BASE_DIR, 'log', '')
+LOG_LOCATION = BASE_DIR / 'log'
 
 MARC_RETRIEVAL_URLFORMAT = 'https://chroniclingamerica.loc.gov/lccn/%s/marc.xml'
 
@@ -171,7 +184,8 @@ LOGGING = {
         },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': os.path.join(LOG_LOCATION, 'debug.log'),
+#            'filename': os.path.join(LOG_LOCATION, 'debug.log'),
+            'filename': LOG_LOCATION / 'debug.log',
             'formatter': 'verbose',
         },
         'sql': {
@@ -208,7 +222,8 @@ SECRET_KEY = os.getenv('ONI_SECRET_KEY', 'openoni')
 SOLR_BASE_URL = os.getenv('ONI_SOLR_URL', 'http://solr:8983')
 
 ## Absolute path on disk to the data directory
-STORAGE = os.getenv('ONI_STORAGE_PATH', os.path.join(BASE_DIR, 'data'))
+#STORAGE = os.getenv('ONI_STORAGE_PATH', os.path.join(BASE_DIR, 'data'))
+STORAGE = os.getenv('ONI_STORAGE_PATH', BASE_DIR / 'data')
 
 
 #################################################################
@@ -228,7 +243,7 @@ if DEBUG:
     # Output emails to console
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/3.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.DisableClientSideCachingMiddleware',         # Open ONI
@@ -254,7 +269,7 @@ else:
         }
     }
 
-    # Suggested order: https://docs.djangoproject.com/en/2.2/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/3.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.TooBusyMiddleware',                          # Open ONI

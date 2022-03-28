@@ -129,7 +129,7 @@ docker-compose exec web manage help batches
 
 ### Change / update Python dependencies
 
-If `requirements.pip` is changed or you want to update dependencies in
+If `requirements.txt` is changed or you want to update dependencies in
 `requirements.lock`, you'll need to run `pip-update.sh`. The `pip-install.sh`
 and `pip-reinstall.sh` scripts install from `requirements.lock`.
 

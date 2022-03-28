@@ -61,14 +61,15 @@ likely upgrade Open ONI's components between major releases again.
 
 Component | Version | Supported Until | Next Target Release | Documentation
 ----------|---------|-----------------|---------------------|--------------
-Python | 3.6 | 2021-12 | TBD | https://www.python.org/dev/peps/pep-0494/#lifespan
-Django | 2.2 LTS | 2022-04 | 3.2 LTS, 2021-04 | https://www.djangoproject.com/download/#supported-versions
-MariaDB | 10.4 | 2024-06 | TBD | https://mariadb.com/kb/en/mariadb-server/
+Python | 3.8 | 2024-10 | 3.10 | https://peps.python.org/pep-0569/#lifespan
+Django | 3.2 LTS | 2024-04 | 4.2 LTS, 2023-04 | https://www.djangoproject.com/download/#supported-versions
+MariaDB | 10.6 | 2026-07-06 | Next LTS in ~2 years | https://mariadb.org/about/#maintenance-policy
 Solr | 8.x | Approx 2022, based on ~18mo major release cycle | TBD | https://lucene.apache.org/solr/downloads.html#about-versions-and-support
+RAIS | 4.x | Unknown | TBD | https://github.com/uoregon-libraries/rais-image-server
 jQuery | 3.6.0 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
 Bootstrap | 3.4.1 | 2019-07-24 | TBD | https://github.com/twbs/release
-OpenSeadragon | 2.4.1 | Unknown | TBD | https://github.com/openseadragon/openseadragon
-tablesorter | 2.31.2 | Unknown | TBD | https://github.com/mottie/tablesorter/
+OpenSeadragon | 2.4.2 | Unknown | 3.x | https://github.com/openseadragon/openseadragon
+tablesorter | 2.31.3 | Unknown | TBD | https://github.com/Mottie/tablesorter/wiki/Changes
 
 ## Documentation
 - [Installation, Configuration, and

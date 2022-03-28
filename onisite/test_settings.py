@@ -1,8 +1,7 @@
 from .settings_base import *
 
 # Required settings that don't really matter, but need to exist for tests to run
-LOG_LOCATION = '/opt/openoni/log/'
-OCR_DUMP_STORAGE = '/tmp/ocr'
+LOG_LOCATION = BASE_DIR / 'log'
 PROJECT_NAME = 'Open Online Newspapers Initiative'
 SECRET_KEY = "FOO"
 SITE_TITLE = 'Open ONI'
@@ -12,11 +11,11 @@ TITLE_DISPLAY_MEDIUM = False
 TOO_BUSY_LOAD_AVERAGE = 64
 
 # Storage path and dependent settings
-STORAGE = '/opt/openoni/data/'
-BATCH_STORAGE = os.path.join(STORAGE, 'batches')
-COORD_STORAGE = os.path.join(STORAGE, 'word_coordinates')
-OCR_DUMP_STORAGE = os.path.join(STORAGE, 'ocr')
-TEMP_TEST_DATA = os.path.join(STORAGE, 'temp_test_data')
+STORAGE = BASE_DIR / 'data'
+BATCH_STORAGE = STORAGE / 'batches'
+COORD_STORAGE = STORAGE / 'word_coordinates'
+OCR_DUMP_STORAGE = STORAGE / 'ocr'
+TEMP_TEST_DATA = STORAGE / 'temp_test_data'
 
 # These are explicitly overridden in order to verify the JSON is using the
 # proper URLs, and not "http://testserver"
@@ -48,7 +47,7 @@ MIDDLEWARE = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

@@ -48,17 +48,17 @@ releases outside of severe security vulnerabilities or breaking changes. We may
 mention dependency releases such as Django updates in the #general channel of
 our Slack workspace.
 
-We encourage you to review `requirements.pip` which [controls the versions pip
+We encourage you to review `requirements.txt` which [controls the versions pip
 may install](https://pip.pypa.io/en/stable/user_guide/#requirements-files) and
 make a plan to update your dependencies and test regularly for security
 maintenance.
 
-Update Python dependencies based on `requirements.pip`:
+Update Python dependencies based on `requirements.txt`:
 
 ```bash
 cd /opt/openoni/
 source ENV/bin/activate
-pip install -U -r requirements.pip
+pip install -U -r requirements.txt
 
 # Update requirements.lock for repeatable installs
 pip freeze > requirements.lock
@@ -130,24 +130,8 @@ Set the URLs file to use the theme and plugins it incorporates
 cp onisite/urls_example.py onisite/urls.py
 ```
 
-`vim onisite/urls.py`:
-```python
-# Copy this to urls.py.  Most sites can leave this as-is.  If you have custom
-# apps which need routing, modify this file to include those urlconfs.
-from django.conf.urls import url, include
-
-# Django documentation recommends always using raw string syntax: r''
-urlpatterns = [
-  # Plugin URLs
-  #url(r'^map/', include("onisite.plugins.map.urls")),
-
-  # Theme URLs
-  #url(r'', include("themes.(theme_name).urls")),
-
-  # Open ONI URLs
-  url(r'', include("core.urls")),
-]
-```
+Edit `onisite/urls.py` as needed for plugins and themes following instructions
+within the file.
 
 ## Migrate Database
 ```bash

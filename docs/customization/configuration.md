@@ -65,7 +65,7 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
  which should **never** be used for a live site. Various development-friendly
  setttings are enabled based on this.
 - `ONI_LOG_LEVEL` (default = `INFO`): Sets [Django's logging
- level](https://docs.djangoproject.com/en/2.2/topics/logging/#loggers). `INFO`
+ level](https://docs.djangoproject.com/en/3.2/topics/logging/#loggers). `INFO`
  as the default leans toward logging more information
 - `ONI_LOG_SQL` (default = `0`): If set to 1, more logs than you ever wanted
  will be printed out. Useful for debugging what ONI is doing with the
@@ -110,5 +110,5 @@ something like this to your file, you'd be telling the `statemap` app to handle
 anything under `http://example.com/map`:
 
 ```python
-  url('^map/', include("statemap.urls")),
+  re_path('^map/', include("statemap.urls")),
 ```

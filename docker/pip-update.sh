@@ -4,7 +4,7 @@
 source ENV/bin/activate
 
 # Update dependencies
-pip install -U -r requirements.pip
+pip install -U -r requirements.txt
 
 # Update requirements.lock
 pip freeze > requirements.lock
