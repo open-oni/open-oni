@@ -141,14 +141,11 @@ Language Notes:
 
 Follow these steps for each Open ONI release:
 
-- Ensure `core/version.py` is set to the new version on the release PR
 - Review and merge the release PR into `main`
 - [Create a GitHub release](https://github.com/open-oni/open-oni/releases/new)
 - Update [open-oni.github.io
   source](https://github.com/open-oni/open-oni.github.io) as necessary
 - Merge the `main` branch back into the `dev` branch
-- Copy the template for unreleased work in `CHANGELOG.md` and add a template
-  changelog entry file at `changelogs/YYYY-MM-DD-branch_name.md` on `dev`
 - Post an announcement to #general channel on Slack and the [Chronam Users
   mailing list](https://listserv.loc.gov/cgi-bin/wa?A0=CHRONAM-USERS)
 

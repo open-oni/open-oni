@@ -9,15 +9,14 @@
   - [ ] If a `manage.py` command is added, deleted, or modified its help text must
     be valid and it should be documented in detail in
     `docs/advanced/admin-commands.md`
-- Copy the changelog entry file template in `changelogs/` to a new file in the
+- Copy the changelog file template in `changelogs/` to a new file in the
   same directory named following the `YYYY-MM-DD-branch_name.md` pattern with
   the day's date and your branch name
   - [ ] Describe change(s) in appropriate section(s)
   - [ ] List self in Contributors section
 - If a release PR:
-  - [ ] Add individual changelog entry files from `changelogs/` to
-    `CHANGELOG.md`, delete the `changelogs/` directory, replace `[Unreleased]`
-    with version and update compare link
+  - [ ] Move changelog files' contents from `changelogs/` to `CHANGELOG.md`
+    - [ ] Delete files after contents moved to new release in `CHANGELOG.md`
   - [ ] Update `core/version.py` with new version
 - [ ] Resolve merge conflicts
 - [ ] @mention individual(s) you would like to review the PR

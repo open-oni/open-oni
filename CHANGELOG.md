@@ -9,8 +9,8 @@ Please respect the 80-character text margin and follow the [GitHub Flavored
 Markdown Spec](https://github.github.com/gfm/).
 
 <!-- Template - Please preserve this order of sections
-## [Unreleased] - Brief description
-[Unreleased]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
+## [v#.#.#] - Brief description
+[v#.#.#]: https://github.com/open-oni/open-oni/compare/v#.#.#...dev
 
 ### Security
 
@@ -163,8 +163,6 @@ Markdown Spec](https://github.github.com/gfm/).
     `from django.conf.urls import url, include`. Then search and replace `url(`
     to `re_path(`, though non-regex patterns should use just `path(`
   - Remove `default_app_config` lines in all apps' `__init__.py` files
-
-### Deprecated
 
 ### Contributors
 - Jim Campbell (lauterman)
