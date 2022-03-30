@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:focal
 
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
@@ -15,19 +15,20 @@ RUN apt-get update && \
   curl \
   rsync \
   python3-dev \
-  python3-pip && \
+  python3-venv && \
   apt-get -y install --no-install-recommends libapache2-mod-wsgi-py3
 
 # Force apache error logs to stderr
 RUN ln -sf /proc/self/fd/1 /var/log/apache2/error.log
 
-RUN a2enmod cache cache_disk expires rewrite proxy_http
+RUN a2enmod cache cache_disk expires rewrite proxy_http ssl
 RUN mkdir -p /var/cache/httpd/mod_disk_cache
 RUN chown -R www-data:www-data /var/cache/httpd
 RUN a2dissite 000-default.conf
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 WORKDIR /opt/openoni
+ADD . /opt/openoni
 
 ADD entrypoint.sh /
 RUN chmod u+x /entrypoint.sh

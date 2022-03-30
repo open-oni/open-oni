@@ -10,10 +10,8 @@ verify_config() {
     cp onisite/urls_example.py onisite/urls.py
   fi
 
-  # Prepare the ENV dir if necessary
-  if [ ! -d /opt/openoni/ENV/lib ]; then
-    /pip-install.sh
-  fi
+  # Install Python dependencies
+  /pip-install.sh
 }
 
 setup_database() {
@@ -75,8 +73,9 @@ prep_webserver() {
 
   echo "-------" >&2
   echo "Running collectstatic" >&2
-  # Django needs write access to STATIC_ROOT
+  # Django needs write access to STATIC_ROOT and the log directory
   chown -R www-data:www-data /opt/openoni/static/compiled
+  chown -R www-data:www-data /opt/openoni/log
   /opt/openoni/manage.py collectstatic --noinput
 
   # Remove any pre-existing PID file which prevents Apache from starting thus

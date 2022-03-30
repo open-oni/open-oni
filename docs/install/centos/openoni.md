@@ -13,7 +13,6 @@
         - [Title and Project Name](#title-and-project-name)
     - [Logging](#logging)
     - [URLs](#urls)
-    - [Error Emails](#error-emails)
 - [Migrate Database](#migrate-database)
 
 ## Dependencies
@@ -49,17 +48,17 @@ releases outside of severe security vulnerabilities or breaking changes. We may
 mention dependency releases such as Django updates in the #general channel of
 our Slack workspace.
 
-We encourage you to review `requirements.pip` which [controls the versions pip
+We encourage you to review `requirements.txt` which [controls the versions pip
 may install](https://pip.pypa.io/en/stable/user_guide/#requirements-files) and
 make a plan to update your dependencies and test regularly for security
 maintenance.
 
-Update Python dependencies based on `requirements.pip`:
+Update Python dependencies based on `requirements.txt`:
 
 ```bash
 cd /opt/openoni/
 source ENV/bin/activate
-pip install -U -r requirements.pip
+pip install -U -r requirements.txt
 
 # Update requirements.lock for repeatable installs
 pip freeze > requirements.lock
@@ -78,35 +77,32 @@ ln -s /var/local/newspapers data/batches
 
 ### Local Settings
 ```bash
-cp settings_local_example.py settings_local.py
+cp onisite/settings_local_example.py onisite/settings_local.py
 ```
 
 Follow instructions within for the appropriate deployment environment
 
 #### Theme and Plugins
-Add the theme and plugins it incorporates to `INSTALLED_APPS`:
+Add your theme and plugin customizations to `INSTALLED_APPS`:
 
 ```py
-# List of configuration classes / app packages in order of priority (i.e., the
-# first item in the list has final say when collisions occur)
+# List of configuration classes / app packages in order of priority high to low.
+# The first item in the list has final say when collisions occur.
 INSTALLED_APPS = (
     # Default
-#    'django.contrib.admin',
-#    'django.contrib.auth',
-#    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Humanize and local theme override all below
+    'django.contrib.humanize',  # Makes data more human-readable
+
     # Plugins
     # See https://github.com/open-oni?q=plugin for available plugins
-    'onisite.plugins.calendar',
-    'onisite.plugins.featured_content',
-    'onisite.plugins.map',
 
     # Open ONI
-    'django.contrib.humanize',  # Added to make data more human-readable
-    'themes.nebraska',
+    # Extend the default theme by including your own above themes.default
+    # 'themes.YOUR_THEME_NAME',
     'themes.default',
     'core',
 )
@@ -116,13 +112,8 @@ INSTALLED_APPS = (
 Set the title and project name text for the website
 
 ```py
-# SITE_TITLE that will be used for display purposes throughout app
-# PROJECT_NAME may be the same as SITE_TITLE but can be used
-# for longer descriptions that will only show up occasionally
-# Example 'Open ONI' for most headers, 'Open Online Newspapers Initiative'
-# for introduction / about / further information / etc
-SITE_TITLE = "Nebraska Newspapers"
-PROJECT_NAME = "Nebraska Newspapers"
+SITE_TITLE = "YOUR_SHORT_PROJECT_NAME"
+PROJECT_NAME = "YOUR_LONG_PROJECT_NAME"
 ```
 
 ### Logging
@@ -139,82 +130,8 @@ Set the URLs file to use the theme and plugins it incorporates
 cp onisite/urls_example.py onisite/urls.py
 ```
 
-`vim onisite/urls.py`:
-```python
-# Copy this to urls.py.  Most sites can leave this as-is.  If you have custom
-# apps which need routing, modify this file to include those urlconfs.
-from django.conf.urls import url, include
-
-# Django documentation recommends always using raw string syntax: r''
-urlpatterns = [
-  # Plugin URLs
-  #url(r'^map/', include("onisite.plugins.map.urls")),
-
-  # Theme URLs
-  #url(r'', include("themes.(theme_name).urls")),
-
-  # Open ONI URLs
-  url(r'', include("core.urls")),
-]
-```
-
-### Error Emails
-Django provides the ability to [send emails about 5xx error and 404 responses an
-app generates](https://docs.djangoproject.com/en/2.2/howto/error-reporting/).
-They can be a bit spammy, but we include documentation about how to enable them
-if anyone wants to try them out.
-
-One must add an additional middleware in `settings_local.py`:
-
-```py
-    MIDDLEWARE = (
-        'django.middleware.security.SecurityMiddleware',
-        'core.middleware.TooBusyMiddleware',                          # Open ONI
-        'django.middleware.http.ConditionalGetMiddleware',            # Open ONI
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.common.BrokenLinkEmailsMiddleware',        # Open ONI
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
-```
-
-Additional configuration is required for how and to whom Django sends emails:
-
-```py
-    """
-    Optional email error reporting
-    https://docs.djangoproject.com/en/2.2/howto/error-reporting/
-
-    EMAIL_HOST settings only necessary if another server or service sends email.
-    Defaults to 'localhost', sending from the same server running Django.
-    Additional settings for further email host configuration:
-    https://docs.djangoproject.com/en/2.2/ref/settings/#email-host
-    """
-    #EMAIL_HOST = 'YOUR_EMAIL_HOST'
-    #EMAIL_HOST_PASSWORD = 'YOUR_EMAIL_HOST_PASSWORD'
-    #EMAIL_HOST_USER = 'YOUR_EMAIL_HOST_USER'
-
-    """
-    'From' address on error emails sent to ADMINS and MANAGERS:
-    If sending email from different server, replace `@' + url.hostname` with host.
-    """
-    #SERVER_EMAIL = 'YOUR_PROJECT_NAME_ABBREVIATION-no-reply@' + url.hostname
-
-    # ADMINS receive 5xx error emails; MANAGERS receive 404 error emails.
-    #ADMINS = [
-    #    ('YOUR_admin1', 'YOUR_admin1@example.com'),
-    #    ('YOUR_adminX', 'YOUR_adminX@example.com')
-    #]
-    #MANAGERS = [
-    #    ('YOUR_mngr1', 'YOUR_mngr13@example.com'),
-    #    ('YOUR_mngrX', 'YOUR_mngrX4@example.com')
-    #]
-    #IGNORABLE_404_URLS = [
-    #    re.compile(r'YOUR_known_404_URL_regex_to_prevent_emails'),
-    #]
-```
+Edit `onisite/urls.py` as needed for plugins and themes following instructions
+within the file.
 
 ## Migrate Database
 ```bash

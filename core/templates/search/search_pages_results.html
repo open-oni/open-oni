@@ -184,11 +184,11 @@
         {# Gallery or List view #}
         <div class="pull-left">
           {% ifequal view_type 'list' %}
-            <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-            <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+            <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+            <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
           {% else %}
-            <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-            <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}" role="button"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+            <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+            <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
 
           {% endifequal %}
         </div>

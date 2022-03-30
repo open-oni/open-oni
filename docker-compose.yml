@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   rdbms:
-    image: mariadb:10.4
+    image: mariadb:10.6
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=openoni
@@ -12,7 +12,7 @@ services:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-mariadb:/var/lib/mysql
   solr:
-    image: solr:8.3-slim
+    image: solr:8-slim
     volumes:
       - data-solr:/var/solr
     command:
@@ -31,7 +31,7 @@ services:
   web:
     build:
       context: ./docker
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
     volumes:
       - ./:/opt/openoni:z
     ports:
@@ -53,6 +53,7 @@ services:
       - ONI_DEBUG
       - ONI_HSTS_SECONDS
       - ONI_IIIF_URL
+      - ONI_LOG_LEVEL
       - ONI_LOG_SQL
       - ONI_LOG_TO_FILE
       - ONI_SECRET_KEY

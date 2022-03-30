@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from django.conf import settings as s
+from pathlib import Path
 
-import os
 import urllib
 
 class CoreConfig(AppConfig):
@@ -26,10 +26,10 @@ class CoreConfig(AppConfig):
         s.SOLR = s.SOLR_BASE_URL + '/solr/openoni'
 
             # STORAGE-dependent settings
-        s.BATCH_STORAGE = os.path.join(s.STORAGE, 'batches')
-        s.COORD_STORAGE = os.path.join(s.STORAGE, 'word_coordinates')
-        s.OCR_DUMP_STORAGE = os.path.join(s.STORAGE, 'ocr')
-        s.TEMP_TEST_DATA = os.path.join(s.STORAGE, 'temp_test_data')
+        s.BATCH_STORAGE = Path(s.STORAGE) / 'batches'
+        s.COORD_STORAGE = Path(s.STORAGE) / 'word_coordinates'
+        s.OCR_DUMP_STORAGE = Path(s.STORAGE) / 'ocr'
+        s.TEMP_TEST_DATA = Path(s.STORAGE) / 'temp_test_data'
             # / STORAGE-dependent settings
 
         return

@@ -11,12 +11,15 @@ If you are using docker, batches should be stored in `data/batches`.
 
 ## Load Batch
 
-This command loads the metadata and pages associated with a batch into a
-database and search index. It may take up to several hours to complete,
-depending on the batch size and machine. If there is a chance of interruption
-to where the command is running (for example, on a remote machine), you may
-wish to preface the command with `nohup (command) >> nohup.out` in order to
-ensure the batch will be completed regardless of your connection.
+This command loads all titles, issues, pages, OCR, and metadata associated with
+a batch into the database and search index. For more information on the process,
+see [Batch Loading Outline](/docs/manage-data/batch-loading-outline.md).
+
+It may take up to several hours to complete, depending on the batch size and
+machine. If there is a chance of interruption to where the command is running
+(for example, on a remote machine), you may wish to preface the command with
+`nohup (command) >> nohup.out` in order to ensure the batch will be completed
+regardless of your connection.
 
 Ensure that your batch location is a directory containing a `data` directory.
 
@@ -42,11 +45,17 @@ With docker, a path is not needed if your batch is in `data/batches`:
 docker-compose exec web /load_batch.sh batch_name
 ```
 
+After ingesting a batch that replaces existing content it is recommended 
+to restart the web server to clear caches and serve the most up to date 
+data. 
+
 ## Purge Batch
 
 This command removes pages associated with a batch from the search index and
 database, but does not remove titles specific to this batch. It is effective
-even on batches which were only partially loaded.
+even on batches which were only partially loaded. Data that was purged may
+continue to serve from the cache. It is recommended to restart
+the web server after purging a batch to clear the residual cache.
 
 ```bash
 source ENV/bin/activate

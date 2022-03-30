@@ -7,9 +7,17 @@ were inherited from the chronam software project and are not all supported.
 Before running commands, activate your environment from your app:
 
 ```bash
+# For linux and Mac
 source ENV/bin/activate
 ./manage.py [command]
 ```
+
+```powershell
+# For windows
+.\ENV\bin\activate.ps1
+```
+
+If using docker, be sure that your docker daemon is running and you have run `docker-compose up`.
 
 If using docker, the `manage` shortcut is necessary.  It automatically
 activates the environment, but also fixes some permissions issues which occur

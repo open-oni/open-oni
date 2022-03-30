@@ -1,7 +1,7 @@
 # Open ONI Changelog
 All notable changes to Open ONI will be documented in this file.
 
-Starting from Open ONI v0.11, The format is based on [Keep a
+Starting from Open ONI v0.11, the format is based on [Keep a
 Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -28,6 +28,152 @@ Markdown Spec](https://github.github.com/gfm/).
 
 ### Contributors
 -->
+
+## [v1.1.0]
+[v1.1.0]: https://github.com/open-oni/open-oni/compare/v1.0.6...v1.1.0
+
+### Security
+- jQuery updated to 3.6.0, including 3.5.0 fix for HTML parsing vulnerability
+
+### Fixed
+- `setup_index` command now reports Solr errors more effectively
+- Removed various invalid / unnecessary ARIA role specifications
+- Fixed poor alternative text on some thumbnails
+- Fixed accessibility issues with the global search form
+- Logging to `log/debug.log` file in addition to the console
+- Typo in CentOS RAIS docs for SELinux file context application command
+- Mistake in path for local settings copy command and outdated, non-general
+  examples in CentOS OpenONI web app configuration documentation
+- The test environment is now properly isolated from the local environment
+  (specifically the `ENV` directory, i.e., the Python virtual environment)
+- URLs/objects built with a static number `1` rather than edition number
+- Make Docker builds more reproducible
+  - Install Python dependencies from `requirements.lock` every time the web
+    container starts; create virtual environment if not present
+  - Switch to Python 3 included `venv` from `virtualenv` for virtual environment
+  - Don't install latest versions of `pip` and `setuptools` from PyPI before
+    creating virtual environment
+  - Skip creating wheels of packages that don't provide them on PyPI
+  - Copy `pip-update.sh` into the web container for use in changing / updating
+    Python dependencies and update `docs/advanced/docker-reference.md`
+- Public Domain fixes: rights statements now show up under qualifying images,
+  and the date of a qualifying image is now rolling instead of static (96 years
+  ago, reset each January 1st)
+
+### Added
+- Enabled apache mod_ssl in web image build
+- Included codebase as part of Dockerfile build
+- Reel test fixture
+- Tests for image_urls methods
+- image_url template tag
+- Add script to update Python dependencies in `requirements.lock`
+- Workflow using GitHub Actions to run tests natively within GitHub
+  as a quality check for PRs into `dev` and `main`
+- Batch loading outline documentation
+  - Links to this documentation in docs readme and "Load and Purge batches"
+
+### Changed
+- Moved Dockerfile-dev to Dockerfile to support automated builds
+- References to test fixtures
+- Flipped order of reel and issue display on batch info page
+- Update CentOS MariaDB schema / access commands to most robust forms which
+  allow for names with hyphens/underscores and inline comments
+- The local settings example file has been simplified by moving many settings
+  controlled by environment variables to `base_settings.py`
+  - Import `settings_base.py` in `settings_local.py` so all settings available
+    for reference, not duplicating `BASE_DIR`
+  - `ONI_IIIF_URL` defaults to `BASE_URL` + `/images/iiif`, like Apache config
+  - `ONI_LOG_TO_FILE` places `debug.log` within `LOG_LOCATION` directory
+  - Updated `docs/customization/configuration.md` to reflect re-organization
+    with revised descriptions and simpler instructions
+  - Include resets in `test_settings.py` to keep test output simple
+- Updated Open ONI configuration documentation
+- Changelog entry workflow in `.github/pull_request_template.md` and
+  `CONTRIBUTING.md` altered to avoid merge conflicts between PRs
+- Update readme with notice about data required in batch format & brief
+  description of the NEH grant
+  - Update and alphabetize list of sites powered by ONI
+  - Remove older paragraph about 1.0 release changes
+  - Add link to installation documentation
+- Update annual report info in Code of Conduct
+- Switch ONI Docker image base to Ubuntu Focal LTS for Python 3.8
+  - Change pip-install.sh to install wheel package to prevent bdist_wheel errors
+- Docker Compose
+  - Switch to use the latest Solr 8.x release
+  - Switch to MariaDB 10.6 LTS release
+    - Update config to specify `utf8mb3` charset and collation to prevent
+      charset collation mismatch error when `utf8(mb3)` charset oddly defaults
+      to collation `utf8mb4_general_ci`
+    - Remove unused config file variables
+- Update OpenSeadragon to 2.4.2
+- Update tablesorter to 2.31.3
+- Update Dependency Roadmap
+- Rename `requirements.pip` to `requirements.txt`
+- Update Django to 3.2
+  - https://docs.djangoproject.com/en/3.2/releases/3.2/
+  - https://docs.djangoproject.com/en/3.2/internals/deprecation/
+    - Update `urls.py`, example files, and documentation to no longer use
+      deprecated `django.conf.urls`
+
+### Removed
+- Hidden input fields in search forms with search type and row count
+- Unused image template tags in favor of generic image_url tag
+- `RDBMSPORT` and `SOLRPORT`, unused env vars, from `.env.example` and docs
+- Unused `IS_PRODUCTION` setting from `test_settings.py`
+- Django error/404 email alert config in CentOS OpenONI web app documentation
+  - Maintaining with latest settings files would be way more complicated for
+    minimal benefit based upon spammy results from trial in production
+- Duplicates in `core/fixtures/awardees.json`
+- Deprecated `default_app_config` line in `core/__init__.py`
+
+### Migration
+- Please remake your `settings_local.py` file by re-copying from
+  `settings_local_example.py`. Simplification of the settings file and recent
+  logging config improvements will be incorporated into your site most easily
+  this way
+- If using jQuery to handle HTML in the DOM, review the [3.5.0 upgrade
+  guide](https://jquery.com/upgrade-guide/3.5/) to avoid breaking changes
+  related to the security fix
+- If upgrading to MariaDB 10.6.1+, be aware of `utf8` character set default
+  changes: https://mariadb.com/kb/en/mariadb-1061-release-notes/#character-sets
+  - See documentation for compatible character sets and collations:
+    https://mariadb.com/kb/en/supported-character-sets-and-collations/
+  - Also see Django recommendations:
+    https://docs.djangoproject.com/en/3.2/ref/databases/#creating-your-database
+    - TL;DR use `utf8_general_ci` rather than `utf8_unicode_ci` unless you
+      require German multi-character comparison to match German DIN-1 ordering
+- If you use any deployment scripts or CI/CD that interact with
+  `requirements.pip`, note that this file has been renamed to `requirements.txt`
+  to function with GitHub's dependency graph security scanning
+- Django 3.2 changes
+  - Update theme template tags from `{% load static from staticfiles %}` to
+    `{% load static %}` if not already done. This was deprecated in Django 2.2
+    and is now removed.
+  - Update any path building in settings files using `BASE_DIR`, `LOG_LOCATION`,
+    `STATIC_ROOT`, and `STORAGE` to use Path syntax, e.g.
+    `BASE_DIR / 'subdir1' / 'subdir2'`
+    - Code working with these paths outside settings files like
+      `os.path.join(settings.LOG_LOCATION, 'subdir')` must be updated by adding
+      import line `from pathlib import Path` and changing code to
+      `Path(settings.LOG_LOCATION) / 'subdir'`; `import os` may then be removed
+      - Other corresponding code changes:
+        https://docs.python.org/3/library/pathlib.html#correspondence-to-tools-in-the-os-module
+  - Update `urls.py` files to use
+    `from django.urls import include, path, re_path` rather than
+    `from django.conf.urls import url, include`. Then search and replace `url(`
+    to `re_path(`, though non-regex patterns should use just `path(`
+  - Remove `default_app_config` lines in all apps' `__init__.py` files
+
+### Deprecated
+
+### Contributors
+- Jim Campbell (lauterman)
+- Jessica Dussault (jduss4)
+- Jeremy Echols (jechols)
+- Andrew Gearhart (andrewgearhart)
+- John Konderla (businessFawn)
+- John Scancella (jscancella)
+- Greg Tunink (techgique)
 
 ## [v1.0.6] - Fix configuration for IIIF server
 [v1.0.6]: https://github.com/open-oni/open-oni/compare/v1.0.5...v1.0.6
@@ -97,7 +243,7 @@ Markdown Spec](https://github.github.com/gfm/).
 [v1.0.2]: https://github.com/open-oni/open-oni/compare/v1.0.1...v1.0.2
 
 ### Fixed
-- Pinned solrpy to 0.99 as newer versions had breaking changes
+- Pinned solrpy to 0.9.9 as newer versions had breaking changes
 
 ### Contributors
 - Jeremy Echols (jechols)

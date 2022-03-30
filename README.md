@@ -12,23 +12,32 @@ information about the project's origins and history.
 Visit sites currently powered by Open ONI:
 
 - [Historic Oregon Newspapers](https://oregonnews.uoregon.edu/)
-- [Pennsylvania Newspaper Archive](http://panewsarchive.psu.edu/)
 - [Nebraska Newspapers](https://nebnewspapers.unl.edu/)
+- [North Carolina Newspapers](https://www.digitalnc.org/collections/newspapers/)
+- [Pennsylvania Newspaper Archive](https://panewsarchive.psu.edu/)
 
 View ["Sites using Open ONI" in our
 wiki](https://github.com/open-oni/open-oni/wiki/Sites-Using-Open-ONI) for links
 to the sites' source code.
 
 ## Install
-To evaluate the software, we recommend installing from the [latest Open ONI
-release](https://github.com/open-oni/open-oni/releases).
+Open ONI requires newspaper data in specific files and formats which comprise a
+"batch". We provide [small sample
+batches](https://github.com/open-oni/sample-data) for testing and [documentation
+on how to create a
+batch](https://github.com/open-oni/open-oni/wiki/Create-Your-Own-Batch). The
+Library of Congress also provides [Chronicling America newspapers as
+batches](https://chroniclingamerica.loc.gov/batches/).
 
-The 1.0 release includes upgrading Django to the latest LTS 2.2 release along
-with migrating to Python 3 and upgrading Solr and MariaDB to more recent
-releases. Note that release 0.11 and prior run Python 2 and Django 1.11 LTS
-which goes out of support in April 2020.
+Open ONI does not currently provide tools to create batches, but the [University
+of Oregon and University of Nebraska-Lincoln were awarded a National Endowment
+for the Humanities grant](https://library.uoregon.edu/node/7671) to develop
+software and features to assist with batch creation, enable issue editing, and
+update the Open ONI front end framework alongside an accessibility / user
+experience audit.
 
-If you're interested in more recent changes, check out the `dev` branch.
+To evaluate the software, we recommend downloading the [latest Open ONI
+release](https://github.com/open-oni/open-oni/releases) and following [installation documentation](https://github.com/open-oni/open-oni/tree/main/docs#installation-and-updating). If you're interested in more recent changes, check out the `dev` branch.
 
 ### Resource Requirements
 
@@ -46,20 +55,17 @@ wiki, which may further inform your resource allocation.
 
 ### Dependency Roadmap
 
-We expect Open ONI's major components (aside from Bootstrap 3) to be supported
-until the next Django LTS release 3.2 in April 2021, at which point we will
-likely upgrade Open ONI's components between major releases again.
-
 Component | Version | Supported Until | Next Target Release | Documentation
 ----------|---------|-----------------|---------------------|--------------
-Python | 3.6 | 2021-12 | TBD | https://www.python.org/dev/peps/pep-0494/#lifespan
-Django | 2.2 LTS | 2022-04 | 3.2 LTS, 2021-04 | https://www.djangoproject.com/download/#supported-versions
-MariaDB | 10.4 | 2024-06 | TBD | https://mariadb.com/kb/en/mariadb-server/
-Solr | 8.x | Approx 2022, based on ~18 major release cycle | TBD | https://lucene.apache.org/solr/downloads.html#about-versions-and-support
-jQuery | 3.4.1 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
-Bootstrap | 3.4.1 | 2019-07-24 | TBD | https://github.com/twbs/release
-OpenSeadragon | 2.4.1 | Unkown | TBD | https://github.com/openseadragon/openseadragon
-tablesorter | 2.31.2 | Unknown | TBD | https://github.com/mottie/tablesorter/
+Python | 3.8 | 2024-10 | 3.10 | https://peps.python.org/pep-0569/#lifespan
+Django | 3.2 LTS | 2024-04 | 4.2 LTS, 2023-04 | https://www.djangoproject.com/download/#supported-versions
+MariaDB | 10.6 | 2026-07-06 | Next LTS in ~2 years | https://mariadb.org/about/#maintenance-policy
+Solr | 8.x | Approx 2022, based on ~18mo major release cycle | TBD | https://lucene.apache.org/solr/downloads.html#about-versions-and-support
+RAIS | 4.x | Unknown | TBD | https://github.com/uoregon-libraries/rais-image-server
+jQuery | 3.6.0 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
+Bootstrap | 3.4.1 | 2019-07-24 | Upgrade as part of NEH grant | https://github.com/twbs/release
+OpenSeadragon | 2.4.2 | Unknown | 3.x | https://github.com/openseadragon/openseadragon
+tablesorter | 2.31.3 | Unknown | TBD | https://github.com/Mottie/tablesorter/wiki/Changes
 
 ## Documentation
 - [Installation, Configuration, and

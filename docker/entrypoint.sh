@@ -13,6 +13,7 @@ fi
 mkdir -p /var/local/onidata/batches
 cp $src/pip-install.sh /pip-install.sh
 cp $src/pip-reinstall.sh /pip-reinstall.sh
+cp $src/pip-update.sh /pip-update.sh
 cp $src/load_batch.sh /load_batch.sh
 cp $src/_startup_lib.sh /_startup_lib.sh
 

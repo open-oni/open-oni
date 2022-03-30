@@ -7,7 +7,7 @@ to docker and Open ONI.
 - [Manage Data](#manage-data)
 - [Run Commands from Containers](#run-commands-from-containers)
 - [Django Reference](#django-reference)
-- [Manage Containers, Volumes, and Imges](#manage-containers-volumes-and-images)
+- [Manage Containers, Volumes, and Images](#manage-containers-volumes-and-images)
 
 ## Rebuild Dev Containers
 
@@ -127,12 +127,14 @@ script within the Open ONI project:
 docker-compose exec web manage help batches
 ```
 
-### Change dependencies
+### Change / update Python dependencies
 
-If requirements.pip is changed, you'll need to run the pip reinstall in the container:
+If `requirements.txt` is changed or you want to update dependencies in
+`requirements.lock`, you'll need to run `pip-update.sh`. The `pip-install.sh`
+and `pip-reinstall.sh` scripts install from `requirements.lock`.
 
 ```bash
-docker-compose exec web /pip-reinstall.sh
+docker-compose exec web /pip-update.sh
 ```
 
 ### Django Migrations in Docker

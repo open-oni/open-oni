@@ -1,11 +1,10 @@
 [
-
   {
-    "pk": "batch_oru_fakey1_ver01", 
-    "model": "core.batch", 
+    "pk": "batch_oru_fakey1_ver01",
+    "model": "core.batch",
     "fields": {
-      "validated_batch_file": "BATCH_1.xml", 
-      "awardee": "oru", 
+      "validated_batch_file": "BATCH_1.xml",
+      "awardee": "oru",
       "created": "2020-09-21T11:50:00-07:00"
     }
   },
@@ -20,19 +19,18 @@
   },
   {
     "pk": 111,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-01-01", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-01-01",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1111,
     "model": "core.page",
@@ -179,19 +177,18 @@
   },
   {
     "pk": 112,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-01-08", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-01-08",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1121,
     "model": "core.page",
@@ -338,19 +335,18 @@
   },
   {
     "pk": 113,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-01-15", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-01-15",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1131,
     "model": "core.page",
@@ -506,19 +502,18 @@
   },
   {
     "pk": 121,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-01-22", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-01-22",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1211,
     "model": "core.page",
@@ -665,19 +660,18 @@
   },
   {
     "pk": 122,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-01-29", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-01-29",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1221,
     "model": "core.page",
@@ -824,19 +818,18 @@
   },
   {
     "pk": 123,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-02-05", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-02-05",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1231,
     "model": "core.page",
@@ -992,19 +985,18 @@
   },
   {
     "pk": 131,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-02-12", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-02-12",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1311,
     "model": "core.page",
@@ -1151,19 +1143,18 @@
   },
   {
     "pk": 132,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-02-19", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-02-19",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1321,
     "model": "core.page",
@@ -1310,19 +1301,18 @@
   },
   {
     "pk": 133,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-02-26", 
-      "batch": "batch_oru_fakey1_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-02-26",
+      "batch": "batch_oru_fakey1_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 1331,
     "model": "core.page",
@@ -1468,11 +1458,11 @@
     }
   },
   {
-    "pk": "batch_oru_fakey2_ver01", 
-    "model": "core.batch", 
+    "pk": "batch_oru_fakey2_ver01",
+    "model": "core.batch",
     "fields": {
-      "validated_batch_file": "BATCH_1.xml", 
-      "awardee": "oru", 
+      "validated_batch_file": "BATCH_1.xml",
+      "awardee": "oru",
       "created": "2020-09-21T11:50:00-07:00"
     }
   },
@@ -1487,19 +1477,18 @@
   },
   {
     "pk": 211,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-03-05", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-03-05",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2111,
     "model": "core.page",
@@ -1646,19 +1635,18 @@
   },
   {
     "pk": 212,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-03-12", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-03-12",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2121,
     "model": "core.page",
@@ -1805,19 +1793,18 @@
   },
   {
     "pk": 213,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-03-19", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-03-19",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2131,
     "model": "core.page",
@@ -1973,19 +1960,18 @@
   },
   {
     "pk": 221,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-03-26", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-03-26",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2211,
     "model": "core.page",
@@ -2132,19 +2118,18 @@
   },
   {
     "pk": 222,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-04-02", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-04-02",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2221,
     "model": "core.page",
@@ -2291,19 +2276,18 @@
   },
   {
     "pk": 223,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-04-09", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-04-09",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2231,
     "model": "core.page",
@@ -2459,19 +2443,18 @@
   },
   {
     "pk": 231,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-04-16", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-04-16",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2311,
     "model": "core.page",
@@ -2618,19 +2601,18 @@
   },
   {
     "pk": 232,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-04-23", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-04-23",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2321,
     "model": "core.page",
@@ -2777,19 +2759,18 @@
   },
   {
     "pk": 233,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-04-30", 
-      "batch": "batch_oru_fakey2_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-04-30",
+      "batch": "batch_oru_fakey2_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 2331,
     "model": "core.page",
@@ -2935,11 +2916,11 @@
     }
   },
   {
-    "pk": "batch_oru_fakey3_ver01", 
-    "model": "core.batch", 
+    "pk": "batch_oru_fakey3_ver01",
+    "model": "core.batch",
     "fields": {
-      "validated_batch_file": "BATCH_1.xml", 
-      "awardee": "oru", 
+      "validated_batch_file": "BATCH_1.xml",
+      "awardee": "oru",
       "created": "2020-09-21T11:50:00-07:00"
     }
   },
@@ -2954,19 +2935,18 @@
   },
   {
     "pk": 311,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-05-07", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-05-07",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3111,
     "model": "core.page",
@@ -3113,19 +3093,18 @@
   },
   {
     "pk": 312,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-05-14", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-05-14",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3121,
     "model": "core.page",
@@ -3272,19 +3251,18 @@
   },
   {
     "pk": 313,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-05-21", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-05-21",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3131,
     "model": "core.page",
@@ -3440,19 +3418,18 @@
   },
   {
     "pk": 321,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-05-28", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-05-28",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3211,
     "model": "core.page",
@@ -3599,19 +3576,18 @@
   },
   {
     "pk": 322,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-06-04", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-06-04",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3221,
     "model": "core.page",
@@ -3758,19 +3734,18 @@
   },
   {
     "pk": 323,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-06-11", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-06-11",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3231,
     "model": "core.page",
@@ -3926,19 +3901,18 @@
   },
   {
     "pk": 331,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-06-18", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "1", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-06-18",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "1",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3311,
     "model": "core.page",
@@ -4085,19 +4059,18 @@
   },
   {
     "pk": 332,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-06-25", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "2", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-06-25",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "2",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3321,
     "model": "core.page",
@@ -4244,19 +4217,18 @@
   },
   {
     "pk": 333,
-    "model": "core.issue", 
+    "model": "core.issue",
     "fields": {
-      "title": "sn83030214", 
-      "date_issued": "1898-07-02", 
-      "batch": "batch_oru_fakey3_ver01", 
-      "number": "3", 
-      "volume": "83", 
-      "edition": 1, 
+      "title": "sn83030214",
+      "date_issued": "1898-07-02",
+      "batch": "batch_oru_fakey3_ver01",
+      "number": "3",
+      "volume": "83",
+      "edition": 1,
       "edition_label": "",
       "created": "2020-09-21T11:50:00-07:00"
     }
-  }
-	,
+  },
   {
     "pk": 3331,
     "model": "core.page",

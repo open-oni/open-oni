@@ -44,7 +44,7 @@ def _sorted_facet_counts(solr_counts, field):
     """
     Convert the raw solr facet data (counts, ranges, etc.) from a flat array
     into a two-dimensional list sorted by the number of hits.  The result will
-    look something like this: (('field1', count1), 'field2', count2, ...)
+    look something like this: (('field1', count1), ('field2', count2), ...)
     """
     raw = solr_counts.get(field, ())
     items = []
@@ -453,7 +453,7 @@ def index_title(solr, title):
         _log.exception(e)
 
 def delete_title(title):
-    r = conn().delete(q='+type:title +id:%s' % title.solr_doc['id'])
+    conn().delete(q='+type:title +id:%s' % title.solr_doc['id'])
     _log.info("deleted title %s from the index" % title)
 
 def index_pages():

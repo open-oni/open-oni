@@ -5,7 +5,7 @@ volumes:
 
 services:
   rdbms:
-    image: mariadb:10.4
+    image: mariadb:10.6
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=openoni
@@ -14,14 +14,14 @@ services:
     volumes:
       - ./conf/mysql/:/etc/mysql/conf.d:ro
   solr:
-    image: solr:8.3-slim
+    image: solr:8-slim
     command:
       - solr-precreate
       - openoni
   test:
     build:
       context: ./docker
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
     volumes:
       - ./:/usr/local/src/openoni:ro
       - onisrc:/opt/openoni
