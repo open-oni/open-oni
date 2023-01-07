@@ -14,7 +14,7 @@
     // returns current window's hash parameters
     function fragmentArgs() {
         var collection = {};
-        var paramString = window.location.hash.substr(1);
+        var paramString = window.location.hash.substring(1);
         paramString.split("&").forEach(function(param) {
             var keyVal = param.replace(/\+/g, " ").split("=");
             collection[keyVal[0]] = keyVal[1]
