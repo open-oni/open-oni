@@ -82,9 +82,6 @@
     }
 
     function addOverlay(viewer, x1, y1, x2, y2) {
-        var img = document.createElement("img");
-        var placement = OpenSeadragon.OverlayPlacement.BOTTOM;
-            
         var div = document.createElement("div");
         var rect = new OpenSeadragon.Rect(x1, y1, x2, y2);
 
@@ -96,12 +93,10 @@
         var viewer = event.eventSource;
         var params = fragmentArgs();
         var words = params["words"] || "";
-        var dimensions = viewer.source.dimensions;
         $.getJSON(coordinates_url, function(all_coordinates) {
             var scale = 1 / all_coordinates["width"];
             
             $.each(words.split(/\s+/), function(index, word) {
-                var boxes = [];
                 var coordinates = all_coordinates["coords"][word];
                 for (k in coordinates) {
                     var v = coordinates[k];
