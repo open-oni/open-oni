@@ -115,8 +115,6 @@
         static_url = $('#page_data').data("static_url")
         iiif_id = $('#page_data').data("iiif_id")
 
-        var viewer = null;
-
         var viewer = OpenSeadragon({
             id: "viewer_container",
             toolbar: "item-ctrl",
