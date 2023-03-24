@@ -212,25 +212,26 @@ After the beginning of each new year, the team will publicize the number of
 violation reports received and the team's enforcement decisions for the previous
 year. Any public incident reports will be listed and linked to as well.
 
-Year                  | 2020| 2021
-----------------------|-----|-----
-**Violation reports** |    0|    0
-No violation occurred |     |
-Private reprimand     |     |
-Public reprimand      |     |
-Imposed vacation      |     |
-Temporary ban         |     |
-Permanent ban         |     |
-**Strings Attached**  |     |
-Private apology       |     |
-Public apology        |     |
+Year                  | 2020| 2021|2022
+----------------------|-----|-----|----
+**Violation reports** |    0|    0|   0
+No violation occurred |     |     |
+Private reprimand     |     |     |
+Public reprimand      |     |     |
+Imposed vacation      |     |     |
+Temporary ban         |     |     |
+Permanent ban         |     |     |
+**Strings Attached**  |     |     |
+Private apology       |     |     |
+Public apology        |     |     |
 
 #### Public Reports
 - 2020
   - None
 - 2021
   - None
-
+- 2022
+  - None
 
 ## Changes
 Changes to the Open ONI Community Code of Conduct can be tracked in this file on
