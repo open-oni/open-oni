@@ -89,6 +89,14 @@ LOG_LOCATION = BASE_DIR / 'log'
 
 MARC_RETRIEVAL_URLFORMAT = 'https://chroniclingamerica.loc.gov/lccn/%s/marc.xml'
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
 # Display newspaper titles with medium ("volume", "microform") when available
 TITLE_DISPLAY_MEDIUM = False
 
