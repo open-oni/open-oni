@@ -5,7 +5,7 @@ from django.urls import include, path, re_path
 from django.utils import cache
 from django.views.defaults import page_not_found, server_error
 
-from .views import home, browse, directory, reports, search, static
+from .views import home, browse, directory, reports, search, static, api
 
 handler404 = page_not_found
 handler500 = server_error
@@ -356,4 +356,9 @@ urlpatterns = [
     # ocr data
     re_path(r'^ocr/feed/$', reports.ocr_atom, name='openoni_ocr_atom'),
     re_path(r'^ocr.json$', reports.ocr_json, name='openoni_ocr_json'),
+
+    # API views
+    path('api/oni/batches.json', api.batch_list, name='api_batches'),
+    path('api/oni/batches/<slug:batch_name>.json', api.batch, name='api_batch'),
+    re_path('^api/oni/lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+).json$', api.issue, name='api_issue'),
 ]

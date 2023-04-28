@@ -1,8 +1,10 @@
 asgiref==3.11.1
 certifi==2026.4.22
+chardet==3.0.4
 charset-normalizer==3.4.7
 coverage==7.13.5
 Django==5.2.14
+djangorestframework==3.14.0
 feedparser==6.0.12
 idna==3.13
 isodate==0.7.2
