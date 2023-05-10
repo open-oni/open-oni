@@ -82,7 +82,7 @@ def issue(request, lccn, date, edition):
     _year, _month, _day = date.split("-")
     _date = datetime.date(int(_year), int(_month), int(_day))
     title = models.Title.objects.get(lccn=lccn)
-    issue = title.issues.filter(date_issued=_date, edition=edition).order_by("-created")[0]
+    issue = title.issues.filter(date_issued=_date, edition=edition).order_by("-created").first()
   except ValueError as e:
     return JsonResponse({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
   except (IndexError, ObjectDoesNotExist):
@@ -118,8 +118,8 @@ def page(request, lccn, date, edition, sequence):
     _year, _month, _day = date.split("-")
     _date = datetime.date(int(_year), int(_month), int(_day))
     title = models.Title.objects.get(lccn=lccn)
-    issue = title.issues.filter(date_issued=_date, edition=edition).order_by("-created")[0]
-    page = issue.pages.filter(sequence=int(sequence)).order_by("-created")[0]
+    issue = title.issues.filter(date_issued=_date, edition=edition).order_by("-created").first()
+    page = issue.pages.filter(sequence=int(sequence)).order_by("-created").first()
   except ValueError as e:
     return JsonResponse({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
   except (IndexError, ObjectDoesNotExist):
