@@ -33,7 +33,7 @@ class AwardeeSerializer(serializers.BaseSerializer):
 
 class BatchListSerializer(serializers.BaseSerializer):
   """
-  api/oni/batches.json
+  api/oni/batches.json; api/oni/batches/<page_number>.json
   List all batches
   """
   def to_representation(self, instance):

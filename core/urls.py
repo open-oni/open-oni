@@ -361,6 +361,7 @@ urlpatterns = [
     path('api/oni/awardees.json', api.awardee_list, name='api_awardee_list'),
     re_path('^api/oni/awardee/(?P<org_code>\w+)\.json$', api.awardee, name='api_awardee'),
     path('api/oni/batches.json', api.batch_list, name='api_batch_list'),
+    re_path('^api/oni/batches/(?P<page_number>\d+)\.json$', api.batch_list, name='api_batch_list_page'),
     path('api/oni/batches/<slug:batch_name>.json', api.batch, name='api_batch'),
     re_path('^api/oni/lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)\.json$', api.issue, name='api_issue'),
     path('api/oni/newspapers.json', api.newspaper_list, name='api_newspaper_list'),

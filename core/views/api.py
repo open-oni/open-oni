@@ -1,6 +1,9 @@
 import datetime
 
+from django.conf import settings
+from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.parsers import JSONParser
@@ -49,15 +52,27 @@ def batch(request, batch_name):
   end
 
 @csrf_exempt
-def batch_list(request):
+def batch_list(request, page_number=1):
   """
   api/oni/batches.json
   List all batches
   """
   if request.method == 'GET':
     batches = models.Batch.objects.all()
-    serializer = rest_serializers.BatchListSerializer(batches, many=True, context={'request': request})
-    return JsonResponse({'batches': serializer.data}, safe=False)
+    paginator = Paginator(batches, 25)
+    page = paginator.page(page_number)
+    serializer = rest_serializers.BatchListSerializer(page.object_list, many=True, context={'request': request})
+    data = {
+      'batches': serializer.data,
+      'count': paginator.count,
+      'pages': paginator.num_pages,
+    }
+    if page.has_next():
+      data['next'] = settings.BASE_URL + reverse('api_batch_list_page', args=[page.next_page_number()])
+    if page.has_previous():
+      data['previous'] = settings.BASE_URL + reverse('api_batch_list_page', args=[page.previous_page_number()])
+
+    return JsonResponse(data, safe=False)
   else:
     return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
   end
