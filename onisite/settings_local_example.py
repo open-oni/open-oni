@@ -32,6 +32,8 @@ CONN_HEALTH_CHECKS = True
 # The first item in the list has final say when collisions occur.
 INSTALLED_APPS = (
     # Default
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
