@@ -1,13 +1,13 @@
 import datetime
 
 from django.conf import settings
-from django.core.paginator import Paginator
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import InvalidPage, Paginator
 from django.http import JsonResponse
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from core import models, rest_serializers
 
 @api_view(['GET'])
@@ -16,7 +16,10 @@ def awardee(request, org_code):
   api/oni/awardee/<org_code>.json
   Retrieve an awardee and its batches
   """
-  awardee = models.Awardee.objects.get(org_code=org_code)
+  try:
+    awardee = models.Awardee.objects.get(org_code=org_code)
+  except ObjectDoesNotExist:
+    return JsonResponse({'detail': 'Awardee does not exist'}, status=status.HTTP_404_NOT_FOUND)
   serializer = rest_serializers.AwardeeSerializer(awardee, context={'request': request})
   return JsonResponse(serializer.data, safe=False)
 
@@ -36,7 +39,10 @@ def batch(request, batch_name):
   api/oni/batches/<batch_name>.json
   Retrieve a batch and its issues
   """
-  batch = models.Batch.objects.get(name=batch_name)
+  try:
+    batch = models.Batch.objects.get(name=batch_name)
+  except ObjectDoesNotExist:
+    return JsonResponse({'detail': 'Batch does not exist'}, status=status.HTTP_404_NOT_FOUND)
   serializer = rest_serializers.BatchSerializer(batch, context={'request': request})
   return JsonResponse(serializer.data, safe=False)
 
@@ -46,9 +52,13 @@ def batch_list(request, page_number=1):
   api/oni/batches.json
   List all batches
   """
-  batches = models.Batch.objects.all()
-  paginator = Paginator(batches, 25)
-  page = paginator.page(page_number)
+  try:
+    batches = models.Batch.objects.all()
+    paginator = Paginator(batches, 25)
+    page = paginator.page(page_number)
+  except InvalidPage as e:
+    return JsonResponse({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
   serializer = rest_serializers.BatchListSerializer(page.object_list, many=True, context={'request': request})
   data = {
     'batches': serializer.data,
@@ -68,10 +78,15 @@ def issue(request, lccn, date, edition):
   api/oni/lccn/<date>/ed-<edition>.json
   Retrieve an issue's info
   """
-  _year, _month, _day = date.split("-")
-  _date = datetime.date(int(_year), int(_month), int(_day))
-  title = models.Title.objects.get(lccn=lccn)
-  issue = title.issues.filter(date_issued=_date, edition=edition).order_by("-created")[0]
+  try:
+    _year, _month, _day = date.split("-")
+    _date = datetime.date(int(_year), int(_month), int(_day))
+    title = models.Title.objects.get(lccn=lccn)
+    issue = title.issues.filter(date_issued=_date, edition=edition).order_by("-created")[0]
+  except ValueError as e:
+    return JsonResponse({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+  except (IndexError, ObjectDoesNotExist):
+    return JsonResponse({'detail': 'Issue does not exist'}, status=status.HTTP_404_NOT_FOUND)
   serializer = rest_serializers.IssueSerializer(issue, context={'request': request})
   return JsonResponse(serializer.data, safe=False)
 
@@ -99,11 +114,16 @@ def page(request, lccn, date, edition, sequence):
   api/oni/lccn/<date>/ed-<edition>/seq-<sequence>.json
   Retrieve a page's info
   """
-  _year, _month, _day = date.split("-")
-  _date = datetime.date(int(_year), int(_month), int(_day))
-  title = models.Title.objects.get(lccn=lccn)
-  issue = title.issues.filter(date_issued=_date, edition=edition).order_by("-created")[0]
-  page = issue.pages.filter(sequence=int(sequence)).order_by("-created")[0]
+  try:
+    _year, _month, _day = date.split("-")
+    _date = datetime.date(int(_year), int(_month), int(_day))
+    title = models.Title.objects.get(lccn=lccn)
+    issue = title.issues.filter(date_issued=_date, edition=edition).order_by("-created")[0]
+    page = issue.pages.filter(sequence=int(sequence)).order_by("-created")[0]
+  except ValueError as e:
+    return JsonResponse({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+  except (IndexError, ObjectDoesNotExist):
+    return JsonResponse({'detail': 'Page does not exist'}, status=status.HTTP_404_NOT_FOUND)
   serializer = rest_serializers.PageSerializer(page, context={'request': request})
   return JsonResponse(serializer.data, safe=False)
 
@@ -113,6 +133,9 @@ def title(request, lccn):
   api/oni/lccn/<lccn>.json
   Retrieve a title's info
   """
-  title = models.Title.objects.get(lccn=lccn)
+  try:
+    title = models.Title.objects.get(lccn=lccn)
+  except ObjectDoesNotExist:
+    return JsonResponse({'detail': 'Title does not exist'}, status=status.HTTP_404_NOT_FOUND)
   serializer = rest_serializers.TitleSerializer(title, context={'request': request})
   return JsonResponse(serializer.data, safe=False)
