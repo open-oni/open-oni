@@ -57,7 +57,7 @@ def batch_list(request, page_number=1):
     List all batches
     """
     try:
-        batches = models.Batch.objects.all()
+        batches = models.Batch.objects.all().order_by('name')
         paginator = Paginator(batches, 25)
         page = paginator.page(page_number)
     except InvalidPage as e:
@@ -92,6 +92,10 @@ def issue(request, lccn, date, edition):
         return JsonResponse({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
     except (IndexError, ObjectDoesNotExist):
         return JsonResponse({'detail': 'Issue does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    if issue is None:
+        return JsonResponse({'detail': 'Issue does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
     serializer = rest_serializers.IssueSerializer(issue, context={'request': request})
     return JsonResponse(serializer.data, safe=False)
 
@@ -129,8 +133,12 @@ def page(request, lccn, date, edition, sequence):
         page = issue.pages.filter(sequence=int(sequence)).order_by("-created").first()
     except ValueError as e:
         return JsonResponse({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-    except (IndexError, ObjectDoesNotExist):
+    except (AttributeError, IndexError, ObjectDoesNotExist):
         return JsonResponse({'detail': 'Page does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+    if page is None:
+        return JsonResponse({'detail': 'Page does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
     serializer = rest_serializers.PageSerializer(page, context={'request': request})
     return JsonResponse(serializer.data, safe=False)
 
