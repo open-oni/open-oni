@@ -357,22 +357,22 @@ urlpatterns = [
     re_path(r'^ocr/feed/$', reports.ocr_atom, name='openoni_ocr_atom'),
     re_path(r'^ocr.json$', reports.ocr_json, name='openoni_ocr_json'),
 
-    # API views
-    path('api/oni/awardees.json', api.awardee_list, name='api_awardee_list'),
-    re_path(r'^api/oni/awardee/(?P<org_code>\w+)\.json$', api.awardee, name='api_awardee'),
-    path('api/oni/batches.json', api.batch_list, name='api_batch_list'),
-    re_path(r'^api/oni/batches/(?P<page_number>\d+)\.json$', api.batch_list, name='api_batch_list_page'),
-    path('api/oni/batches/<slug:batch_name>.json', api.batch, name='api_batch'),
+    # ChronAm API views
+    path('api/chronam/awardees.json', api.awardee_list, name='api_awardee_list'),
+    re_path(r'^api/chronam/awardee/(?P<org_code>\w+)\.json$', api.awardee, name='api_awardee'),
+    path('api/chronam/batches.json', api.batch_list, name='api_batch_list'),
+    re_path(r'^api/chronam/batches/(?P<page_number>\d+)\.json$', api.batch_list, name='api_batch_list_page'),
+    path('api/chronam/batches/<slug:batch_name>.json', api.batch, name='api_batch'),
     re_path(
-        r'^api/oni/lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)\.json$',
+        r'^api/chronam/lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)\.json$',
         api.issue,
         name='api_issue'
     ),
-    path('api/oni/newspapers.json', api.newspaper_list, name='api_newspaper_list'),
+    path('api/chronam/newspapers.json', api.newspaper_list, name='api_newspaper_list'),
     re_path(
-        r'^api/oni/lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)\.json$',
+        r'^api/chronam/lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)\.json$',
         api.page,
         name='api_page'
     ),
-    re_path(r'^api/oni/lccn/(?P<lccn>\w+).json$', api.title, name='api_title'),
+    re_path(r'^api/chronam/lccn/(?P<lccn>\w+).json$', api.title, name='api_title'),
 ]

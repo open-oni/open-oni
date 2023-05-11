@@ -14,7 +14,7 @@ from core import models, rest_serializers
 @api_view(['GET'])
 def awardee(request, org_code):
     """
-    api/oni/awardee/<org_code>.json
+    api/chronam/awardee/<org_code>.json
     Retrieve an awardee and its batches
     """
     try:
@@ -28,7 +28,7 @@ def awardee(request, org_code):
 @api_view(['GET'])
 def awardee_list(request):
     """
-    api/oni/awardees.json
+    api/chronam/awardees.json
     List all awardees
     """
     awardees = models.Awardee.objects.all()
@@ -39,7 +39,7 @@ def awardee_list(request):
 @api_view(['GET'])
 def batch(request, batch_name):
     """
-    api/oni/batches/<batch_name>.json
+    api/chronam/batches/<batch_name>.json
     Retrieve a batch and its issues
     """
     try:
@@ -53,7 +53,7 @@ def batch(request, batch_name):
 @api_view(['GET'])
 def batch_list(request, page_number=1):
     """
-    api/oni/batches.json
+    api/chronam/batches.json
     List all batches
     """
     try:
@@ -80,7 +80,7 @@ def batch_list(request, page_number=1):
 @api_view(['GET'])
 def issue(request, lccn, date, edition):
     """
-    api/oni/lccn/<date>/ed-<edition>.json
+    api/chronam/lccn/<date>/ed-<edition>.json
     Retrieve an issue's info
     """
     try:
@@ -99,7 +99,7 @@ def issue(request, lccn, date, edition):
 @api_view(['GET'])
 def newspaper_list(request):
     """
-    api/oni/newspapers.json
+    api/chronam/newspapers.json
     List all newspapers
     """
     _newspapers_by_state = {}
@@ -118,7 +118,7 @@ def newspaper_list(request):
 @api_view(['GET'])
 def page(request, lccn, date, edition, sequence):
     """
-    api/oni/lccn/<date>/ed-<edition>/seq-<sequence>.json
+    api/chronam/lccn/<date>/ed-<edition>/seq-<sequence>.json
     Retrieve a page's info
     """
     try:
@@ -138,7 +138,7 @@ def page(request, lccn, date, edition, sequence):
 @api_view(['GET'])
 def title(request, lccn):
     """
-    api/oni/lccn/<lccn>.json
+    api/chronam/lccn/<lccn>.json
     Retrieve a title's info
     """
     try:

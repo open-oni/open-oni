@@ -8,7 +8,7 @@ from core import models
 
 class AwardeeListSerializer(serializers.BaseSerializer):
     """
-    api/oni/awardees.json
+    api/chronam/awardees.json
     List all awardees
     """
 
@@ -21,7 +21,7 @@ class AwardeeListSerializer(serializers.BaseSerializer):
 
 class AwardeeSerializer(serializers.BaseSerializer):
     """
-    api/oni/awardee/<org_code>.json
+    api/chronam/awardee/<org_code>.json
     Retrieve an awardee and its batches
     """
 
@@ -38,7 +38,7 @@ class AwardeeSerializer(serializers.BaseSerializer):
 
 class BatchListSerializer(serializers.BaseSerializer):
     """
-    api/oni/batches.json; api/oni/batches/<page_number>.json
+    api/chronam/batches.json; api/chronam/batches/<page_number>.json
     List all batches
     """
 
@@ -58,7 +58,7 @@ class BatchListSerializer(serializers.BaseSerializer):
 
 class BatchSerializer(serializers.BaseSerializer):
     """
-    api/oni/batches/<batch_name>.json
+    api/chronam/batches/<batch_name>.json
     Retrieve a batch and its issues
     """
 
@@ -90,7 +90,7 @@ class BatchSerializer(serializers.BaseSerializer):
 
 class IssueSerializer(serializers.BaseSerializer):
     """
-    api/oni/lccn/<date>/ed-<edition>.json
+    api/chronam/lccn/<date>/ed-<edition>.json
     Retrieve an issue's info
     """
 
@@ -126,7 +126,7 @@ class IssueSerializer(serializers.BaseSerializer):
 
 class NewspaperListSerializer(serializers.BaseSerializer):
     """
-    api/oni/newspapers.json
+    api/chronam/newspapers.json
     List all newspapers
     """
 
@@ -145,7 +145,7 @@ class NewspaperListSerializer(serializers.BaseSerializer):
 
 class PageSerializer(serializers.BaseSerializer):
     """
-    api/oni/lccn/<date>/ed-<edition>/seq-<sequence>.json
+    api/chronam/lccn/<date>/ed-<edition>/seq-<sequence>.json
     Retrieve a page's info
     """
 
@@ -173,7 +173,7 @@ class PageSerializer(serializers.BaseSerializer):
 
 class TitleSerializer(serializers.BaseSerializer):
     """
-    api/oni/lccn/<lccn>.json
+    api/chronam/lccn/<lccn>.json
     Retrieve a title's info
     """
 
