@@ -359,7 +359,7 @@ urlpatterns = [
 
     # ChronAm API views
     path('api/chronam/awardees.json', api.awardee_list, name='api_awardee_list'),
-    re_path(r'^api/chronam/awardee/(?P<org_code>\w+)\.json$', api.awardee, name='api_awardee'),
+    re_path(r'^api/chronam/awardees/(?P<org_code>\w+)\.json$', api.awardee, name='api_awardee'),
     path('api/chronam/batches.json', api.batch_list, name='api_batch_list'),
     re_path(r'^api/chronam/batches/(?P<page_number>\d+)\.json$', api.batch_list, name='api_batch_list_page'),
     path('api/chronam/batches/<slug:batch_name>.json', api.batch, name='api_batch'),

@@ -1,0 +1,34 @@
+[
+  {
+    "pk": "curiv",
+    "model": "core.awardee", 
+    "fields": {
+      "name": "University of California, Riverside",
+      "created": "2009-02-09 06:44:45"
+    }
+  },
+  {
+    "pk": "dlc",
+    "model": "core.awardee",
+    "fields": {
+      "name": "Library of Congress, Washington, DC",
+      "created": "2009-02-09 06:44:45"
+    }
+  },
+  {
+    "pk": "uuml",
+    "model": "core.awardee",
+    "fields": {
+      "name": "University of Utah, Marriott Library",
+      "created": "2009-02-09 06:44:45"
+    }
+  },
+  {
+    "pk": "iune",
+    "model": "core.awardee",
+    "fields": {
+      "name": "University of Illinois at Urbana-Champaign Library, Urbana, IL",
+      "created": "2009-02-09 06:44:45"
+    }
+  }
+]
