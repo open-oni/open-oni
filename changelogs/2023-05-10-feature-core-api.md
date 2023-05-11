@@ -3,9 +3,9 @@
 ### Fixed
 
 ### Added
-- Restore [LoC / ChronAm JSON API] at /api/oni/
+- Restore [ChronAm JSON API] at /api/chronam/
 
-[LoC / ChronAm JSON API]: https://chroniclingamerica.loc.gov/about/api/#json-views
+[ChronAm JSON API]: https://chroniclingamerica.loc.gov/about/api/#json-views
 
 ### Changed
 
