@@ -70,15 +70,15 @@
               </div>
             </div>
           {% endblock header_title %}
-
+          
           {% block navbar %}
-          <nav class="navbar {% block navbar_classes %}navbar-expand-lg navbar-dark header_navbar p-lg-0{% endblock navbar_classes %}">
+          <nav class="navbar {% block navbar_classes %}header_navbar navbar-dark navbar-expand-lg p-lg-0{% endblock navbar_classes %}" aria-label="Main">
             <div class="container-lg gx-0">
-              <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainMenu"
+                aria-controls="navbarMainMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse navbar-collapse align-items-start" id="navbarSupportedContent">
+              <div class="collapse navbar-collapse align-items-start" id="navbarMainMenu">
                 <ul class="navbar-nav me-auto p-0">
                   {% block navbar_home %}
                   <li class="nav-item">
@@ -109,20 +109,18 @@
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap flex-xl-nowrap justify-content-end">
                 {% block navbar_advancedsearch %}
-                  <li class="nav-item nav_advanced_search order-xl-1">
+                  <li class="nav-item nav_advanced_search order-xl-1 flex-shrink-0">
                     <a class="nav-link p-3" href="{% url 'openoni_search_advanced' %}">
                       Advanced Search
                     </a>
                   </li>
                 {% endblock navbar_advancedsearch %}
                 {% block navbar_search %}
-                <form class="d-flex flex-column flex-lg-row p-2 pe-5 pe-lg-2" method="get" action="{% url 'openoni_search_pages_results' %}" role="search">
+                <form class="d-inline-flex flex-column flex-lg-row p-2 pe-5 pe-lg-2" method="get" action="{% url 'openoni_search_pages_results' %}" role="search">
                   {{ city_form.city }}
                   <input class="form-control mt-1 mt-lg-0 mb-2 mb-lg-0 me-lg-1 ms-lg-1" type="text" name="proxtext" placeholder="Search words" aria-label="Search words">
                   <!-- Glyphicon (glyphicon-search) was here - Erin -->
-                  <div class="flex-1">
                   <button class="btn btn-primary" type="submit">Search</button>
-                  </div>
                 </form>
                 {% endblock navbar_search %}
               </ul>
@@ -133,17 +131,19 @@
         {% endblock header %}
       </header>
 
-      <div class="main_content">
+      <main class="main_content">
         <div class="container pt-4 pb-4">
           {% block breadcrumbs %}
             {% if crumbs and crumbs|length > 1 %}
+            <nav aria-label="Breadcrumb">
               <ol class="breadcrumb">
                 {% for crumb in crumbs %}
                   <li {% if crumb.active %}class="breadcrumb-item active"{% else %}class="breadcrumb-item"{% endif %}>
-                    <a href="{{crumb.href}}">{{crumb.label}}</a>
+                    <a href="{{crumb.href}}" {% if crumb.active %}aria-current="page"{% else %}{% endif %}>{{crumb.label}}</a>
                   </li>
                 {% endfor %}
               </ol>
+            </nav>
             {% endif %}
           {% endblock breadcrumbs %}
 
@@ -169,18 +169,18 @@
           {% block subcontent %}{% endblock subcontent %}
         {% endblock content %}
         </div>{# /container #}
-      </div>{# /main_content #}
+      </main>{# /main_content #}
     {% endblock body_content %}
 
     {% block footer %}
-      <div id="footer">
+      <footer id="footer">
         <div class="container">
           <p>{{site_title}}</p>
           <p>
             Powered by <a href="https://github.com/open-oni/open-oni">Open ONI</a>
           </p>
         </div>
-      </div>
+      </footer>
     {% endblock footer %}
   </body>
 </html>
