@@ -20,7 +20,7 @@ class ApiIiifTests(TestCase):
     ]
 
     def test_newspaper_json(self):
-        r = self.client.get("/newspapers.json")
+        r = self.client.get('/newspapers.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.maxDiff = None
@@ -34,7 +34,7 @@ class ApiIiifTests(TestCase):
              'label': 'Newspapers'})
 
     def test_title_json(self):
-        r = self.client.get("/lccn/sn83030214.json")
+        r = self.client.get('/lccn/sn83030214.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.maxDiff = None
@@ -75,7 +75,7 @@ class ApiIiifTests(TestCase):
                                       {'@value': 'New York--Queens--New York City'}]}]})
 
     def test_issue_json(self):
-        r = self.client.get("/lccn/sn83030214/1898-01-01/ed-1.json")
+        r = self.client.get('/lccn/sn83030214/1898-01-01/ed-1.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.maxDiff = None
@@ -152,7 +152,7 @@ class ApiIiifTests(TestCase):
                              'label': 'issue order'}]})
 
     def test_page_json(self):
-        r = self.client.get("/lccn/sn83030214/1898-01-01/ed-1/seq-1.json")
+        r = self.client.get('/lccn/sn83030214/1898-01-01/ed-1/seq-1.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.maxDiff = None
@@ -185,7 +185,7 @@ class ApiIiifTests(TestCase):
              'width': 6394})
 
     def test_batch_json(self):
-        r = self.client.get("/batches/batch_curiv_ahwahnee_ver01.json")
+        r = self.client.get('/batches/batch_curiv_ahwahnee_ver01.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.maxDiff = None
@@ -204,7 +204,7 @@ class ApiIiifTests(TestCase):
                             'value': 'University of California, Riverside'}]})
 
     def test_awardee_json(self):
-        r = self.client.get("/awardees/curiv.json")
+        r = self.client.get('/awardees/curiv.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.maxDiff = None
@@ -224,7 +224,7 @@ class ApiIiifTests(TestCase):
              'label': 'University of California, Riverside'})
 
     def test_batches_json(self):
-        r = self.client.get("/batches.json")
+        r = self.client.get('/batches.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.maxDiff = None
@@ -259,7 +259,7 @@ class ApiChronamTests(TestCase):
     ]
 
     def test_awardee_json(self):
-        r = self.client.get("/api/chronam/awardees/curiv.json")
+        r = self.client.get('/api/chronam/awardees/curiv.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertEqual(j['name'], 'University of California, Riverside')
@@ -268,7 +268,7 @@ class ApiChronamTests(TestCase):
         self.assertEqual(j['batches'][0]['name'], 'batch_curiv_ahwahnee_ver01')
 
     def test_awardee_list_json(self):
-        r = self.client.get("/api/chronam/awardees.json")
+        r = self.client.get('/api/chronam/awardees.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertEqual(len(j['awardees']), 47)
@@ -278,12 +278,12 @@ class ApiChronamTests(TestCase):
         self.assertIs(j['awardees'][46]['url'].endswith('/awardees/wvu.json'), True)
 
     def test_batch_json(self):
-        r = self.client.get("/api/chronam/batches/batch_does_not_exist.json")
+        r = self.client.get('/api/chronam/batches/batch_does_not_exist.json')
         self.assertEqual(r.status_code, 404)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'Batch does not exist')
 
-        r = self.client.get("/api/chronam/batches/batch_curiv_ahwahnee_ver01.json")
+        r = self.client.get('/api/chronam/batches/batch_curiv_ahwahnee_ver01.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertEqual(j['name'], 'batch_curiv_ahwahnee_ver01')
@@ -330,57 +330,57 @@ class ApiChronamTests(TestCase):
         self.assertTrue(b['ingested'].startswith('2009-03-26T20:59:28'))
 
     def test_drf_http_verb_control(self):
-        r = self.client.delete("/api/chronam/batches.json")
+        r = self.client.delete('/api/chronam/batches.json')
         self.assertEqual(r.status_code, 405)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'Method "DELETE" not allowed.')
 
-        r = self.client.head("/api/chronam/batches.json")
+        r = self.client.head('/api/chronam/batches.json')
         self.assertEqual(r.status_code, 405)
 
-        r = self.client.options("/api/chronam/batches.json")
+        r = self.client.options('/api/chronam/batches.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertEqual(j['description'], 'api/chronam/batches.json\nList all batches')
         self.assertEqual(j['name'], 'Batch List')
 
-        r = self.client.post("/api/chronam/batches.json")
+        r = self.client.post('/api/chronam/batches.json')
         self.assertEqual(r.status_code, 405)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'Method "POST" not allowed.')
 
-        r = self.client.put("/api/chronam/batches.json")
+        r = self.client.put('/api/chronam/batches.json')
         self.assertEqual(r.status_code, 405)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'Method "PUT" not allowed.')
 
-        r = self.client.trace("/api/chronam/batches.json")
+        r = self.client.trace('/api/chronam/batches.json')
         self.assertEqual(r.status_code, 405)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'Method "TRACE" not allowed.')
 
     def test_issue_json(self):
-        r = self.client.get("/api/chronam/lccn/sn83030214/0000-01-01/ed-1.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/0000-01-01/ed-1.json')
         self.assertEqual(r.status_code, 400)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'year 0 is out of range')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214/1898-13-01/ed-1.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/1898-13-01/ed-1.json')
         self.assertEqual(r.status_code, 400)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'month must be in 1..12')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214/1898-01-41/ed-1.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/1898-01-41/ed-1.json')
         self.assertEqual(r.status_code, 400)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'day is out of range for month')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214/1898-01-01/ed-2.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/1898-01-01/ed-2.json')
         self.assertEqual(r.status_code, 404)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'Issue does not exist')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214/1898-01-01/ed-1.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/1898-01-01/ed-1.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertTrue(j['url'].endswith('/lccn/sn83030214/1898-01-01/ed-1.json'))
@@ -394,7 +394,7 @@ class ApiChronamTests(TestCase):
         self.assertTrue(j['pages'][0]['url'].endswith('/lccn/sn83030214/1898-01-01/ed-1/seq-1.json'))
 
     def test_newspaper_json(self):
-        r = self.client.get("/api/chronam/newspapers.json")
+        r = self.client.get('/api/chronam/newspapers.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertEqual(len(j['newspapers']), 1)
@@ -404,27 +404,27 @@ class ApiChronamTests(TestCase):
         self.assertTrue(j['newspapers'][0]['url'].endswith('/lccn/sn83030214.json'))
 
     def test_page_json(self):
-        r = self.client.get("/api/chronam/lccn/sn83030214/0000-01-01/ed-1/seq-1.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/0000-01-01/ed-1/seq-1.json')
         self.assertEqual(r.status_code, 400)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'year 0 is out of range')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214/1898-13-01/ed-1/seq-1.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/1898-13-01/ed-1/seq-1.json')
         self.assertEqual(r.status_code, 400)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'month must be in 1..12')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214/1898-01-41/ed-1/seq-1.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/1898-01-41/ed-1/seq-1.json')
         self.assertEqual(r.status_code, 400)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'day is out of range for month')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214/1898-01-01/ed-1/seq-2.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/1898-01-01/ed-1/seq-2.json')
         self.assertEqual(r.status_code, 404)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'Page does not exist')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214/1898-01-01/ed-1/seq-1.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214/1898-01-01/ed-1/seq-1.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertTrue(j['jp2'].endswith('/lccn/sn83030214/1898-01-01/ed-1/seq-1.jp2'))
@@ -438,12 +438,12 @@ class ApiChronamTests(TestCase):
         self.assertTrue(j['issue']['url'].endswith('/lccn/sn83030214/1898-01-01/ed-1.json'))
 
     def test_title_json(self):
-        r = self.client.get("/api/chronam/lccn/does_not_exist.json")
+        r = self.client.get('/api/chronam/lccn/does_not_exist.json')
         self.assertEqual(r.status_code, 404)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'Title does not exist')
 
-        r = self.client.get("/api/chronam/lccn/sn83030214.json")
+        r = self.client.get('/api/chronam/lccn/sn83030214.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertEqual(j['place_of_publication'], 'New York [N.Y.]')
