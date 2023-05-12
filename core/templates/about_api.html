@@ -37,10 +37,11 @@ APIs.</p>
 <h3>Jump to:</h3> 
 <ul class="anchor"> 
 <li><a href="#search">Search</a> the newspaper directory and digitized page contents using OpenSearch.</li> 
-<!-- <li><a href="#autosuggest">Auto Suggest</a> API for looking up newspaper
-titles</li> Could not find this section so am removing the link -kmd -->
+{# <li><a href="#autosuggest">Auto Suggest</a> API for looking up newspaper titles</li> #}
+{# Could not find this section so am removing the link -kmd #}
 <li><a href="#link">Link</a> using our stable URL pattern for Open ONI resources.</li>
 <li><a href="#iiif-views">IIIF</a> views of Open ONI resources.</li> 
+<li><a href="#json-views">JSON</a> views of Open ONI resources.</li>
 <li><a href="#linked-data">Linked Data</a> views of Open ONI resources.</li> 
 <li><a href="#bulk-data">Bulk Data</a> for research and external services.</li>
 <li><a href="#cors_jsonp">CORS and JSONP</a> support for your JavaScript
@@ -151,6 +152,61 @@ typically linked from their HTML representation using the &lt;link&gt; element.
     </li>
   </ul>
 {% endif %}
+</p>
+
+<a href="#maincontent">Return to Top</a>
+
+<h3 id="json-views">JSON Views</h3>
+<p>
+  There are JSON views available for various resources in Open ONI. These JSON
+  views are typically linked from their HTML representation using the
+  &lt;link&gt; element. Many of these JSON views link to each other. This allows
+  the JSON to stay relatively compact by including only information about a
+  particular entity, while providing a link to fetch more detail about a
+  related entity. Click through the links to find individual awardee, batch,
+  title, issue, and page data.
+  <ul>
+    <li>
+      <a href="/awardees.json">/awardees.json</a>
+      <br>
+      a list of all NDNP Awardees as JSON
+    </li>
+    <li>
+      /awardees/&lt;org_code&gt;.json
+      <br>
+      detailed information about a specific awardee organization
+    </li>
+    <li>
+      <a href="/batches.json">/batches.json</a>
+      <br>
+      a list of all batches of content that have been loaded
+    </li>
+    <li>
+      /batches/&lt;batch_name&gt;.json
+      <br>
+      detailed information about a specific batch
+    </li>
+    <li>
+      <a href="/newspapers.json">/newspapers.json</a>
+      <br>
+      a list of all newspaper titles for which there is digital content
+    </li>
+    <li>
+      /lccn/&lt;lccn&gt;.json
+      <br>
+      title information for a specific LCCN
+    </li>
+    <li>
+      /lccn/&lt;lccn&gt;/&lt;YYYY-MM-DD&gt;/ed-1.json
+      <br>
+      first available edition for a specific LCCN and date
+    </li>
+    <li>
+      /lccn/&lt;lccn&gt;/&lt;YYYY-MM-DD&gt;/ed-1/seq-3.json
+      <br>
+      third available page from first edition for a specific LCCN and date
+    </li>
+  </ul>
 </p>
 
 <a href="#maincontent">Return to Top</a>

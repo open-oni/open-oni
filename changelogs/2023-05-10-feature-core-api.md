@@ -3,9 +3,13 @@
 ### Fixed
 
 ### Added
-- Restore [ChronAm JSON API] at /api/chronam/
+- [ChronAm JSON API] at /api/chronam/`
+  - Now powered by [Django Rest Framework]
+  - Includes new error checking and testing
+  - Update `/about/api/` text and `<link rel="alternate">` links on relevant pages
 
 [ChronAm JSON API]: https://chroniclingamerica.loc.gov/about/api/#json-views
+[Django Rest Framework]: https://www.django-rest-framework.org/
 
 ### Changed
 
