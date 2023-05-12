@@ -5,14 +5,14 @@
     "fields": {
       "number": 5551212,
       "batch": "batch_curiv_ahwahnee_ver01",
-      "created": "2009-03-26 20:59:28"
+      "created": "2009-03-26 20:59:28+00:00"
     }
   },
   {
     "pk": 1, 
     "model": "core.page", 
     "fields": {
-      "created": "2009-03-26 20:59:28", 
+      "created": "2009-03-26 20:59:28+00:00", 
       "jp2_width": 6394, 
       "sequence": 1, 
       "jp2_length": 8677, 

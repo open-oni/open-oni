@@ -298,19 +298,28 @@ class ApiChronamTests(TestCase):
         self.assertTrue(j['issues'][0]['title']['url'].endswith('/lccn/sn83030214.json'))
 
     def test_batch_list_json(self):
-        r = self.client.get("/api/chronam/batches/2.json")
+        r = self.client.get('/api/chronam/batches/3.json')
         self.assertEqual(r.status_code, 400)
         j = json.loads(r.content)
         self.assertEqual(j['detail'], 'That page contains no results')
 
-        # TODO Add more batches to fixture to test pagination
-
-        r = self.client.get("/api/chronam/batches.json")
+        r = self.client.get('/api/chronam/batches/2.json')
         self.assertEqual(r.status_code, 200)
         j = json.loads(r.content)
         self.assertEqual(len(j['batches']), 1)
-        self.assertEqual(j['count'], 1)
-        self.assertEqual(j['pages'], 1)
+        self.assertEqual(j['count'], 26)
+        self.assertEqual(j['pages'], 2)
+        self.assertIs('next' in j, False)
+        self.assertEqual(j['previous'], 'https://oni.example.com/api/chronam/batches/1.json')
+
+        r = self.client.get('/api/chronam/batches.json')
+        self.assertEqual(r.status_code, 200)
+        j = json.loads(r.content)
+        self.assertEqual(len(j['batches']), 25)
+        self.assertEqual(j['count'], 26)
+        self.assertEqual(j['pages'], 2)
+        self.assertEqual(j['next'], 'https://oni.example.com/api/chronam/batches/2.json')
+        self.assertIs('previous' in j, False)
         b = j['batches'][0]
         self.assertEqual(b['name'], 'batch_curiv_ahwahnee_ver01')
         self.assertTrue(b['url'].endswith('/batches/batch_curiv_ahwahnee_ver01.json'))
