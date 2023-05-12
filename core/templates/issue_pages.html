@@ -32,7 +32,8 @@
 {% endblock javascript %}
 
 {% block head_extra %}
-    <link rel="alternate" href="{% url 'openoni_issue_pages_dot_json' title.lccn issue.date_issued issue.edition %}" />
+    <link rel="alternate" type="application/json" href="{% url 'openoni_issue_pages_dot_json' title.lccn issue.date_issued issue.edition %}" title="IIIF JSON Issue Data">
+    <link rel="alternate" type="application/json" href="{% url 'api_issue' title.lccn issue.date_issued issue.edition %}" title="ChronAm JSON Issue Data">
 {% endblock head_extra %}
 
 {% block head_item_metadata %}

@@ -12,7 +12,7 @@
 <link rel="resourcemap" type="application/rdf+xml" href="{% url 'openoni_title_dot_rdf' title.lccn %}" title="ORE Resource Map" />
 <link rel="alternate" type="application/marc+xml" href="{% url 'openoni_title_marcxml' title.lccn %}" title="MARCXML Record for {{ title.display_name }}" />
 <link rel="alternate" type="application/atom+xml" href="{% url 'openoni_title_atom' title.lccn %}" title="Update Feed for {{ title.display_name }}" />
-
+<link rel="alternate" type="application/json" href="{% url 'api_title' title.lccn %}" title="ChronAm JSON Title Data">
 {% endblock head_extra %}
 
 {% block download_links %}
