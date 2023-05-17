@@ -16,7 +16,7 @@
             <legend><h3>Search Terms</h2></legend>
             <div class="row">
                 <div class="col-md-3">
-                    <label for="id_ortext">{{ form.ortext.label }}</label>
+                    <label class="form-label" for="id_ortext">{{ form.ortext.label }}</label>
                 </div>
                 <div class="col-md-9">
                     {{ form.ortext }}
@@ -24,7 +24,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <label for="id_andtext">{{ form.andtext.label }}</label>
+                    <label class="form-label" for="id_andtext">{{ form.andtext.label }}</label>
                 </div>
                 <div class="col-md-9">
                     {{ form.andtext }}
@@ -32,7 +32,7 @@
             </div>
             <div class="row">
                 <div class="col-md-3">
-                    <label for="id_phrasetext">{{ form.phrasetext.label }}</label>
+                    <label class="form-label" for="id_phrasetext">{{ form.phrasetext.label }}</label>
                 </div>
                 <div class="col-md-9">
                     {{ form.phrasetext }}
@@ -56,13 +56,13 @@
             </p>
             <div class="row">
                 <div class="col-md-2">
-                    <label for="id_proxtext">{{ form.proxtext.label }}</label>
+                    <label class="form-label" for="id_proxtext">{{ form.proxtext.label }}</label>
                 </div>
                 <div class="col-md-5">
                     {{ form.proxtext }}
                 </div>
                 <div class="col-md-2">
-                    <label for="id_proxdistance">{{ form.proxdistance.label }}</label>
+                    <label class="form-label" for="id_proxdistance">{{ form.proxdistance.label }}</label>
                 </div>
                 <div class="col-md-3">
                     {{ form.proxdistance }}
@@ -76,21 +76,21 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="col-md-2">
-                        <label for="id_city">{{ form.city.label }}</label>
+                        <label class="form-label" for="id_city">{{ form.city.label }}</label>
                     </div>
                     <div class="col-md-10">
                         {{ form.city }}
                     </div>
 
                     <div class="col-md-2">
-                        <label for="id_county">{{ form.county.label }}</label>
+                        <label class="form-label" for="id_county">{{ form.county.label }}</label>
                     </div>
                     <div class="col-md-10">
                         {{ form.county }}
                     </div>
                 </div>
                 <div class="col-md-3 date_form">
-                    <label for="date_from">
+                    <label class="form-label" for="date_from">
                         Start Date (Earliest: {{ form.fulltextStartYear }})
                     </label><br>
                     <input id="date_from" name="date1" type="date"
@@ -99,7 +99,7 @@
                         value="{{form.fulltextStartYear}}-01-01">
                 </div>
                 <div class="col-md-3 date_form">
-                    <label for="date_to">
+                    <label class="form-label" for="date_to">
                         End Date (Latest: {{ form.fulltextEndYear }})
                     </label><br>
                     <input id="date_to" name="date2" type="date"
@@ -113,13 +113,13 @@
         <!-- Newspapers / LCCNs -->
         <h3>Search selected newspapers:</h3>
         <div class="row">
-            <div class="help-block">
+            <div class="form-text">
                 Hold Cmd/Ctrl key while clicking
                 to select and de-select multiple papers;
                 Search all papers if none selected
             </div>
             <div class="col-md-2">
-                <label for="id_lccn">Newspaper(s)</label>
+                <label class="form-label" for="id_lccn">Newspaper(s)</label>
             </div>
             <div class="col-md-10">
                 {{ form.lccn }}
@@ -130,16 +130,16 @@
         <h3>Additional Filters</h3>
         <div class="row">
             <div class="col-md-4">
-                <label for="id_language">{{ form.language.label }}</label>
+                <label class="form-label" for="id_language">{{ form.language.label }}</label>
                 {{ form.language }}
             </div>
             <div class="col-md-4">
-                <label for="id_frequency">{{ form.frequency.label }}</label>
+                <label class="form-label" for="id_frequency">{{ form.frequency.label }}</label>
                 {{ form.frequency }}
             </div>
-            <div class="col-md-2 buffer-top">
-                <input name="sequence" id="sequence" value="1" type="checkbox" />
-                <label class="norm" for="sequence">Front pages only</label>
+            <div class="col-md-2 buffer-top form-check">
+                <input class="form-check-input" name="sequence" id="sequence" value="1" type="checkbox" />
+                <label class="norm form-check-label" for="sequence">Front pages only</label>
             </div>
             <div class="col-md-2">
                 &nbsp;

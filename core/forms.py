@@ -98,7 +98,7 @@ def _titles_states():
 
 class CityForm(forms.Form):
     city = fields.ChoiceField(choices=[], required=False)
-    city.widget.attrs["class"] = "form-control"
+    city.widget.attrs["class"] = "form-select"
     city.widget.attrs["aria-label"] = "City"
     city.widget.attrs["id"] = "global_city_id"
 
@@ -145,8 +145,8 @@ class SearchResultsForm(forms.Form):
     sort = fields.ChoiceField(choices=RESULT_SORT)
 
     # add classes
-    rows.widget.attrs["class"] = "form-control"
-    sort.widget.attrs["class"] = "form-control"
+    rows.widget.attrs["class"] = "form-select"
+    sort.widget.attrs["class"] = "form-select"
 
     def __init__(self, *args, **kwargs):
         super(SearchResultsForm, self).__init__(*args, **kwargs)
@@ -178,14 +178,21 @@ class SearchPagesForm(SearchPagesFormBase):
     language = fields.ChoiceField(label="Language", required=False)
 
     form_control_items = [
+        andtext, ortext, phrasetext, proxtext, proxdistance
+    ]
+
+    for item in form_control_items:
+        item.widget.attrs["class"] = "form-control"
+
+    form_select_items = [
         city, county, state, 
         date1, date2, date_day, date_month,
-        andtext, ortext, phrasetext, proxtext, proxdistance,
         lccn,
         language, frequency
     ]
-    for item in form_control_items:
-        item.widget.attrs["class"] = "form-control"
+    
+    for item in form_select_items:
+        item.widget.attrs["class"] = "form-select"
 
     def __init__(self, *args, **kwargs):
         super(SearchPagesForm, self).__init__(*args, **kwargs)
@@ -230,7 +237,7 @@ class SearchTitlesForm(forms.Form):
         material_type
     ]
     for item in form_control_items:
-        item.widget.attrs["class"] = "form-control"
+        item.widget.attrs["class"] = "form-select"
 
     def __init__(self, *args, **kwargs):
         super(SearchTitlesForm, self).__init__(*args, **kwargs)
