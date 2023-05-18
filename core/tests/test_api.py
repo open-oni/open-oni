@@ -251,11 +251,11 @@ class ApiChronamTests(TestCase):
     """
 
     fixtures = [
-        'api-chronam/awardee.json',
-        'api-chronam/batch.json',
-        'api-chronam/issue.json',
-        'api-chronam/page.json',
-        'api-chronam/titles.json',
+        'api_chronam/awardee.json',
+        'api_chronam/batch.json',
+        'api_chronam/issue.json',
+        'api_chronam/page.json',
+        'api_chronam/titles.json',
     ]
 
     def test_awardee_json(self):

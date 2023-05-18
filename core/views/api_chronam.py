@@ -70,12 +70,20 @@ def batch_list(request, page_number=1):
         'pages': paginator.num_pages,
     }
     if page.has_next():
-        data['next'] = settings.BASE_URL + reverse('api_batch_list_page', args=[page.next_page_number()])
+        data['next'] = settings.BASE_URL + reverse('api_chronam_batch_list_page', args=[page.next_page_number()])
     if page.has_previous():
-        data['previous'] = settings.BASE_URL + reverse('api_batch_list_page', args=[page.previous_page_number()])
+        data['previous'] = settings.BASE_URL + reverse('api_chronam_batch_list_page', args=[page.previous_page_number()])
 
     return JsonResponse(data, safe=False)
 
+
+@api_view(['GET'])
+def description(request):
+    """
+    api/chronam/
+    API description response with URLs to list resources
+    """
+    
 
 @api_view(['GET'])
 def issue(request, lccn, date, edition):
