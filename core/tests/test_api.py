@@ -311,6 +311,14 @@ class ApiChronamTests(TestCase):
         self.assertEqual(j['pages'], 2)
         self.assertIs('next' in j, False)
         self.assertEqual(j['previous'], 'https://oni.example.com/api/chronam/batches/1.json')
+        b = j['batches'][0]
+        self.assertEqual(b['name'], 'batch_curiv_ahwahnee_ver01')
+        self.assertTrue(b['url'].endswith('/batches/batch_curiv_ahwahnee_ver01.json'))
+        self.assertEqual(b['page_count'], 1)
+        self.assertEqual(b['lccns'], ['sn83030214'])
+        self.assertEqual(b['awardee']['name'], 'University of California, Riverside')
+        self.assertTrue(b['awardee']['url'].endswith('/awardees/curiv.json'))
+        self.assertTrue(b['ingested'].startswith('2009-03-26T20:59:28'))
 
         r = self.client.get('/api/chronam/batches.json')
         self.assertEqual(r.status_code, 200)
@@ -320,14 +328,6 @@ class ApiChronamTests(TestCase):
         self.assertEqual(j['pages'], 2)
         self.assertEqual(j['next'], 'https://oni.example.com/api/chronam/batches/2.json')
         self.assertIs('previous' in j, False)
-        b = j['batches'][0]
-        self.assertEqual(b['name'], 'batch_curiv_ahwahnee_ver01')
-        self.assertTrue(b['url'].endswith('/batches/batch_curiv_ahwahnee_ver01.json'))
-        self.assertEqual(b['page_count'], 1)
-        self.assertEqual(b['lccns'], ['sn83030214'])
-        self.assertEqual(b['awardee']['name'], 'University of California, Riverside')
-        self.assertTrue(b['awardee']['url'].endswith('/awardees/curiv.json'))
-        self.assertTrue(b['ingested'].startswith('2009-03-26T20:59:28'))
 
     def test_drf_http_verb_control(self):
         r = self.client.delete('/api/chronam/batches.json')
