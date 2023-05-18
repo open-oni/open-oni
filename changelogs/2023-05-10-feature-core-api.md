@@ -2,14 +2,14 @@
 - [ChronAm JSON API] at /api/chronam/
   - Original endpoints were [changed to JSON-LD IIIF
     responses](https://github.com/open-oni/open-oni/pull/127). Original
-    responses are now available again. Read more about Open ONI API resources in
-    the [About API markup](/core/templates/about_api.html).
-  - Now powered by [Django Rest Framework] which provides throttling, auth, etc
-  - Include new error checking and testing
-  - Update `/about/api/` text & `<link rel="alternate">` links on relevant pages
-  - Throttling of the API by IP can be enabled with the environment variable
-    `ONI_CHRONAM_API_THROTTLE`. Read more in [configuration
-    documentation](/docs/customization/configuration.md#onisitesettings_basepy)
+    responses are now available again.
+  - Now powered by [Django REST Framework] which provides throttling, auth, etc
+  - Added new error checking and testing. New `count` and `pages` keys
+    in `batches.json` responses to aid parsing pagination
+  - Updated `/about/api/` markup and `<link rel="alternate">` links
+    on relevant pages
+    - Read more about Open ONI API resources in the [About API
+      markup](/core/templates/about_api.html).
 
 [ChronAm JSON API]: https://chroniclingamerica.loc.gov/about/api/#json-views
 [Django Rest Framework]: https://www.django-rest-framework.org/
@@ -28,6 +28,14 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ```
+
+- Throttling of the ChronAm JSON API by IP can be enabled with the environment
+  variable `ONI_CHRONAM_API_THROTTLE`. Default to no throttling when env var
+  not present. Accepts `#/day`, `#/hour`, `#/minute`, or `#/second` values.
+  Read more in [configuration
+  documentation](/docs/customization/configuration.md#onisitesettings_basepy)
+  - Update `web` service's `environment:` list in `docker-compose.yml` and your
+    `.env` file for Docker
 
 ### Contributors
 - Greg Tunink (techgique)
