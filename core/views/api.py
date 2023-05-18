@@ -57,7 +57,7 @@ def batch_list(request, page_number=1):
     List all batches
     """
     try:
-        batches = models.Batch.objects.all().order_by('name')
+        batches = models.Batch.objects.all().order_by('-created')
         paginator = Paginator(batches, 25)
         page = paginator.page(page_number)
     except InvalidPage as e:
