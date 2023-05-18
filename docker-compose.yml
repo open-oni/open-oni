@@ -45,6 +45,7 @@ services:
     environment:
       - APACHE_LOG_LEVEL=${APACHE_LOG_LEVEL:-warn}
       - ONI_BASE_URL
+      - ONI_CHRONAM_API_THROTTLE
       - ONI_DB_HOST
       - ONI_DB_PORT
       - ONI_DB_NAME

@@ -54,6 +54,14 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
  machine.
 
 ### `onisite/settings_base.py`
+- `ONI_CHRONAM_API_THROTTLE` (default = `None` for no throttling)
+  - Accepts `#/day`, `#/hour`, `#/minute`, or `#/second` which enables
+    a global IP-based throttle for requests to /api/chronam/ endpoints.
+    This is _NOT_ for security against brute force or denial of service attacks. It only serves to prevent API over-use. Read more in [Django REST Framework
+    documentation](https://www.django-rest-framework.org/api-guide/throttling/).
+    Note that throttling does not work with `ONI_DEBUG` on because it toggles
+    `CACHES` to use `DummyCache` which doesn't store the data throttling uses to
+    track IPs. Copy production `CACHES` setting to test with `ONI_DEBUG` on.
 - `ONI_DB_HOST` (default = `rdbms`): Hostname for the MariaDB server. If using
  docker-compose, this *and all other database settings* should remain
  unchanged unless you know what you're doing!

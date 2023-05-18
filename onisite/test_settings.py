@@ -25,6 +25,8 @@ IIIF_URL = BASE_URL + "/images/iiif"
 # List of configuration classes / app packages in order of priority (i.e., the
 # first item in the list has final say when collisions occur)
 INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'themes.default',

@@ -1,6 +1,10 @@
 {% extends "reports/reports_base.html" %}
 {% load humanize %}
 
+{% block extra_link_types %}
+<link rel="alternate" type="application/json" href="{% url 'api_awardee_list' %}" title="ChronAm JSON Awardees Data">
+{% endblock %}
+
 {% block subcontent %}
 
 <p>

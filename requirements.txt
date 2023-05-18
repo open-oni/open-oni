@@ -1,5 +1,6 @@
 coverage
 Django>=3.2,<3.3
+djangorestframework>=3.0,<4.0
 feedparser
 lxml
 mysqlclient
