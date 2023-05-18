@@ -83,7 +83,16 @@ def description(request):
     api/chronam/
     API description response with URLs to list resources
     """
-    
+    description = {
+        'description': 'Original Chronicling America JSON API, now powered by Django REST Framework with additional error checking, tests, throttling, and new pagination-assisting keys "count" and "pages" in batches.json responses.',
+        'links': {
+            'awardee_list_url': settings.BASE_URL + reverse('api_chronam_awardee_list'),
+            'batch_list_url': settings.BASE_URL + reverse('api_chronam_batch_list'),
+            'newspaper_list_url': settings.BASE_URL + reverse('api_chronam_newspaper_list'),
+        },
+        'title': 'ChronAm JSON API',
+    }
+    return JsonResponse(description, safe=False)
 
 @api_view(['GET'])
 def issue(request, lccn, date, edition):

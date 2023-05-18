@@ -358,6 +358,7 @@ urlpatterns = [
     re_path(r'^ocr.json$', reports.ocr_json, name='openoni_ocr_json'),
 
     # ChronAm JSON API views
+    re_path(r'^api/chronam/?$', api_chronam.description, name='api_chronam_description'),
     path('api/chronam/awardees.json', api_chronam.awardee_list, name='api_chronam_awardee_list'),
     re_path(r'^api/chronam/awardees/(?P<org_code>\w+)\.json$', api_chronam.awardee, name='api_chronam_awardee'),
     path('api/chronam/batches.json', api_chronam.batch_list, name='api_chronam_batch_list'),
