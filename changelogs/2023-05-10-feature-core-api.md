@@ -4,8 +4,9 @@
     responses](https://github.com/open-oni/open-oni/pull/127). Original
     responses are now available again.
   - Now powered by [Django REST Framework] which provides throttling, auth, etc
-  - Added new error checking and testing. New `count` and `pages` keys
-    in `batches.json` responses to aid parsing pagination
+  - Added new error checking and testing, new `count` and `pages` keys
+    in `batches.json` responses to aid parsing pagination, and root
+    `/api/chronam/` description response with links to resource list URLs
   - Updated `/about/api/` markup and `<link rel="alternate">` links
     on relevant pages
     - Read more about Open ONI API resources in the [About API

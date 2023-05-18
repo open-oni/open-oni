@@ -329,6 +329,16 @@ class ApiChronamTests(TestCase):
         self.assertEqual(j['next'], 'https://oni.example.com/api/chronam/batches/2.json')
         self.assertIs('previous' in j, False)
 
+    def test_description_json(self):
+        r = self.client.get('/api/chronam/')
+        self.assertEqual(r.status_code, 200)
+        j = json.loads(r.content)
+        self.assertEqual(j['description'], 'Original Chronicling America JSON API, now powered by Django REST Framework with additional error checking, tests, throttling, and new pagination-assisting keys "count" and "pages" in batches.json responses.')
+        self.assertEqual(j['links']['awardee_list_url'], 'https://oni.example.com/api/chronam/awardees.json')
+        self.assertEqual(j['links']['batch_list_url'], 'https://oni.example.com/api/chronam/batches.json')
+        self.assertEqual(j['links']['newspaper_list_url'], 'https://oni.example.com/api/chronam/newspapers.json')
+        self.assertEqual(j['title'], 'ChronAm JSON API')
+
     def test_drf_http_verb_control(self):
         r = self.client.delete('/api/chronam/batches.json')
         self.assertEqual(r.status_code, 405)
