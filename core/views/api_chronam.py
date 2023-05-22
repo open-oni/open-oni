@@ -94,6 +94,7 @@ def description(request):
     }
     return JsonResponse(description, safe=False)
 
+
 @api_view(['GET'])
 def issue(request, lccn, date, edition):
     """
