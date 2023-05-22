@@ -14,7 +14,7 @@
 
 {% block extra_link_types %}
 <link rel="alternate" href="{% url 'openoni_title_dot_json' title.lccn %}" />
-<link rel="alternate" type="application/json" href="{% url 'api_title' title.lccn %}" title="ChronAm JSON Title Data">
+<link rel="alternate" type="application/json" href="{% url 'api_chronam_title' title.lccn %}" title="ChronAm JSON Title Data">
 {% endblock %}
 
 {% block newspaper_content %}

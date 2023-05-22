@@ -20,7 +20,7 @@
 {% block head_extra %}
 <link rel="alternate" title="Newspapers Atom Feed" href="{% url 'openoni_newspapers_atom' %}" />
 <link rel="alternate" type="application/json" href="{% url 'openoni_newspapers_format' "json" %}" title="IIIF JSON Newspapers Feed">
-<link rel="alternate" type="application/json" href="{% url 'api_newspaper_list' %}" title="ChronAm JSON Newspapers Data">
+<link rel="alternate" type="application/json" href="{% url 'api_chronam_newspaper_list' %}" title="ChronAm JSON Newspapers Data">
 {% endblock head_extra %}
 
 {% block subcontent %}

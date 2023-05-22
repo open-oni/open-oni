@@ -5,7 +5,7 @@
 <link rel="primaryTopic" href="{{ batch.abstract_url }}" />
 <link rel="resourcemap" type="application/rdf+xml" href="{% url 'openoni_batch_dot_rdf' batch.name %}" />
 <link rel="alternate" href="{% url 'openoni_batch_dot_json' batch.name %}" title="IIIF JSON Batch Data">
-<link rel="alternate" type="application/json" href="{% url 'api_batch' batch.name %}" title="ChronAm JSON Batch Data">
+<link rel="alternate" type="application/json" href="{% url 'api_chronam_batch' batch.name %}" title="ChronAm JSON Batch Data">
 {% endblock %}
 
 {% block subcontent %}
