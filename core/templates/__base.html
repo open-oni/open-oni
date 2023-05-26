@@ -79,51 +79,74 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse align-items-start" id="navbarMainMenu">
-                <ul class="navbar-nav me-auto p-0">
-                  {% block navbar_home %}
-                  <li class="nav-item">
-                    <a class="nav-link p-3" href="{% url 'openoni_home' %}">Home</a></li>
-                  {% endblock navbar_home %}
-                  {% block navbar_pos1 %}
-                  <li class="nav-item">
-                    <a class="nav-link p-3" href="{% url 'openoni_newspapers' %}">Newspapers</a>
-                  </li>
-                  {% endblock navbar_pos1 %}
-                  {% block navbar_pos2 %}
-                  <li class="nav-item">
-                    <a class="nav-link p-3" href="{% url 'openoni_about' %}">About</a></li>
-                  {% endblock navbar_pos2 %}
-                  {% block navbar_pos3 %}
-                  <li class="nav-item">
-                    <a class="nav-link p-3" href="{% url 'openoni_about_api' %}">API</a></li>
-                  {% endblock navbar_pos3 %}
-                  {% block navbar_pos4 %}
-                  <li class="nav-item flex-shrink-0">
-                    <a class="nav-link p-3" href="{% url 'openoni_issues' %}">Browse by Date</a>
-                  </li>
-                  {% endblock navbar_pos4 %}
-                  {% block navbar_pos5 %}
-                  <li class="nav-item">
-                    <a class="nav-link p-3" href="{% url 'openoni_help' %}">Help</a></li>
-                  {% endblock navbar_pos5 %}
-                </ul>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap flex-xl-nowrap justify-content-end">
-                {% block navbar_advancedsearch %}
-                  <li class="nav-item nav_advanced_search order-xl-1 flex-shrink-0">
-                    <a class="nav-link p-3" href="{% url 'openoni_search_advanced' %}">
-                      Advanced Search
-                    </a>
-                  </li>
-                {% endblock navbar_advancedsearch %}
-                {% block navbar_search %}
-                <form class="d-inline-flex flex-column flex-lg-row p-2 pe-5 pe-lg-2" method="get" action="{% url 'openoni_search_pages_results' %}" role="search">
-                  {{ city_form.city }}
-                  <input class="form-control mt-1 mt-lg-0 mb-2 mb-lg-0 me-lg-1 ms-lg-1" type="text" name="proxtext" placeholder="Search words" aria-label="Search words">
-                  <!-- Glyphicon (glyphicon-search) was here - Erin -->
-                  <button class="btn btn-primary" type="submit">Search</button>
-                </form>
-                {% endblock navbar_search %}
-              </ul>
+                <div class="d-lg-flex w-lg-100">
+                <!-- <ul class="navbar-nav me-lg-auto p-0"> -->
+                  <ul class="navbar-nav flex-lg-wrap me-lg-auto p-0">
+                    {% block navbar_home %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_home' %}">Home</a></li>
+                    {% endblock navbar_home %}
+                    {% block navbar_pos1 %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_newspapers' %}">Newspapers</a>
+                    </li>
+                    {% endblock navbar_pos1 %}
+                    {% block navbar_pos2 %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_about' %}">About</a></li>
+                    {% endblock navbar_pos2 %}
+                    {% block navbar_pos3 %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_about_api' %}">API</a></li>
+                    {% endblock navbar_pos3 %}
+                    {% block navbar_pos4 %}
+                    <li class="nav-item flex-shrink-0">
+                      <a class="nav-link p-3" href="{% url 'openoni_issues' %}">Browse by Date</a>
+                    </li>
+                    {% endblock navbar_pos4 %}
+                    {% block navbar_pos5 %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_help' %}">Help</a></li>
+                    {% endblock navbar_pos5 %}
+                    <li class="nav-item">
+                    <a class="nav-link p-3" href="#">Another</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link p-3" href="#">Another</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link p-3" href="#">Another</a>
+                    </li>
+                  </ul>
+                  <!--                 
+                  <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap flex-xl-nowrap justify-content-end">
+                  -->
+                  <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-lg-wrap flex-xl-nowrap justify-content-lg-end">
+                  {% block navbar_advancedsearch %}
+                    <!-- 
+                    <li class="nav-item nav_advanced_search order-xl-1 flex-shrink-0">
+                    -->
+                    <li class="nav-item order-lg-last flex-shrink-0 nav_advanced_search">
+                      <a class="nav-link p-3" href="{% url 'openoni_search_advanced' %}">
+                        Advanced Search
+                      </a>
+                    </li>
+                    {% endblock navbar_advancedsearch %}
+                    {% block navbar_search %}
+                    <li class="nav-item order-lg-2 order-xl-1">
+                      <!-- 
+                      <form class="d-inline-flex flex-column flex-lg-row p-2 pe-5 pe-lg-2" method="get" action="{% url 'openoni_search_pages_results' %}" role="search"> 
+                      -->
+                      <form class="d-inline-flex flex-column flex-lg-row p-2 pe-5 pe-lg-2" method="get" action="{% url 'openoni_search_pages_results' %}" role="search">
+                      {{ city_form.city }}
+                      <input class="form-control mt-1 mt-lg-0 mb-2 mb-lg-0 me-lg-1 ms-lg-1" type="text" name="proxtext" placeholder="Search words" aria-label="Search words">
+                      <!-- Glyphicon (glyphicon-search) was here - Erin -->
+                      <button class="btn btn-primary" type="submit">Search</button>
+                      </form>
+                    </li>
+                    {% endblock navbar_search %}
+                  </ul>
+                </div>
               </div>
             </div>
           </nav>
