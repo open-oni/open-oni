@@ -38,21 +38,21 @@
 {% block page_nav %} 
 <div id="newspaper_nav">
 
-<div class="row">
+<div class="row mb-3">
     <div class="col-md-7">
         <ul class="nav nav-pills">
-            <li role="presentation">
-                <a id="page_nav_title" href="{% url 'openoni_title' title.lccn %}">About {{title.display_name}}</a>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="page_nav_title" href="{% url 'openoni_title' title.lccn %}">About {{title.display_name}}</a>
             </li>
 
             {% if title.has_issues %}
-            <li role="presentation">
-                <a id="page_nav_issues" href="{% url 'openoni_issues_title' title.lccn %}">Browse Issues by Date</a>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="page_nav_date" href="{% url 'openoni_issues_title' title.lccn %}">Browse Issues by Date</a>
             </li>
             {% endif %}
 
-            <li role="presentation">
-                <a id="page_nav_issues" href="{% url 'openoni_issues_first_pages' title.lccn %}">View Front Pages</a>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="page_nav_issues" href="{% url 'openoni_issues_first_pages' title.lccn %}">View Front Pages</a>
             </li>
         </ul>
     </div>
@@ -62,8 +62,8 @@
         <ul class="nav nav-pills">
             {% with iss=title.first_issue img=title.first_issue.first_page_with_image %}
             {% if img.jp2_filename and img.sequence %}
-            <li role="presentation">
-                <a href="{% url 'openoni_issue_pages' title.lccn iss.date_issued iss.edition %}">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="{% url 'openoni_issue_pages' title.lccn iss.date_issued iss.edition %}">
                     View First Issue
                 </a>
             </li>
@@ -72,8 +72,8 @@
 
             {% with iss=title.last_issue img=title.last_issue.first_page_with_image %}
             {% if img.jp2_filename and img.sequence %}
-            <li role="presentation">
-                <a href="{% url 'openoni_issue_pages' title.lccn iss.date_issued iss.edition %}">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" href="{% url 'openoni_issue_pages' title.lccn iss.date_issued iss.edition %}">
                     View Last Issue
                 </a>
             </li>
