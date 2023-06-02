@@ -178,14 +178,15 @@ class SearchPagesForm(SearchPagesFormBase):
     language = fields.ChoiceField(label="Language", required=False)
 
     form_control_items = [
-        andtext, ortext, phrasetext, proxtext, proxdistance
+        andtext, ortext, phrasetext, proxtext
     ]
 
     for item in form_control_items:
         item.widget.attrs["class"] = "form-control"
 
     form_select_items = [
-        city, county, state, 
+        city, county, state,
+        proxdistance,
         date1, date2, date_day, date_month,
         lccn,
         language, frequency
