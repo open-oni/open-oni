@@ -29,18 +29,21 @@
     {% block newspapers_table_intro %}
     <div class="results_nav">
         <div class="row">
-            <div class="col-md-6 form-inline">
-                <label for="filterTitles">Search Titles: </label>
-                <span id="filterTitlesHelp" class="help-block">
+            <form class="col-md-6 form-inline" aria-label="All Titles" role="search">
+                <label class="form-label" for="filterTitles">Search Titles: </label>
+                <div id="filterTitlesHelp" class="form-text text-body mb-2">
                     Type a partial title to show only those which match below
-                </span>
-                <input type="text" id="filterTitles" class="form-control"
-                    aria-describedby="filterTitlesHelp"
-                    placeholder="Start typing to search..." />
-                <button type="reset" id="resetTitles" class="btn btn-primary">
-                    Reset
+                </div>
+                <div class="d-flex mb-4">
+                    <input type="text" id="filterTitles" class="form-control me-2"
+                        aria-describedby="filterTitlesHelp"
+                        placeholder="Start typing to search..." />
+                    
+                    <button type="reset" id="resetTitles" class="btn btn-primary flex-shrink-0">
+                        Reset
                 </button>
-            </div>
+                </div>
+            </form>
             <div class="col-md-6">
                 <p>Titles available: {{ titles.count|intcomma }}</p>
                 <p>Pages available: {{ page_count|intcomma }}</p>
@@ -49,38 +52,40 @@
     </div>
     {% endblock newspapers_table_intro %}
     {% block newspapers_table %}
-    <table id="newspapers" class="table table-striped table-hover browse_collect tablesorter" cellspacing="0" summary="">
-        <thead>
-        <tr>
-            <th scope="col" class="left_no_border sort-titles">Title</th>
-            <th scope="col">Location</th>
-            <th scope="col">Publication Info</th>
-            <th scope="col" class="sort-off">Browse Issues</th>
-            <th scope="col">No. of Issues</th>
-            <th scope="col">Earliest Issue</th>
-            <th scope="col">Latest Issue</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for title in sorted_titles %}
+    <div class="table-responsive">
+        <table id="newspapers" class="table table-striped table-hover browse_collect tablesorter" cellspacing="0" summary="">
+            <thead>
             <tr>
-                <td class="first left_no_border" scope="row">
-                    <a href="{% url 'openoni_title' title.lccn %}">{{title.display_name}}</a>
-                </td>
-                <td>
-                    {% for place in title.places.all %}
-                        {{ place.get_city_county }}<br/>
-                    {% endfor %}
-                </td>
-                <td>{{title.place_of_publication}}, {{title.start_year}}-{{title.end_year}}</td>
-                <td><a href="{% url 'openoni_issues_title' title.lccn %}" shape="rect"><img src="{% static 'images/calendar_icon.gif' %}" alt="calendar"/></a></td>
-                <td>{{title.issues.count}}</td>
-                <td><a href="{% url 'openoni_issue_pages' title.lccn title.first 1 %}">{{title.first|date:'Y-m-d'}}</a></td>
-                <td class="last"><a href="{% url 'openoni_issue_pages' title.lccn title.last 1 %}">{{title.last|date:'Y-m-d'}}</a></td>
+                <th scope="col" class="left_no_border sort-titles align-middle">Title</th>
+                <th scope="col" class="align-middle">Location</th>
+                <th scope="col" class="align-middle">Publication Info</th>
+                <th scope="col" class="sort-off align-middle">Browse Issues</th>
+                <th scope="col" class="align-middle">No. of Issues</th>
+                <th scope="col" class="align-middle">Earliest Issue</th>
+                <th scope="col" class="align-middle">Latest Issue</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for title in sorted_titles %}
+                <tr>
+                    <th class="first left_no_border fw-normal" scope="row">
+                        <a href="{% url 'openoni_title' title.lccn %}">{{title.display_name}}</a>
+                    </th>
+                    <td>
+                        {% for place in title.places.all %}
+                            {{ place.get_city_county }}<br/>
+                        {% endfor %}
+                    </td>
+                    <td>{{title.place_of_publication}}, {{title.start_year}}-{{title.end_year}}</td>
+                    <td><a href="{% url 'openoni_issues_title' title.lccn %}" shape="rect"><img src="{% static 'images/calendar_icon.gif' %}" alt="Calendar icon - links to Browse Issues page"/></a></td>
+                    <td>{{title.issues.count}}</td>
+                    <td><a href="{% url 'openoni_issue_pages' title.lccn title.first 1 %}">{{title.first|date:'Y-m-d'}}</a></td>
+                    <td class="last"><a href="{% url 'openoni_issue_pages' title.lccn title.last 1 %}">{{title.last|date:'Y-m-d'}}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% endblock newspapers_table %}
     <a href="#maincontent">Return to Top</a>
 </div><!-- end class:search_results_body -->
