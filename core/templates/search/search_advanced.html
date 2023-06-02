@@ -13,28 +13,28 @@
 <div class="page_search">
     <form action="{% url 'openoni_search_pages_results' %}" method="get" name="fulltext2" id="fulltext2">
         <fieldset>
-            <legend><h3>Search Terms</h2></legend>
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="form-label" for="id_ortext">{{ form.ortext.label }}</label>
+            <legend><h2>Search Terms</h2></legend>
+            <div class="row pb-3 pb-md-2">
+                <div class="col-md-3 col-lg-2 d-flex align-items-center">
+                    <label class="form-label mb-md-0" for="id_ortext">{{ form.ortext.label }}</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col">
                     {{ form.ortext }}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="form-label" for="id_andtext">{{ form.andtext.label }}</label>
+            <div class="row pb-3 pb-md-2">
+                <div class="col-md-3 col-lg-2 d-flex align-items-center">
+                    <label class="form-label mb-md-0" for="id_andtext">{{ form.andtext.label }}</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col">
                     {{ form.andtext }}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <label class="form-label" for="id_phrasetext">{{ form.phrasetext.label }}</label>
+            <div class="row pb-3 pb-md-2">
+                <div class="col-md-3 col-lg-2 d-flex align-items-center">
+                    <label class="form-label mb-md-0" for="id_phrasetext">{{ form.phrasetext.label }}</label>
                 </div>
-                <div class="col-md-9">
+                <div class="col">
                     {{ form.phrasetext }}
                 </div>
             </div>
@@ -49,107 +49,112 @@
         </fieldset>
 
         <fieldset>
-            <legend><h3>Proximity Search</h3></legend>
-            <p class="hint">
+            <legend><h2>Proximity Search</h2></legend>
+            <p class="pb-2">
                 Enter a list of words to search for, and the distance, in
                 words, they may be from each other in order to match.
             </p>
             <div class="row">
-                <div class="col-md-2">
-                    <label class="form-label" for="id_proxtext">{{ form.proxtext.label }}</label>
+                <div class="col-md-1 d-flex align-items-center">
+                    <label class="form-label mb-md-0" for="id_proxtext">{{ form.proxtext.label }}</label>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6 pb-3 pb-md-0">
                     {{ form.proxtext }}
                 </div>
-                <div class="col-md-2">
-                    <label class="form-label" for="id_proxdistance">{{ form.proxdistance.label }}</label>
+                <div class="col-md-2 d-flex align-items-center">
+                    <label class="form-label mb-md-0 w-100 text-md-end" for="id_proxdistance">{{ form.proxdistance.label }}</label>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 pb-3 pb-md-0">
                     {{ form.proxdistance }}
                 </div>
             </div>
         </fieldset>
 
         <fieldset>
-            <legend><h3>Limit By:</h3></legend>
+            <legend><h2>Limit By:</h2></legend>
             <!-- Locations and Dates -->
             <div class="row">
-                <div class="col-md-6">
-                    <div class="col-md-2">
+                <div class="row col-md-6 col-lg-5">
+                    <div class="col-xl-2 d-flex align-items-center">
                         <label class="form-label" for="id_city">{{ form.city.label }}</label>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-xl-9 mb-3">
                         {{ form.city }}
                     </div>
-
-                    <div class="col-md-2">
+                    <div class="col-xl-2 d-flex align-items-center">
                         <label class="form-label" for="id_county">{{ form.county.label }}</label>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-xl-9 mb-3">
                         {{ form.county }}
                     </div>
                 </div>
-                <div class="col-md-3 date_form">
-                    <label class="form-label" for="date_from">
-                        Start Date (Earliest: {{ form.fulltextStartYear }})
-                    </label><br>
-                    <input id="date_from" name="date1" type="date"
-                        min="{{form.fulltextStartYear}}-01-01"
-                        max="{{form.fulltextEndYear}}-12-31"
-                        value="{{form.fulltextStartYear}}-01-01">
-                </div>
-                <div class="col-md-3 date_form">
-                    <label class="form-label" for="date_to">
-                        End Date (Latest: {{ form.fulltextEndYear }})
-                    </label><br>
-                    <input id="date_to" name="date2" type="date"
-                        min="{{form.fulltextStartYear}}-01-01"
-                        max="{{form.fulltextEndYear}}-12-31"
-                        value="{{form.fulltextEndYear}}-12-31">
-                </div>
+                <div class="row col-md-6 col-lg-7">
+                    <div class="col-lg-6 date_form">
+                        <label class="form-label" for="date_from">
+                            Start Date (Earliest: {{ form.fulltextStartYear }})
+                        </label><br>
+                        <input class="form-control" id="date_from" name="date1" type="date"
+                            min="{{form.fulltextStartYear}}-01-01"
+                            max="{{form.fulltextEndYear}}-12-31"
+                            value="{{form.fulltextStartYear}}-01-01">
+                    </div>
+                    <div class="col-lg-6 date_form mt-3 mt-md-0">
+                        <label class="form-label" for="date_to">
+                            End Date (Latest: {{ form.fulltextEndYear }})
+                        </label><br>
+                        <input class="form-control" id="date_to" name="date2" type="date"
+                            min="{{form.fulltextStartYear}}-01-01"
+                            max="{{form.fulltextEndYear}}-12-31"
+                            value="{{form.fulltextEndYear}}-12-31">
+                    </div>
             </div>
-        </fieldset>
 
-        <!-- Newspapers / LCCNs -->
-        <h3>Search selected newspapers:</h3>
-        <div class="row">
-            <div class="form-text">
+            <legend><h3>Search selected newspapers:</h3></legend>
+            <p class="pb-2">
                 Hold Cmd/Ctrl key while clicking
                 to select and de-select multiple papers;
                 Search all papers if none selected
+            </p>
+            <div class="row">
+                <div class="col-md-2">
+                    <label class="form-label" for="id_lccn">Newspaper(s)</label>
+                </div>
+                <div class="col-md-10">
+                    {{ form.lccn }}
+                </div>
             </div>
-            <div class="col-md-2">
-                <label class="form-label" for="id_lccn">Newspaper(s)</label>
+            
+            <legend><h3>Additional Filters</h3></legend>
+            <div class="row align-items-center">
+                <div class="col-md-6 col-lg-4 d-flex flex-column flex-md-row align-items-md-center mb-3 mb-md-2">
+                    <div class="flex-md-shrink-0 pe-md-3">
+                        <label class="form-label" for="id_language">{{ form.language.label }}</label>
+                    </div>
+                    <div class="flex-grow-1 mb-2">
+                        {{ form.language }}
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 d-flex flex-column flex-md-row align-items-md-center">
+                    <div class="flex-md-shrink-0 pe-md-3">
+                        <label class="form-label" for="id_frequency">{{ form.frequency.label }}</label>
+                    </div>
+                    <div class="flex-grow-1 mb-2">
+                        {{ form.frequency }}
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xl-2 mb-2 d-flex align-items-center">
+                    <div class="form-check flex-shrink-0">
+                        <input class="form-check-input" name="sequence" id="sequence" value="1" type="checkbox" />
+                        <label class="form-check-label" for="sequence">Front pages only</label>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-10">
-                {{ form.lccn }}
-            </div>
-        </div>
+            {% comment %}
+                Ethnicity, labor press, and material type not
+                included as they are not in solr index
+            {% endcomment %}
+        </fieldset>
 
-        <!-- TODO make the below expandable / collapsible? -->
-        <h3>Additional Filters</h3>
-        <div class="row">
-            <div class="col-md-4">
-                <label class="form-label" for="id_language">{{ form.language.label }}</label>
-                {{ form.language }}
-            </div>
-            <div class="col-md-4">
-                <label class="form-label" for="id_frequency">{{ form.frequency.label }}</label>
-                {{ form.frequency }}
-            </div>
-            <div class="col-md-2 buffer-top form-check">
-                <input class="form-check-input" name="sequence" id="sequence" value="1" type="checkbox" />
-                <label class="norm form-check-label" for="sequence">Front pages only</label>
-            </div>
-            <div class="col-md-2">
-                &nbsp;
-            </div>
-        </div>
-        {% comment %}
-            Ethnicity, labor press, and material type not
-            included as they are not in solr index
-        {% endcomment %}
-        
         <div class="row">
             <div class="form-actions">
                 <button id="adv_reset" type="reset" value="clear" class="btn btn-link">Clear</button>
@@ -157,7 +162,7 @@
             </div>
         </div>
     </form>
-</div><!-- end id:tab_advanced_search -->
+</div>
 
 
 {% endblock subcontent %}
