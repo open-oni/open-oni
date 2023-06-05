@@ -19,7 +19,6 @@ body {
 
 .main_content {
     background-color:#f7f6f2;
-    padding: 10px 0 60px 0
 }
 
 /* ==========
@@ -32,34 +31,39 @@ Header
 
 .header_navbar {
     background-color: RGBA(0,0,0,.7);
-    border: none;
-    margin-bottom: 0
 }
 
-.header_navbar a {
+.header_navbar .nav-item .nav-link {
     text-decoration:none;
     color: #fff;
 }
 
-/* using .navbar-inverse rather than .header_navbar so
-it is specific enough to overwrite bootstrap rules */
-
-.navbar-inverse .navbar-nav>li>a {
-    color:#fff;
+.navbar-dark .nav-item .nav-link.active,
+.header_navbar .nav-item .nav-link:hover,
+.header_navbar .nav-item .nav-link:focus {
+    color: #fff;
+    text-decoration: underline;
+    background-color: RGBA(0,0,0,.85);
 }
 
-.navbar-inverse .navbar-nav>li>a:hover {
-    color:#9d9d9d;
+/* Making Bootstrap navbar toggler icon white */
+
+.header_navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-h1.title {
+.header_navbar .navbar-toggler {
+    border:1px solid RGBA(0,0,0,.85);
+}
+
+.site_title {
     font-family: 'Rokkitt', serif;
     font-weight:700;
     text-align:center;
-    font-size: 4em; /* note bigger size in media queries below */
     margin:10px;
     color:RGBA(0,0,0,.6);
     text-shadow: 1px 4px 6px #E1DFD7, 0 0 0 #000, 1px 4px 6px #E1DFD7; /* fancy inner shadow */
+    line-height: 1em;
 }
 
 /* ==========
@@ -108,17 +112,27 @@ h6 {
     font-size: 1.3em;
 }
 
-a {
+a:not(.btn) {
     color: #296FB9;
-    text-decoration:underline;
+    text-decoration: underline;
 }
 
-a:visited {
+.pagination li.disabled a {
+    text-decoration: none;
+}
+
+a:visited:not(.btn) {
     color: #865EB8;
 }
 
-a:hover {
+a:hover:not(.btn):not(.page-link) {
     color: #D14536;
+}
+
+#newspaper_nav .nav-pills .nav-link:hover {
+    color: #D14536;
+    background-color: #eee;
+    text-decoration: none; 
 }
 
 /* Fix for calendar page, newer bigger base font makes calendars wrap */
@@ -141,7 +155,22 @@ Breakpoints (Based on bootstrap defaults)
         font-size: 16px;
     } /* Make font bigger when screens are bigger */
 
-    h1.title {
+    .site_title {
         font-size: 7em;
     } /* Make font bigger when screens are bigger */
+}
+
+/* =============
+Forms (to account for changes in base styles from Bootstrap 3 to Bootstrap 5)
+============== */
+
+label {
+    font-weight: bold;
+}
+
+legend {
+    padding-top: 2rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 1em;
 }
