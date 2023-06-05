@@ -4,32 +4,32 @@
 
 <div class="search_results_ctrl row">
   <div class="col-md-4">
-    <span class="nav">
+    <nav class="nav" aria-label="Issues">
       {% if issue.previous %}
-        <a class="btn btn-default"
+        <a class="btn btn-secondary me-1"
           href="{% url 'openoni_issue_pages' issue.previous.title.lccn issue.previous.date_issued issue.previous.edition %}">
-          <strong>Previous Issue</strong>
+          Previous Issue
         </a>
       {% else %}
-        <button class="btn btn-default"
-          disabled="disabled">Previous Issue</button>
+        <a class="btn btn-secondary me-1 disabled"
+          aria-disabled="true">Previous Issue</a>
       {% endif %}
       {% if issue.next %}
-        <a class="btn btn-default"
+        <a class="btn btn-secondary"
           href="{% url 'openoni_issue_pages' issue.next.title.lccn issue.next.date_issued issue.next.edition %}">
-          <strong>Next Issue</strong>
+          Next Issue
         </a>
       {% else %}
-        <button class="btn btn-default"
-          disabled="disabled">Next Issue</button>
+        <a class="btn btn-secondary disabled"
+          aria-disabled="true">Next Issue</a>
       {% endif %}
-    </span>
+    </nav>
   </div> {# /col-md-3 #}
 
   {% if paginator.num_pages > 1 %}
     <div class="col-md-3">
       <form action="" method="GET" class="jumptopage" name="page_number_form">
-        <label for="jumptopage">Jump to page:</label>
+        <label class="form-label" for="jumptopage">Jump to page:</label>
           <input class="std" type="text" id="jumptopage" name="page" value=""
             size="2">
         <input type="submit" class="btn btn-primary" value="Go" />
@@ -37,48 +37,52 @@
     </div> {# /col-md-3 #}
 
     <div class="col-md-5">
-      <nav aria-label="Pages" class="pull-right">
+      <nav aria-label="Pages" class="float-end">
         <ul class="pagination pagination-sm">
           {% if page.has_previous %}
-            <li>
-              <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition previous_page_number %}"
+          <li class="page-item">
+              <a class="page-link" href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition previous_page_number %}"
                 aria-label="Previous Page">
                 <span aria-hidden="true">&laquo;</span>
               </a>
             </li>
           {% else %}
-            <li class="disabled">
-              <span aria-hidden="true">&laquo;</span>
+            <li class="page-item disabled">
+              <a href="page-link" href="#" aria-label="Previous Page" aria-disabled="true">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
             </li>
           {% endif %}
 
           {% for page_number in page_range_short %}
             {% ifequal page_number "..." %}
-              <li class="disabled">
-                <a>…</a>
+              <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Middle of Page Range" aria-disabled="true">…</a>
               </li>
             {% else %}
               {% ifequal page_number page.number %}
-                <li class="active" aria-current="true">
+                <li class="page-item active" aria-current="true">
               {% else %}
-                <li>
+                <li class="page-item">
               {% endifequal %}
-                <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition page_number %}"
+                <a class="page-link" href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition page_number %}"
                   aria-label="Page {{page_number}}">{{page_number}}</a>
               </li>
             {% endifequal %}
           {% endfor %}
 
           {% if page.has_next %}
-            <li>
-              <a href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition next_page_number %}"
+            <li class="page-item">
+              <a class="page-link" href="{% url 'openoni_issue_pages_page_number' title.lccn issue.date_issued issue.edition next_page_number %}"
                 aria-label="Next Page">
                 <span aria-hidden="true">&raquo;</span>
               </a>
             </li>
           {% else %}
-            <li class="disabled">
-              <span aria-hidden="true">&raquo;</span>
+            <li class="page-item disabled">
+              <a href="page-link" href="#" aria-label="Next Page" aria-disabled="true">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
             </li>
           {% endif %}
         </ul>
