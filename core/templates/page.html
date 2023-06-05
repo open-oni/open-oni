@@ -84,7 +84,7 @@
                   aria-label="Previous page">Prev</a>
               {% endif %}
               Page
-              <select name="pageNum" id="pageNum" class="input-small">
+              <select name="pageNum" id="pageNum" class="form-control-sm">
                 {% for p in issue.pages.all %}
                   <option
                     value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}"
@@ -173,7 +173,7 @@
 
     {# Bottom controls #}
     <a href="#maincontent">Return to Top</a>
-    <div id="imageViewer_nav" class="pull-right">
+    <div id="imageViewer_nav" class="float-end">
       <span class="control">
         {% if page.previous or page.next %}
           {% if page.previous %}
@@ -183,7 +183,7 @@
               aria-label="Previous page">Prev</a>
           {% endif %}
           Page
-          <select name="pageNumBottom" id="pageNumBottom" class="input-small">
+          <select name="pageNumBottom" id="pageNumBottom" class="form-control-sm">
             {% for p in issue.pages.all %}
               <option
                 value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}"
