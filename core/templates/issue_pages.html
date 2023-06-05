@@ -48,24 +48,19 @@
 
 <div class="search_results_body gallery issues">
     {% if page.object_list %}
-    <div class="search_results">
-        <div class="row"> 
+    <div class="search_results d-flex flex-wrap column-gap-3 text-center">
         {% for page_info in page.object_list %}
-            <div class="col-md-3">
-                <div class="highlite">
+                <figure class="figure flex-shrink-0">
                     {% if page_info.page.relative_image_path %}
                     {% url 'openoni_page' title.lccn page_info.issue.date_issued page_info.issue.edition page_info.page.sequence as url %}
                       <a href="{{url}}">
-                        <div>
-                          <img src="{% thumb_image_url page_info.page %}" alt=""/>
-                        </div>
-
-                        <div>
+                          <img class="figure-img img-fluid" src="{% thumb_image_url page_info.page %}" alt="First page of {{page_info.issue|label}} issue"/>
+                        <p>
                           {{page_info.issue|label}},
                           {% if page_info.page %}
                             {{ page_info.page|label }}
                           {% endif %}
-                        </div>
+                        </p>
                       </a>
                     {% else %}
                       <div class="page_image_missing">
@@ -80,16 +75,15 @@
                         <p><a href="{{url}}">View Issue</a></p>
                       </div>
                     {% endif %}
-                </div>
-            </div>
-            {% if forloop.counter|divisibleby:"4" %}
+                </figure>
+
+            <!-- {% if forloop.counter|divisibleby:"4" %}
             {# close row div and open another #}
         </div>
         <div class="row">
-            {% endif %}
+            {% endif %} -->
 
         {% endfor %}
-        </div>
     </div>
     {% else %}
     <div class="missing">
