@@ -17,8 +17,8 @@
 {% endblock %}
 
 {% block newspaper_content %}
-<div class="row">
-    <div class="col-md-7">
+<div class="d-flex">
+    <div>
       
         <dl class="alt">
             <dt>Title: </dt>
@@ -50,9 +50,8 @@
                         
             {% if title.place_of_publication %}
             <dt>Place of publication:</dt>
-                <dd>{{title.place_of_publication}}</dd>
+            <dd>{{title.place_of_publication}}</dd>
             {% endif %}
-        
             {% if title.places %}
             <dt>Geographic coverage:</dt>
             <dd>
@@ -114,7 +113,7 @@
             <ul>
                 {% for lang in title.languages.all %}
                 <li>
-                    <dd>{{lang.name}}</dd>
+                    {{lang.name}}
                 </li>
                 {% endfor %}
             </ul>
@@ -213,21 +212,22 @@
 
     </div><!-- /col-md-7 -->
 
-    <div class="col-md-5">
+    <div>
         {% if title.has_issues %}
-        <div class="about_issue_right">
+        <div class="about_issue_right d-flex flex-column">
             <div class="frontpage">
             {% if title.first_issue.first_page_with_image.jp2_filename and title.first_issue.first_page_with_image.sequence %}
             <a href="{% url 'openoni_page' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page_with_image.sequence %}">
-                <img class="thumbnail" src="{% thumb_image_url title.first_issue.first_page_with_image %}" alt="" />
+                <img class="thumbnail" src="{% thumb_image_url title.first_issue.first_page_with_image %}" alt="Cover image from first issue of {{title.display_name}} Links to first issue." />
+              <p class="mt-3">{{title.display_name}}&nbsp;{{issue_date|date:"F j, Y"}}, Image {{title.first_issue.first_page.sequence}}</strong></p>
             </a>
-            {% else %}
-                Missing Page: {{explanation}}
-            {% endif %}
             </div><!-- /frontpage -->
-            <div class="info">
-              <p><strong>{{title.display_name}}&nbsp;{{issue_date|date:"F j, Y"}}, Image {{title.first_issue.first_page.sequence}}</strong></p>
-            </div>
+            {% else %}
+                <p>Missing Page: {{explanation}}</p>
+                 <a href="{% url 'openoni_page' title.lccn title.first_issue.date_issued title.first_issue.edition title.first_issue.first_page_with_image.sequence %}">
+                    <p class="mt-3">{{title.display_name}}&nbsp;{{issue_date|date:"F j, Y"}}</p>
+                </a>
+            {% endif %}
         </div>
         {% endif %}
         <div class="about_issue_more">
@@ -244,7 +244,7 @@
                     {% endif %}
                 </div>
             {% endblock essay %}
-        </div><!-- end class:more -->
+        </div>
     </div><!-- /col_md_5 -->
 </div><!-- /row -->
 {% endblock %}
