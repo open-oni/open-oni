@@ -29,7 +29,7 @@
 {% endblock %}
                       
 {% block page_head %}
-<h2>{{title.display_name}}</h1>
+<h1>{{title.display_name}}</h1>
 <p><strong>{{title.place_of_publication}} ({{title.start_year}}-{{title.end_year}})</strong></p>
 {% endblock %}
 
@@ -39,7 +39,7 @@
 <div id="newspaper_nav">
 
 <div class="row mb-3">
-    <div class="col-md-7">
+    <div class="col-lg-8">
         <ul class="nav nav-pills">
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="page_nav_title" href="{% url 'openoni_title' title.lccn %}">About {{title.display_name}}</a>
@@ -58,8 +58,8 @@
     </div>
 
     {% if title.has_issues %}
-    <div class="col-md-5">
-        <ul class="nav nav-pills">
+    <div class="col-lg-4">
+        <ul class="nav nav-pills float-sm-end">
             {% with iss=title.first_issue img=title.first_issue.first_page_with_image %}
             {% if img.jp2_filename and img.sequence %}
             <li class="nav-item" role="presentation">
@@ -94,6 +94,6 @@
     {% block newspaper_content %}
     {% endblock newspaper_content %}
 
-    <div class="clear">=</div> 
+    <div class="clear"></div> 
 </div>
 {% endblock subcontent%}
