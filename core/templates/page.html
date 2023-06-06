@@ -16,7 +16,7 @@
     <link rel="primaryTopic" href="{{ page.abstract_url }}" />
     <link rel="resourcemap" type="application/rdf+xml" href="{% url 'openoni_page_dot_rdf' page.issue.title.lccn page.issue.date_issued page.issue.edition page.sequence %}" />
     <link rel="alternate" type="application/json" href="{% url 'openoni_page_dot_json' page.issue.title.lccn page.issue.date_issued page.issue.edition page.sequence %}" title="IIIF JSON Page Data">
-    <link rel="alternate" type="application/json" href="{% url 'api_page' page.issue.title.lccn page.issue.date_issued page.issue.edition page.sequence %}" title="ChronAm JSON Page Data">
+    <link rel="alternate" type="application/json" href="{% url 'api_chronam_page' page.issue.title.lccn page.issue.date_issued page.issue.edition page.sequence %}" title="ChronAm JSON Page Data">
     <link rel="alternate" type="image/jp2" href="{% url 'openoni_page_jp2' title.lccn issue.date_issued issue.edition page.sequence %}" />
     <link rel="alternate" type="application/pdf" href="{% url 'openoni_page_pdf' title.lccn issue.date_issued issue.edition page.sequence %}" />
     <link rel="alternate" type="application/xml" href="{% url 'openoni_page_ocr_xml' title.lccn issue.date_issued issue.edition page.sequence %}" />
