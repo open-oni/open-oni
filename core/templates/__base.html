@@ -80,7 +80,6 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarMainMenu">
                 <div class="d-lg-flex container-lg w-100-xl">
-                <!-- <ul class="navbar-nav me-lg-auto p-0"> -->
                   <ul class="navbar-nav flex-wrap me-lg-auto p-0">
                     {% block navbar_home %}
                     <li class="nav-item">
@@ -109,14 +108,8 @@
                       <a class="nav-link p-3" href="{% url 'openoni_help' %}">Help</a></li>
                     {% endblock navbar_pos5 %}
                   </ul>
-                  <!--                 
-                  <ul class="navbar-nav ms-auto mb-2 mb-lg-0 flex-wrap flex-xl-nowrap justify-content-end">
-                  -->
                   <ul class="navbar-nav ms-auto flex-wrap justify-content-end">
                   {% block navbar_advancedsearch %}
-                    <!-- 
-                    <li class="nav-item nav_advanced_search order-xl-1 flex-shrink-0">
-                    -->
                     <li class="nav-item flex-shrink-0 nav_advanced_search">
                       <a class="nav-link p-3" href="{% url 'openoni_search_advanced' %}">
                         Advanced Search
@@ -130,7 +123,9 @@
                       {{ city_form.city }}
                       </div>
                       <input class="form-control mt-1 mt-lg-0 mb-2 mb-lg-0 me-lg-1 ms-lg-1" type="text" name="proxtext" placeholder="Search words" aria-label="Search words">
-                      <!-- Glyphicon (glyphicon-search) was here - Erin -->
+                      {% comment %} 
+                      Glyphicon (glyphicon-search) was here
+                      {% endcomment %}
                       <button class="btn btn-primary" type="submit">Search</button>
                       </form>
                     </li>
