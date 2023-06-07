@@ -27,7 +27,7 @@
 {% endblock result_count %}
 
 {% block search_page_filter_desc %}
-  <h3>Filters</h3>
+  <h2 class="mt-3">Filters</h2>
   <ul class="list-inline">
     {# Date filter from Advanced Search #}
     {% if request.GET.date1 or request.GET.date2 %}
@@ -68,7 +68,7 @@
 {% block search_page_results_filter_form %}
   <form class="search_results_form" action="" method="GET">
     {% block search_page_results_filter_form_row1 %}
-      <div class="row search_results_option_set">
+      <div class="row search_results_option_set gy-3">
         <div class="col-md-2">
           <label class="form-label" for="county">County</label>
           <select class="form-select" id="county" name="county">
@@ -122,7 +122,7 @@
 
     {% block search_page_results_filter_form_row2 %}
       <!-- search preferences -->
-      <div class="row search_results_option_set">
+      <div class="row search_results_option_set gy-3">
         <div class="col-md-3">
           <label class="form-label" for="id_rows">{{ form.rows.label }}</label>
           {{ form.rows }}
@@ -132,8 +132,10 @@
           {{ form.sort }}
         </div>
         <div class="col-md-3 buffer-top form-check">
+          <div class="ps-3 ps-md-0">
           <input class="form-check-input" name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
           <label class="norm form-check-label" for="sequence">Front pages only</label>
+          </div>
         </div>
         <div class="col-md-3 buffer-top">
           <button type="submit" class="btn btn-primary float-end">Refine Search</button>
@@ -164,14 +166,14 @@
 {% endblock search_page_results_filter_form %}
 
 {% block result_numeration %}
-  <h3 class="results">
+  <p class="results h3 pb-2">
     {% if paginator.count == 0 %}
       No Matches Found
     {% else %}
       Result{% if paginator.count != 1 %}s{% endif %}
       {{ start }}{% if paginator.count > 1 %}-{{ end }}{% endif %}
     {% endif %}
-  </h3>
+  </p>
 {% endblock result_numeration %}
 
 {% if paginator.count != 0 %}
@@ -180,7 +182,7 @@
     {# template logic flows while still making it clear which HTML tags wrap #}
     {# what....  Pagination should probably be a helper method of some kind. #}
     <div class="row search_results_option_set">
-      <div class="col-md-5">
+      <div class="col-lg-5 col-xxl-4">
         {# Gallery or List view #}
         <div class="float-start">
           {% ifequal view_type 'list' %}
@@ -243,7 +245,7 @@
       </div>
 
       {% block pagination_top %}
-        <div class="col-md-7">
+        <div class="col-lg-7 col-xxl-8 pt-3 pt-lg-0">
           {% include 'search/results_pagination.html' %}
         </div>
       {% endblock pagination_top %}
@@ -251,18 +253,12 @@
   {% endblock search_page_option_set %}
 
   {% block search_results_box %}
-  <div class="content search_results">
-
-  <div class="row">
+  <div class="content search_results d-flex flex-wrap column-gap-3 text-center">
   {% for object in page.object_list %}
-    {% if forloop.counter0|divisibleby:4 and not forloop.first %}
-  </div><div class="row">
-    {% endif %}
-
-      <div class="col-md-3">
+      <figure class="figure flex-shrink-0">
         <a href="{{ object.highlight_url }}" class="thumbnail">
           <img src="{% thumb_image_url object %}" alt=""
-                  class="highlight_words"
+                  class="highlight_words figure-img img-fluid"
                   data-script_name="{{script_name}}"
                   data-id="{{object.url}}"
                   data-words="{{object.words|join:' '}}">
@@ -273,13 +269,13 @@
             </p>
           {% endwith %}
         </a>
-      </div>
+      </figure>
   {% endfor %}
   </div><!-- /row -->
 
   </div>
   {% endblock search_results_box %}
-
+<div class="container pb-4">
   <div class="row">
     <div class="col-md-5"></div>
     {% block pagination_bottom %}
@@ -288,6 +284,7 @@
       </div>
     {% endblock pagination_bottom %}
   </div>
+</div>
 {% endif %}
 
 {% endblock subcontent %}
