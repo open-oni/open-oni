@@ -4,7 +4,7 @@
 {% block extra_link_types %}
 <link rel="primaryTopic" href="{{ awardee.abstract_url }}" />
 <link rel="alternate" type="application/rdf+xml" href="{% url 'openoni_awardee_dot_rdf' awardee.org_code %}" />
-<link rel="alternate" type="application/json" href="{% url 'api_awardee' awardee.org_code %}" title="ChronAm JSON Awardee Data">
+<link rel="alternate" type="application/json" href="{% url 'api_chronam_awardee' awardee.org_code %}" title="ChronAm JSON Awardee Data">
 {% endblock %}
 
 
