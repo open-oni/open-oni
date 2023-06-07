@@ -30,12 +30,17 @@ CONN_MAX_AGE = 30
 # The first item in the list has final say when collisions occur.
 INSTALLED_APPS = (
     # Default
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
     # Humanize and local theme override all below
     'django.contrib.humanize',  # Makes data more human-readable
+
+    # Django REST Framework
+    'rest_framework',
 
     # Plugins
     # See https://github.com/open-oni?q=plugin for available plugins

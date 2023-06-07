@@ -89,6 +89,22 @@ LOG_LOCATION = BASE_DIR / 'log'
 
 MARC_RETRIEVAL_URLFORMAT = 'https://chroniclingamerica.loc.gov/lccn/%s/marc.xml'
 
+REST_FRAMEWORK = {
+    # Reference: https://github.com/encode/django-rest-framework/blob/master/rest_framework/settings.py
+    # Remove default BrowsableAPIRenderer which responds with HTML pages if
+    # requests denied by throttling or permissions
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer'
+    ],
+    # Setup for single setting change to enable throttling in settings_local.py
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': os.getenv('ONI_CHRONAM_API_THROTTLE', None)
+    }
+}
+
 # Display newspaper titles with medium ("volume", "microform") when available
 TITLE_DISPLAY_MEDIUM = False
 

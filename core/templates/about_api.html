@@ -37,10 +37,9 @@ APIs.</p>
 <h3>Jump to:</h3> 
 <ul class="anchor"> 
 <li><a href="#search">Search</a> the newspaper directory and digitized page contents using OpenSearch.</li> 
-<!-- <li><a href="#autosuggest">Auto Suggest</a> API for looking up newspaper
-titles</li> Could not find this section so am removing the link -kmd -->
 <li><a href="#link">Link</a> using our stable URL pattern for Open ONI resources.</li>
 <li><a href="#iiif-views">IIIF</a> views of Open ONI resources.</li> 
+<li><a href="#json-views">JSON</a> views of Open ONI resources.</li>
 <li><a href="#linked-data">Linked Data</a> views of Open ONI resources.</li> 
 <li><a href="#bulk-data">Bulk Data</a> for research and external services.</li>
 <li><a href="#cors_jsonp">CORS and JSONP</a> support for your JavaScript
@@ -141,7 +140,7 @@ typically linked from their HTML representation using the &lt;link&gt; element.
     a list of all newspaper titles for which there is digital content represented as
     a IIIF Collection
     </li>
-    <li><a href="{% url "openoni_batches_json" %}">{% url "openoni_batches_json" %}</a>
+    <li><a href="{% url 'openoni_batches_json' %}">{{ BASE_URL }}{% url 'openoni_batches_json' %}</a>
     <br>
     a list of all batches of content that have been loaded
     </li>
@@ -151,6 +150,61 @@ typically linked from their HTML representation using the &lt;link&gt; element.
     </li>
   </ul>
 {% endif %}
+</p>
+
+<a href="#maincontent">Return to Top</a>
+
+<h3 id="json-views">JSON Views</h3>
+<p>
+  There are JSON views available for various resources in Open ONI. These JSON
+  views are typically linked from their HTML representation using the
+  &lt;link&gt; element. Many of these JSON views link to each other. This allows
+  the JSON to stay relatively compact by including only information about a
+  particular entity, while providing a link to fetch more detail about a
+  related entity. Click through the links to find individual awardee, batch,
+  title, issue, and page data.
+  <ul>
+    <li>
+      <a href="{% url 'api_awardee_list' %}">{{ BASE_URL }}{% url 'api_awardee_list' %}</a>
+      <br>
+      a list of all NDNP Awardees as JSON
+    </li>
+    <li>
+      {{ BASE_URL }}/api/chronam/awardees/&lt;org_code&gt;.json
+      <br>
+      detailed information about a specific awardee organization
+    </li>
+    <li>
+      <a href="{% url 'api_batch_list' %}">{{ BASE_URL }}{% url 'api_batch_list' %}</a>
+      <br>
+      a list of all batches of content that have been loaded
+    </li>
+    <li>
+      {{ BASE_URL }}/api/chronam/batches/&lt;batch_name&gt;.json
+      <br>
+      detailed information about a specific batch
+    </li>
+    <li>
+      <a href="{% url 'api_newspaper_list' %}">{{ BASE_URL }}{% url 'api_newspaper_list' %}</a>
+      <br>
+      a list of all newspaper titles for which there is digital content
+    </li>
+    <li>
+      {{ BASE_URL }}/api/chronam/lccn/&lt;lccn&gt;.json
+      <br>
+      title information for a specific LCCN
+    </li>
+    <li>
+      {{ BASE_URL }}/api/chronam/lccn/&lt;lccn&gt;/&lt;YYYY-MM-DD&gt;/ed-1.json
+      <br>
+      first available edition for a specific LCCN and date
+    </li>
+    <li>
+      {{ BASE_URL }}/api/chronam/lccn/&lt;lccn&gt;/&lt;YYYY-MM-DD&gt;/ed-1/seq-3.json
+      <br>
+      third available page from first edition for a specific LCCN and date
+    </li>
+  </ul>
 </p>
 
 <a href="#maincontent">Return to Top</a>
@@ -260,7 +314,7 @@ bulk access to the underlying data sets. The initial bulk data sets include:
     <li>Batches: each batch of digitized content is
     made available via the Batches <a href="{% url 'openoni_batches' %}">HTML</a>,
     <a href="{% url 'openoni_batches_atom' %}">Atom</a> and 
-    <a href="{% url 'openoni_batches_json' %}">JSON</a> views. These views provide
+    <a href="{% url 'api_batch_list' %}">JSON</a> views. These views provide
     links to where the files comprising the batch can be fetched with a web
     crawling tool like <a href="http://www.gnu.org/software/wget/">wget</a>.</li>
     <li>OCR Bulk Data: the complete set of OCR XML and text files that make up
