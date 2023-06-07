@@ -117,11 +117,16 @@ a:not(.btn) {
     text-decoration: underline;
 }
 
-.pagination li.disabled a {
+.pagination li a,
+.pagination li.disabled a:hover {
     text-decoration: none;
 }
 
-a:visited:not(.btn) {
+.pagination li a:hover {
+    text-decoration: underline;
+}
+
+a:visited:not(.btn):not(.pagination .active .page-link):not(.navbar .nav-link) {
     color: #865EB8;
 }
 
