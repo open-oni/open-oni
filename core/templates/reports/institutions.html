@@ -5,38 +5,66 @@
 {% block subcontent %}
 
   {% ifnotequal paginator.num_pages 1 %}
-    <div class="pagination">
-        <ul>
-      {% if page.has_previous %}
-      <li><a href="{% url 'openoni_institutions_page_number' page.previous_page_number %}">&laquo;</a></li>
-      {% endif %}
-      {% for page_number in page_range_short %}
-      {% ifequal page_number "..." %}
-      <li><a href="#">...</a></li>
-      {% else %}
+    <nav aria-label="Pages">
+    <ul class="pagination pagination-sm">
+        {% if page.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="{% url 'openoni_institutions_page_number' page.previous_page_number %}"
+                aria-label="Previous Page">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" aria-label="Previous Page" aria-disabled="true">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        {% for page_number in page_range_short %}
+        {% ifequal page_number "..." %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Middle of Page Range">…</a>
+        </li>
+        {% else %}
 
-      {% ifequal page_number page.number %}
-      <li><span class="off">{{page_number}}</span></li>
-      {% else %}
-      <li><a href="{% url 'openoni_institutions_page_number' page_number%}">{{page_number}}</a></li>
-      {% endifequal %}
+        {% ifequal page_number page.number %}
+        <li class="page-item active" aria-current="true">
+            {% else %}
+        <li class="page-item">
+            {% endifequal %}
+            <a class="page-link" href="{% url 'openoni_institutions_page_number' page_number%}"
+                aria-label="Page {{page_number}}">{{page_number}}</a>
+        </li>
+        {% endifequal %}
+        {% endfor %}
 
-      {% endifequal %}
-      {% endfor %}
-      {% if page.has_next %}
-      <li><a href="{% url 'openoni_institutions_page_number' page.next_page_number %}">&raquo;</a></li>
-      {% endif %}
-        </ul>
-    </div>
+        {% if page.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+                href="{% url 'openoni_institutions_page_number' page.next_page_number %}"
+                aria-label="Next Page">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" aria-label="Next Page" aria-disabled="true">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% endif %}
+    </ul>
+</nav>
 
 {% endifnotequal %}
 
-    <div id="search_results_box">
+    <div id="search_results_box" class="table-responsive mt-2">
        
 
-        <table class="data table table-striped table-hover" style="margin: 20px;">
+        <table class="data table table-striped table-hover">
         {% for institution in page.object_list %}
-        <tr class="{% cycle 'lightGray' 'white' %}">
+        <tr>
             <td>
                 <a href="{% url 'openoni_institution' institution.code.lower %}">{{ institution }}</a>
             </td>

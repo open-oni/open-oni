@@ -4,8 +4,8 @@
 {% block subcontent %}
 
   {% ifnotequal paginator.num_pages 1 %}
-  <div id="searchnav">
-      <div class="pageNavigator">
+  <nav id="searchnav" aria-label="Pages">
+      <ul class="pagination pagination-sm">
       Pages: 
       {% if page.has_previous %}
       <a rel="prev" href="{% url 'openoni_language_titles_page_number' language page.previous_page_number %}"><img src="{% static 'images/pag_prev_on.gif' %}" alt="prev" width="13" height="13" /></a>
@@ -24,10 +24,10 @@
       {% endifequal %}
       {% endfor %}
       {% if page.has_next %}
-      <a rel="next" href="{% url 'openoni_language_titles_page_number' language page.next_page_number %}"><img src="{% static 'images/pag_next_on.gif' %}" alt="next" width="13" height="13" /></a> 
+      <a rel="next" class="page-link"href="{% url 'openoni_language_titles_page_number' language page.next_page_number %}"><img src="{% static 'images/pag_next_on.gif' %}" alt="next" width="13" height="13" /></a> 
       {% endif %}
-    </div>
-  </div>
+    </ul>
+  </nav>
 
 {% endifnotequal %}
 
@@ -37,8 +37,8 @@
 <table class="data table table-striped table-hover" width="100%">
 
   <tr>
-    <th>Titles</th>
-    <th>Number of {{ language_name }} Pages</th>
+    <th scope="col">Titles</th>
+    <th scope="col">Number of {{ language_name }} Pages</th>
   </tr>
 
 {% for title in page.object_list %}

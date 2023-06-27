@@ -2,14 +2,14 @@
 
 {% block subcontent %}
 
-<div>
+<div class="table-responsive">
   <table class="data table table-striped table-hover">
-    <tr class="lightGray">
-      <td class="label">Name</td>
+    <tr>
+      <th scope="row" class="label">Name</th>
       <td>{{institution.name}}</td>
     </tr>
-    <tr class="white">
-      <td class="label">Address</td>
+    <tr>
+      <th scope="row" class="label">Address</th>
       <td>
                 {% if institution.address1 %}
                 {{institution.address1}} <br />
@@ -28,16 +28,16 @@
                 {% endif %}
       </td>
     </tr>
-    <tr class="lightGray">
-      <td class="label">OCLC Institution Code</td>
+    <tr>
+      <th scope="row" class="label w-md-25">OCLC Institution Code</th>
       <td>{{ institution.code }}</td>
     </tr>
-    <tr class="white">
-      <td class="label">Total Titles</td>
+    <tr>
+      <th scope="row"class="label">Total Titles</th>
       <td><a href="{% url 'openoni_institution_titles' institution.code.lower %}">{{ titles_count }}</a></td>
     </tr>
-    <tr class="lightGray">
-      <td class="label">Total Holdings</td>
+    <tr>
+      <th scope="row"class="label">Total Holdings</th>
       <td>{{ holdings_count }}</td>
     </tr>
   </table>

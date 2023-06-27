@@ -57,11 +57,11 @@ If you are interested in automated access to this data you may want to use the
 
 <table class="data table table-striped table-hover">
     <tr>
-        <th>Filename</th>
-        <th>Batch</th>
-        <th>Created</th>
-        <th>Size</th>
-        <th>SHA-1 Checksum</th>
+        <th scope="col">Filename</th>
+        <th scope="col">Batch</th>
+        <th scope="col">Created</th>
+        <th scope="col">Size</th>
+        <th scope="col">SHA-1 Checksum</th>
     </tr>
     {% for dump in dumps %}
     <tr class="{% cycle 'lightGray' 'white' %}">

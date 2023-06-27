@@ -6,19 +6,19 @@
 This report is also available as a 
 <a href="{% url 'openoni_batch_summary_txt' "txt" %}">comma separated text file</a>.
 </p>
-
+<div class="table-responsive">
 <table class="data table table-striped table-hover" width="100%">
 
     <tr>
-        <th>Batch Name</th>
-        <th>LCCN</th>
-        <th>Earliest</th>
-        <th>Latest</th>
-        <th>Pages</th>
+        <th scope="col">Batch Name</th>
+        <th scope="col">LCCN</th>
+        <th scope="col">Earliest</th>
+        <th scope="col">Latest</th>
+        <th scope="col">Pages</th>
     </tr>
 
 {% for row in batch_details %}
-    <tr class="{% cycle 'lightGray' 'white' %}">
+    <tr>
         <td><a href="{% url 'openoni_batch' row.0 %}">{{ row.0 }}</a></td>
         <td><a href="{% url 'openoni_title' row.1 %}">{{ row.1 }}</a></td>
         <td>{{ row.2 }}</td>
@@ -28,7 +28,6 @@ This report is also available as a
 {% endfor %}
 
 </table>
-
-<br />
+</div>
 
 {% endblock %}

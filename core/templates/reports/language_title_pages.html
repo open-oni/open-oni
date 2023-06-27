@@ -4,8 +4,8 @@
 {% block subcontent %}
 
   {% ifnotequal paginator.num_pages 1 %}
-  <div id="searchnav">
-      <div class="pageNavigator">
+  <nav id="searchnav" aria-label="Pages">
+      <ul class="pagination pagination-sm">
       Pages: 
       {% if page.has_previous %}
       <a rel="prev" href="{% url 'openoni_language_title_pages_page_number' language batch title page.previous_page_number %}"><img src="{% static 'images/pag_prev_on.gif' %}" alt="prev" width="13" height="13" /></a>
@@ -24,10 +24,10 @@
       {% endifequal %}
       {% endfor %}
       {% if page.has_next %}
-      <a rel="next" href="{% url 'openoni_language_title_pages_page_number' language batch title page.next_page_number %}"><img src="{% static 'images/pag_next_on.gif' %}" alt="next" width="13" height="13" /></a> 
+      <a rel="next" class="page-link"href="{% url 'openoni_language_title_pages_page_number' language batch title page.next_page_number %}"><img src="{% static 'images/pag_next_on.gif' %}" alt="next" width="13" height="13" /></a> 
       {% endif %}
-    </div>
-  </div>
+    </ul>
+  </nav>
 
 {% endifnotequal %}
 
@@ -37,10 +37,10 @@
 <table class="data table table-striped table-hover" width="100%">
 
   <tr>
-    <th>Reel</th>
-    <th>LCCN</th>
-    <th>Date Issued</th>
-    <th>Page</th>
+    <th scope="col">Reel</th>
+    <th scope="col">LCCN</th>
+    <th scope="col">Date Issued</th>
+    <th scope="col">Page</th>
   </tr>
 
 {% for p in page.object_list %}

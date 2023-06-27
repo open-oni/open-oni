@@ -72,18 +72,18 @@ in the <a href="{% url 'openoni_batches_atom' %}">Atom</a> and
     </ul>
   </nav>
 {% endif %}
-
+<div class="table-responsive mb-3">
 <table class="data table table-striped table-hover" width="100%">
   <tr>
-    <th>Created</th>
-    <th>Batch Name</th>
-    <th>Awardee</th>
-    <th>Total Pages</th>
+    <th scope="col">Created</th>
+    <th scope="col">Batch Name</th>
+    <th scope="col">Awardee</th>
+    <th scope="col">Total Pages</th>
   </tr>
 
 {% for batch in page.object_list %}
 
-  <tr class="{% cycle 'lightGray' 'white' %}">
+  <tr>
     <td>{{batch.created }}</td>
     <td><a href="{% url 'openoni_batch' batch.name %}">{{ batch.name }}</a></td>
     <td>
@@ -97,7 +97,6 @@ in the <a href="{% url 'openoni_batches_atom' %}">Atom</a> and
 {% endfor %}
 
 </table>
-
-<br />
+</div>
 
 {% endblock %}

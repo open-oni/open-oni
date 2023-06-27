@@ -9,10 +9,13 @@
 
 <div id="search_results_box">
   <div id="search_results_content">
-    <div id="search_body">
-      <table class="data table table-striped table-hover" width="100%">
+    <div id="search_body table-responsive">
+      <table class="data table table-striped table-hover">
     {% for county in counties %}
-        <tr class="{% cycle 'lightGray' 'white' %}">
+        <tr>
+        {% comment %}
+        {% should the following url be openoni_counties_in_state? %}
+        {% endcomment %}
           <td><a href="{% url 'openoni_cities_in_county' state|pack_url county|pack_url %}">{{county}}</a></td>
         </tr>
     {% endfor %}
