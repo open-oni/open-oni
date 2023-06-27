@@ -427,7 +427,7 @@ def _create_year_form(issues, year, all_issues):
 
     class SelectYearForm(django_forms.Form):
         year = fields.ChoiceField(choices=((d.year, d.year) for d in dates), initial=_year)
-        year.widget.attrs["class"] = "form-select"
+        year.widget.attrs["class"] = "form-select w-auto d-inline-block"
 
 
     return year_view, SelectYearForm()
