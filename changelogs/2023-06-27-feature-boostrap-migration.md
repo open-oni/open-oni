@@ -23,7 +23,7 @@ Markdown Spec](https://github.github.com/gfm/).
   - Add ARIA labels and roles to navigation, pagination, and form elements
 - Add Bootstrap v5 classes for layout and accessibility
   - Add classes required by Bootstrap v5
-      - Add `.breacrumb-item` class to breadcrumb `<li>` elements
+      - Add `.breadcrumb-item` class to breadcrumb `<li>` elements
       - Add `.form-check-*` classes to checkboxes
       - Add `.form-label` to form labels
       - Add `.form-select` to dropdowns
@@ -84,7 +84,7 @@ easier to distinguish
     - search form in `search_advanced.html`
     - `extra_nav` in `issues_title.html`
     - view options and pagination in `search_page_results.html`
-- Replace Bootstrap v3 classes with Bootstrap v5 classes
+- Replace deprecated Bootstrap v3 and v4 classes with Bootstrap v5 classes
     - Change `.btn-default` to `.btn-secondary`
     - Change `.form-control` to `.form-select`
     - Change `.help-block` to `.form-text`
@@ -93,7 +93,7 @@ easier to distinguish
     - Change `.pagination-mini` (deprecated) to `.pagination-sm`
     - Change `.pull-*` to `.float-*`
     - Change `.sr-*` classes to `.visually-hidden-*` classes
-    - Change v3 left/right margin and padding classes to v5 start/end classes
+    - Change v3 and v4 left/right margin and padding classes to v5 start/end
 - Amend `forms.py` to distinguish between search form dropdowns and 
 text fields (v5 requires different classes for each)
 - Move `newspapers.html` search help text below form input and change from 
