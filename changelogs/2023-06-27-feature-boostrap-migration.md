@@ -50,6 +50,15 @@ easier to distinguish
 
 
 ### Changed
+- Migrate `core` and `default theme` from Bootstrap v3.4 to Bootstrap v5.3
+  - Replace [Bootstrap v3.4 Compiled CSS and JS](https://getbootstrap.com/docs/3.4/getting-started/#download) 
+  with [Bootstrap v5.3 Compiled CSS and JS](https://getbootstrap.com/docs/5.3/getting-started/download/)
+  - Remove deprecated v3 classes (see Removed section of this document)
+  - Change v3 classes to v5 classes (see Changed section of this document)
+  - Change default theme CSS to account for Bootstrap framework changes (see 
+  Changed section of this document)
+  - Add v5 classes for layout and accessibility (see Added section of this 
+  document)
 - Major changes to navigation menu from v3 to v5
   - Change navbar to `ul` to improve accessibility
 	- Switch from `.navbar-inverse` to `.navbar-dark`
@@ -102,8 +111,6 @@ and v5 button classes
   - Remove Django table striping (`{% cycle 'lighytGray' 'white' %}`)
   - Add v5 `.table-striped` and `.table-hover` classes
 - Replace inline CSS styles with Bootstrap classes
-
-...
 - Update core CSS to account for Bootstrap style changes
   - Change `.header_navbar a` selector to `.header_navbar .nav-item .nav-link` 
   to retain specificity
@@ -128,15 +135,7 @@ longer necessary with v5
 
 
 ### Migration
-- Migrate `core` and `default theme` from Bootstrap v3.4 to Bootstrap v5.3
-  - Replace [Bootstrap v3.4 Compiled CSS and JS](https://getbootstrap.com/docs/3.4/getting-started/#download) 
-  with [Bootstrap v5.3 Compiled CSS and JS](https://getbootstrap.com/docs/5.3/getting-started/download/)
-  - Remove deprecated v3 classes (see Removed section of this document)
-  - Change v3 classes to v5 classes (see Changed section of this document)
-  - Change default theme CSS to account for Bootstrap framework changes (see 
-  Changed section of this document)
-  - Add v5 classes for layout and accessibility (see Added section of this 
-  document)
+
 
 ### Deprecated
 - Remove default theme CSS styles/selectors that are no longer in use
