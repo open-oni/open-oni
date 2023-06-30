@@ -108,7 +108,7 @@ and v5 button classes
   - Remove empty paragraphs and line breaks
   - Add Bootstrap v5 padding/margin classes to surrounding elements
 - Change how striped table columns are generated
-  - Remove Django table striping (`{% cycle 'lighytGray' 'white' %}`)
+  - Remove Django table striping (`{% cycle 'lightGray' 'white' %}`)
   - Add v5 `.table-striped` and `.table-hover` classes
 - Replace inline CSS styles with Bootstrap classes
 - Update core CSS to account for Bootstrap style changes
