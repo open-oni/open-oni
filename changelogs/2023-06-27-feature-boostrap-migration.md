@@ -135,6 +135,9 @@ longer necessary with v5
 
 
 ### Migration
+- If you have customized your site theme using additional Bootstrap classes, see 
+the official [Bootstrap 3 -> 4](https://getbootstrap.com/docs/4.0/migration/) and [Bootstrap 4 -> 5](https://getbootstrap.com/docs/5.0/migration/) documentation. Also see the 
+Added, Changed, and Removed notes in this document for the things we changed.
 
 
 ### Deprecated
