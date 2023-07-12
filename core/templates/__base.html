@@ -58,7 +58,7 @@
     {% block body_content %}
       <header class="site_header">
         {# Skip link before all other content #}
-        <a class="skiplink sr-only sr-only-focusable" href="#maincontent">
+        <a class="skiplink visually-hidden visually-hidden-focusable" href="#maincontent">
           Skip to main content
         </a>
 
@@ -66,100 +66,92 @@
           {% block header_title %}
             <div class="header_title">
               <div class="container">
-                <h1 class="title">{{ site_title }}</h1>
+                <div class="site_title">{{ site_title }}</div>
               </div>
             </div>
           {% endblock header_title %}
-
+          
           {% block navbar %}
-          <nav class="navbar {% block navbar_classes %}navbar-inverse
-            header_navbar{% endblock navbar_classes %}">
-            <div class="container">
-              {# Brand and toggle get grouped for better mobile display #}
-              <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed"
-                  aria-expanded="false" data-toggle="collapse"
-                  data-target="#bs-example-navbar-collapse-1">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                </button>
+          <nav class="navbar {% block navbar_classes %}header_navbar navbar-dark navbar-expand-lg p-lg-0{% endblock navbar_classes %}" aria-label="Main">
+            <div class="container-lg gx-0">
+              <button class="navbar-toggler ms-auto me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMainMenu"
+                aria-controls="navbarMainMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarMainMenu">
+                <div class="d-lg-flex container-lg w-100-xl">
+                  <ul class="navbar-nav flex-wrap me-lg-auto p-0">
+                    {% block navbar_home %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_home' %}">Home</a></li>
+                    {% endblock navbar_home %}
+                    {% block navbar_pos1 %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_newspapers' %}">Newspapers</a>
+                    </li>
+                    {% endblock navbar_pos1 %}
+                    {% block navbar_pos2 %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_about' %}">About</a></li>
+                    {% endblock navbar_pos2 %}
+                    {% block navbar_pos3 %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_about_api' %}">API</a></li>
+                    {% endblock navbar_pos3 %}
+                    {% block navbar_pos4 %}
+                    <li class="nav-item flex-shrink-0">
+                      <a class="nav-link p-3" href="{% url 'openoni_issues' %}">Browse by Date</a>
+                    </li>
+                    {% endblock navbar_pos4 %}
+                    {% block navbar_pos5 %}
+                    <li class="nav-item">
+                      <a class="nav-link p-3" href="{% url 'openoni_help' %}">Help</a></li>
+                    {% endblock navbar_pos5 %}
+                  </ul>
+                  <ul class="navbar-nav ms-auto flex-wrap justify-content-end">
+                  {% block navbar_advancedsearch %}
+                    <li class="nav-item flex-shrink-0 nav_advanced_search">
+                      <a class="nav-link p-3" href="{% url 'openoni_search_advanced' %}">
+                        Advanced Search
+                      </a>
+                    </li>
+                    {% endblock navbar_advancedsearch %}
+                    {% block navbar_search %}
+                    <li class="nav-item">
+                      <form class="d-inline-flex flex-column flex-lg-row p-2 pe-5 pe-lg-2" method="get" action="{% url 'openoni_search_pages_results' %}" role="search">
+                      <div class="col-lg-4">
+                      {{ city_form.city }}
+                      </div>
+                      <input class="form-control mt-1 mt-lg-0 mb-2 mb-lg-0 me-lg-1 ms-lg-1" type="text" name="proxtext" placeholder="Search words" aria-label="Search words">
+                      {% comment %} 
+                      Glyphicon (glyphicon-search) was here
+                      {% endcomment %}
+                      <button class="btn btn-primary" type="submit">Search</button>
+                      </form>
+                    </li>
+                    {% endblock navbar_search %}
+                  </ul>
+                </div>
               </div>
-
-              {# Collect the nav links, forms, and other content for toggling #}
-              <div class="collapse navbar-collapse"
-                id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                  {% block navbar_home %}
-                    <li><a href="{% url 'openoni_home' %}">Home</a></li>
-                  {% endblock navbar_home %}
-                  {% block navbar_pos1 %}
-                    <li>
-                      <a href="{% url 'openoni_newspapers' %}">Newspapers</a>
-                    </li>
-                  {% endblock navbar_pos1 %}
-                  {% block navbar_pos2 %}
-                    <li><a href="{% url 'openoni_about' %}">About</a></li>
-                  {% endblock navbar_pos2 %}
-                  {% block navbar_pos3 %}
-                    <li><a href="{% url 'openoni_about_api' %}">API</a></li>
-                  {% endblock navbar_pos3 %}
-                  {% block navbar_pos4 %}
-                    <li>
-                      <a href="{% url 'openoni_issues' %}">Browse by Date</a>
-                    </li>
-                  {% endblock navbar_pos4 %}
-                  {% block navbar_pos5 %}
-                    <li><a href="{% url 'openoni_help' %}">Help</a></li>
-                  {% endblock navbar_pos5 %}
-                </ul>
-
-                {% block navbar_advancedsearch %}
-                <ul class="nav navbar-nav navbar-right">
-                  <li class="nav_advanced_search">
-                    <a href="{% url 'openoni_search_advanced' %}">
-                      Advanced Search
-                    </a>
-                  </li>
-                </ul>
-                {% endblock navbar_advancedsearch %}
-
-                {% block navbar_search %}
-                <form class="form-inline navbar-form navbar-right" method="get"
-                  action="{% url 'openoni_search_pages_results' %}" role="search">
-                  <div class="form-group">
-                    {{ city_form.city }}
-                    <input class="form-control" type="text" name="proxtext" aria-label="Search words"
-                      placeholder="search words">
-                  </div>
-
-                  <button type="submit" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"
-                      ></span>
-                    <span class="search_text">Search</span>
-                  </button>
-                </form>
-                {% endblock navbar_search %}
-
-              </div>{# /.navbar-collapse #}
-            </div>{# /.container-fluid #}
+            </div>
           </nav>
           {% endblock navbar %}
         {% endblock header %}
       </header>
 
-      <div class="main_content">
-        <div class="container">
+      <main class="main_content">
+        <div class="container pt-4 pb-4">
           {% block breadcrumbs %}
             {% if crumbs and crumbs|length > 1 %}
+            <nav aria-label="Breadcrumb">
               <ol class="breadcrumb">
                 {% for crumb in crumbs %}
-                  <li {% if crumb.active %}class="active"{% endif %}>
-                    <a href="{{crumb.href}}">{{crumb.label}}</a>
+                  <li {% if crumb.active %}class="breadcrumb-item active"{% else %}class="breadcrumb-item"{% endif %}>
+                    <a href="{{crumb.href}}" {% if crumb.active %}aria-current="page"{% else %}{% endif %}>{{crumb.label}}</a>
                   </li>
                 {% endfor %}
               </ol>
+            </nav>
             {% endif %}
           {% endblock breadcrumbs %}
 
@@ -174,7 +166,7 @@
             {% block page_head %}
               {% block sub_page_head %}
                 {% if page_title %}
-                  <h2>{{ page_title }}</h2>
+                  <h1>{{ page_title }}</h1>
                 {% endif %}
               {% endblock sub_page_head %}
             {% endblock page_head%}
@@ -185,18 +177,18 @@
           {% block subcontent %}{% endblock subcontent %}
         {% endblock content %}
         </div>{# /container #}
-      </div>{# /main_content #}
+      </main>{# /main_content #}
     {% endblock body_content %}
 
     {% block footer %}
-      <div id="footer">
+      <footer id="footer">
         <div class="container">
           <p>{{site_title}}</p>
           <p>
             Powered by <a href="https://github.com/open-oni/open-oni">Open ONI</a>
           </p>
         </div>
-      </div>
+      </footer>
     {% endblock footer %}
   </body>
 </html>

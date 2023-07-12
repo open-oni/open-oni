@@ -14,8 +14,8 @@
 {% block subcontent %}
 
 {% ifnotequal paginator.num_pages 1 %}
-<div id="searchnav">
-  <span class="pagination">
+<nav id="searchnav" aria-label="Pages">
+  <ul class="pagination pagination-sm">
     {% if page.has_previous %}
       <a rel="prev" href="{% url 'openoni_city_page_number' state|pack_url county|pack_url city|pack_url page.previous_page_number %}"><img src="{% static 'images/pag_prev_on.gif'%}" width="9" height="9" alt=""/></a>
     {% endif %}
@@ -36,8 +36,8 @@
     {% if page.has_next %}
       <a href="{% url 'openoni_city_page_number' state|pack_url county|pack_url city|pack_url page.next_page_number %}"><img src="{% static 'images/pag_next_on.gif' %}" width="9" height="9" alt=""/></a>
     {% endif %}
-  </span>
-</div>
+  </ul>
+</nav>
 {% endifnotequal %}
 
 <div id="search_results_box">

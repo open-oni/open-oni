@@ -27,14 +27,14 @@
 {% endblock result_count %}
 
 {% block search_page_filter_desc %}
-  <h3>Filters</h3>
+  <h2 class="mt-3">Filters</h2>
   <ul class="list-inline">
     {# Date filter from Advanced Search #}
     {% if request.GET.date1 or request.GET.date2 %}
       {% if not request.GET.yearRange and not searching_all_dates %}
-        <li>
+        <li class="list-inline-item">
           <a href="{{BASE_URL}}{{request.path}}?{% remove_param 'date1' 'date2' %}"
-            class="btn btn-default" aria-label="Clear Date Filter"
+            class="btn btn-secondary" aria-label="Clear Date Filter"
             title="Clear Date Filter">
             Date:
             {% if request.GET.date1 and request.GET.date2 %}
@@ -54,7 +54,7 @@
       {% for title in titles %}
         <li>
           <a href="{{BASE_URL}}{{request.path}}?{% remove_param_value 'lccn' title.lccn %}"
-            class="btn btn-default" aria-label="Clear '{{ title.name }}' Filter"
+            class="btn btn-secondary" aria-label="Clear '{{ title.name }}' Filter"
             title="Clear '{{ title.name }}' Filter">
             <span>{{ title.abbrev }}</span>
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -68,10 +68,10 @@
 {% block search_page_results_filter_form %}
   <form class="search_results_form" action="" method="GET">
     {% block search_page_results_filter_form_row1 %}
-      <div class="row search_results_option_set">
+      <div class="row search_results_option_set gy-3">
         <div class="col-md-2">
-          <label for="county">County</label>
-          <select class="form-control" id="county" name="county">
+          <label class="form-label" for="county">County</label>
+          <select class="form-select" id="county" name="county">
             <option value="">All</option>
             {% for county, count in page.facets.county %}
               <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
@@ -79,8 +79,8 @@
           </select>
         </div>
         <div class="col-md-3">
-          <label for="city">City</label>
-          <select class="form-control" id="city" name="city">
+          <label class="form-label" for="city">City</label>
+          <select class="form-select" id="city" name="city">
             <option value="">All</option>
             {% for city, count in page.facets.city %}
               <option value="{{city}}" {% ifequal city request.GET.city %} selected=selected {% endifequal %}>{{city}} ({{count}})</option>
@@ -88,8 +88,8 @@
           </select>
         </div>
         <div class="col-md-2">
-          <label for="yearRange">Year</label>
-          <select class="form-control" id="yearRange" name="yearRange">
+          <label class="form-label" for="yearRange">Year</label>
+          <select class="form-select" id="yearRange" name="yearRange">
             <option value="">All</option>
             {% if request.GET.yearRange %}
               <option value="{{request.GET.yearRange}}" selected=selected>{{request.GET.yearRange}}</option>
@@ -100,8 +100,8 @@
           </select>
         </div>
         <div class="col-md-3">
-          <label for="frequency">Frequency</label>
-          <select class="form-control" id="frequency" name="frequency">
+          <label class="form-label" for="frequency">Frequency</label>
+          <select class="form-select" id="frequency" name="frequency">
             <option value="">All</option>
             {% for frequency, count in page.facets.frequency %}
               <option value="{{frequency}}" {% ifequal frequency request.GET.frequency %} selected=selected {% endifequal %}>{{frequency}} ({{count}})</option>
@@ -109,8 +109,8 @@
           </select>
         </div>
         <div class="col-md-2">
-          <label for="language">Language</label>
-          <select class="form-control" id="language" name="language">
+          <label class="form-label" for="language">Language</label>
+          <select class="form-select" id="language" name="language">
             <option value="">All</option>
             {% for language, count in page.facets.language %}
               <option value="{{language}}" {% ifequal language request.GET.language %} selected=selected {% endifequal %}>{{language}} ({{count}})</option>
@@ -122,21 +122,23 @@
 
     {% block search_page_results_filter_form_row2 %}
       <!-- search preferences -->
-      <div class="row search_results_option_set">
+      <div class="row search_results_option_set gy-3">
         <div class="col-md-3">
-          <label for="id_rows">{{ form.rows.label }}</label>
+          <label class="form-label" for="id_rows">{{ form.rows.label }}</label>
           {{ form.rows }}
         </div>
         <div class="col-md-3">
-          <label for="id_sort">{{ form.sort.label }}</label>
+          <label class="form-label" for="id_sort">{{ form.sort.label }}</label>
           {{ form.sort }}
         </div>
-        <div class="col-md-3 buffer-top">
-          <input name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
-          <label class="norm" for="sequence">Front pages only</label>
+        <div class="col-md-3 buffer-top form-check">
+          <div class="ps-3 ps-md-0">
+          <input class="form-check-input" name="sequence" id="sequence" value="1" type="checkbox" {{ seq_check }}/>
+          <label class="norm form-check-label" for="sequence">Front pages only</label>
+          </div>
         </div>
         <div class="col-md-3 buffer-top">
-          <button type="submit" class="btn btn-primary pull-right">Refine Search</button>
+          <button type="submit" class="btn btn-primary float-end">Refine Search</button>
         </div>
       </div>
     {% endblock search_page_results_filter_form_row2 %}
@@ -164,14 +166,14 @@
 {% endblock search_page_results_filter_form %}
 
 {% block result_numeration %}
-  <h3 class="results">
+  <p class="results h3 pb-2">
     {% if paginator.count == 0 %}
       No Matches Found
     {% else %}
       Result{% if paginator.count != 1 %}s{% endif %}
       {{ start }}{% if paginator.count > 1 %}-{{ end }}{% endif %}
     {% endif %}
-  </h3>
+  </p>
 {% endblock result_numeration %}
 
 {% if paginator.count != 0 %}
@@ -180,15 +182,15 @@
     {# template logic flows while still making it clear which HTML tags wrap #}
     {# what....  Pagination should probably be a helper method of some kind. #}
     <div class="row search_results_option_set">
-      <div class="col-md-5">
+      <div class="col-lg-5 col-xxl-4">
         {# Gallery or List view #}
-        <div class="pull-left">
+        <div class="float-start">
           {% ifequal view_type 'list' %}
-            <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
+            <a class="btn btn-secondary"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
             <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
           {% else %}
             <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
-            <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
+            <a class="btn btn-secondary" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
 
           {% endifequal %}
         </div>
@@ -196,8 +198,8 @@
 
         {# Jump to page #}
         {% if page.has_previous or page.has_next %}
-          <form action="" method="GET" class="pull-right">
-            <label for="jumptopage">Jump to page:</label>
+          <form action="" method="GET" class="float-end">
+            <label class="form-label" for="jumptopage">Jump to page:</label>
             <input class="std" type="text" id="jumptopage" name="page" value="" size="2" />
 
             {% block search_page_pagination_hidden_filters %}
@@ -243,7 +245,7 @@
       </div>
 
       {% block pagination_top %}
-        <div class="col-md-7">
+        <div class="col-lg-7 col-xxl-8 pt-3 pt-lg-0">
           {% include 'search/results_pagination.html' %}
         </div>
       {% endblock pagination_top %}
@@ -251,18 +253,12 @@
   {% endblock search_page_option_set %}
 
   {% block search_results_box %}
-  <div class="content search_results">
-
-  <div class="row">
+  <div class="content search_results d-flex flex-wrap column-gap-3 text-center">
   {% for object in page.object_list %}
-    {% if forloop.counter0|divisibleby:4 and not forloop.first %}
-  </div><div class="row">
-    {% endif %}
-
-      <div class="col-md-3">
+      <figure class="figure flex-shrink-0">
         <a href="{{ object.highlight_url }}" class="thumbnail">
           <img src="{% thumb_image_url object %}" alt=""
-                  class="highlight_words"
+                  class="highlight_words figure-img img-fluid"
                   data-script_name="{{script_name}}"
                   data-id="{{object.url}}"
                   data-words="{{object.words|join:' '}}">
@@ -273,13 +269,13 @@
             </p>
           {% endwith %}
         </a>
-      </div>
+      </figure>
   {% endfor %}
   </div><!-- /row -->
 
   </div>
   {% endblock search_results_box %}
-
+<div class="container pb-4">
   <div class="row">
     <div class="col-md-5"></div>
     {% block pagination_bottom %}
@@ -288,6 +284,7 @@
       </div>
     {% endblock pagination_bottom %}
   </div>
+</div>
 {% endif %}
 
 {% endblock subcontent %}

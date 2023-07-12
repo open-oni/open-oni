@@ -14,36 +14,38 @@
 from the NDNP Awardee, {{ awardee }}. Summary information about <a href="{% url 'openoni_awardees' %}">all awardees</a> is also available.</p>
 
 <h2>Batches</h2>
-
-<table class="data table table-striped table-hover" width="100%">
+<div class="table-responsive">
+<table class="data table table-striped table-hover">
     <tr>
-    <th>Ingested</th>
-    <th>Batch Name</th>
-    <th>Total Pages</th>
+    <th scope="col">Ingested</th>
+    <th scope="col">Batch Name</th>
+    <th cope="col">Total Pages</th>
+    </tr>
 {% for batch in batches %}
-    <tr class="{% cycle 'lightGray' 'white' %}">
+    <tr>
     <td>{{batch.created }}</td>
     <td><a href="{% url 'openoni_batch' batch.name %}">{{ batch.name }}</a></td>
-    <td style="text-align: right">{{ batch.page_count|intcomma }}</td>
+    <td class="text-end">{{ batch.page_count|intcomma }}</td>
     </tr>
 {% endfor %}
 </table>
-
-<br />
+</div>
 
 {% if awardee.essays.all.count > 0 %}
 <h2>Essays</h2>
 
-<table class="data table table-striped table-hover" width="100%">
-    <th width="75%">Essay Title</th>
-    <th>Created</th>
+<div class="table-responsive mt-3">
+<table class="data table table-striped table-hover">
+    <th scope="col">Essay Title</th>
+    <th scope="col">Created</th>
     {% for essay in awardee.essays.all %}
-    <tr class="{% cycle 'lightGray' 'white' %}">
+    <tr>
         <td><a href="{% url 'openoni_essay' essay.id %}">{{ essay.title }}</td>
         <td>{{ essay.created|date }}</td>
     </tr>
     {% endfor %}
 </table>
 {% endif %}
+</div>
 
 {% endblock %}

@@ -65,7 +65,7 @@
   </div>
 
   <div id="wrap_searchdir" class="w_pad">
-    <table class="data" width="100%">
+    <table class="data w-100">
     {% for title in page.object_list %}
     <tr class="{% cycle 'lightGray' 'white' %}">
         <td><a href="{% url 'openoni_title' title.lccn %}">{{title}}</a></td>

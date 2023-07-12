@@ -10,13 +10,11 @@
 
 {% block subcontent %}
 
-<br />
+<h2 class="mt-3">Summary Information</h2>
 
-<h4>Summary Information</h4>
-<br />
-
+<div class="table-responsive mb-3">
 <table class="data table table-striped table-hover">
-  <tr class="lightGray">
+  <tr>
     <td>Awardee:</td>
     <td>
       <a href="{% url 'openoni_awardee' awardee.org_code %}">
@@ -24,27 +22,27 @@
       </a>
     </td>
   </tr>
-  <tr class="white">
+  <tr>
     <td>Ingested:</td>
     <td>{{ batch.created }}</td>
   </tr>
-  <tr class="lightGray">
+  <tr>
     <td>Number of Issues:</td>
     <td>{{ issues|length }}</td>
   </tr>
-  <tr class="white">
+  <tr>
     <td>Number of Pages:</td>
     <td>{{ batch.page_count|intcomma }}</td>
   </tr>
-  <tr class="lightGray">
+  <tr>
     <td>Bag Location:</td>
     <td><a href="/data/batches/{{ batch.name }}">{{ batch.name }}</a>
   </tr>
-  <tr class="white">
+  <tr>
     <td>Validated Batch File:</td>
     <td><a href="/data/batches/{{ batch.name }}/data/{{ batch.validated_batch_file }}">data/{{ batch.validated_batch_file }}</a></td>
   </tr>
-  <tr class="lightGray">
+  <tr>
     <td>LCCNs In Batch:</td>
     <td>
       {% for lccn in batch.lccns %}
@@ -53,20 +51,21 @@
     </td>
   </tr>
 </table>
+</div>
 
-<p>
-  <h4>Reels in Batch</h4>
-  <br />
+
+  <h2>Reels in Batch</h2>
+  <div class="table-responsive mb-3">
   <table class="data table table-striped table-hover">
     <tr>
-      <th>Reel Number</th>
-      <th>Titles in Reel</th>
-      <th>Date Range</th>
-      <th>Number of Pages</th>
+      <th scope="col">Reel Number</th>
+      <th scope="col">Titles in Reel</th>
+      <th scope="col">Date Range</th>
+      <th scope="col">Number of Pages</th>
     </tr>
     {% for reel in reels %}
     {% if reel.number %}
-    <tr class="{% cycle 'lightGray' 'white' %}">
+    <tr>
       <td><a href="{% url 'openoni_reel' reel.number %}">{{ reel.number }}</a></td>
       <td>
         {% for title in reel.titles %}
@@ -79,26 +78,24 @@
     {% endif %}
     {% endfor %}
   </table>
-</p>
+  </div>
 
-<p>
-  <h4>Issues in Batch</h4>
-  <br />
+  <h2>Issues in Batch</h2>
+  <div class="table-responsive">
   <table class="data table table-striped table-hover">
     <tr>
-      <th>Title</th>
-      <th>Issue Date</th>
-      <th>Number of Pages</th>
+      <th scope="col">Title</th>
+      <th scope="col">Issue Date</th>
+      <th scope="col">Number of Pages</th>
     </tr>
 
     {% for issue in issues %}
-    <tr class="{% cycle 'lightGray' 'white' %}">
+    <tr>
       <td><a href="{% url 'openoni_title' issue.lccn %}">{{ issue.title }}</a></td>
       <td><a href="{% url 'openoni_issue_pages' issue.lccn issue.date_issued issue.edition %}">{{issue.date_issued }}</a></td>
       <td>{{ issue.page_count }}</td>
     </tr>
     {% endfor %}
   </table>
-</p>
-
+  </div>
 {% endblock %}

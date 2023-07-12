@@ -13,18 +13,18 @@ Clicking on the name will bring you to a
 detailed page for the awardee, and clicking on the organization code will
 perform a search of the MARC Organization database.
 </p>
-
+<div class="table-responsive mb-3">
 <table class="data table table-striped table-hover" width="100%">
     <tr>
-        <th>Name</th>
-        <th>MARC Organization Code</th>
-        <th>Total Pages</th>
-        <th>Total Essays</th>
+        <th scope="col">Name</th>
+        <th scope="col">MARC Organization Code</th>
+        <th scope="col">Total Pages</th>
+        <th scope="col">Total Essays</th>
     </tr>
 
 {% for awardee in awardees %}
 
-  <tr class="{% cycle 'lightGray' 'white' %}"> 
+  <tr> 
       <td>
           <a href="{% url 'openoni_awardee' awardee.org_code %}">
               {{ awardee.name }}
@@ -35,10 +35,10 @@ perform a search of the MARC Organization database.
               {{ awardee.org_code }}
           </a>
       </td>
-      <td style="text-align: right">
+      <td class="text-end">
           {{ awardee.page_count|intcomma }}
       </td>
-      <td style="text-align: right">
+      <td  class="text-end">
           {{ awardee.essays.count|intcomma }}
       </td>
   </tr>
@@ -46,7 +46,6 @@ perform a search of the MARC Organization database.
 {% endfor %}
 
 </table>
-
-<br />
+</div>
 
 {% endblock %}

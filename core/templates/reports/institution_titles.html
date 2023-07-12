@@ -13,8 +13,8 @@
 {% block subcontent %}
 
   {% ifnotequal paginator.num_pages 1 %}
-  <div id="searchnav">
-    <div class="pageNavigator">
+  <nav id="searchnav" aria-label="Pages">
+    <ul class="pagination pagination-sm">
       {% if page.has_previous %}
       <a rel="prev" href="{% url 'openoni_institution_titles_page_number' code page.previous_page_number %}"><img src="{% static 'images/pag_prev_on.gif' %}" alt="prev" width="13" height="13" /></a> 
       {% endif %}
@@ -32,10 +32,10 @@
       {% endifequal %}
       {% endfor %}
       {% if page.has_next %}
-          <a rel="next" href="{% url 'openoni_institution_titles_page_number' code page.next_page_number %}"><img src="{% static 'images/pag_next_on.gif' %}" alt="prev" width="13" height="13" /></a>
+          <a rel="next" class="page-link"href="{% url 'openoni_institution_titles_page_number' code page.next_page_number %}"><img src="{% static 'images/pag_next_on.gif' %}" alt="prev" width="13" height="13" /></a>
       {% endif %}
-    </div>
-  </div>
+    </ul>
+  </nav>
 
 {% endifnotequal %}
 
