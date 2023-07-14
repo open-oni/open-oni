@@ -19,7 +19,11 @@ export DJANGO_SETTINGS_MODULE=onisite.test_settings
 source /_startup_lib.sh
 
 verify_config
-setup_database
+
+# We use sqlite for testing, so we do not want to run the standard DB setup here
+source ENV/bin/activate
+/opt/openoni/manage.py migrate
+
 setup_index
 prep_webserver
 
