@@ -4,15 +4,6 @@ volumes:
   onisrc:
 
 services:
-  rdbms:
-    image: mariadb:10.6
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=openoni
-      - MYSQL_USER=openoni
-      - MYSQL_PASSWORD=openoni
-    volumes:
-      - ./conf/mysql/:/etc/mysql/conf.d:ro
   solr:
     image: solr:8-slim
     command:
@@ -26,7 +17,6 @@ services:
       - ./:/usr/local/src/openoni:ro
       - onisrc:/opt/openoni
     depends_on:
-      - rdbms
       - solr
     environment:
       - ONLY_RUN_TESTS=1

@@ -1,4 +1,15 @@
+[client]
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
 [mysqld]
+character-set-client-handshake = FALSE
+collation-server = utf8mb4_unicode_ci
+init-connect = 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
+character-set-server = utf8mb4
+
 # Connections
 max_connections                 = 128
 max_user_connections            = 128
