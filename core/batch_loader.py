@@ -219,9 +219,14 @@ class BatchLoader(object):
     def _get_batch(self, batch_name, batch_source=None, create=False):
         if create:
             batch = self._create_batch(batch_name, batch_source)
+            return batch
         else:
-            batch = Batch.objects.get(name=batch_name)
-        return batch
+            try:
+                batch = Batch.objects.get(name=batch_name)
+                return batch
+            except Batch.DoesNotExist as e:
+                _logger.info("Tried to get a batch that doesn't exist: %s", batch_name)
+                return None
 
     def _create_batch(self, batch_name, batch_source):
         if Batch.objects.filter(name=batch_name).count()!=0:
@@ -532,12 +537,15 @@ class BatchLoader(object):
             job.save()
             msg = "purge failed: %s" % e
             _logger.error(msg)
-            _logger.exception(e)
+            if str(e) != "Tried to purge a batch that doesn't exist":
+                _logger.exception(e)
             event = LoadBatchEvent(batch_name=batch_name, message=msg)
             event.save()
-            raise BatchLoaderException(msg)
 
     def _purge_batch(self, batch):
+        if not isinstance(batch, Batch):
+            raise BatchLoaderException("Tried to purge a batch that doesn't exist")
+
         batch_name = batch.name
         # just delete batch causes memory to bloat out
         # so we do it piece-meal
