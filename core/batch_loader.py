@@ -178,6 +178,7 @@ class BatchLoader(object):
             if self.PROCESS_OCR:
                 self.solr.commit()
 
+            batch.completed_at = timezone.now()
             batch.save()
             msg = "processed %s pages" % batch.page_count
             event = LoadBatchEvent(batch_name=batch_name, message=msg)

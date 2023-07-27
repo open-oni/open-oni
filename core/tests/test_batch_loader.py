@@ -2,14 +2,24 @@ import shutil
 import os
 import tempfile
 import tarfile
+from datetime import datetime
+from unittest.mock import patch
 
 from django.conf import settings
 from django.test import TestCase
+from django.utils import timezone
 
 import core
 from core.batch_loader import BatchLoader
 from core.models import Title
 from core.models import Batch
+
+
+# `timezone.now` will now always return the value we want
+@patch(
+    "django.utils.timezone.now",
+    lambda: datetime(2011, 3, 11, tzinfo=timezone.utc),
+)
 
 class BatchLoaderTest(TestCase):
     fixtures = [
@@ -50,6 +60,7 @@ class BatchLoaderTest(TestCase):
         batch = loader.load_batch(batch_dir)
         self.assertTrue(isinstance(batch, Batch))
         self.assertEqual(batch.name, 'batch_oru_testbatch_ver01')
+        self.assertEqual(batch.completed_at, timezone.now())
         self.assertEqual(len(batch.issues.all()), 4)
 
         title = Title.objects.get(lccn = 'sn83030214')

@@ -74,6 +74,7 @@ class Awardee(models.Model):
 class Batch(models.Model):
     name = models.CharField(max_length=250, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True)
     validated_batch_file = models.CharField(max_length=100)
     awardee = models.ForeignKey('Awardee', related_name='batches', null=True, on_delete = models.CASCADE)
     source = models.CharField(max_length=4096, null=True)
