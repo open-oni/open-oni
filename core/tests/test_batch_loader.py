@@ -11,11 +11,11 @@ from django.utils import timezone
 
 import core
 from core.batch_loader import BatchLoader
-from core.models import Title
-from core.models import Batch
+from core.models import Batch, Job, Title
 
 
 # `timezone.now` will now always return the value we want
+# Note this also sets the same last_modified value of all Job records
 @patch(
     "django.utils.timezone.now",
     lambda: datetime(2011, 3, 11, tzinfo=timezone.utc),
@@ -57,11 +57,39 @@ class BatchLoaderTest(TestCase):
         batch_dir = os.path.join(BatchLoaderTest.batchDir, "batch_oru_testbatch_ver01")
 
         loader = BatchLoader(process_ocr=False)
+
+        # Add fake in progress load_batch to test blocking jobs on same batch
+        fake_batch_job = Job(
+            info='batch_oru_testbatch_ver01',
+            status=Job.Status.IN_PROGRESS,
+            type=Job.Type.LOAD_BATCH,
+        )
+        fake_batch_job.save()
+
+        # Try to start a new load_batch job with the same batch
+        batch = loader.load_batch(batch_dir)
+        self.assertEqual(Batch.objects.all().count(), 0)
+
+        # Change fake job to purge_batch to check it still blocks new load_batch
+        fake_batch_job.type = Job.Type.PURGE_BATCH
+        fake_batch_job.save()
+        batch = loader.load_batch(batch_dir)
+        self.assertEqual(Batch.objects.all().count(), 0)
+
+        # Change fake job to FAILED so it no longer blocks load_batch
+        fake_batch_job.status = Job.Status.FAILED
+        fake_batch_job.save()
+
         batch = loader.load_batch(batch_dir)
         self.assertTrue(isinstance(batch, Batch))
         self.assertEqual(batch.name, 'batch_oru_testbatch_ver01')
         self.assertEqual(batch.completed_at, timezone.now())
         self.assertEqual(len(batch.issues.all()), 4)
+        self.assertEqual(
+            Job.objects.filter(type=Job.Type.LOAD_BATCH, info=batch.name).first().status,
+            Job.Status.SUCCEEDED
+        )
+        # Job table now has successful load_batch and failed purge_batch records
 
         title = Title.objects.get(lccn = 'sn83030214')
         self.assertTrue(title.has_issues)
@@ -124,7 +152,29 @@ class BatchLoaderTest(TestCase):
         self.assertTrue('essay' not in solr_doc)
         self.assertEqual(solr_doc['ocr_eng'], 'LCCNsn83030214Page1')
 
-        # purge the batch and make sure it's gone from the db
+        # Change fake purge job back to IN_PROGRESS to block purge of same batch
+        fake_batch_job.status = Job.Status.IN_PROGRESS
+        fake_batch_job.save()
+
+        # Try to start a new purge_batch job with the same batch
+        loader.purge_batch('batch_oru_testbatch_ver01')
+        self.assertEqual(Batch.objects.all().count(), 1)
+
+        # Change fake job to load_batch to check it still blocks new purge_batch
+        fake_batch_job.type = Job.Type.LOAD_BATCH
+        fake_batch_job.save()
+        loader.purge_batch('batch_oru_testbatch_ver01')
+        self.assertEqual(Batch.objects.all().count(), 1)
+
+        # Change fake job to FAILED so it no longer blocks purge_batch
+        fake_batch_job.status= Job.Status.FAILED
+        fake_batch_job.save()
+
+        # purge the batch and make sure it's gone from the db and job succeeded
         loader.purge_batch('batch_oru_testbatch_ver01')
         self.assertEqual(Batch.objects.all().count(), 0)
         self.assertEqual(Title.objects.get(lccn='sn83030214').has_issues, False)
+        self.assertEqual(
+            Job.objects.filter(type=Job.Type.PURGE_BATCH, info=batch.name).first().status,
+            Job.Status.SUCCEEDED
+        )
