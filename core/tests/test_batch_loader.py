@@ -54,26 +54,37 @@ class BatchLoaderTest(TestCase):
         tar.close()
         settings.BATCH_STORAGE = BatchLoaderTest.batchDir
 
-        batch_dir = os.path.join(BatchLoaderTest.batchDir, "batch_oru_testbatch_ver01")
+        batch_name = 'batch_oru_testbatch_ver01'
+        batch_dir = os.path.join(BatchLoaderTest.batchDir, batch_name)
 
         loader = BatchLoader(process_ocr=False)
 
+        # Test loading a batch that doesn't exist
+        nonexistent_batch_name = 'batch_nbu_nonexistent_ver01'
+        nonexistent_batch_path = os.path.join(BatchLoaderTest.batchDir, nonexistent_batch_name)
+        batch = loader.load_batch(nonexistent_batch_path)
+        self.assertEqual(Batch.objects.all().count(), 0)
+
         # Add fake in progress load_batch to test blocking jobs on same batch
         fake_batch_job = Job(
-            info='batch_oru_testbatch_ver01',
+            info=batch_name,
             status=Job.Status.IN_PROGRESS,
             type=Job.Type.LOAD_BATCH,
         )
         fake_batch_job.save()
 
         # Try to start a new load_batch job with the same batch
-        batch = loader.load_batch(batch_dir)
+        with self.assertRaisesMessage(core.batch_loader.BatchLoaderException,
+                                      "Job for batch %s already in progress:" % batch_name):
+            batch = loader.load_batch(batch_dir)
         self.assertEqual(Batch.objects.all().count(), 0)
 
         # Change fake job to purge_batch to check it still blocks new load_batch
         fake_batch_job.type = Job.Type.PURGE_BATCH
         fake_batch_job.save()
-        batch = loader.load_batch(batch_dir)
+        with self.assertRaisesMessage(core.batch_loader.BatchLoaderException,
+                                      "Job for batch %s already in progress:" % batch_name):
+            batch = loader.load_batch(batch_dir)
         self.assertEqual(Batch.objects.all().count(), 0)
 
         # Change fake job to FAILED so it no longer blocks load_batch
@@ -82,7 +93,7 @@ class BatchLoaderTest(TestCase):
 
         batch = loader.load_batch(batch_dir)
         self.assertTrue(isinstance(batch, Batch))
-        self.assertEqual(batch.name, 'batch_oru_testbatch_ver01')
+        self.assertEqual(batch.name, batch_name)
         self.assertEqual(batch.completed_at, timezone.now())
         self.assertEqual(len(batch.issues.all()), 4)
         self.assertEqual(
@@ -139,7 +150,7 @@ class BatchLoaderTest(TestCase):
         self.assertEqual(solr_doc['lccn'], 'sn83030214')
         self.assertEqual(solr_doc['title'], 'New-York tribune.')
         self.assertEqual(solr_doc['date'], '19990615')
-        self.assertEqual(solr_doc['batch'], 'batch_oru_testbatch_ver01')
+        self.assertEqual(solr_doc['batch'], batch_name)
         self.assertEqual(solr_doc['subject'], [
             'New York (N.Y.)--Newspapers.',
             'New York County (N.Y.)--Newspapers.'])
@@ -157,21 +168,31 @@ class BatchLoaderTest(TestCase):
         fake_batch_job.save()
 
         # Try to start a new purge_batch job with the same batch
-        loader.purge_batch('batch_oru_testbatch_ver01')
+        with self.assertRaisesMessage(core.batch_loader.BatchLoaderException,
+                                      "Job for batch %s already in progress:" % batch_name):
+            loader.purge_batch(batch_name)
         self.assertEqual(Batch.objects.all().count(), 1)
 
         # Change fake job to load_batch to check it still blocks new purge_batch
         fake_batch_job.type = Job.Type.LOAD_BATCH
         fake_batch_job.save()
-        loader.purge_batch('batch_oru_testbatch_ver01')
+        with self.assertRaisesMessage(core.batch_loader.BatchLoaderException,
+                                      "Job for batch %s already in progress:" % batch_name):
+            loader.purge_batch(batch_name)
         self.assertEqual(Batch.objects.all().count(), 1)
 
         # Change fake job to FAILED so it no longer blocks purge_batch
         fake_batch_job.status= Job.Status.FAILED
         fake_batch_job.save()
 
+        # Test purging a batch that doesn't exist
+        with self.assertRaisesMessage(core.batch_loader.BatchLoaderException,
+                                      "Tried to purge batch that does not exist: %s" % nonexistent_batch_name):
+            loader.purge_batch(nonexistent_batch_name)
+        self.assertEqual(Batch.objects.all().count(), 1)
+
         # purge the batch and make sure it's gone from the db and job succeeded
-        loader.purge_batch('batch_oru_testbatch_ver01')
+        loader.purge_batch(batch_name)
         self.assertEqual(Batch.objects.all().count(), 0)
         self.assertEqual(Title.objects.get(lccn='sn83030214').has_issues, False)
         self.assertEqual(
