@@ -3,6 +3,7 @@ import logging
 
 from optparse import make_option
 
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.core.management.base import CommandError
 
@@ -33,6 +34,9 @@ class Command(BaseCommand):
         parser.add_argument('--skip-process-ocr', action='store_true',
                             default=True, dest='process_ocr',
                             help='Do not generate ocr, and index')
+        parser.add_argument('--interactive', action='store_true',
+                            default=True, dest='interactive',
+                            help='Whether command run interactively via terminal or via code')
 
     def handle(self, batch_path, *args, **options):
         if len(args)!=0:
@@ -44,7 +48,9 @@ class Command(BaseCommand):
         loader = BatchLoader(process_ocr=options['process_ocr'],
                              process_coordinates=options['process_coordinates'])
         try:
-            batch = loader.load_batch(batch_path)
+            batch = loader.load_batch(batch_path, options['interactive'])
         except BatchLoaderException as e:
-            LOGGER.exception(e)
-            raise CommandError("Batch load failed. See logs/load_batch_#.log")
+            if not options['interactive']:
+                raise CommandError("Batch load failed. %s. See %s/load_batch_%s.log" % (
+                    e, settings.LOG_LOCATION, os.getpid()
+                ))

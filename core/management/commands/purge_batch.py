@@ -29,6 +29,9 @@ class Command(BaseCommand):
         parser.add_argument(
             '--optimize', action='store_true', default=False, dest='optimize',
             help='Optimize Solr and MySQL after purge (VERY SLOW)')
+        parser.add_argument('--interactive', action='store_true', default=True,
+            dest='interactive',
+            help='Whether command run interactively via terminal or via code')
 
     def handle(self, batch_name=None, *args, **options):
         if len(args)!=0:
@@ -37,7 +40,7 @@ class Command(BaseCommand):
         loader = BatchLoader()
         try:
             log.info("purging batch '%s'", batch_name)
-            loader.purge_batch(batch_name)
+            loader.purge_batch(batch_name, options['interactive'])
             if options['optimize']:
                 log.info("optimizing solr")
                 solr = solr_index.conn()
@@ -47,5 +50,7 @@ class Command(BaseCommand):
                 cursor.execute("OPTIMIZE TABLE core_ocr")
                 log.info("finished optimizing")
         except BatchLoaderException as e:
-            log.exception(e)
-            raise CommandError("unable to purge batch. check the purge_batch log for clues")
+            if not options['interactive']:
+                raise CommandError("Batch purge failed. %s. See %s/purge_batch_%s.log" % (
+                    e, settings.LOG_LOCATION, os.getpid()
+                ))
