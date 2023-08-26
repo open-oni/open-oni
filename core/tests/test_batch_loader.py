@@ -65,6 +65,12 @@ class BatchLoaderTest(TestCase):
         batch = loader.load_batch(nonexistent_batch_path)
         self.assertEqual(Batch.objects.all().count(), 0)
 
+        # Test non-interactive load of batch that doesn't exist
+        with self.assertRaisesMessage(core.batch_loader.BatchLoaderException,
+                                      "Unable to load %s: could not find batch_1.xml (or any of its aliases) in '%s/data/' -- has the batch been validated?" % (nonexistent_batch_path, nonexistent_batch_path)):
+            batch = loader.load_batch(nonexistent_batch_path, interactive=False)
+        self.assertEqual(Batch.objects.all().count(), 0)
+
         # Add fake in progress load_batch to test blocking jobs on same batch
         fake_batch_job = Job(
             info=batch_name,
@@ -190,6 +196,16 @@ class BatchLoaderTest(TestCase):
                                       "Tried to purge batch that does not exist: %s" % nonexistent_batch_name):
             loader.purge_batch(nonexistent_batch_name)
         self.assertEqual(Batch.objects.all().count(), 1)
+
+        # Test non-interactive purging a batch that doesn't exist
+        with patch.object(BatchLoader, '_purge_batch',
+                          side_effect=RuntimeError('Something failed with purging the batch.')):
+            with self.assertRaisesMessage(core.batch_loader.BatchLoaderException,
+                                          "Purge of %s failed: Something failed with purging the batch." % batch_name):
+                loader.purge_batch(batch_name, interactive=False)
+        self.assertEqual(Batch.objects.all().count(), 1)
+        # Delete failed job so doesn't interfere with job assertion below
+        Job.objects.filter(type=Job.Type.PURGE_BATCH, info=batch.name).delete()
 
         # purge the batch and make sure it's gone from the db and job succeeded
         loader.purge_batch(batch_name)

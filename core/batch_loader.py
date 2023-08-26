@@ -94,7 +94,7 @@ class BatchLoader(object):
         #b = urllib2.urlopen(batch.url)
         batch.validated_batch_file = self._find_batch_file(batch)
 
-    def load_batch(self, batch_path):
+    def load_batch(self, batch_path, interactive=True):
         """Load a batch, and return a Batch instance for the batch
         that was loaded.
 
@@ -215,6 +215,9 @@ class BatchLoader(object):
                 _logger.exception(pbe)
                 msg += "Failed to purge partially loaded content: %s" % pbe
                 _logger.error(msg)
+
+            if not interactive:
+                raise BatchLoaderException(msg)
 
         # updates the min and max years of all titles
         set_fulltext_range()
@@ -507,7 +510,7 @@ class BatchLoader(object):
         rel_path = path.replace(self.current_batch.storage_url, '')
         return rel_path
 
-    def purge_batch(self, batch_name):
+    def purge_batch(self, batch_name, interactive=True):
         batch = self._get_batch(batch_name)
         if batch is None:
             msg = "Tried to purge batch that does not exist: %s" % batch_name
@@ -550,6 +553,8 @@ class BatchLoader(object):
             _logger.error(msg)
             event = LoadBatchEvent(batch_name=batch_name, message=msg)
             event.save()
+            if not interactive:
+                raise BatchLoaderException(msg)
 
     def _purge_batch(self, batch):
         batch_name = batch.name
