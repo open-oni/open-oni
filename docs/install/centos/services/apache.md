@@ -36,6 +36,13 @@ sudo semanage fcontext -a -t httpd_sys_script_exec_t "/opt/openoni/ENV/lib/pytho
 mkdir /opt/openoni/static/compiled
 sudo semanage fcontext -a -t httpd_sys_rw_content_t "/opt/openoni/static/compiled(/.*)?"
 
+# Word coordinates files need Apache-writeable context for Django to modify
+# during load/purge via web request rather than command line
+mkdir /opt/openoni/data/word_coordinates
+sudo chown apache:openoni /opt/openoni/data/word_coordinates
+sudo chmod 2775 /opt/openoni/data/word_coordinates
+sudo semanage fcontext -a -t httpd_sys_rw_content_t "/opt/openoni/data/word_coordinates(/.*)?"
+
 sudo restorecon -F -R /opt/openoni/
 ```
 
