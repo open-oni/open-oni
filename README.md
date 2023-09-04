@@ -31,7 +31,7 @@ batches](https://chroniclingamerica.loc.gov/batches/).
 
 Open ONI does not currently provide tools to create batches, but the [University
 of Oregon and University of Nebraska-Lincoln were awarded a National Endowment
-for the Humanities grant](https://library.uoregon.edu/node/7671) to develop
+for the Humanities grant](https://web.archive.org/web/20230101212540/https://library.uoregon.edu/node/7671) to develop
 software and features to assist with batch creation, enable issue editing, and
 update the Open ONI front end framework alongside an accessibility / user
 experience audit.
