@@ -23,7 +23,7 @@ from django.utils import timezone
 
 from core import models
 from core.utils.utils import set_fulltext_range
-from core.models import Batch, Issue, Title, Awardee, Page, OCR
+from core.models import Awardee, Batch, Issue, Job, OCR, Page, Title
 from core.models import LoadBatchEvent
 from core.ocr_extractor import ocr_extractor
 from core import solr_index
@@ -94,7 +94,7 @@ class BatchLoader(object):
         #b = urllib2.urlopen(batch.url)
         batch.validated_batch_file = self._find_batch_file(batch)
 
-    def load_batch(self, batch_path):
+    def load_batch(self, batch_path, interactive=True):
         """Load a batch, and return a Batch instance for the batch
         that was loaded.
 
@@ -129,10 +129,25 @@ class BatchLoader(object):
         batch_name = _normalize_batch_name(batch_name)
         try:
             batch = Batch.objects.get(name=batch_name)
-            _logger.info("Batch already loaded: %s" % batch_name)
-            return batch
-        except Batch.DoesNotExist as e:
+            msg = "Batch already loaded: %s" % batch_name
+            _logger.warn(msg)
+            raise BatchLoaderException(msg)
+        except Batch.DoesNotExist:
+            # New batch will be created below
             pass
+
+        if Job.in_progress().filter(info=batch_name).count() > 0:
+            job_id = Job.in_progress().filter(info=batch_name).first().id
+            msg = "Job for batch %s already in progress: %s" % (batch_name, job_id)
+            _logger.info(msg)
+            raise BatchLoaderException(msg)
+
+        job = Job(
+            info=batch_name,
+            status=Job.Status.IN_PROGRESS,
+            type=Job.Type.LOAD_BATCH,
+        )
+        job.save()
 
         _logger.info("loading batch: %s" % batch_name)
         t0 = time()
@@ -178,23 +193,31 @@ class BatchLoader(object):
             if self.PROCESS_OCR:
                 self.solr.commit()
 
+            batch.completed_at = timezone.now()
             batch.save()
+            job.status = Job.Status.SUCCEEDED
+            job.save()
             msg = "processed %s pages" % batch.page_count
             event = LoadBatchEvent(batch_name=batch_name, message=msg)
             _logger.info(msg)
             event.save()
         except Exception as e:
-            msg = "unable to load batch: %s" % e
-            _logger.error(msg)
+            job.status = Job.Status.FAILED
+            job.save()
             _logger.exception(e)
+            msg = "Unable to load %s: %s" % (batch_path, e)
+            _logger.error(msg)
             event = LoadBatchEvent(batch_name=batch_name, message=msg)
             event.save()
             try:
                 self.purge_batch(batch_name)
             except Exception as pbe:
-                _logger.error("purge batch failed for failed load batch: %s" % pbe)
                 _logger.exception(pbe)
-            raise BatchLoaderException(msg)
+                msg += "Failed to purge partially loaded content: %s" % pbe
+                _logger.error(msg)
+
+            if not interactive:
+                raise BatchLoaderException(msg)
 
         # updates the min and max years of all titles
         set_fulltext_range()
@@ -203,9 +226,14 @@ class BatchLoader(object):
     def _get_batch(self, batch_name, batch_source=None, create=False):
         if create:
             batch = self._create_batch(batch_name, batch_source)
+            return batch
         else:
-            batch = Batch.objects.get(name=batch_name)
-        return batch
+            try:
+                batch = Batch.objects.get(name=batch_name)
+                return batch
+            except Batch.DoesNotExist as e:
+                _logger.warn("Tried to get batch %s that doesn't exist: %s" % (batch_name, e))
+                return None
 
     def _create_batch(self, batch_name, batch_source):
         if Batch.objects.filter(name=batch_name).count()!=0:
@@ -217,8 +245,8 @@ class BatchLoader(object):
             _, org_code, name_part, version = batch_name.split("_", 3)
             awardee_org_code = org_code
             batch.awardee = Awardee.objects.get(org_code=awardee_org_code)
-        except Awardee.DoesNotExist as e:
-            msg = "no awardee for org code: %s" % awardee_org_code
+        except Awardee.DoesNotExist:
+            msg = "No awardee for org code: %s" % awardee_org_code
             _logger.error(msg)
             raise BatchLoaderException(msg)
         batch.save()
@@ -470,9 +498,9 @@ class BatchLoader(object):
                     lang_text, coords = ocr_extractor(url)
                     self._process_coordinates(page, coords)
         except Exception as e:
-            msg = "unable to process coordinates for batch: %s" % e
-            _logger.error(msg)
             _logger.exception(e)
+            msg = "Unable to process coordinates for %s: %s" % (batch_name, e)
+            _logger.error(msg)
             raise BatchLoaderException(msg)
 
     def storage_relative_path(self, path):
@@ -482,13 +510,33 @@ class BatchLoader(object):
         rel_path = path.replace(self.current_batch.storage_url, '')
         return rel_path
 
-    def purge_batch(self, batch_name):
+    def purge_batch(self, batch_name, interactive=True):
+        batch = self._get_batch(batch_name)
+        if batch is None:
+            msg = "Tried to purge batch that does not exist: %s" % batch_name
+            _logger.warn(msg)
+            raise BatchLoaderException(msg)
+
+        if Job.in_progress().filter(info=batch_name).count() > 0:
+            job_id = Job.in_progress().filter(info=batch_name).first().id
+            msg = "Job for batch %s already in progress: %s" % (batch_name, job_id)
+            _logger.warn(msg)
+            raise BatchLoaderException(msg)
+
+        job = Job(
+            info=batch_name,
+            status=Job.Status.IN_PROGRESS,
+            type=Job.Type.PURGE_BATCH,
+        )
+        job.save()
+
         event = LoadBatchEvent(batch_name=batch_name, message="starting purge")
         event.save()
 
         try:
-            batch = self._get_batch(batch_name)
             self._purge_batch(batch)
+            job.status = Job.Status.SUCCEEDED
+            job.save()
             event = LoadBatchEvent(batch_name=batch_name, message="purged")
             event.save()
             # clean up symlinks if exists
@@ -499,12 +547,14 @@ class BatchLoader(object):
             # updates the min and max years of all titles
             set_fulltext_range()
         except Exception as e:
-            msg = "purge failed: %s" % e
+            job.status = Job.Status.FAILED
+            job.save()
+            msg = "Purge of %s failed: %s" % (batch_name, e)
             _logger.error(msg)
-            _logger.exception(e)
             event = LoadBatchEvent(batch_name=batch_name, message=msg)
             event.save()
-            raise BatchLoaderException(msg)
+            if not interactive:
+                raise BatchLoaderException(msg)
 
     def _purge_batch(self, batch):
         batch_name = batch.name
