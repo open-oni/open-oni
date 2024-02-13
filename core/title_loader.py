@@ -482,7 +482,7 @@ def _normal_oclc(value):
 def _is_openoni_electronic_resource(title, record):
     # delete the Title if it is for an electronic resource
     # and it contains a link to chronicling america
-    if record['245']['h'] != '[electronic resource].':
+    if record['245'].get('h') != '[electronic resource].':
         return False
     if len(title.issues.all()) != 0:
         return False
