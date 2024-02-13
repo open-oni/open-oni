@@ -199,7 +199,7 @@ class TitleLoader(object):
         title.name = f245['a']
 
         # add subtitle if available
-        if f245['b']:
+        if 'b' in f245:
             if not title.name.endswith(' '):
                 title.name += ' '
             title.name += f245['b']
@@ -274,7 +274,7 @@ class TitleLoader(object):
 
     def _extract_publication_dates(self, record, title):
         for field in record.get_fields('362'):
-            text = field['a']
+            text = field.get('a')
             if text is None:
                 continue
             pubdate, created = models.PublicationDate.objects.get_or_create(
@@ -300,7 +300,7 @@ class TitleLoader(object):
 
     def _extract_notes(self, record, title):
         for field in record.fields:
-            if field.tag.startswith('5') and field['a']:
+            if field.tag.startswith('5') and 'a' in field:
                 note, note_created = models.Note.objects.get_or_create(
                     text=field['a'],
                     type=field.tag,
@@ -346,9 +346,9 @@ class TitleLoader(object):
 
         for field in record.get_fields('246'):
             alt = models.AltTitle(name=field['a'])
-            if field['b']:
+            if 'b' in field:
                 alt.name += field['b']
-            if field['f']:
+            if 'f' in field:
                 alt.date = field['f']
             alt_titles.append(alt)
 
@@ -373,7 +373,7 @@ class TitleLoader(object):
 
     def _unpack_link(self, klass, field):
         link = klass()
-        link.name = field['t']
+        link.name = field.get('t')
         if not link.name:
             link.name = field['a']
 
