@@ -29,6 +29,14 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.1.1]
+[v1.1.1]: https://github.com/open-oni/open-oni/compare/v1.1.0...v1.1.1
+
+### Fixed
+- Title loader should no longer crash when optional MARC fields aren't present.
+  (The title loader is invoked by the management command `load_titles` as well
+  as when loading a batch with a title that has to be fetched from elsewhere)
+
 ## [v1.1.0]
 [v1.1.0]: https://github.com/open-oni/open-oni/compare/v1.0.6...v1.1.0
 
