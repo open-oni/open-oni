@@ -256,7 +256,7 @@ class TitleLoader(object):
             # TODO fix this up so that it works with nulls
             country = _normal_place(field['a'])
             state = _normal_place(field['b'])
-            county = _normal_place(field['c'])
+            county = _normal_place(field.get('c', None))
             city = _normal_place(field['d'])
             name = "%s--%s--%s" % (state, county, city)
             # hack to remove --None-- when county isn't present
