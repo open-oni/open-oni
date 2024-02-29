@@ -32,12 +32,12 @@ Markdown Spec](https://github.github.com/gfm/).
 ## [v1.1.1]
 [v1.1.1]: https://github.com/open-oni/open-oni/compare/v1.1.0...v1.1.1
 
-### Fixed
-- Title loader should no longer crash when optional MARC fields aren't present.
-  (The title loader is invoked by the management command `load_titles` as well
-  as when loading a batch with a title that has to be fetched from elsewhere)
-  - This isn't reproducible if you use pymarc v4.1.3, but sometime since that
-    release, pymarc stopped suppressing the key errors.
+### Changed
+- Upgraded pymarc to 5.x, as 4.x isn't supported and was giving us trouble in
+  some situations. The title loader has been adjusted to handle the new way
+  pymarc works.
+  - As a side-effect, users who had tried to use pymarc 5.x themselves will now
+    be able to do so without running into title-loader errors.
 
 ## [v1.1.0]
 [v1.1.0]: https://github.com/open-oni/open-oni/compare/v1.0.6...v1.1.0
