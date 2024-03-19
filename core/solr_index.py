@@ -499,6 +499,7 @@ def word_matches_for_page(page_id, words):
         'hl.snippets': 100,
         'hl.requireFieldMatch': 'true',
         'hl.maxAnalyzedChars': '102400',
+        'hl.method': 'original',
         'hl.fl': ','.join(ocr_list),
     }
     response = conn().search(q, **params)
