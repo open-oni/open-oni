@@ -155,6 +155,7 @@ class SolrPaginator(Paginator):
             'hl.snippets': 100, # TODO: make this unlimited
             'hl.requireFieldMatch': 'true', # limits highlighting slop
             'hl.maxAnalyzedChars': '102400', # increased from default 51200
+            'hl.method': 'original',
             'hl.fl': ','.join(self._ocr_list),
             'rows': self.per_page,
             'start': start,
