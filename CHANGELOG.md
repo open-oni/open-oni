@@ -38,6 +38,8 @@ Markdown Spec](https://github.github.com/gfm/).
   pymarc works.
   - As a side-effect, users who had tried to use pymarc 5.x themselves will now
     be able to do so without running into title-loader errors.
+- Forced Solr 9 and above to use the same highlighting method as prior versions
+  to keep compatibility with how ONI highlights searched words
 
 ## [v1.1.0]
 [v1.1.0]: https://github.com/open-oni/open-oni/compare/v1.0.6...v1.1.0
