@@ -29,6 +29,16 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.1.1]
+[v1.1.1]: https://github.com/open-oni/open-oni/compare/v1.1.0...v1.1.1
+
+### Changed
+- Forced Solr 9 and above to use the same highlighting method as prior versions
+  to keep compatibility with how ONI highlights searched words
+
+### Contributors
+- Jeremy Echols (jechols)
+
 ## [v1.1.0]
 [v1.1.0]: https://github.com/open-oni/open-oni/compare/v1.0.6...v1.1.0
 
