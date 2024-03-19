@@ -35,6 +35,11 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Changed
 - Forced Solr 9 and above to use the same highlighting method as prior versions
   to keep compatibility with how ONI highlights searched words
+- Upgraded pymarc to 5.x, as 4.x isn't supported and was giving us trouble in
+  some situations. The title loader has been adjusted to handle the new way
+  pymarc works.
+  - As a side-effect, users who had tried to use pymarc 5.x themselves will now
+    be able to do so without running into title-loader errors.
 
 ### Contributors
 - Jeremy Echols (jechols)
