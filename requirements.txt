@@ -5,7 +5,7 @@ lxml
 mysqlclient
 pip
 Pillow
-pymarc
+pymarc>=5.0,<6.0
 pysolr
 python-mimeparse
 rdflib

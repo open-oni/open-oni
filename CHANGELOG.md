@@ -29,6 +29,21 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.1.1]
+[v1.1.1]: https://github.com/open-oni/open-oni/compare/v1.1.0...v1.1.1
+
+### Changed
+- Upgraded pymarc to 5.x, as 4.x isn't supported and was giving us trouble in
+  some situations. The title loader has been adjusted to handle the new way
+  pymarc works.
+  - As a side-effect, users who had tried to use pymarc 5.x themselves will now
+    be able to do so without running into title-loader errors.
+- Forced Solr 9 and above to use the same highlighting method as prior versions
+  to keep compatibility with how ONI highlights searched words
+
+### Contributors
+- Jeremy Echols (jechols)
+
 ## [v1.1.0]
 [v1.1.0]: https://github.com/open-oni/open-oni/compare/v1.0.6...v1.1.0
 
