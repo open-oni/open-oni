@@ -50,7 +50,6 @@ Member Name | Slack Handle | Email Address
 ------------|--------------|--------------
 Karin Dalziel | karin | kdalziel2 [at] unl.edu
 Andrew Gearhart | andrewgearhart | amg32 [at] psu.edu
-Ray Henry | Ray Henry | rayh [at] uoregon.edu
 Greg Tunink | techgique | techgique [at] unl.edu
 
 ## Expected Behavior
@@ -212,9 +211,9 @@ After the beginning of each new year, the team will publicize the number of
 violation reports received and the team's enforcement decisions for the previous
 year. Any public incident reports will be listed and linked to as well.
 
-Year                  | 2020| 2021
-----------------------|-----|-----
-**Violation reports** |    0|    0
+Year                  | 2020| 2021| 2022| 2023
+----------------------|-----|-----|-----|-----
+**Violation reports** |    0|    0|    0|    0
 No violation occurred |     |
 Private reprimand     |     |
 Public reprimand      |     |
@@ -229,6 +228,10 @@ Public apology        |     |
 - 2020
   - None
 - 2021
+  - None
+- 2022
+  - None
+- 2023
   - None
 
 
