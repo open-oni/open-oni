@@ -12,7 +12,7 @@ services:
       - MYSQL_USER=openoni
       - MYSQL_PASSWORD=openoni
     volumes:
-      - ./conf/mysql/:/etc/mysql/conf.d:ro
+      - ./conf/mysql/:/etc/mysql/conf.d:ro,z
   solr:
     image: solr:8-slim
     command:
@@ -23,7 +23,7 @@ services:
       context: ./docker
       dockerfile: Dockerfile
     volumes:
-      - ./:/usr/local/src/openoni:ro
+      - ./:/usr/local/src/openoni:ro,z
       - onisrc:/opt/openoni
     depends_on:
       - rdbms
