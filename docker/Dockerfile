@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends \
@@ -14,6 +14,7 @@ RUN apt-get update && \
   mysql-client \
   curl \
   rsync \
+  pkg-config \
   python3-dev \
   python3-venv && \
   apt-get -y install --no-install-recommends libapache2-mod-wsgi-py3

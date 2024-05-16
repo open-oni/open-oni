@@ -29,6 +29,21 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.2.0]
+[v1.2.0]: https://github.com/open-oni/open-oni/compare/v1.1.1...v1.2.0
+
+### Changed
+
+- Upgraded Docker image to Ubuntu 22.04 LTS Jammy Jellyfish with Python 3.10.
+  - Added `python3 -m ensurepip` to pip install script so pip reliably works in
+    new virtual environments.
+  - Updated Python dependencies, added `pkg-config` to Ubuntu package needed for
+    building `mysqlclient` Python package.
+- Updated README's Dependency Roadmap
+
+### Contributors
+- Greg Tunink (techgique)
+
 ## [v1.1.1]
 [v1.1.1]: https://github.com/open-oni/open-oni/compare/v1.1.0...v1.1.1
 

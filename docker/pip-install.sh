@@ -8,6 +8,10 @@ fi
 # Activate the Python virtual environment
 source ENV/bin/activate
 
+# Bootstrap pip installer in virtual environment
+# https://docs.python.org/3/library/ensurepip.html
+python3 -m ensurepip
+
 # Install Open ONI dependencies
 # --no-cache-dir no longer disables building wheels in local cache,
 # so install wheel package to prevent bdist_wheel errors
