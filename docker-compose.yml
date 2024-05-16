@@ -12,7 +12,7 @@ services:
       - ./conf/mysql/:/etc/mysql/conf.d:Z
       - data-mariadb:/var/lib/mysql
   solr:
-    image: solr:8-slim
+    image: solr:9-slim
     volumes:
       - data-solr:/var/solr
     command:

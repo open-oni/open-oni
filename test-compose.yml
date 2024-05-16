@@ -14,7 +14,7 @@ services:
     volumes:
       - ./conf/mysql/:/etc/mysql/conf.d:ro,z
   solr:
-    image: solr:8-slim
+    image: solr:9-slim
     command:
       - solr-precreate
       - openoni
