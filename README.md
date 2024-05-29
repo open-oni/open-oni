@@ -64,7 +64,7 @@ Solr | 9.x | Approx 2027, based on past major release dates | TBD | https://luce
 RAIS | 4.x | Unknown | TBD | https://github.com/uoregon-libraries/rais-image-server
 jQuery | 3.7.1 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
 Bootstrap | 3.4.1 | 2019-07-24 | Upgrade as part of NEH grant | https://github.com/twbs/release
-OpenSeadragon | 2.4.2 | Unknown | 3.x | https://github.com/openseadragon/openseadragon
+OpenSeadragon | 4.1.1 | Unknown | 5.x | https://github.com/openseadragon/openseadragon
 tablesorter | 2.31.3 | Unknown | TBD | https://github.com/Mottie/tablesorter/wiki/Changes
 
 ## Documentation
