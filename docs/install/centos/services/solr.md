@@ -14,9 +14,9 @@
 
 General installation and configuration is outside the scope of Open ONI
 documentation, but follow these to start:
-- [Solr Downloads](https://lucene.apache.org/solr/downloads.html)
+- [Solr Downloads](https://solr.apache.org/downloads.html)
 - [Production Service
-  Install](https://lucene.apache.org/solr/guide/8_3/taking-solr-to-production.html)
+  Install](https://solr.apache.org/guide/solr/latest/deployment-guide/taking-solr-to-production.html)
 
 ## Configure
 ```bash
