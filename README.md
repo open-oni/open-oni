@@ -67,6 +67,11 @@ Bootstrap | 3.4.1 | 2019-07-24 | Upgrade as part of NEH grant | https://github.c
 OpenSeadragon | 4.1.1 | Unknown | 5.x | https://github.com/openseadragon/openseadragon
 tablesorter | 2.31.3 | Unknown | TBD | https://github.com/Mottie/tablesorter/wiki/Changes
 
+Also see our [Python package
+dependencies](https://github.com/open-oni/open-oni/blob/dev/requirements.txt).
+We've only added constraints where we are confident they are necessary to avoid
+breaking changes from new releases.
+
 ## Documentation
 - [Installation, Configuration, and
   Troubleshooting](https://github.com/open-oni/open-oni/tree/dev/docs)
@@ -117,5 +122,5 @@ to follow the [Open ONI Community Code of
 Conduct](https://github.com/open-oni/open-oni/tree/dev/CODE_OF_CONDUCT.md)
 
 ## License
-[Licensed](https://github.com/open-oni/open-oni/blob/main/LICENSE) under the
+[Licensed](https://github.com/open-oni/open-oni/blob/dev/LICENSE) under the
 Apache License, Version 2.0
