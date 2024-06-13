@@ -78,6 +78,10 @@ prep_webserver() {
   chown -R www-data:www-data /opt/openoni/log
   /opt/openoni/manage.py collectstatic --noinput
 
+  # Also need write access for batch management via admin API plugin
+  mkdir -p /opt/openoni/data/word_coordinates
+  chown -R www-data:www-data /opt/openoni/data/word_coordinates
+
   # Remove any pre-existing PID file which prevents Apache from starting thus
   # causing the container to close immediately after.
   #

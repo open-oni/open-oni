@@ -10,6 +10,7 @@ import tarfile
 import textwrap
 import urllib.parse
 import io
+import uuid
 
 from rfc3339 import rfc3339
 from lxml import etree
@@ -74,6 +75,7 @@ class Awardee(models.Model):
 class Batch(models.Model):
     name = models.CharField(max_length=250, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(null=True)
     validated_batch_file = models.CharField(max_length=100)
     awardee = models.ForeignKey('Awardee', related_name='batches', null=True, on_delete = models.CASCADE)
     source = models.CharField(max_length=4096, null=True)
@@ -1355,3 +1357,40 @@ class LccnDateCopyright(models.Model):
     end_date = models.DateField()
     copyright = models.ForeignKey('Copyright', related_name='lccn_date_copyright', on_delete = models.CASCADE)
 
+
+class Job(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    info = models.CharField(max_length=255)
+    last_modified = models.DateTimeField(auto_now=True, db_index=True)
+
+    class Status(models.IntegerChoices):
+        IN_PROGRESS = 1
+        SUCCEEDED = 2
+        FAILED = 3
+
+    status = models.IntegerField(choices=Status.choices)
+
+    class Type(models.IntegerChoices):
+        LOAD_BATCH = 1
+        PURGE_BATCH = 2
+
+    type = models.IntegerField(choices=Type.choices)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['status', 'info', '-last_modified']),
+            models.Index(fields=['type', 'info', '-last_modified']),
+        ]
+        ordering = ['-last_modified']
+
+    @classmethod
+    def failed(klass):
+        return Job.objects.filter(status=klass.Status.FAILED)
+
+    @classmethod
+    def in_progress(klass):
+        return Job.objects.filter(status=klass.Status.IN_PROGRESS)
+
+    @classmethod
+    def succeeded(klass):
+        return Job.objects.filter(status=klass.Status.SUCCEEDED)
