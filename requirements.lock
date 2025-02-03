@@ -1,9 +1,10 @@
-asgiref==3.5.0
+asgiref==3.8.1
+backports.zoneinfo==0.2.1
 certifi==2020.6.20
 chardet==3.0.4
 charset-normalizer==2.0.12
 coverage==6.3.2
-Django==3.2.12
+Django==4.2.18
 djangorestframework==3.14.0
 feedparser==6.0.8
 idna==2.10
@@ -22,6 +23,7 @@ rfc3339==6.2
 sgmllib3k==1.0.0
 simplejson==3.17.6
 six==1.15.0
-sqlparse==0.4.1
+sqlparse==0.5.3
+typing-extensions==4.12.2
 urllib3==1.25.11
 worldcat==0.3.6
