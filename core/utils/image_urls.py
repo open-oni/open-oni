@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.utils.http import urlquote
+from urllib.parse import quote as urlquote
 
 def thumb_image_url(page):
     return resize_url(page, settings.THUMBNAIL_WIDTH)
