@@ -56,7 +56,7 @@ class Command(BaseCommand):
                 place.save()
                 _logger.info("found dbpedia resource %s" % url)
             else:
-                _logger.warn("couldn't find dbpedia resource for %s" % url)
+                _logger.warning("couldn't find dbpedia resource for %s" % url)
 
             reset_queries()
         _logger.info("finished looking up places in dbpedia")

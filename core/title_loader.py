@@ -189,9 +189,9 @@ class TitleLoader(object):
                 title.delete()
                 self.records_deleted += 1
             else:
-                _logger.warn("not deleting title %s it has issue data" % lccn)
+                _logger.warning("not deleting title %s it has issue data" % lccn)
         except models.Title.DoesNotExist:
-            _logger.warn("no such title %s to delete" % lccn)
+            _logger.warning("no such title %s to delete" % lccn)
         return
 
     def _set_name(self, record, title):
