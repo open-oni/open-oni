@@ -50,11 +50,11 @@
     <div class="pagination pagination-mini">
     <ul>
       {% for val in browse_val %}
-      {% ifequal val start %}
+      {% if val == start %}
       <li class="alpha_tag"><a class="off" href="{% url 'openoni_titles_start' val %}">{{val}}</a></li>
       {% else %}
       <li class="alpha_tag"><a href="{% url 'openoni_titles_start' val %}">{{val}}</a></li>
-      {% endifequal %}
+      {% endif %}
       {% endfor %}
     </ul>
     </div>

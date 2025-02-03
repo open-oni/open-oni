@@ -4,7 +4,7 @@
 
 {% block subcontent %}
 
-  {% ifnotequal paginator.num_pages 1 %}
+  {% if paginator.num_pages != 1 %}
     <nav aria-label="Pages">
     <ul class="pagination pagination-sm">
         {% if page.has_previous %}
@@ -20,21 +20,21 @@
         </li>
         {% endif %}
         {% for page_number in page_range_short %}
-        {% ifequal page_number "..." %}
+        {% if page_number == "..." %}
         <li class="page-item disabled">
           <span class="page-link" aria-label="Middle of Page Range" aria-disabled="true">…</span>
         </li>
         {% else %}
 
-        {% ifequal page_number page.number %}
+        {% if page_number == page.number %}
         <li class="page-item active" aria-current="true">
             {% else %}
         <li class="page-item">
-            {% endifequal %}
+            {% endif %}
             <a class="page-link" href="{% url 'openoni_institutions_page_number' page_number%}"
                 aria-label="Page {{page_number}}">{{page_number}}</a>
         </li>
-        {% endifequal %}
+        {% endif %}
         {% endfor %}
 
         {% if page.has_next %}
@@ -53,7 +53,7 @@
     </ul>
 </nav>
 
-{% endifnotequal %}
+{% endif %}
 
     <div id="search_results_box" class="table-responsive mt-2">
        
