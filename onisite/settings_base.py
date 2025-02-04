@@ -12,9 +12,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # Our URLs are within the onisite app
 ROOT_URLCONF = 'onisite.urls'
 
-# Enable browser XSS protection, MIME-type sniff prevention headers,
-# and disable framing / embedding
-SECURE_BROWSER_XSS_FILTER = True
+# Enable MIME-type sniff prevention headers and disable framing / embedding
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 
@@ -302,4 +300,8 @@ else:
 
     # Fingerprint compiled static files with MD5 hash of contents
     # Store hashes in STATIC_ROOT directory as staticfiles.json
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+    STORAGES = {
+        'staticfiles': {
+            'BACKEND': 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage',
+        },
+    }
