@@ -5,7 +5,7 @@ from .django_defaults import *
 ################################################################
 # DJANGO CUSTOMIZATIONS
 ################################################################
-# https://docs.djangoproject.com/en/3.2/releases/3.2/#customizing-type-of-auto-created-primary-keys
+# https://docs.djangoproject.com/en/4.2/releases/3.2/#customizing-type-of-auto-created-primary-keys
 # Maintain past default setting to avoid extra migrations
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -260,7 +260,7 @@ if DEBUG:
     # Output emails to console
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-    # Suggested order: https://docs.djangoproject.com/en/3.2/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/4.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.DisableClientSideCachingMiddleware',         # Open ONI
@@ -286,7 +286,7 @@ else:
         }
     }
 
-    # Suggested order: https://docs.djangoproject.com/en/3.2/ref/middleware/#middleware-ordering
+    # Suggested order: https://docs.djangoproject.com/en/4.2/ref/middleware/#middleware-ordering
     MIDDLEWARE = (
         'django.middleware.security.SecurityMiddleware',
         'core.middleware.TooBusyMiddleware',                          # Open ONI
