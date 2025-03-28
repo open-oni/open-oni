@@ -18,6 +18,7 @@ from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.defaultfilters import filesizeformat
 from django.utils import html
+from django.views import View
 from django.views.decorators.vary import vary_on_headers
 
 from core.utils.url import unpack_url_path
@@ -168,99 +169,117 @@ def issue_pages_rdf(request, lccn, date, edition):
     return response
 
 
-@cache_page(settings.DEFAULT_TTL_SECONDS)
-@vary_on_headers('Referer')
-def page(request, lccn, date, edition, sequence, words=None):
-    fragments = []
-    if words:
-        fragments.append("words=" + words)
-    qs = request.META.get('QUERY_STRING')
-    if qs:
-        fragments.append(qs)
-    if fragments:
-        path_parts = dict(lccn=lccn, date=date, edition=edition,
-                          sequence=sequence)
-        url = urls.reverse('openoni_page',
-                                   kwargs=path_parts)
+class PageView(View):
+    """
+    Class-based view for displaying a single newspaper page.
+    Handles redirects for search highlighting and provides context
+    for rendering the page template.
+    """
+    def get(self, request, lccn, date, edition, sequence, words=None):
+        fragments = []
+        if words:
+            fragments.append("words=" + words)
+        qs = request.META.get('QUERY_STRING')
+        if qs:
+            fragments.append(qs)
 
-        return HttpResponseRedirect(url + "#" + "&".join(fragments))
+        # Redirect if there are fragments (search terms or query string)
+        # to ensure the URL includes the hash for JS highlighting
+        if fragments:
+            path_parts = dict(lccn=lccn, date=date, edition=edition,
+                              sequence=sequence)
+            url = urls.reverse('openoni_page', kwargs=path_parts)
+            return HttpResponseRedirect(url + "#" + "&".join(fragments))
 
-    title, issue, page = _get_tip(lccn, date, edition, sequence)
+        title, issue, page = _get_tip(lccn, date, edition, sequence)
 
-    if not page.jp2_filename:
-        notes = page.notes.filter(type="noteAboutReproduction")
-        num_notes = notes.count()
-        if num_notes >= 1:
-            explanation = notes[0].text
-        else:
-            explanation = ""
+        explanation = ""
+        if not page.jp2_filename:
+            notes = page.notes.filter(type="noteAboutReproduction")
+            if notes.exists():
+                explanation = notes.first().text
 
-    # if no word highlights were requests, see if the user came
-    # from search engine results and attempt to highlight words from their
-    # query by redirecting to a url that has the highlighted words in it
-    if not words:
-        try:
-            words = _search_engine_words(request)
-            words = '+'.join(words)
-            if len(words) > 0:
-                path_parts = dict(lccn=lccn, date=date, edition=edition,
-                                  sequence=sequence, words=words)
-                url = urls.reverse('openoni_page_words',
-                                           kwargs=path_parts)
-                return HttpResponseRedirect(url)
-        except Exception as e:
-            if settings.DEBUG:
-                raise e
-            # else squish the exception so the page will still get
-            # served up minus the highlights
+        # If no word highlights were requested, check for search engine referer
+        # and redirect to include words in the URL hash if found.
+        if not words:
+            try:
+                search_words = _search_engine_words(request)
+                search_words_str = '+'.join(search_words)
+                if len(search_words_str) > 0:
+                    path_parts = dict(lccn=lccn, date=date, edition=edition,
+                                      sequence=sequence, words=search_words_str)
+                    url = urls.reverse('openoni_page_words', kwargs=path_parts)
+                    return HttpResponseRedirect(url)
+            except Exception as e:
+                # In production, suppress the error to serve the page without highlights.
+                # In debug mode, re-raise the exception.
+                if settings.DEBUG:
+                    raise e
 
-    # Calculate the previous_issue_first_page. Note: it was decided
-    # that we want to skip over issues with missing pages. See ticket
-    # #383.
-    _issue = issue
-    while True:
+        # Find the first page of the previous available issue
+        _prev_issue = issue
         previous_issue_first_page = None
-        _issue = _issue.previous
-        if not _issue:
-            break
-        previous_issue_first_page = _issue.first_page
-        if previous_issue_first_page:
-            break
+        while True:
+            _prev_issue = _prev_issue.previous
+            if not _prev_issue:
+                break
+            previous_issue_first_page = _prev_issue.first_page
+            if previous_issue_first_page:
+                break
 
-    # do the same as above but for next_issue this time.
-    _issue = issue
-    while True:
+        # Find the first page of the next available issue
+        _next_issue = issue
         next_issue_first_page = None
-        _issue = _issue.next
-        if not _issue:
-            break
-        next_issue_first_page = _issue.first_page
-        if next_issue_first_page:
-            break
+        while True:
+            _next_issue = _next_issue.next
+            if not _next_issue:
+                break
+            next_issue_first_page = _next_issue.first_page
+            if next_issue_first_page:
+                break
 
-    page_title = "%s, %s, %s" % (label(title), label(issue), label(page))
-    page_head_heading = "%s, %s, %s" % (title.display_name, label(issue), label(page))
-    page_head_subheading = label(title)
-    crumbs = create_crumbs(title, issue, date, edition, page)
+        # Prepare context for the template
+        page_title = "%s, %s, %s" % (label(title), label(issue), label(page))
+        page_head_heading = "%s, %s, %s" % (title.display_name, label(issue), label(page))
+        page_head_subheading = label(title)
+        crumbs = create_crumbs(title, issue, date, edition, page)
 
-    filename = page.jp2_abs_filename
-    if filename:
-        try:
-            im = os.path.getsize(filename)
-            image_size = filesizeformat(im)
-        except OSError:
-            image_size = "Unknown"
+        image_size = "Unknown"
+        filename = page.jp2_abs_filename
+        if filename:
+            try:
+                im_size = os.path.getsize(filename)
+                image_size = filesizeformat(im_size)
+            except OSError:
+                # If file size can't be determined, keep image_size as "Unknown"
+                pass
 
-    image_credit = issue.batch.awardee.name
-    host = request.get_host()
-    static_url = settings.STATIC_URL
+        image_credit = issue.batch.awardee.name
+        host = request.get_host()
+        static_url = settings.STATIC_URL
 
-    template = "page.html"
-    response = render(request, template, locals())
-    return response
+        context = {
+            'title': title,
+            'issue': issue,
+            'page': page,
+            'explanation': explanation,
+            'previous_issue_first_page': previous_issue_first_page,
+            'next_issue_first_page': next_issue_first_page,
+            'page_title': page_title,
+            'page_head_heading': page_head_heading,
+            'page_head_subheading': page_head_subheading,
+            'crumbs': crumbs,
+            'image_size': image_size,
+            'image_credit': image_credit + " - ARGUS",
+            'host': host,
+            'static_url': static_url,
+            'words': words,  # Pass words to template context for potential use
+        }
 
+        template = "page.html"
+        response = render(request, template, context)
+        return response
 
-@cache_page(settings.DEFAULT_TTL_SECONDS)
 def titles(request, start=None, page_number=1):
     page_title = 'Newspaper Titles'
     if start:

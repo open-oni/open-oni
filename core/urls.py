@@ -1,9 +1,12 @@
 import os
 
+import os
+
 from django.conf import settings
 from django.urls import include, path, re_path
 from django.utils import cache
 from django.views.defaults import page_not_found, server_error
+from django.views.decorators.vary import vary_on_headers
 
 from .views import home, browse, directory, reports, search, static
 
@@ -113,7 +116,8 @@ urlpatterns = [
 
     # example: /lccn/sn85066387/1907-03-17/ed-1/seq-4
     re_path(r'^lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)/$',
-        browse.page, name="openoni_page"),
+        cache_page(vary_on_headers('Referer')(browse.PageView.as_view()), settings.DEFAULT_TTL_SECONDS),
+        name="openoni_page"),
 
     # example: /lccn/sn85066387/1907-03-17/ed-1/seq-4.pdf
     re_path(r'^lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+).pdf$',
@@ -133,7 +137,8 @@ urlpatterns = [
 
     # example: /lccn/sn85066387/1907-03-17/ed-1/seq-4/;words=
     re_path(r'^lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)/;words=(?P<words>.+)$',
-        browse.page, name="openoni_page_words"),
+        cache_page(vary_on_headers('Referer')(browse.PageView.as_view()), settings.DEFAULT_TTL_SECONDS),
+        name="openoni_page_words"),
 
     # example: /lccn/sn85066387/1907-03-17/ed-1/seq-4/print/image_813x1024_from_0,0_to_6504,8192
     re_path(r'^lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)/print/image_(?P<width>\d+)x(?P<height>\d+)_from_(?P<x1>\d+),(?P<y1>\d+)_to_(?P<x2>\d+),(?P<y2>\d+)/$',
