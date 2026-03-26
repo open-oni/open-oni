@@ -1,5 +1,0 @@
-#!/bin/bash
-cd /opt/openoni
-source ENV/bin/activate
-./manage.py $@
-chown -R www-data:www-data /var/tmp/django_cache

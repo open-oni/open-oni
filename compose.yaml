@@ -1,0 +1,78 @@
+services:
+  rdbms:
+    build:
+      context: ./docker/mysql
+    environment:
+      MYSQL_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD must not be blank}
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    volumes:
+      - rdbms:/var/lib/mysql
+
+  solr:
+    build:
+      context: ./docker/solr
+    volumes:
+      - solr:/var/solr
+
+  rais:
+    build:
+      context: ./docker/rais
+    environment:
+      RAIS_IIIFBASEURL: ${ONI_BASE_URL:?ONI_BASE_URL must not be blank}
+      RAIS_TILECACHELEN: ${RAIS_TILECACHELEN:-250}
+    volumes:
+      - oni-data:/var/local/oni-data:ro
+
+  web:
+    build:
+      context: ./docker/caddy
+    depends_on:
+      app:
+        condition: service_started
+      rais:
+        condition: service_started
+    environment:
+      CADDY_DEBUG: null
+    volumes:
+      - oni-data:/var/local/oni-data:ro
+      - oni-static:/opt/openoni/static:ro
+
+  app:
+    build:
+      dockerfile: ./docker/python/Dockerfile
+    depends_on:
+      rdbms:
+        condition: service_healthy
+      solr:
+        condition: service_started
+    environment:
+      ONI_BASE_URL: ${ONI_BASE_URL:?ONI_BASE_URL must not be blank}
+      ONI_IIIF_URL: ${ONI_BASE_URL:?ONI_BASE_URL must not be blank}/images/iiif
+      ONI_DB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD must not be blank}
+      ONI_LOG_LEVEL: ${ONI_LOG_LEVEL:-INFO}
+      ONI_LOG_TO_FILE: ${ONI_LOG_TO_FILE:-1}
+      ONI_LOG_SQL: ${ONI_LOG_SQL:-0}
+      ONI_SECRET_KEY: ${ONI_SECRET_KEY:?ONI_SECRET_KEY must not be blank}
+      ONI_DEBUG: ${ONI_DEBUG:-0}
+      GUNICORN_WORKERS: null
+      GUNICORN_MAX_REQUESTS: null
+    volumes:
+      - oni-config:/var/local/oni-config:rw
+      - oni-data:/var/local/oni-data:rw
+      - oni-static:/opt/openoni/static:rw
+      - oni-plugins:/opt/openoni/onisite/plugins:ro
+      - oni-themes:/opt/openoni/themes:ro
+
+volumes:
+  rdbms: {}
+  solr: {}
+  oni-config: {}
+  oni-data: {}
+  oni-static: {}
+  oni-plugins: {}
+  oni-themes: {}

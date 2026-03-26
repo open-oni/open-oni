@@ -1,0 +1,85 @@
+# This is an example of overriding the core compose setup. Copy to
+# `compose.override.yaml` and adjust values as needed.
+
+volumes:
+  # Redefine the oni-data volume so that it's more easily manipulated locally
+  # while still being connected (via `compose.yaml`) to all services that need
+  # this volume, and with permissions that make sense per service.
+  #
+  # You can do this for other mounts, too, but choose the directory ("device")
+  # carefully: "moving" a volume doesn't exist. The driver and driver options
+  # are effectively "on-create" semantics (you have to destroy the volume to
+  # redefine it).
+  oni-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/data
+
+  # For development, you could define a "config" volume this way so your
+  # configuration is always available to edit
+  oni-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/DEV-VOLS/config
+
+  # Other mount points you might want. These are touched rarely, though. You
+  # shouldn't do this outside a dev environment.
+  #oni-plugins:
+  #  driver: local
+  #  driver_opts:
+  #    type: none
+  #    o: bind
+  #    device: ${PWD}/DEV-VOLS/plugins
+  #oni-themes:
+  #  driver: local
+  #  driver_opts:
+  #    type: none
+  #    o: bind
+  #    device: ${PWD}/DEV-VOLS/themes
+
+services:
+  rdbms:
+    # Exposes MariaDB to your host so you can locally run mysql commands. We
+    # lock it down to 127.0.0.1 to reduce risk if this gets used in a prod
+    # environment by mistake. Don't do this in production even so.
+    ports:
+      - 127.0.0.1:3306:3306
+
+  # Solr override to reach the web UI locally. Same as above, lock down to
+  # 127.0.0.1, and still, don't do this in production.
+  solr:
+    ports:
+      - 127.0.0.1:8983:8983
+
+  web:
+    # Expose the web server to the host on 8080, again bound only to 127.0.0.1.
+    # In production (if you aren't using something else to expose this), you
+    # will need to expose this on the host's primary IP or else just 0.0.0.0.
+    ports:
+      - 127.0.0.1:8080:80
+
+  # For development, it's moderately safe to override most in-container
+  # directories. You should almost never do this outside active development,
+  # and there are still reasons to be cautious:
+  #
+  # - Avoid mounting "data" in this way. It's used by three services (and
+  #   counting), and redefining the volume's `driver_opts` is easier and
+  #   arguably safer.
+  # - Do **not** mount the entire project root. Seriously. It will hurt.
+  # - This acts as an *override*. Volumes are still created and populated,
+  #   but effectively ignored, which can mask some problems.
+  # - Some parts of the stack will give you permissions issues if you mess
+  #   with files the stack also touches, like compiled assets.
+  # - Nesting volumes and overrides can get really weird. Try not to mount
+  #   anything that contains volumes, or anything that's below a volume.
+  #
+  # The one exception is the "core" directory, where you *have* to mount it if
+  # you want live code updates in podman compose (since it doesn't implement
+  # the "watch" spec).
+  #app:
+  #  volumes:
+  #    - ./core:/opt/openoni/core:ro
