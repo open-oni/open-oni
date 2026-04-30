@@ -1,9 +1,14 @@
 # Configuring Your App
 
-Below details all of the information regarding configuring and customizing your instance of Open ONI.
-By default the docker compose version of Open ONI works without any needed overrides or configuration changes.
-You should read it carefully and fully understand what and why you are making the changes.
-Failure to do so will cause problems. 
+Below details all of the information regarding configuring and customizing your
+instance of Open ONI.
+
+**Note**: the containerized version of Open ONI works almost exclusively with
+environment settings, with only a few exceptions. You only need to edit the
+configuration files (`urls.py` and `settings_local.py`) for plugins and themes
+in most cases, and when you do, you have to edit them in the `oni-config`
+volume, not the project filesystem. See our [docker installation
+guide](/docs/install/docker.md) for details.
 
 ## `onisite/settings_local.py`
 
@@ -33,23 +38,8 @@ environments, such as development vs. staging vs. production. Environment
 variables are used in a few different files and are provided to reduce the need
 to customize settings files directly.
 
-### `docker-compose.yml`
-Note many settings such as database credentials and URLs shouldn't be changed
-for the default `docker compose` setup.
-
-If you're using `docker compose`, you can also opt to configure these
-values via a `docker-compose.override.yml` or `.env` file. You can copy
-`.env.example` to `.env` and alter `.env` as necessary.
-
-- `APACHE_LOG_LEVEL` (default = `warn`): Log level for Apache - values beyond
- `warn` tend to produce a lot of extraneous log entries.
-- `HTTPPORT` (default = `80`): The website's HTTP port exposed on the host
- machine.
-
 ### `onisite/settings_base.py`
-- `ONI_DB_HOST` (default = `rdbms`): Hostname for the MariaDB server. If using
- docker compose, this *and all other database settings* should remain
- unchanged unless you know what you're doing!
+- `ONI_DB_HOST` (default = `rdbms`): Hostname for the MariaDB server.
 - `ONI_DB_PORT` (default = `3306`): Database port, almost always 3306.
 - `ONI_DB_NAME` (default = `openoni`): Database name.
 - `ONI_DB_USER` (default = `openoni`): Database username.
@@ -76,8 +66,6 @@ values via a `docker-compose.override.yml` or `.env` file. You can copy
 - `ONI_BASE_URL` (default = `http://localhost`): This must be the URL which
  reaches the ONI site. For development this is usually kept at the default.
  For production, it could be something like `https://oregonnews.uoregon.edu`.
- If your docker compose HTTPPORT isn't the default `80` for http, you need to
- include that here, e.g. `http://demo.example.org:8080`.
 - `ONI_HSTS_SECONDS` (default = `0`): Enable HSTS cookies for HTTPS security if
  greater than `0`. Suggest testing with a low value like `300` and a higher
  value like `31536000` for long-term use in production

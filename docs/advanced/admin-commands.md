@@ -17,16 +17,6 @@ source ENV/bin/activate
 .\ENV\bin\activate.ps1
 ```
 
-If using docker, be sure that your docker daemon is running and you have run `docker compose up`.
-
-If using docker, the `manage` shortcut is necessary.  It automatically
-activates the environment, but also fixes some permissions issues which occur
-when running `manage.py` as a non-Apache user.
-
-```bash
-docker compose exec web manage [command]
-```
-
 Please bear in mind that we are still working our way through some of the
 commands and have not yet determined which tasks are no longer useful and
 should be removed or which ones need better explanations and support.  Commands
@@ -41,9 +31,6 @@ e.g.:
 ```bash
 # Get help on the "load_batch" command
 ./manage.py help load_batch
-
-# Or with docker
-docker compose exec web manage help load_batch
 ```
 
 ## The Comprehensive List

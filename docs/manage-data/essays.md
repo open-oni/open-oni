@@ -77,9 +77,6 @@ Storing essays in the database is not recommended and no essay loading utility f
 
 Should you need to add new essays for testing purposes, we must first connect to the database:
 
-- If you're running the Open ONI development Docker environment
-    - `docker compose exec rdbms mysql -u openoni -p -D openoni`
-    - `openoni` is the default password for development
 - On a server running ChronAm
     - `mysql -u (username) -p -D (database name)`
     - Database name, username, and password found in `/opt/chronam/settings.py`
