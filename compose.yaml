@@ -61,6 +61,8 @@ services:
       ONI_DEBUG: ${ONI_DEBUG:-0}
       GUNICORN_WORKERS: null
       GUNICORN_MAX_REQUESTS: null
+      ONI_SHORT_PROJECT_NAME: null
+      ONI_LONG_PROJECT_NAME: null
     volumes:
       - oni-config:/var/local/oni-config:rw
       - oni-data:/var/local/oni-data:rw
