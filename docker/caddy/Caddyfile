@@ -33,6 +33,9 @@
     file_server
   }
 
+  # Drop any custom ONI rules here (e.g., for plugins that need custom rules)
+  import /etc/caddy/conf.d/*
+
   # RAIS IIIF image server
   @iiif path_regexp iiif ^/(images/iiif/.*(?:\.jpg|info\.json))$
   reverse_proxy @iiif http://rais:12415

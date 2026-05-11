@@ -41,6 +41,7 @@ services:
     volumes:
       - oni-data:/var/local/oni-data:ro
       - oni-static:/opt/openoni/static:ro
+      - caddy-conf:/etc/caddy/conf.d:ro
 
   app:
     build:
@@ -78,3 +79,4 @@ volumes:
   oni-static: {}
   oni-plugins: {}
   oni-themes: {}
+  caddy-conf: {}
