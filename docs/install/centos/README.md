@@ -61,7 +61,7 @@ the order listed here:
 - [Services](/docs/install/centos/services/)
     - [Apache](/docs/install/centos/services/apache.md)
     - [MariaDB](/docs/install/centos/services/mariadb.md)
-    - [RAIS](/docs/install/centos/services/rais.md)
+    - [RAIS](https://github.com/uoregon-libraries/rais-image-server/wiki/Installation)
     - [Solr](/docs/install/centos/services/solr.md)
 - [Open ONI Django App](/docs/install/centos/openoni.md)
 

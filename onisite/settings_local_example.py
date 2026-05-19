@@ -25,6 +25,8 @@ if url.scheme == 'https':
 
 # Keep database connections open until idle for this many seconds
 CONN_MAX_AGE = 30
+# Enable health checks to prevent errors when db closes connections or restarts
+CONN_HEALTH_CHECKS = True
 
 # List of configuration classes / app packages in order of priority high to low.
 # The first item in the list has final say when collisions occur.

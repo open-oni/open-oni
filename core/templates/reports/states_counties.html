@@ -13,7 +13,7 @@
     {% for state, county, total in states_counties %}
         <tr class="{% cycle 'lightGray' 'white' %}">
           <td>{{state}}</td>
-          <td {% ifequal total 1 %}style="color: red"{% endifequal %}>{{county}}</td>
+          <td {% if total == 1 %}style="color: red"{% endif %}>{{county}}</td>
           <td>{{total}}</td>
         </tr>
     {% endfor %}

@@ -89,7 +89,7 @@
                 {% for p in issue.pages.all %}
                   <option
                     value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}"
-                    {% ifequal p.sequence page.sequence %}selected="selected"{% endifequal %}
+                    {% if p.sequence == page.sequence %}selected="selected"{% endif %}
                     >{{p.sequence}}</option>
                 {% endfor %}
               </select>
@@ -188,7 +188,7 @@
             {% for p in issue.pages.all %}
               <option
                 value="{% url 'openoni_page' title.lccn issue.date_issued issue.edition p.sequence %}"
-                {% ifequal p.sequence page.sequence %}selected="selected"{% endifequal %}
+                {% if p.sequence == page.sequence %}selected="selected"{% endif %}
                 >{{p.sequence}}</option>
             {% endfor %}
           </select>

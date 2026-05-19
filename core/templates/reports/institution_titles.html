@@ -12,24 +12,24 @@
 
 {% block subcontent %}
 
-  {% ifnotequal paginator.num_pages 1 %}
+  {% if paginator.num_pages != 1 %}
   <div id="searchnav">
     <div class="pageNavigator">
       {% if page.has_previous %}
       <a rel="prev" href="{% url 'openoni_institution_titles_page_number' code page.previous_page_number %}"><img src="{% static 'images/pag_prev_on.gif' %}" alt="prev" width="13" height="13" /></a> 
       {% endif %}
       {% for page_number in page_range_short %}
-      {% ifequal page_number "..." %}
+      {% if page_number == "..." %}
       ...
       {% else %}
 
-      {% ifequal page_number page.number %}
+      {% if page_number == page.number %}
       <span class="off">{{page_number}}</span> 
       {% else %}
       <a href="{% url 'openoni_institution_titles_page_number' code page_number%}">{{page_number}}</a> 
-      {% endifequal %}
+      {% endif %}
 
-      {% endifequal %}
+      {% endif %}
       {% endfor %}
       {% if page.has_next %}
           <a rel="next" href="{% url 'openoni_institution_titles_page_number' code page.next_page_number %}"><img src="{% static 'images/pag_next_on.gif' %}" alt="prev" width="13" height="13" /></a>
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-{% endifnotequal %}
+{% endif %}
 
     <div id="search_results_box">
         

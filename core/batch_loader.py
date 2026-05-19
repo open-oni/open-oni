@@ -322,7 +322,7 @@ class BatchLoader(object):
                 reel.save()
                 page.reel = reel
             else:
-                _logger.warn("unable to find reel number in page metadata")
+                _logger.warning("unable to find reel number in page metadata")
 
         _logger.info("Assigned page sequence: %s" % page.sequence)
 

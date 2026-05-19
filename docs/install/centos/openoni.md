@@ -24,7 +24,8 @@
 
 ### File-based Cache Directory
 This is used when the app is not running with `DEBUG` enabled. The file path is
-defined in `settings_local.py`.
+defined in the `CACHES` dictionary in `settings_base.py`, but may be overridden
+in `settings_local.py`.
 
 ```bash
 sudo mkdir -p /var/tmp/django_cache

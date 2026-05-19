@@ -74,7 +74,7 @@
           <select class="form-control" id="county" name="county">
             <option value="">All</option>
             {% for county, count in page.facets.county %}
-              <option value="{{county}}" {% ifequal county request.GET.county %} selected=selected {% endifequal %}>{{county}} ({{count}})</option>
+              <option value="{{county}}" {% if county == request.GET.county %} selected=selected {% endif %}>{{county}} ({{count}})</option>
             {% endfor %}
           </select>
         </div>
@@ -83,7 +83,7 @@
           <select class="form-control" id="city" name="city">
             <option value="">All</option>
             {% for city, count in page.facets.city %}
-              <option value="{{city}}" {% ifequal city request.GET.city %} selected=selected {% endifequal %}>{{city}} ({{count}})</option>
+              <option value="{{city}}" {% if city == request.GET.city %} selected=selected {% endif %}>{{city}} ({{count}})</option>
             {% endfor %}
           </select>
         </div>
@@ -95,7 +95,7 @@
               <option value="{{request.GET.yearRange}}" selected=selected>{{request.GET.yearRange}}</option>
             {% endif %}
             {% for years, count in page.facets.year %}
-              <option value="{{years}}" {% ifequal years request.GET.yearRange %} selected=selected {% endifequal %}>{{years}} ({{count}})</option>
+              <option value="{{years}}" {% if years == request.GET.yearRange %} selected=selected {% endif %}>{{years}} ({{count}})</option>
             {% endfor %}
           </select>
         </div>
@@ -104,7 +104,7 @@
           <select class="form-control" id="frequency" name="frequency">
             <option value="">All</option>
             {% for frequency, count in page.facets.frequency %}
-              <option value="{{frequency}}" {% ifequal frequency request.GET.frequency %} selected=selected {% endifequal %}>{{frequency}} ({{count}})</option>
+              <option value="{{frequency}}" {% if frequency == request.GET.frequency %} selected=selected {% endif %}>{{frequency}} ({{count}})</option>
             {% endfor %}
           </select>
         </div>
@@ -113,7 +113,7 @@
           <select class="form-control" id="language" name="language">
             <option value="">All</option>
             {% for language, count in page.facets.language %}
-              <option value="{{language}}" {% ifequal language request.GET.language %} selected=selected {% endifequal %}>{{language}} ({{count}})</option>
+              <option value="{{language}}" {% if language == request.GET.language %} selected=selected {% endif %}>{{language}} ({{count}})</option>
             {% endfor %}
           </select>
         </div>
@@ -183,14 +183,14 @@
       <div class="col-md-5">
         {# Gallery or List view #}
         <div class="pull-left">
-          {% ifequal view_type 'list' %}
+          {% if view_type == 'list' %}
             <a class="btn btn-default"  href="{% url 'openoni_search_pages_results' %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
             <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
           {% else %}
             <a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span> Gallery</a>
             <a class="btn btn-default" href="{% url 'openoni_search_pages_results_list' view_type="list" %}?{{q}}&amp;page={{page.number}}&amp;sort={{sort}}"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> List</a>
 
-          {% endifequal %}
+          {% endif %}
         </div>
         {# /Gallery or List view #}
 

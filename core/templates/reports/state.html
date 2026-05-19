@@ -13,7 +13,7 @@
 
 {% block subcontent %}
 
-{% ifnotequal paginator.num_pages 1 %}
+{% if paginator.num_pages != 1 %}
 <div id="searchnav">
   <span class="pagination">
     {% if page.has_previous %}
@@ -22,15 +22,15 @@
     
     {% for page_number in page_range_short %}
       {% if not forloop.first %}|{% endif %}
-      {% ifequal page_number "..." %}
+      {% if page_number == "..." %}
        ...
       {% else %}
-        {% ifequal page_number page.number %}
+        {% if page_number == page.number %}
           <span class="off">{{page_number}}</span> 
         {% else %}
           <a href="{% url 'openoni_state_page_number' state|pack_url page_number %}">{{page_number}}</a> 
-        {% endifequal %}
-      {% endifequal %}
+        {% endif %}
+      {% endif %}
     {% endfor %}
  
     {% if page.has_next %}
@@ -38,7 +38,7 @@
     {% endif %}
   </span>
 </div>
-{% endifnotequal %}
+{% endif %}
 
 <div id="search_results_box">
   <div id="search_results_content">

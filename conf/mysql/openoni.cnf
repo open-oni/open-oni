@@ -1,3 +1,6 @@
+[client]
+default-character-set = utf8mb4
+
 [mysqld]
 # Connections
 max_allowed_packet              = 16M
@@ -7,8 +10,15 @@ net_buffer_length               = 16K
 thread_cache_size               = 32
 
 # Data
-character_set_server            = utf8mb3
-collation_server                = utf8mb3_general_ci
+character_set_server            = utf8mb4
+collation_server                = utf8mb4_unicode_ci
+init_connect                    = 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci'
+old_mode                        = ''
+# Removal of default old_mode value 'UTF8_IS_UTF8MB3' sets defaults to utf8mb4 for:
+# character_set_client
+# character_set_connection
+# character_set_results
+# character_set_system
 sql_mode                        = TRADITIONAL
 
 # Logging

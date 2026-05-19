@@ -15,10 +15,10 @@
       
         {% for page_number in page_range_short %}
           {% if not forloop.first %}|{% endif %}
-        {% ifequal page_number "..." %}
+        {% if page_number == "..." %}
         ...
         {% else %}
-        {% ifequal page_number page.number %}
+        {% if page_number == page.number %}
         <span class="off">{{page_number}}</span> 
         {% else %}
             {% if start %}
@@ -26,8 +26,8 @@
             {% else %}
             <a href="{% url 'openoni_titles_page' page_number%}">{{page_number}}</a>
             {% endif %}
-        {% endifequal %}
-        {% endifequal %}
+        {% endif %}
+        {% endif %}
         {% endfor %}
       
         {% if page.has_next %}

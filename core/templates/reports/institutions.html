@@ -4,24 +4,24 @@
 
 {% block subcontent %}
 
-  {% ifnotequal paginator.num_pages 1 %}
+  {% if paginator.num_pages != 1 %}
     <div class="pagination">
         <ul>
       {% if page.has_previous %}
       <li><a href="{% url 'openoni_institutions_page_number' page.previous_page_number %}">&laquo;</a></li>
       {% endif %}
       {% for page_number in page_range_short %}
-      {% ifequal page_number "..." %}
+      {% if page_number == "..." %}
       <li><a href="#">...</a></li>
       {% else %}
 
-      {% ifequal page_number page.number %}
+      {% if page_number == page.number %}
       <li><span class="off">{{page_number}}</span></li>
       {% else %}
       <li><a href="{% url 'openoni_institutions_page_number' page_number%}">{{page_number}}</a></li>
-      {% endifequal %}
+      {% endif %}
 
-      {% endifequal %}
+      {% endif %}
       {% endfor %}
       {% if page.has_next %}
       <li><a href="{% url 'openoni_institutions_page_number' page.next_page_number %}">&raquo;</a></li>
@@ -29,7 +29,7 @@
         </ul>
     </div>
 
-{% endifnotequal %}
+{% endif %}
 
     <div id="search_results_box">
        

@@ -18,7 +18,6 @@ from urllib.request import url2pathname
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
-from django.utils.http import urlquote
 
 from core.utils.image_urls import thumb_image_url, page_iiif_info_url
 

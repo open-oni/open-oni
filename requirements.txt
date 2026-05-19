@@ -1,12 +1,11 @@
 coverage
-Django>=3.2,<3.3
-djangorestframework>=3.0,<4.0
+Django>=4.2,<4.3
 feedparser
 lxml
 mysqlclient
 pip
 Pillow
-pymarc
+pymarc>=5.0,<6.0
 pysolr
 python-mimeparse
 rdflib
@@ -14,4 +13,5 @@ requests
 rfc3339
 setuptools
 simplejson
+tzdata
 worldcat

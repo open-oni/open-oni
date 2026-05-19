@@ -28,7 +28,6 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@v4
       - name: Run tests
-        run: docker-compose -f test-compose.yml -p onitest up test
+        run: docker compose -f test-compose.yml -p onitest up test --exit-code-from test

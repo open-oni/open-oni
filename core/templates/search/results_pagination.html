@@ -14,20 +14,20 @@
       {% endif %}
 
       {% for page_number in page_range_short %}
-        {% ifequal page_number "..." %}
+        {% if page_number == "..." %}
           <li class="disabled">
             <a>…</a>
           </li>
         {% else %}
-          {% ifequal page_number page.number %}
+          {% if page_number == page.number %}
             <li class="active" aria-current="true">
           {% else %}
             <li>
-          {% endifequal %}
+          {% endif %}
             <a href="?{{q}}&amp;page={{page_number}}&amp;sort={{sort}}"
               aria-label="Page {{page_number}}">{{page_number}}</a>
           </li>
-        {% endifequal %}
+        {% endif %}
       {% endfor %}
 
       {% if page.has_next %}

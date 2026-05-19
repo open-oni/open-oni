@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.utils.http import urlquote
+from urllib.parse import quote
 
 def thumb_image_url(page):
     return resize_url(page, settings.THUMBNAIL_WIDTH)
@@ -18,4 +18,4 @@ def page_iiif_info_url(page):
     if page.relative_image_path is None:
         return "%s/None" % settings.IIIF_URL
     else:
-        return "%s/%s" % (settings.IIIF_URL, urlquote(page.relative_image_path, safe=""))
+        return "%s/%s" % (settings.IIIF_URL, quote(page.relative_image_path, safe=""))

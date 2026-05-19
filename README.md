@@ -11,6 +11,7 @@ information about the project's origins and history.
 ## Open ONI-powered Sites
 Visit sites currently powered by Open ONI:
 
+- [Georgia Historic Newspapers](https://gahistoricnewspapers.galileo.usg.edu/)
 - [Historic Oregon Newspapers](https://oregonnews.uoregon.edu/)
 - [Nebraska Newspapers](https://nebnewspapers.unl.edu/)
 - [North Carolina Newspapers](https://www.digitalnc.org/collections/newspapers/)
@@ -57,15 +58,20 @@ wiki, which may further inform your resource allocation.
 
 Component | Version | Supported Until | Next Target Release | Documentation
 ----------|---------|-----------------|---------------------|--------------
-Python | 3.8 | 2024-10 | 3.10 | https://peps.python.org/pep-0569/#lifespan
-Django | 3.2 LTS | 2024-04 | 4.2 LTS, 2023-04 | https://www.djangoproject.com/download/#supported-versions
+Python | 3.10 | 2026-10 | 3.12 | https://www.python.org/downloads/
+Django | 4.2 LTS | 2026-04 | 5.2 LTS, 2025-04 | https://www.djangoproject.com/download/#supported-versions
 MariaDB | 10.6 | 2026-07-06 | Next LTS in ~2 years | https://mariadb.org/about/#maintenance-policy
-Solr | 8.x | Approx 2022, based on ~18mo major release cycle | TBD | https://lucene.apache.org/solr/downloads.html#about-versions-and-support
+Solr | 9.x | Approx 2027, based on past major release dates | TBD | https://lucene.apache.org/solr/downloads.html#about-versions-and-support
 RAIS | 4.x | Unknown | TBD | https://github.com/uoregon-libraries/rais-image-server
-jQuery | 3.6.0 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
+jQuery | 3.7.1 | Unknown | TBD | https://github.com/jquery/jquery/wiki/Roadmap
 Bootstrap | 3.4.1 | 2019-07-24 | Upgrade as part of NEH grant | https://github.com/twbs/release
-OpenSeadragon | 2.4.2 | Unknown | 3.x | https://github.com/openseadragon/openseadragon
+OpenSeadragon | 4.1.1 | Unknown | 5.x | https://github.com/openseadragon/openseadragon
 tablesorter | 2.31.3 | Unknown | TBD | https://github.com/Mottie/tablesorter/wiki/Changes
+
+Also see our [Python package
+dependencies](https://github.com/open-oni/open-oni/blob/dev/requirements.txt).
+We've only added constraints where we are confident they are necessary to avoid
+breaking changes from new releases.
 
 ## Documentation
 - [Installation, Configuration, and
@@ -117,5 +123,5 @@ to follow the [Open ONI Community Code of
 Conduct](https://github.com/open-oni/open-oni/tree/dev/CODE_OF_CONDUCT.md)
 
 ## License
-[Licensed](https://github.com/open-oni/open-oni/blob/main/LICENSE) under the
+[Licensed](https://github.com/open-oni/open-oni/blob/dev/LICENSE) under the
 Apache License, Version 2.0

@@ -29,6 +29,149 @@ Markdown Spec](https://github.github.com/gfm/).
 ### Contributors
 -->
 
+## [v1.2.0] Django 4.2 LTS and MariaDB utf8mb4 for Emoji
+[v1.2.0]: https://github.com/open-oni/open-oni/compare/v1.1.2...v1.2.0
+
+### Security
+- Updates Django to latest available 4.2.x.
+- Updates Python packages to the latest available versions.
+
+### Changed
+- Fixes for features removed in Django 4.0:
+    - Replaces a reference (and removes an unused reference) to
+      `django.utils.http.urlquote`, an alias that was removed in Django 4.
+      [See original deprecation notice here](
+          https://docs.djangoproject.com/en/3.0/releases/3.0/#id3
+        ).
+    - Replaces `{% ifequal %}` and `{% ifnotequal %}` tags with their
+      `{% if %}` equivalents.
+    - Changes the docker/django-admin script to call django-admin instead
+      of django-admin.py, which was removed in 4.0.
+- Changes settings to adopt the following Django 4.2 defaults:
+  - Removes `SECURE_BROWSER_XSS_FILTER` (
+       https://docs.djangoproject.com/en/4.0/releases/4.0/#securitymiddleware-no-longer-sets-the-x-xss-protection-header
+     )
+  - Removes now-redundant `USE_L10N = True` (
+        https://docs.djangoproject.com/en/4.0/releases/4.0/#use-l10n-deprecation
+      )
+  - "To allow serving a Django site on a subpath without changing the value of
+    STATIC_URL, the leading slash is removed from that setting (now 'static/')
+    in the default startproject template."
+    (https://docs.djangoproject.com/en/4.0/releases/4.0/#miscellaneous)
+  - The STATICFILES_STORAGE setting is deprecated in favor of
+    STORAGES["staticfiles"].
+    (https://docs.djangoproject.com/en/4.2/releases/4.2/#id1)
+- Replaces usages of the deprecated `Logger.warn()` with `Logger.warning()`
+  (A Python thing, not a Django 4 thing.)
+- Upgraded Docker image to Ubuntu 22.04 LTS Jammy Jellyfish with Python 3.10.
+  - Added `python3 -m ensurepip` to pip install script so pip reliably works in
+    new virtual environments.
+  - Updated Python dependencies, added `pkg-config` to Ubuntu package needed for
+    building `mysqlclient` Python package.
+- Docker test compose now uses sqlite rather than MariaDB for quicker testing
+- Updated README's Dependency Roadmap
+  - Update Python (via Docker Ubuntu 22.04 LTS) 3.8 to 3.10
+  - Update Django 3.2 LTS to 4.2 LTS
+  - Update Solr 8.x to 9.x
+  - Update jQuery 3.6.0 to 3.7.1
+  - Update OpenSeadragon 2.4.2 to 4.1.1
+
+### Fixed
+- Various UTF8 fixes have been applied to allow emoji into the database. These
+  are more and more common in born-digital publications
+
+### Added
+- Persistent database connection health checks to avoid errors
+  when the db closes connections or restarts with `CONN_HEALTH_CHECKS = True`
+
+### Removed
+- See all features removed in Django
+  [4.0](https://docs.djangoproject.com/en/4.2/releases/4.0/#features-removed-in-4-0),
+  [4.1](https://docs.djangoproject.com/en/4.2/releases/4.1/#features-removed-in-4-1).
+- Notable removals include:
+  - `{% ifequal %}` and `{% ifnotequal %}` template tags.
+  - Various django.utils helper functions and aliases. 
+
+### Migration
+- Check themes and plugins for code that is not compatible with Django 4.x:
+  - Look for usages of `{% ifequal %}` and `{% ifnotequal %}` in theme
+    and plugin templates and replace them with `{% if %}` tags
+    and the `==` or `!=` operators.
+  - Review Django 4.x release notes with special attention to
+    [features removed in 4.0](
+        https://docs.djangoproject.com/en/5.1/releases/4.0/#features-removed-in-4-0
+      ) and [features removed in 4.1](
+        https://docs.djangoproject.com/en/5.1/releases/4.1/#features-removed-in-4-1
+      ).
+- Merge changes from requirements.lock into any project-specific requirements.lock.
+- You'll have to run database migrations, and they may take a while depending
+  on the size of your `core_languagetext` data.
+  - On ~60 gigs, it took UO roughly 45 minutes running on our production server
+    while it was still serving up data to users
+  - To determine your table's size, you can do something like this in a DB
+    console: `SELECT table_name, ROUND((DATA_LENGTH + INDEX_LENGTH) / 1024 /
+    1024) AS SizeMB FROM information_schema.TABLES WHERE TABLE_SCHEMA =
+    'openoni' AND TABLE_NAME = 'core_languagetext';`
+- Make sure if you're overriding the Django `DATABASES` hash in your local
+  settings that you pay close attention to the new `OPTIONS` setting in the
+  base settings file! You'll need to get the `SET NAMES...` bit added to your
+  `init_command` as well as the `charset` value, otherwise your overrides will
+  effectively undo some required setup:
+  ```
+  'OPTIONS': {
+    'init_command': "SET sql_mode='STRICT_TRANS_TABLES'; SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;",
+    'charset': 'utf8mb4',
+  },
+  ```
+- Add `CONN_HEALTH_CHECKS = True` to `settings_local.py` below `CONN_MAX_AGE`
+  to enable persistent database connection health checks
+- Review dependencies and any local customizations for breaking changes
+  - Solr 8.x to 9.x: https://solr.apache.org/guide/solr/latest/upgrade-notes/solr-upgrade-notes.html
+    - Note a full re-index is encouraged for making one major version upgrade,
+      and **required** if upgrading two or more major versions
+  - jQuery 3.6.0 to 3.7.1: https://blog.jquery.com/2023/05/11/jquery-3-7-0-released-staying-in-order/
+  - OpenSeadragon 2.4.2 to 4.1.1: https://github.com/openseadragon/openseadragon/releases
+
+### Deprecated
+- See features deprecated in Django
+  [4.0](https://docs.djangoproject.com/en/4.2/releases/4.0/#features-deprecated-in-4-0),
+  [4.1](https://docs.djangoproject.com/en/4.2/releases/4.1/#features-deprecated-in-4-1),
+  [4.2](https://docs.djangoproject.com/en/4.2/releases/4.2/#features-deprecated-in-4-2).
+- Notable deprecations include:
+  - Direct use of time zone APIs from `pytz`
+    (https://docs.djangoproject.com/en/4.2/releases/4.0/#zoneinfo-default-timezone-implementation).
+  - `STATICFILES_STORAGE` and `DEFAULT_FILE_STORAGE` settings.
+    (Not to be confused with `STATIC_ROOT`.)
+
+### Contributors
+- Jeremy Echols (jechols)
+- Joshua Wier (walkerwier)
+- Greg Tunink (techgique)
+
+## [v1.1.2] Hotfix for docker developers
+[v1.1.2]: https://github.com/open-oni/open-oni/compare/v1.1.1...v1.1.2
+
+### Changed
+- Update setuptools to latest on container startup
+
+### Contributors
+- Joshua Wier (walkerwier)
+
+## [v1.1.1]
+[v1.1.1]: https://github.com/open-oni/open-oni/compare/v1.1.0...v1.1.1
+
+### Changed
+- Upgraded pymarc to 5.x, as 4.x isn't supported and was giving us trouble in
+  some situations. The title loader has been adjusted to handle the new way
+  pymarc works.
+  - As a side-effect, users who had tried to use pymarc 5.x themselves will now
+    be able to do so without running into title-loader errors.
+- Forced Solr 9 and above to use the same highlighting method as prior versions
+  to keep compatibility with how ONI highlights searched words
+
+### Contributors
+- Jeremy Echols (jechols)
+
 ## [v1.1.0]
 [v1.1.0]: https://github.com/open-oni/open-oni/compare/v1.0.6...v1.1.0
 
