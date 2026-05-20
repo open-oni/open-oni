@@ -1,4 +1,4 @@
-FROM docker.io/python:3.12-slim
+FROM docker.io/python:3.12-slim AS base
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get -y install --no-install-recommends \
@@ -43,10 +43,9 @@ ENV ONI_SOLR_URL=http://solr:8983
 # *must* be a volume, not ephemeral
 VOLUME /var/local/oni-data
 
-# Entrypont is the final common element all sub-images need
-COPY docker/python/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
+
+FROM base AS app
 
 # gunicorn defaults - the config file has these as well, but this makes it
 # clearer what we've made configurable via environment
@@ -55,4 +54,14 @@ ENV GUNICORN_MAX_REQUESTS=10000
 
 # Get gunicorn config file in place: this makes ENV vars work
 COPY docker/python/gunicorn.conf.py /etc/gunicorn.conf.py
+
+COPY docker/python/entrypoint.sh /entrypoint.sh
 CMD ["gunicorn", "-c", "/etc/gunicorn.conf.py"]
+
+FROM app AS test
+
+# Test just needs custom settings and the stripped-down test entrypoint
+COPY onisite/test_settings.py /opt/openoni/onisite/settings_local.py
+COPY onisite/urls_example.py /opt/openoni/onisite/urls.py
+COPY docker/python/test-entrypoint.sh /entrypoint.sh
+CMD ["/opt/openoni/manage.py", "test", "--settings=onisite.test_settings"]

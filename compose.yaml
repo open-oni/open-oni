@@ -46,6 +46,7 @@ services:
   app:
     build:
       dockerfile: ./docker/python/Dockerfile
+      target: app
     depends_on:
       rdbms:
         condition: service_healthy

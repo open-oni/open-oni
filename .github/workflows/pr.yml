@@ -20,7 +20,7 @@ on:
       # Current only env.example, but anticipate further instances
       - "**.example"
       # Automatically exclude any further examples (same as above)
-      - "**.yml-example"
+      - "**.example.yaml"
 
 jobs:
   run_tests:
@@ -30,4 +30,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run tests
-        run: docker compose -f test-compose.yml -p onitest up test --exit-code-from test
+        run: docker compose -f test.compose.yaml up --build test --exit-code-from test

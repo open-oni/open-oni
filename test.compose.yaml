@@ -1,0 +1,37 @@
+name: test-open-oni
+
+services:
+  solr:
+    build:
+      context: ./docker/solr
+    volumes:
+      - solr:/var/solr
+
+  test:
+    build:
+      dockerfile: ./docker/python/Dockerfile
+      target: test
+    depends_on:
+      solr:
+        condition: service_started
+    volumes:
+      - oni-config:/var/local/oni-config:rw
+      - oni-data:/var/local/oni-data:rw
+      - oni-static:/opt/openoni/static:rw
+      - oni-plugins:/opt/openoni/onisite/plugins:ro
+      - oni-themes:/opt/openoni/themes:ro
+
+volumes:
+  solr:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: "size=512m"
+  # These have to exist and can't be tmpfs because it breaks things when the
+  # tmpfs *volume* exists, but the *files* are gone.
+  oni-config: {}
+  oni-data: {}
+  oni-static: {}
+  oni-plugins: {}
+  oni-themes: {}
