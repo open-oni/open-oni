@@ -2,13 +2,13 @@ asgiref==3.11.1
 certifi==2026.4.22
 chardet==3.0.4
 charset-normalizer==3.4.7
-coverage==7.13.5
+coverage==7.14.0
 Django==5.2.14
-djangorestframework==3.14.0
+djangorestframework==3.17.1
 feedparser==6.0.12
 idna==3.13
 isodate==0.7.2
-lxml==6.1.0
+lxml==6.1.1
 mysqlclient==2.2.8
 packaging==26.2
 pillow==12.2.0
@@ -17,7 +17,7 @@ pyparsing==3.3.2
 pysolr==3.11.0
 python-mimeparse==2.0.0
 rdflib==7.6.0
-requests==2.33.1
+requests==2.34.2
 rfc3339==6.2
 setuptools==82.0.1
 sgmllib3k==1.0.0
