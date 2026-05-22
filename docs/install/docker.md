@@ -231,3 +231,22 @@ This can be painful to do regularly. As such, you should consider having a
 the defaults as possible, with one exception: `COMPOSE_PROJECT_NAME` *must* be
 different from what you use in your main project! If two projects share the
 same compose project name, wackiness will ensue, and not the good kind.
+
+### Unit tests
+
+Unit testing is all done in an isolated stack using `test.compose.yaml`:
+
+```bash
+docker compose -f test.compose.yaml up --build test --exit-code-from test
+```
+
+When using the test compose file explicitly, your overrides won't be included,
+`.env` vars won't be used, and we force a compose project name to avoid volume
+and container collisions. 99% of the time, this is all you need to run test.
+
+Occasionally you need to destroy volumes and images (volume definitions may
+need to change, for instance):
+
+```bash
+docker compose -f test.compose.yaml down -v --rmi=local
+```
