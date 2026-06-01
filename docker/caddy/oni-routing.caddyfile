@@ -1,0 +1,41 @@
+# All Caddy rules live here and are included by the base Caddyfile for the
+# default (port 80) listener. The rules are in this separate file so that the
+# internal-only listener can apply the same rules for whatever has passed an
+# Anubis / TPS challenge.
+
+# Serve word coordinates as gzipped JSON
+@coordinates path_regexp coords ^/lccn/(.*)/coordinates/$
+route @coordinates {
+  header Content-Type application/json
+  header Content-Encoding gzip
+  rewrite * /lccn/{re.coords.1}/coordinates.json.gz
+  root * /var/local/oni-data/word_coordinates
+  file_server
+}
+
+# robots.txt is the only static file that actually lives at the top level of
+# the ONI "static" dir? Huh.
+handle /robots.txt {
+  root * /opt/openoni/static
+  file_server
+}
+
+# Compiled assets: strip /static prefix, serve from compiled asset location
+handle_path /static/* {
+  header Cache-Control "max-age=31536000"
+  root * /opt/openoni/static/compiled
+  file_server
+}
+
+# Serve /data/ from the openoni data directory
+handle_path /data/* {
+  root * /var/local/oni-data
+  file_server browse
+}
+
+# RAIS IIIF image server
+@iiif path_regexp iiif ^/(images/iiif/.*(?:\.jpg|info\.json))$
+reverse_proxy @iiif http://rais:12415
+
+# Everything else goes to ONI (via gunicorn)
+reverse_proxy http://app:8000

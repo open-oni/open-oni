@@ -118,16 +118,22 @@ in question.
 You'll want to make sure you are aware of potential permissions problems that
 can arise, but this approach is *usually* risk-free.
 
-For the sitemap configuration, for example, your copy command might look
-something like this:
+For sitemap and bot-protection configuration, for example, your copy commands
+might look something like this:
 
 ```bash
 podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
   cp /source/docker/caddy/examples/sitemap.site.caddyfile /dest/sitemap.site.caddyfile
+podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
+  cp /source/docker/caddy/examples/bot-protection.server.caddyfile /dest/bot-protection.server.caddyfile
+podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
+  cp /source/docker/caddy/examples/bot-protection-tps.site.caddyfile /dest/bot-protection.site.caddyfile
 ```
 
-The volume's full name can change if your compose project isn't `open-oni`, but
-this is generally the recipe for getting around read-only volumes.
+For bot protection files, you might need to copy and edit them first, in which
+case you'd use the customized filenames, obviously. Additionally, the volume's
+full name can change if your compose project isn't `open-oni`, but this is
+generally the recipe for getting around read-only volumes.
 
 Note that in development, (or any situation your volumes are mounted from a
 specific location on the host), you can just copy and edit files directly. **Be
@@ -153,6 +159,13 @@ you need to mount a lot more of the project into running containers even in
 production. *This is okay!* It's a bad idea if you are new to devops, but if
 you understand the risks and you test things very carefully, advanced use-cases
 can work this way. Just make sure you know the risks you can run into.
+
+## Bot Protection
+
+Open ONI can optionally gate expensive paths (search, large files, or anything
+you choose) behind a challenge proxy — either Cloudflare Turnstile (via TPS) or
+Anubis proof-of-work. It is off by default and entirely opt-in. See [Bot
+Protection](/docs/install/bot-protection.md) for the full setup.
 
 ## Management
 

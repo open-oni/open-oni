@@ -1,0 +1,22 @@
+# This is not actually a "block-the-world" policy. Caddy decides which paths
+# reach Anubis so that we can centralize bot protection regardless of the
+# underlying tool. But this means Anubis's rules have to be a blanket deny so
+# customized Caddy configs don't also require changing Anubis policies.
+#
+# To allow "friendly" bots (e.g., Google Scholar, well-behaved scrapers like
+# Claude, etc.) add ALLOW rules above the CHALLENGE rule.
+bots:
+  # Example friendly-bot allowlist (uncomment / adjust as needed). These match
+  # first, so allowed agents skip the challenge entirely.
+  #
+  # You probably don't need this if you only block expensive paths that bots
+  # shouldn't crawl to begin with. Also note that some aggressive bots fake
+  # their user agent, so this may not be a great option, but in practice we've
+  # only seen that a handful of times.
+  #- name: friendly-crawlers
+  #  user_agent_regex: (?i)(googlebot|bingbot|google scholar)
+  #  action: ALLOW
+
+  - name: default-deny
+    path_regex: .*
+    action: CHALLENGE
