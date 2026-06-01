@@ -1,0 +1,14 @@
+# Copy this into the caddy-conf volume to enable TPS or Anubis. The challenge
+# proxy forwards here *after* a visitor passes, so this listener mirrors the
+# normal routing but has NO protection rules, which is critical to avoid
+# infinite challenge loops.
+#
+# This port should never be published to the host unless you're testing
+# something, otherwise bots could potentially bypass your protections.
+:8081 {
+  import /etc/caddy/oni-routing.caddyfile
+
+  log {
+    level INFO
+  }
+}

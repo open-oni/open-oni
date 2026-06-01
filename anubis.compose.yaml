@@ -1,0 +1,20 @@
+# Anubis bot protection service. See docs/install/bot-protection.md for details
+# on enabling bot protection for ONI.
+services:
+  anubis:
+    build:
+      context: ./docker/anubis
+    environment:
+      COOKIE_SECURE: ${ANUBIS_COOKIE_SECURE:?set ANUBIS_COOKIE_SECURE in .env to use Anubis}
+      DIFFICULTY: ${ANUBIS_DIFFICULTY:?set ANUBIS_DIFFICULTY in .env to use Anubis}
+      SLOG_LEVEL: ${ANUBIS_LOG_LEVEL:-INFO}
+    volumes:
+      - anubis-policies:/etc/anubis:ro
+    depends_on:
+      app:
+        condition: service_started
+      web:
+        condition: service_started
+
+volumes:
+  anubis-policies: {}

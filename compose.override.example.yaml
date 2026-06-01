@@ -1,6 +1,13 @@
 # This is an example of overriding the core compose setup. Copy to
 # `compose.override.yaml` and adjust values as needed.
 
+# Optional bot protection. Uncomment either service to run a challenge proxy,
+# and see docs/install/bot-protection.md for Caddy config and other details.
+#
+#include:
+#  - tps.compose.yaml
+#  - anubis.compose.yaml
+
 volumes:
   # Redefine the oni-data volume so that it's more easily manipulated locally
   # while still being connected (via `compose.yaml`) to all services that need
@@ -40,6 +47,18 @@ volumes:
   #    type: none
   #    o: bind
   #    device: ${PWD}/DEV-VOLS/themes
+  #caddy-conf:
+  #  driver: local
+  #  driver_opts:
+  #    type: none
+  #    o: bind
+  #    device: ${PWD}/DEV-VOLS/caddy-conf.d
+  #anubis-policies:
+  #  driver: local
+  #  driver_opts:
+  #    type: none
+  #    o: bind
+  #    device: ${PWD}/DEV-VOLS/anubis-policies
 
 services:
   rdbms:

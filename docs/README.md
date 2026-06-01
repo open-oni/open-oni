@@ -10,6 +10,7 @@ purposes.
 
 - [CentOS](/docs/install/centos)
 - [Docker](/docs/install/docker.md)
+- [Bot Protection](/docs/install/bot-protection.md) (optional; Docker/Caddy)
 
 When updating, please review the changelog for information and instructions
 about upgrading versions, breaking changes, etc

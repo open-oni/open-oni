@@ -48,8 +48,9 @@ mount some local directories right into running containers. In production,
 project's directories is rarely a good idea.
 
 A lot of the time, you don't need to mount anything at all. You can use `docker
-cp`, for instance, to alter your configuration, copy plugins into a volume,
-etc. "One and done" changes may not warrant exposing an entire volume forever.
+cp` and/or temporary containers, for instance, to alter your configuration,
+copy plugins into a volume, etc. "One and done" changes may not warrant
+exposing an entire volume forever.
 
 So we advise that you let podman manage volumes when possible. You will rarely
 need to change plugins, themes, or even configuration. This is especially true
@@ -83,6 +84,38 @@ You can use the `oni-data` compose override example to expose `oni-config` if
 necessary, but as mentioned above, this is generally not necessary, and
 long-term not a good idea.
 
+#### Copying files into read-only volumes
+
+Some of our services mount their volumes read-only for security, so you can't
+do a simple `docker cp` to get files from the host into the containers.
+
+The simplest way to handle this for a one-off copy is just spinning up a
+temporary Alpine Linux image that has access to your local files and the volume
+in question.
+
+You'll want to make sure you are aware of potential permissions problems that
+can arise, but this approach is *usually* risk-free.
+
+For Caddy configuration, for example, your copy commands might look something
+like this:
+
+```bash
+podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
+  cp /source/bot-protection.server.caddyfile /dest/bot-protection.server.caddyfile
+podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
+  cp /source/bot-protection.site.caddyfile /dest/bot-protection.site.caddyfile
+```
+
+You'll need to use your actual filenames, obviously, and the volume's full name
+can change if your compose project isn't `open-oni`, but this is generally the
+recipe for getting around read-only volumes.
+
+Note that in development, (or any situation your volumes are mounted from a
+specific location on the host), you can just copy and edit files directly. **Be
+aware** that this can give you the same permissions issues as a one-off copy,
+and sometimes has other odd issues because your local user may be able to read
+files that the in-container users cannot.
+
 ### Configuration architecture
 
 Generally your compose concerns will live in `compose.override.yaml`,
@@ -101,6 +134,13 @@ you need to mount a lot more of the project into running containers even in
 production. *This is okay!* It's a bad idea if you are new to devops, but if
 you understand the risks and you test things very carefully, advanced use-cases
 can work this way. Just make sure you know the risks you can run into.
+
+## Bot Protection
+
+Open ONI can optionally gate expensive paths (search, large files, or anything
+you choose) behind a challenge proxy — either Cloudflare Turnstile (via TPS) or
+Anubis proof-of-work. It is off by default and entirely opt-in. See [Bot
+Protection](/docs/install/bot-protection.md) for the full setup.
 
 ## Management
 

@@ -1,0 +1,16 @@
+# This snippet diverts the protected paths to the "tps" service, which presents
+# a Turnstile challenge designed to prevent bot traffic.
+#
+# Usage:
+#
+# - Copy this into the caddy-conf volume (modify @protected if desired)
+# - Copy bot-protection.server.caddyfile into the caddy-conf volume
+# - Enable the "tps" compose service
+# - Restart the "web" service
+#
+# See docs/install/bot-protection.md for bot protection details.
+
+@protected path /data/* /search/*
+handle @protected {
+  reverse_proxy tps:8080
+}

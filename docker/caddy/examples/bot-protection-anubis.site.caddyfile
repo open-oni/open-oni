@@ -1,0 +1,20 @@
+# This snippet diverts the protected paths to the "anubis" service, which
+# presents a proof-of-work challenge designed to stop simple bots and slow down
+# advanced bots.
+#
+# Usage:
+#
+# - Copy this into the caddy-conf volume (modify @protected if desired, but
+#   note that `/.within.website/*` is required for Anubis to function properly)
+# - Copy bot-protection.server.caddyfile into the caddy-conf volume
+# - Enable the "anubis" compose service
+# - Restart the "web" service
+#
+# See docs/install/bot-protection.md for bot protection details.
+
+@protected path /data/* /search/* /.within.website/*
+handle @protected {
+  reverse_proxy anubis:8080 {
+    header_up X-Real-IP {client_ip}
+  }
+}

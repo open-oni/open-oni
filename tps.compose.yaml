@@ -1,0 +1,15 @@
+# TPS bot protection service. See docs/install/bot-protection.md for details
+# on enabling bot protection for ONI.
+services:
+  tps:
+    build:
+      context: ./docker/tps
+    environment:
+      TURNSTILE_SITE_KEY: ${TPS_SITE_KEY:?set TPS_SITE_KEY in .env to use TPS}
+      TURNSTILE_SECRET_KEY: ${TPS_SECRET_KEY:?set TPS_SECRET_KEY in .env to use TPS}
+      JWT_SIGNING_KEY: ${TPS_JWT_KEY:?set TPS_JWT_KEY in .env to use TPS}
+    depends_on:
+      app:
+        condition: service_started
+      web:
+        condition: service_started
