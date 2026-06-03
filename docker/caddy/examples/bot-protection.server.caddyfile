@@ -7,6 +7,13 @@
 :8081 {
   import /etc/caddy/oni-routing.caddyfile
 
+  # Everything else goes to ONI (via gunicorn), but for this internal server we
+  # force the host and scheme since our bot protection proxies can lose this.
+  reverse_proxy http://app:8000 {
+    header_up Host {$ONI_PUBLIC_HOST}
+    header_up X-Forwarded-Proto {$ONI_PUBLIC_SCHEME}
+  }
+
   log {
     level INFO
   }

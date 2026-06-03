@@ -20,6 +20,9 @@ import /etc/caddy/conf.d/*.server.caddyfile
   # "challenge succeeded" listener.
   import /etc/caddy/oni-routing.caddyfile
 
+  # Everything not caught by other rules goes to ONI directly
+  reverse_proxy http://app:8000
+
   log {
     level INFO
   }

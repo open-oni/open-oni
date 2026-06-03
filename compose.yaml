@@ -38,6 +38,7 @@ services:
         condition: service_started
     environment:
       CADDY_DEBUG: null
+      ONI_BASE_URL: ${ONI_BASE_URL:?ONI_BASE_URL must not be blank}
     volumes:
       - oni-data:/var/local/oni-data:ro
       - oni-static:/opt/openoni/static:ro

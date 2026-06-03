@@ -36,6 +36,3 @@ handle_path /data/* {
 # RAIS IIIF image server
 @iiif path_regexp iiif ^/(images/iiif/.*(?:\.jpg|info\.json))$
 reverse_proxy @iiif http://rais:12415
-
-# Everything else goes to ONI (via gunicorn)
-reverse_proxy http://app:8000
