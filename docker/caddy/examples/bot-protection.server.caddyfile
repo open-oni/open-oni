@@ -14,7 +14,7 @@
     header_up X-Forwarded-Proto {$ONI_PUBLIC_SCHEME}
   }
 
-  log {
+  log http-internal-access {
     level INFO
   }
 }

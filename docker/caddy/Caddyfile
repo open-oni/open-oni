@@ -23,7 +23,7 @@ import /etc/caddy/conf.d/*.server.caddyfile
   # Everything not caught by other rules goes to ONI directly
   reverse_proxy http://app:8000
 
-  log {
+  log http-public-access {
     level INFO
   }
 }
