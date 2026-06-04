@@ -16,6 +16,54 @@ included:
 [tps]: https://github.com/uoregon-libraries/turnstile-proxy-server
 [anubis]: https://anubis.techaro.lol/
 
+## Routing
+
+Routing *is confusing* when you look at bot protection! This can make debugging
+tough, especially when doing development or testing.
+
+The players:
+
+- **Client**: usually (hopefully), a real user making a request via a web
+  browser, but a client can be anything accessing your site
+- **Caddy-Ext**: the Caddy listener exposed directly to the Internet
+- **Caddy-Int**: the Caddy listener that's only accessible from within the
+  docker / podman network
+- **Challenger**: the TPS or Anubis service the intercepts protected URLs
+- **App**: The server runs gunicorn, which serves ONI pages
+
+The challenge loop:
+
+1. **Client** makes a request for an ONI page
+2. **Caddy-Ext** is always the first responder for any request
+   - If the requested URL is in the `@protected` list, **Caddy-Ext**
+     reverse-proxies to **Challenger**
+   - Otherwise, **Caddy-Ext** either serves it directly (static assets) or
+     dispatches to **App**
+     - *The flow is complete*
+3. **Challenger** checks **Client** data
+   - If **Client** has a valid challenge token, we break out of the loop
+     immediately
+   - Otherwise, **Challenger** sends the challenge HTML / JS back to **Client**
+4. **Client** solves the challenge, usually non-interactively, and stores the
+   solved challenge in a special token
+   - Most basic bots, and some advanced bots, are stopped here, unable to run
+     the challenge (e.g., inability to run JS, lack of resources to solve the
+     challenge, blocked by other challenger rules, etc.)
+5. **Client** sends a new request with the token
+   - *This repeats the flow from step 2*
+
+Once step 3's "break out of the loop" occurs:
+
+6. **Caddy-Int** receives the request and uses the same rules **Caddy-Ext**
+   uses on unprotected paths (serving static assets or dispatching to **App**)
+   - There is no challenge logic on **Caddy-Int** because it is unreachable
+     externally (it only receives verified post-challenge requests)
+   - *The flow is complete*
+
+Note that in some cases, the challenge token will become invalidated. Things
+like switching IP addresses can be a flag that a challenge needs to be issued
+again, as the more aggressive bots rotate IP addresses for every request.
+
 ## Common Setup
 
 We chose to separate the "protected path" configuration from the service that
