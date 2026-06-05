@@ -106,6 +106,35 @@ You can use the `oni-data` compose override example to expose `oni-config` if
 necessary, but as mentioned above, this is generally not necessary, and
 long-term not a good idea.
 
+#### Copying files into read-only volumes
+
+Some of our services mount their volumes read-only for security, so you can't
+do a simple `docker cp` to get files from the host into the containers.
+
+The simplest way to handle this for a one-off copy is just spinning up a
+temporary Alpine Linux image that has access to your local files and the volume
+in question.
+
+You'll want to make sure you are aware of potential permissions problems that
+can arise, but this approach is *usually* risk-free.
+
+For the sitemap configuration, for example, your copy command might look
+something like this:
+
+```bash
+podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
+  cp /source/docker/caddy/examples/sitemap.site.caddyfile /dest/sitemap.site.caddyfile
+```
+
+The volume's full name can change if your compose project isn't `open-oni`, but
+this is generally the recipe for getting around read-only volumes.
+
+Note that in development, (or any situation your volumes are mounted from a
+specific location on the host), you can just copy and edit files directly. **Be
+aware** that this can give you the same permissions issues as a one-off copy,
+and sometimes has other odd issues because your local user may be able to read
+files that the in-container users cannot.
+
 ### Configuration architecture
 
 Generally your compose concerns will live in `compose.override.yaml`,
