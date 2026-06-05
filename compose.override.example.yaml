@@ -17,6 +17,22 @@ volumes:
       o: bind
       device: ${PWD}/data
 
+  # For dev, you might mess with caddy configs *a lot*: plugins like sitemap
+  # need it, testing out Caddy configs you might want to add to core, etc.
+  #
+  # In production, you still may need this. There are cases where this volume
+  # is a big exception to the "let podman manage volumes" rule. We've sometimes
+  # had to add rules to block entire networks real-time when getting scraped by
+  # aggressive bots, for instance. Containerized Caddy might not be the best
+  # place for such rules, but sometimes it's the fastest option for a quick,
+  # temporary ban.
+  caddy-conf:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/DEV-VOLS/config
+
   # For development, you could define a "config" volume this way so your
   # configuration is always available to edit
   oni-config:

@@ -48,8 +48,9 @@ mount some local directories right into running containers. In production,
 project's directories is rarely a good idea.
 
 A lot of the time, you don't need to mount anything at all. You can use `docker
-cp`, for instance, to alter your configuration, copy plugins into a volume,
-etc. "One and done" changes may not warrant exposing an entire volume forever.
+cp` and/or temporary containers, for instance, to alter your configuration,
+copy plugins into a volume, etc. "One and done" changes may not warrant
+exposing an entire volume forever.
 
 So we advise that you let podman manage volumes when possible. You will rarely
 need to change plugins, themes, or even configuration. This is especially true
@@ -65,6 +66,28 @@ order to get the container engine to re-read the new definition.
 Removing a volume removes whatever the engine created. For volumes with no
 custom driver options, the engine *creates the directory*. In these cases,
 removing the volume **also removes the data**.
+
+#### `caddy-conf`
+
+Like `oni-data`, this volume may need custom setup, because there are times
+when editing your web server configuration is a regular occurrence. This has
+been especially true for us when reacting to new types of bot traffic.
+
+*For a basic install, you don't need to worry about this volume; it's just here
+to allow more granular control over how your ONI web server behaves.*
+
+Any file in `caddy-conf` that has either `.site.caddyfile` or
+`.server.caddyfile` gets imported into Caddy, either as a site-level or a
+server-level rule, respectively.
+
+Site-level rules are imported within the scope of the public web listener (the
+`:80 {...}` block) before other rules. In Caddy, when two rules are the same,
+whichever is first gets priority, so you can use this to effectively override
+defaults. The sitemap configuration in `docker/caddy/sitemap.Caddyfile` shows
+how this can work for serving static plugin-generated content.
+
+Server-level rules are imported outside the web listener, allowing server-level
+directives if desired.
 
 #### `oni-config`
 

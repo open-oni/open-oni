@@ -3,7 +3,7 @@
 - Complete refactor of the container side of ONI
   - The stack now works with `podman` and `podman compose`
   - Apache has been replaced with Caddy to more easily separate app and web
-    server concerns
+    server concerns and provide granular override / extension
   - All direct filesystem mounts are removed and *strongly* discouraged in the
     example files and documentation
   - Compose environment settings are simpler and smarter, e.g., a single

@@ -2,7 +2,17 @@
   {$CADDY_DEBUG:}
 }
 
+# Optional extra top-level listeners. Drop a `*.server.caddyfile` file into the
+# caddy-conf volume to enable one.
+import /etc/caddy/conf.d/*.server.caddyfile
+
 :80 {
+  # Custom site-level rules (bot-protection handling, sitemap routes, etc.)
+  # should be put into `*.site.caddyfile` files. For rules that are exact
+  # matches with the core rules (below), whatever is first gets priority,
+  # meaning these custom rules will be evaluated instead of the defaults.
+  import /etc/caddy/conf.d/*.site.caddyfile
+
   # Serve word coordinates as gzipped JSON
   @coordinates path_regexp coords ^/lccn/(.*)/coordinates/$
   route @coordinates {
@@ -32,9 +42,6 @@
     root * /opt/openoni/static/compiled
     file_server
   }
-
-  # Drop any custom ONI rules here (e.g., for plugins that need custom rules)
-  import /etc/caddy/conf.d/*
 
   # RAIS IIIF image server
   @iiif path_regexp iiif ^/(images/iiif/.*(?:\.jpg|info\.json))$
