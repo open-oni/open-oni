@@ -4,6 +4,12 @@ services:
   anubis:
     build:
       context: ./docker/anubis
+    networks:
+      default:
+        aliases:
+          # Generic name for Caddy to proxy to, shared by all bot-protection
+          # services so the caddy-conf snippets don't care which one is in use
+          - challenger
     environment:
       COOKIE_SECURE: ${ANUBIS_COOKIE_SECURE:?set ANUBIS_COOKIE_SECURE in .env to use Anubis}
       DIFFICULTY: ${ANUBIS_DIFFICULTY:?set ANUBIS_DIFFICULTY in .env to use Anubis}

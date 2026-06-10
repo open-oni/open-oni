@@ -67,18 +67,21 @@ again, as the more aggressive bots rotate IP addresses for every request.
 ## Common Setup
 
 We chose to separate the "protected path" configuration from the service that
-does the protecting. This should make it easy to use TPS or Anubis (or some
-other option we haven't even considered) in a very similar way.
+does the protecting. Both services register the network alias `challenger`,
+which is what the Caddy snippets proxy to, so the same Caddy configuration
+works for TPS or Anubis (or some other option we haven't even considered) -
+the only choice you make is which compose file to include.
 
 If you choose to enable either service, you follow roughly the same steps:
 
-1. Include one of the bot protection services' compose files in your stack
+1. Include one (and only one) of the bot protection services' compose files in
+   your stack
 2. Set up service-specific configuration / files
-3. Copy the common "server" snippet,
+3. Copy the "server" snippet,
    `docker/caddy/examples/bot-protection.server.caddyfile`, into the Caddy
    configuration volume, `caddy-conf`
-4. Copy a service-specific "site" snippet
-   (`docker/caddy/examples/bot-protection-*.site.caddyfile`) into the Caddy
+4. Copy the "site" snippet,
+   `docker/caddy/examples/bot-protection.site.caddyfile`, into the Caddy
    configuration volume, and edit as needed to alter protected URLs
 
 ### Include a bot-protection service
@@ -120,8 +123,9 @@ notes on basic ONI bot protection are included below.
 ### Configuration files
 
 As mentioned above, all setups require a server file that defines an internal
-listener, and a service-specific "site" file. Look at the examples in
-`docker/caddy/examples`. For most simple setups, these can be used as-is.
+listener, and a "site" file that defines the protected paths. Both are shared
+by TPS and Anubis. Look at the examples in `docker/caddy/examples`. For most
+simple setups, these can be used as-is.
 
 The destination filenames can be whatever you want as long as the internal
 listener uses the `.server.caddyfile` suffix, and the routing uses the
@@ -136,23 +140,26 @@ installation guide.
 
 ### Choosing which paths are protected
 
-Edit the `@protected` matcher in your service-specific `*.site.caddyfile`. It
-is a normal [Caddy path matcher][path-matcher], and the only difference between
-TPS and Anubis is that Anubis requires `/.within.website/*` to be explicitly in
-this list.
+Edit the `@protected` matcher in your `*.site.caddyfile`. All protected paths
+live in a single [Caddy `path_regexp` matcher][path-regexp-matcher], with each
+protected prefix being one alternative in the regex's group. Add or remove
+alternatives to change what is challenged.
 
-Simply add or remove entries in the `path` list to change what is challenged.
+One entry deserves a special mention: `/.within.website/` is where Anubis
+serves its challenge assets, so it must route to the challenger for Anubis to
+work. TPS never uses the path, and ONI has no dot-prefixed routes, so leaving
+it in place under TPS is harmless.
 
-[path-matcher]: https://caddyserver.com/docs/caddyfile/matchers#path
+[path-regexp-matcher]: https://caddyserver.com/docs/caddyfile/matchers#path_regexp
 
 ### Allowing trusted IP ranges
 
 To exempt known-good networks (a campus range, a monitoring service) for either
-proxy, add a `not client_ip` clause to the `@protected` matcher:
+proxy, add a `not client_ip` clause to the `@protected` matcher, e.g.,
 
 ```caddyfile
 @protected {
-  path /data/* /search/*
+  path_regexp ^/(data/|search/|issues/|lccn/\w+/issues/first_pages/|\.within\.website/)
   not client_ip 203.0.113.0/24 198.51.100.10
 }
 ```

@@ -127,7 +127,7 @@ podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
 podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
   cp /source/docker/caddy/examples/bot-protection.server.caddyfile /dest/bot-protection.server.caddyfile
 podman run --rm -it -v "$PWD":/source -v open-oni_caddy-conf:/dest alpine \
-  cp /source/docker/caddy/examples/bot-protection-tps.site.caddyfile /dest/bot-protection.site.caddyfile
+  cp /source/docker/caddy/examples/bot-protection.site.caddyfile /dest/bot-protection.site.caddyfile
 ```
 
 For bot protection files, you might need to copy and edit them first, in which

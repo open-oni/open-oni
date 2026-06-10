@@ -4,6 +4,12 @@ services:
   tps:
     build:
       context: ./docker/tps
+    networks:
+      default:
+        aliases:
+          # Generic name for Caddy to proxy to, shared by all bot-protection
+          # services so the caddy-conf snippets don't care which one is in use
+          - challenger
     environment:
       TURNSTILE_SITE_KEY: ${TPS_SITE_KEY:?set TPS_SITE_KEY in .env to use TPS}
       TURNSTILE_SECRET_KEY: ${TPS_SECRET_KEY:?set TPS_SECRET_KEY in .env to use TPS}
