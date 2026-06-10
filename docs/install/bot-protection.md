@@ -150,6 +150,18 @@ serves its challenge assets, so it must route to the challenger for Anubis to
 work. TPS never uses the path, and ONI has no dot-prefixed routes, so leaving
 it in place under TPS is harmless.
 
+Note that if you want to customize the rules significantly, you'll probably
+want to learn more about Caddy's matchers and how they work, but a very basic
+protection just for search and calendar (not recommended, by the way; this is
+just an example!) might look like this:
+
+```caddyfile
+@protected {
+  path /search/* /issues/*
+  not client_ip 203.0.113.0/24 198.51.100.10
+}
+```
+
 [path-regexp-matcher]: https://caddyserver.com/docs/caddyfile/matchers#path_regexp
 
 ### Allowing trusted IP ranges
