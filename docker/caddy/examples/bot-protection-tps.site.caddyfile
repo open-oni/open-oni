@@ -3,7 +3,31 @@
 #
 # See docs/install/bot-protection.md for usage and bot protection details.
 
-@protected path /data/* /search/*
+# Protected endpoints:
+#
+# - /data/* is for raw files - humans can browse and scrape data, but they have
+#   to get through the challenge first (making automated harvesting tough, but
+#   they can deal with that in a browser, then copy the token or something;
+#   there's no easy way to protect this path otherwise, and SEO / AI bots
+#   generally don't belong here)
+# - /search/* should never be crawled by any bots, period
+# - /issues/* is the calendar view, and while it's not expensive, it's a waste
+#   of resources for bots to "click" through every link just to get data
+#   already in our sitemap
+# - /lccn/<lccn>/issues/first_pages/* is the per-title issue browser, which is
+#   arguably great for bots to discover issues, but very expensive (see gh
+#   #643), and bots should be given a sitemap anyway
+#
+# All paths live in a single path_regexp, with each protected prefix being one
+# alternative in the group. Matchers listed inside a named matcher are ANDed
+# together, so OR-ing paths has to happen within one matcher - and keeping it
+# to one matcher means shared rules (like a client_ip exemption) only ever
+# need to be written once.
+@protected {
+  path_regexp ^/(data/|search/|issues/|lccn/\w+/issues/first_pages/)
+  # not client_ip blah blah
+}
+
 handle @protected {
   reverse_proxy tps:8080
 }
