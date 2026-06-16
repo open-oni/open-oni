@@ -14,6 +14,9 @@ services:
       TURNSTILE_SITE_KEY: ${TPS_SITE_KEY:?set TPS_SITE_KEY in .env to use TPS}
       TURNSTILE_SECRET_KEY: ${TPS_SECRET_KEY:?set TPS_SECRET_KEY in .env to use TPS}
       JWT_SIGNING_KEY: ${TPS_JWT_KEY:?set TPS_JWT_KEY in .env to use TPS}
+      TOKEN_LIFETIME: ${TPS_TOKEN_LIFETIME:-24h}
+      TOKEN_REQUEST_BUDGET: ${TPS_TOKEN_REQUEST_BUDGET:-5000}
+      TOKEN_IP_SWITCH_COST: ${TPS_TOKEN_IP_SWITCH_COST:-50}
     depends_on:
       app:
         condition: service_started

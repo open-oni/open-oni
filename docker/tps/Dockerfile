@@ -4,7 +4,7 @@ RUN apk update && apk upgrade
 RUN apk add make git
 
 WORKDIR /usr/local/src/turnstile-proxy
-RUN git clone https://github.com/uoregon-libraries/turnstile-proxy-server.git -b v1.0.1-rc3 .
+RUN git clone https://github.com/uoregon-libraries/turnstile-proxy-server.git -b v1.1.1 .
 RUN make
 
 FROM alpine AS app
