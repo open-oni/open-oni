@@ -23,6 +23,9 @@
 #   to reach the challenger; TPS never uses the path, and ONI has no
 #   dot-prefixed routes, so under TPS this entry is harmless dead config
 #   (though you can also delete it if you don't like it)
+# - The /lccn/<lccn>/<date>/ed-<n>/seq-<n>/print/image_* path is the "clip"
+#   link. Bots get no value from it, but it adds a tiny bit of load, so it's
+#   protected too.
 #
 # All paths live in a single path_regexp, with each protected prefix being one
 # alternative in the group. Matchers listed inside a named matcher are ANDed
@@ -30,11 +33,26 @@
 # to one matcher means shared rules (like a client_ip exemption) only ever
 # need to be written once.
 @protected {
-  path_regexp ^/(data/|search/|issues/|lccn/\w+/issues/first_pages/|\.within\.website/)
+  path_regexp ^/(data/|search/|issues/|lccn/\w+/issues/first_pages/|lccn/\w+/\d\d\d\d-\d\d-\d\d/ed-\d+/seq-\d+/print/image_|\.within\.website/)
   # not client_ip blah blah
 }
-
 handle @protected {
+  # X-Real-IP is required by Anubis; TPS just ignores it
+  reverse_proxy challenger:8080 {
+    header_up X-Real-IP {client_ip}
+  }
+}
+
+# Browsers, or things that pretend to be a browser, get challenged on even more
+# requests. Users won't really notice this, but misbehaving bots should be
+# slowed down further. Automated harvesting is deliberately allowed... if done
+# by honest users who don't hide that they're using curl / wget / etc.
+@browser {
+  header_regexp User-Agent (?i)(gecko|applewebkit|trident)
+  not header_regexp User-Agent (?i)(bot|crawl|spider|slurp|chatgpt|anthropic|claude|perplexity|google|meta-external|facebookexternal|cohere|omgili|mistralai|duckassist)
+  path_regexp \.(pdf|jp2|xml)$
+}
+handle @browser {
   # X-Real-IP is required by Anubis; TPS just ignores it
   reverse_proxy challenger:8080 {
     header_up X-Real-IP {client_ip}
