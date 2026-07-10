@@ -4,19 +4,6 @@ Adapted from the [Django Code of
 Conduct](https://www.djangoproject.com/conduct/) for the [Open ONI
 Community](https://github.com/open-oni/).
 
-**Contents**
-- [Introduction](#introduction)
-- [Open ONI Community Health Team](#open-oni-community-health-team)
-- [Expected Behavior](#expected-behavior)
-- [Reporting](#reporting)
-  - [Acknowledgement](#acknowledgement)
-  - [Acting Unilaterally](#acting-unilaterally)
-  - [Response and Enforcement](#response-and-enforcement)
-  - [Transparency](#transparency)
-    - [Public Reports](#public-reports)
-- [Changes](#changes)
-- [License](#license)
-
 ## Introduction
 Like the technical community as a whole, the Open ONI community is made up of a
 mixture of professionals and volunteers from all over the world.
@@ -211,9 +198,9 @@ After the beginning of each new year, the team will publicize the number of
 violation reports received and the team's enforcement decisions for the previous
 year. Any public incident reports will be listed and linked to as well.
 
-Year                  | 2020| 2021| 2022| 2023
-----------------------|-----|-----|-----|-----
-**Violation reports** |    0|    0|    0|    0
+Year                  | 2020| 2021| 2022| 2023| 2024| 2025
+----------------------|-----|-----|-----|-----|-----|-----
+**Violation reports** |    0|    0|    0|    0|    0|    0
 No violation occurred |     |
 Private reprimand     |     |
 Public reprimand      |     |
@@ -233,7 +220,10 @@ Public apology        |     |
   - None
 - 2023
   - None
-
+- 2024
+  - None
+- 2025
+  - None
 
 ## Changes
 Changes to the Open ONI Community Code of Conduct can be tracked in this file on
