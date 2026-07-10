@@ -32,7 +32,7 @@ us and the technical communities in which we participate.
 
 This code of conduct applies to all spaces managed by the Open ONI organization.
 This includes [Open ONI
-Discord](https://discord.gg/4JbkHjp5a),
+Discord](https://discord.gg/AmSyaRRSJY),
 [Open ONI GitHub](https://github.com/open-oni/), and any other forums created by
 the project team which the community uses for communication online or in person.
 In addition, violations of this code outside these spaces may affect a person's
@@ -103,7 +103,7 @@ project](http://web.archive.org/web/20141109123859/http://speakup.io/coc.html).
 If you believe someone is violating the code of conduct we ask that you report
 it to one or more members of the Open ONI Community Health Team either via email
 or [Open ONI
-Discord](https://discord.gg/4JbkHjp5a).
+Discord](https://discord.gg/AmSyaRRSJY).
 If you are reporting a violation by one or more of the team members, only the
 other team members will be informed to review and respond to the report. In the
 event of any conflict of interest a team member must immediately notify the

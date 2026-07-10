@@ -10,7 +10,7 @@ Conduct](https://github.com/open-oni/open-oni/tree/dev/CODE_OF_CONDUCT.md)
 ## Develop With Us
 
 There is a lot of work to be done on Open ONI. [Joining us on
-Discord](https://discord.gg/4JbkHjp5a)
+Discord](https://discord.gg/AmSyaRRSJY)
 and [submitting issues](https://github.com/open-oni/open-oni/issues) are both
 great ways to get involved without diving into the code.
 

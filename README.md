@@ -101,21 +101,21 @@ the scope of what to expect Open ONI developers to provide.
 We ask that bugs and feature requests be submitted to [Open ONI on
 GitHub](https://github.com/open-oni/open-oni/issues). Please confine other
 questions and conversation about Open ONI development and use to [Open ONI's
-Discord](https://discord.gg/4JbkHjp5a).
+Discord](https://discord.gg/AmSyaRRSJY).
 These guidelines are intended both to keep conversation in the open where it may
 benefit all of the Open ONI community and to protect developers' already limited
 time.
 
 ## Contact Us
 We prefer to communicate on the [Open ONI
-Discord](https://discord.gg/4JbkHjp5a),
+Discord](https://discord.gg/AmSyaRRSJY),
 but if you have trouble or prefer not to use Discord, email Greg Tunink (techgique
 [at] unl.edu).
 
 ### Security
 To report a security concern or vulnerability, please ask for a project
 maintainer to direct message you on the [Open ONI
-Discord](https://discord.gg/4JbkHjp5a)
+Discord](https://discord.gg/AmSyaRRSJY)
 or email Greg Tunink (techgique [at] unl.edu). Maintainers will evaluate,
 discuss responsible disclosure and patching, and give many thanks and credit for
 your generous assistance.
