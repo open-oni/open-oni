@@ -157,13 +157,7 @@ After working on CSS, JavaScript, images, or other static files, you will need
 to compile the files. Collected static files are stored in the
 `/static/compiled/` directory.
 
-If you are using Docker, you can use this command:
-
-```
-docker compose exec web manage collectstatic --noinput
-```
-
-If you are not using Docker, follow these steps as a regular user (not root):
+Follow these steps as a regular user (not root):
 
 ```bash
 cd /opt/openoni

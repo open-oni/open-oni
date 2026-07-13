@@ -73,8 +73,8 @@ descriptions that will only show up occasionally.
 For example: 'Open ONI' for most headers, 'Open Online Newspapers Initiative'
 for introduction / about / further information / etc
 """
-SITE_TITLE = 'YOUR_SHORT_PROJECT_NAME'
-PROJECT_NAME = 'YOUR_LONG_PROJECT_NAME'
+SITE_TITLE = os.getenv('ONI_SHORT_PROJECT_NAME', 'YOUR_SHORT_PROJECT_NAME')
+PROJECT_NAME = os.getenv('ONI_LONG_PROJECT_NAME', 'YOUR_LONG_PROJECT_NAME')
 
 """
 Use below only if LoC is down and MARC requests fail.

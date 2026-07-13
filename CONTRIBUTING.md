@@ -19,7 +19,8 @@ standards](#development-standards) below to keep us all on the same page.
 
 You should start by reviewing the [Docker
 install](https://github.com/open-oni/open-oni/tree/dev/docs/install/docker.md)
-page to help set up a development environment.
+page to help set up a development environment, learn how to unit test in an
+isolated stack, etc.
 
 ### Workflow
 
@@ -44,16 +45,6 @@ git checkout -b feature/my-awesome-oni-thing
 When you're ready, push up your code and
 [submit a pull request](https://github.com/open-oni/open-oni/pulls).
 **Make sure** the pull request is against the `dev` branch, *not* `main`.
-
-### Testing
-
-```bash
-docker compose -f test-compose.yml -p onitest up test
-```
-
-This will produce a lot of output and you'll have to scroll back to get read
-test failure information, but it runs a test container setup that ensures your
-development data will not be modified.
 
 ## Development Standards
 

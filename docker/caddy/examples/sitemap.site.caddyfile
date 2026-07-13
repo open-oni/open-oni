@@ -1,0 +1,8 @@
+# This file is an example of custom configuration to enable sitemaps (e.g., via
+# a custom plugin). Just copy this into your `caddy-conf` volume, restart the
+# "web" service, and requests for /sitemap*.xml will automatically route to the
+# static/sitemaps directory.
+handle /sitemap*.xml {
+  root * /opt/openoni/static/sitemaps
+  file_server
+}

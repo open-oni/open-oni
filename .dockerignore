@@ -1,0 +1,35 @@
+# Ignore everything by default so this can act as if it's ".dockerinclude"
+**
+
+# ONI code/support
+!/core
+!/log/.keep
+!/manage.py
+!/onisite
+!/requirements.txt
+!/requirements.lock
+!/static
+
+# Default theme, and the friggin' __init__.py file have to be preserved. We
+# don't want to accidentally bundle a dev's themes into an image if we ever
+# publish one, but we also need the default theme and the module file.
+!/themes/default
+!/themes/__init__.py
+
+# Generally the same For plugins, but there's no default plugin, so we just
+# need the __init__.py file. But we have to re-ignore /onisite/plugins because
+# of the rule above to *not* ignore /onisite. Containers are hard.
+/onisite/plugins
+!/onisite/plugins/__init__.py
+
+# Docker stuff needs to be here to copy things like web/app configs,
+# entrypoints, etc.
+!/docker
+
+# Now re-ignore things we definitely don't want, even when it's in an allowed
+# subdir, like python cache and local settings
+**/__pycache__
+/onisite/settings_local.py
+/onisite/urls.py
+/static/compiled
+Dockerfile

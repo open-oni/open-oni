@@ -23,6 +23,9 @@ onisite/plugins/*
 !onisite/plugins/__init__.py
 !onisite/plugins/README.md
 
-# Ignore Docker overrides
-/docker-compose.override.yml
+# Ignore compose overrides
+compose.override.yaml
 .env
+
+# If used, devs will want this ignored
+/DEV-VOLS

@@ -9,7 +9,6 @@ contributing to Open ONI, we recommend that you use Docker for development
 purposes.
 
 - [CentOS](/docs/install/centos)
-- [Ubuntu](/docs/install/ubuntu.md) (incomplete)
 - [Docker](/docs/install/docker.md)
 
 When updating, please review the changelog for information and instructions
@@ -34,5 +33,4 @@ about upgrading versions, breaking changes, etc
 ## Advanced
 
 - [Admin Commands Reference](/docs/advanced/admin-commands.md) (in progress)
-- [Docker Commands Quick Reference](/docs/advanced/docker-reference.md)
 - [Solr Schema Setup](/core/fixtures/solr-schema/README.md)

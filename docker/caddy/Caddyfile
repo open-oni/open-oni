@@ -1,0 +1,56 @@
+{
+  {$CADDY_DEBUG:}
+}
+
+# Optional extra top-level listeners. Drop a `*.server.caddyfile` file into the
+# caddy-conf volume to enable one.
+import /etc/caddy/conf.d/*.server.caddyfile
+
+:80 {
+  # Custom site-level rules (bot-protection handling, sitemap routes, etc.)
+  # should be put into `*.site.caddyfile` files. For rules that are exact
+  # matches with the core rules (below), whatever is first gets priority,
+  # meaning these custom rules will be evaluated instead of the defaults.
+  import /etc/caddy/conf.d/*.site.caddyfile
+
+  # Serve word coordinates as gzipped JSON
+  @coordinates path_regexp coords ^/lccn/(.*)/coordinates/$
+  route @coordinates {
+    header Content-Type application/json
+    header Content-Encoding gzip
+    rewrite * /lccn/{re.coords.1}/coordinates.json.gz
+    root * /var/local/oni-data/word_coordinates
+    file_server
+  }
+
+  # Serve /data/ from the openoni data directory
+  handle_path /data/* {
+    root * /var/local/oni-data
+    file_server browse
+  }
+
+  # robots.txt is the only static file that actually lives at the top level of
+  # the ONI "static" dir? Huh.
+  handle /robots.txt {
+    root * /opt/openoni/static
+    file_server
+  }
+
+  # Compiled assets: strip /static prefix, serve from compiled asset location
+  handle_path /static/* {
+    header Cache-Control "max-age=31536000"
+    root * /opt/openoni/static/compiled
+    file_server
+  }
+
+  # RAIS IIIF image server
+  @iiif path_regexp iiif ^/(images/iiif/.*(?:\.jpg|info\.json))$
+  reverse_proxy @iiif http://rais:12415
+
+  # Everything else goes to ONI (via gunicorn)
+  reverse_proxy http://app:8000
+
+  log {
+    level INFO
+  }
+}
