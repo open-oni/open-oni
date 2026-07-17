@@ -5,7 +5,7 @@ from django.urls import include, path, re_path
 from django.utils import cache
 from django.views.defaults import page_not_found, server_error
 
-from .views import home, browse, directory, reports, search, static
+from .views import home, browse, directory, reports, search, static, api_chronam
 
 handler404 = page_not_found
 handler500 = server_error
@@ -356,4 +356,28 @@ urlpatterns = [
     # ocr data
     re_path(r'^ocr/feed/$', reports.ocr_atom, name='openoni_ocr_atom'),
     re_path(r'^ocr.json$', reports.ocr_json, name='openoni_ocr_json'),
+
+    # ChronAm JSON API views
+    re_path(r'^api/chronam/?$', api_chronam.description, name='api_chronam_description'),
+    path('api/chronam/awardees.json', api_chronam.awardee_list, name='api_chronam_awardee_list'),
+    re_path(r'^api/chronam/awardees/(?P<org_code>\w+)\.json$', api_chronam.awardee, name='api_chronam_awardee'),
+    path('api/chronam/batches.json', api_chronam.batch_list, name='api_chronam_batch_list'),
+    re_path(
+        r'^api/chronam/batches/(?P<page_number>\d+)\.json$',
+        api_chronam.batch_list,
+        name='api_chronam_batch_list_page'
+    ),
+    path('api/chronam/batches/<slug:batch_name>.json', api_chronam.batch, name='api_chronam_batch'),
+    re_path(
+        r'^api/chronam/lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)\.json$',
+        api_chronam.issue,
+        name='api_chronam_issue'
+    ),
+    path('api/chronam/newspapers.json', api_chronam.newspaper_list, name='api_chronam_newspaper_list'),
+    re_path(
+        r'^api/chronam/lccn/(?P<lccn>\w+)/(?P<date>\d{4}-\d{2}-\d{2})/ed-(?P<edition>\d+)/seq-(?P<sequence>\d+)\.json$',
+        api_chronam.page,
+        name='api_chronam_page'
+    ),
+    re_path(r'^api/chronam/lccn/(?P<lccn>\w+).json$', api_chronam.title, name='api_chronam_title'),
 ]
