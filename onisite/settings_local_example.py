@@ -1,6 +1,6 @@
 import os
-import urllib
 
+from urllib.parse import urlparse
 from .settings_base import *
 
 # Copy to settings_local.py, update YOUR_ values, and follow our documentation:
@@ -12,7 +12,7 @@ from .settings_base import *
 ################################################################
 # BASE_URL can NOT include any path elements!
 BASE_URL = os.getenv('ONI_BASE_URL', 'http://localhost')
-url = urllib.parse.urlparse(BASE_URL)
+url = urlparse(BASE_URL)
 ALLOWED_HOSTS = [url.hostname]
 
 if url.scheme == 'https':
